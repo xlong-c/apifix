@@ -1,0 +1,650 @@
+{
+  "vendor": "iflytek",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "4.0Ultra",
+      "vendor": "iflytek",
+      "family": "Spark Ultra",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Ultra版本已升级至X1.5快思考模式；Max套餐于2026-03-10下线后授权并入Ultra",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认1",
+          "range_note": "原始文档写法 \"(0,1]\"（开区间）；端点按闭区间取值记录"
+        },
+        "top_k": {
+          "supported": true,
+          "range": [
+            1,
+            6
+          ],
+          "constraint": "默认4"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "支持搜索/天气/日期/诗词/字词/股票内置插件",
+        "支持system与Function Call（仅HTTP协议）",
+        "返回联网检索信源标题及地址"
+      ],
+      "sources": [
+        "https://www.xfyun.cn/doc/spark/HTTP%E8%B0%83%E7%94%A8%E6%96%87%E6%A1%A3.html"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Ultra 已升级至 X1.5 快思考模式；现行官方价格页未列出该版本单价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://xinghuo.xfyun.cn/sparkapi",
+          "https://www.xfyun.cn/doc/spark/BillingDescription.html"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "generalv3",
+      "vendor": "iflytek",
+      "family": "Spark Pro",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Pro专业级模型，仍在售",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认1",
+          "range_note": "原始文档写法 \"(0,1]\"（开区间）；端点按闭区间取值记录"
+        },
+        "top_k": {
+          "supported": true,
+          "range": [
+            1,
+            6
+          ],
+          "constraint": "默认4"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "pro-128k",
+        "max-32k",
+        "lite"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "pro-128k最大输出32768；lite免费但输出仅4096",
+        "Function Call仅Max/Ultra支持（HTTP）"
+      ],
+      "sources": [
+        "https://www.xfyun.cn/doc/spark/HTTP%E8%B0%83%E7%94%A8%E6%96%87%E6%A1%A3.html"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Spark Pro 现行官方价格页未列出单价（官方计费页仅指向控制台）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://xinghuo.xfyun.cn/sparkapi",
+          "https://www.xfyun.cn/doc/spark/BillingDescription.html"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "generalv3.5",
+      "vendor": "iflytek",
+      "family": "Spark Max",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "Max版本套餐已于2026-03-10下线，后端服务升级为Ultra",
+      "context_window": 32768,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认1",
+          "range_note": "原始文档写法 \"(0,1]\"（开区间）；端点按闭区间取值记录"
+        },
+        "top_k": {
+          "supported": true,
+          "range": [
+            1,
+            6
+          ],
+          "constraint": "默认4"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "max-32k"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "2026-03-10下线，授权用量与Ultra合并",
+        "WebSocket domain=generalv3.5"
+      ],
+      "sources": [
+        "https://www.xfyun.cn/doc/spark/HTTP%E8%B0%83%E7%94%A8%E6%96%87%E6%A1%A3.html",
+        "https://www.xfyun.cn/doc/spark/Web.html"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Max 套餐已于2026-03-10下线（后端并入 Ultra），现行官方价格页未列出单价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://xinghuo.xfyun.cn/sparkapi",
+          "https://www.xfyun.cn/doc/spark/BillingDescription.html"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "spark-x",
+      "vendor": "iflytek",
+      "family": "Spark X",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "X2/X1.5共用model=spark-x，按base_url区分版本",
+      "context_window": 65536,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1.2，数学/推理/代码建议调高",
+          "range_note": "原始文档写法 \"(0,2]\"（开区间）；端点按闭区间取值记录"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.95",
+          "range_note": "原始文档写法 \"(0,1]\"（开区间）；端点按闭区间取值记录"
+        },
+        "top_k": {
+          "supported": true,
+          "range": [
+            1,
+            6
+          ],
+          "constraint": "默认6"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required",
+          "force",
+          "allowed_tools"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(仅json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "x1"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "X2用https://spark-api-open.xf-yun.com/x2/，X1.5用/v2/，同一model名不同端点",
+        "X2输入64K/输出128K；X1.5最大输出65535",
+        "thinking.type支持enabled/disabled/auto",
+        "web_search与function不可同时传",
+        "历史x1传参指向X1.5"
+      ],
+      "sources": [
+        "https://www.xfyun.cn/doc/spark/X1http.html"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方产品页仅给出单一价格区间 2~3 元/百万tokens（约 $0.2778~$0.4167，按 1 USD = 7.2 CNY 换算），未拆分输入/输出；spark-x 同时对应 X2/X1.5 两版",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://xinghuo.xfyun.cn/sparkapi"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "spark-x2-flash",
+      "vendor": "iflytek",
+      "family": "Spark X2",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "current",
+      "lifecycle_note": "官方产品页显示Spark-X2-Flash已发布，价格1~2元/百万tokens",
+      "context_window": null,
+      "max_output_tokens": 262144,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "官方未列Flash专属范围",
+          "range_note": "原始文档写法 \"(0,2]\"（开区间）；端点按闭区间取值记录"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "官方未列Flash专属范围",
+          "range_note": "原始文档写法 \"(0,1]\"（开区间）；端点按闭区间取值记录"
+        },
+        "top_k": {
+          "supported": true,
+          "range": [
+            1,
+            6
+          ],
+          "constraint": "官方未列Flash专属范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required",
+          "force",
+          "allowed_tools"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方HTTP文档未给出精确model参数值，第三方文档用x2-flash/262144输出",
+        "需以星火控制台实际模型ID为准"
+      ],
+      "sources": [
+        "https://xinghuo.xfyun.cn/sparkapi"
+      ],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方产品页仅给出单一价格区间 1~2 元/百万tokens（约 $0.1389~$0.2778，按 1 USD = 7.2 CNY 换算），未拆分输入/输出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://xinghuo.xfyun.cn/sparkapi"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "Spark-X2.5-1.7B",
+      "vendor": "iflytek",
+      "family": "Spark X2.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "1.7B级端侧通用Dense模型",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "端侧小模型，官方未公开API细节"
+      ],
+      "sources": [
+        "https://xinghuo.xfyun.cn/sparkapi"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0,
+        "output": 0,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方标注免费（0 元）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://xinghuo.xfyun.cn/sparkapi"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "Spark-X2.5-4B",
+      "vendor": "iflytek",
+      "family": "Spark X2.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "4B级端侧通用Dense模型，200+语言支持",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "产品页标注文本生成/多语言1M上下文",
+        "端侧定位，能力有限"
+      ],
+      "sources": [
+        "https://xinghuo.xfyun.cn/sparkapi"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0,
+        "output": 0,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方标注限时免费（0 元）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://xinghuo.xfyun.cn/sparkapi"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

@@ -193,12 +193,16 @@ apifix/
 ├── apifix.mjs        CLI + local UI server (zero dependencies)
 ├── lib/core.mjs      Shared core (pure ESM, importable in the browser)
 ├── ui/               Web UI (fully static)
-├── catalog.json      Official specs for 325 models (the data source)
-├── tools/            Merge + validate scripts (used by CI)
+├── catalog/          Source of truth: one file per vendor (catalog/<vendor>.json, edit these)
+├── catalog.json      **Generated** bundle built from catalog/ (CLI/UI read this; do not hand-edit)
+├── tools/            Build + merge + validate scripts (used by CI)
 ├── incoming/         Raw research batches (traceable provenance)
 ├── legacy-python/    Original Python implementation (reference only)
 └── skills/           Companion AI skills (model-spec-lookup / catalog-maintain)
 ```
+
+To change data: edit `catalog/<vendor>.json` → run `npm run build` to regenerate `catalog.json`
+(see [CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ## FAQ
 

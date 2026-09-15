@@ -1,0 +1,1644 @@
+{
+  "vendor": "moonshot",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "kimi-k2",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "K2 系列整体于 2026-05-25 下线（含 kimi-k2-0905-preview、kimi-k2-0711-preview、kimi-k2-turbo-preview、kimi-k2-thinking、kimi-k2-thinking-turbo）",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "kimi-k2-0905-preview",
+          "note": "2026-05-25 下线"
+        },
+        {
+          "id": "kimi-k2-0711-preview",
+          "note": "2026-05-25 下线"
+        },
+        {
+          "id": "kimi-k2-turbo-preview",
+          "note": "2026-05-25 下线"
+        },
+        {
+          "id": "kimi-k2-thinking",
+          "note": "2026-05-25 下线"
+        },
+        {
+          "id": "kimi-k2-thinking-turbo",
+          "note": "2026-05-25 下线"
+        }
+      ],
+      "gotchas": [
+        "官方模型页以“kimi-k2 系列”整体标注下线，无单独基础 ID 条目。",
+        "基础模型 kimi-k2（非 preview）是否曾作为独立 API ID 未在文档中确认。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-05-25 随 K2 系列下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2-0711-preview",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-05-25 随 K2 系列下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2-0905-preview",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线，官方建议迁移至 kimi-k3。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-05-25 随 K2 系列下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2-thinking",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考变体，已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-05-25 随 K2 系列下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2-thinking-turbo",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考高速变体，已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-05-25 随 K2 系列下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2-turbo-preview",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-05-25 随 K2 系列下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2.5",
+      "vendor": "moonshot",
+      "family": "Kimi K2.x",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 官方退役；第三方仍在提供（OpenRouter 上 8 家供应商、SiliconFlow 等），参数为退役前规格",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "固定值：thinking 1.0 / 非 thinking 0.6，显式传其他值报错"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "API 表未文档化；模型卡建议 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "Moonshot API 未文档化"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.type=json_object|json_schema"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [
+        "moonshotai/kimi-k2.5",
+        "moonshot-kimi-k2.5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "已退役：2026-08-31 起官方 API 返回 404，官方迁移到 kimi-k3",
+        "thinking 是 K2.x 专属 extra_body 参数 {type:enabled|disabled}，无 reasoning_effort",
+        "temperature 不要显式传（固定值）",
+        "缓存命中需上一请求 prompt_tokens > 256"
+      ],
+      "sources": [
+        "https://platform.kimi.ai/docs/api/models-overview",
+        "https://platform.kimi.ai/docs/models"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-08-31 退役）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2.6",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-04-20 发布（1T MoE、256K 上下文、原生多模态）；当前在售",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "思考固定 1.0 / 非思考固定 0.6，传其他值报错"
+        },
+        "top_p": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 0.95，传其他值报错"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_schema + strict（复杂 schema 偶有不稳定）"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "thinking.type 支持 enabled（默认）/disabled；thinking.keep 可选 all 启用保留式思考（默认 null 不保留）。",
+        "不支持 reasoning_effort；tool_choice 不支持 required。",
+        "思考模式下内置 $web_search 工具不兼容，需先关闭思考。",
+        "复杂 JSON Schema（$ref/oneOf）可能返回 Markdown 代码块，建议业务层二次校验。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k2-6-quickstart",
+        "https://platform.kimi.com/docs/api/models-overview",
+        "https://platform.kimi.com/docs/guide/use-thinking-models",
+        "https://platform.kimi.com/docs/guide/response_format"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.95,
+        "output": 4,
+        "cache_read": 0.16,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "USD 表取自 platform.kimi.ai（国际站）；platform.kimi.com 同页为 CNY 表。",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2.7-code",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-06-12 发布，代码专用模型（基于 K2.6，思考 token 约减少 30%）；当前在售",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 1.0，传其他值报错"
+        },
+        "top_p": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 0.95，传其他值报错"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_schema + strict（对嵌套/anyOf/oneOf/$ref 支持最稳）"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "始终开启思考且不可禁用，传 thinking.type=disabled 报错；Preserved Thinking 始终开启。",
+        "不支持 reasoning_effort。",
+        "tool_choice 不支持 required（传入报错）。",
+        "max_tokens 默认 32768（文档仅给出默认值，未公布上限）。",
+        "支持文本/图片/视频输入。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart",
+        "https://platform.kimi.com/docs/api/models-overview",
+        "https://platform.kimi.com/docs/api/chat",
+        "https://platform.kimi.com/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.95,
+        "output": 4,
+        "cache_read": 0.19,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "USD 表取自 platform.kimi.ai（国际站）；platform.kimi.com 同页为 CNY 表。",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k2.7-code-highspeed",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "与 kimi-k2.7-code 同一模型的高速版，输出约 180 tok/s（短上下文可达 260 tok/s）；当前在售",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 1.0，传其他值报错"
+        },
+        "top_p": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 0.95，传其他值报错"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_schema + strict"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "参数约束与 kimi-k2.7-code 完全一致，仅输出速度不同。",
+        "官方提示高速版资源有限，体验可能偶有波动。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart",
+        "https://platform.kimi.com/docs/api/models-overview",
+        "https://platform.kimi.com/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.9,
+        "output": 8,
+        "cache_read": 0.38,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "USD 表取自 platform.kimi.ai（国际站）；platform.kimi.com 同页为 CNY 表。",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-k3",
+      "vendor": "moonshot",
+      "family": "Kimi K3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-07-16 发布（2.8T 参数、1M 上下文），2026-07-27 开源权重；当前旗舰",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "max",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 1.0，传其他值报错，建议不要显式传入"
+        },
+        "top_p": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 0.95，传其他值报错"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_schema + strict（token 级约束解码，符合 MFJS 规范）"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "始终思考且保留式思考（Preserved Thinking）始终开启，多轮/工具调用必须原样回传完整 assistant message（含 reasoning_content）。",
+        "max_completion_tokens 默认 131072、最大 1048576；输入+输出超出上下文会报错。",
+        "温度/top_p/n/presence_penalty/frequency_penalty 均为固定值。",
+        "视觉输入不支持公网图片 URL，仅 base64 或 ms://<file-id>。",
+        "另支持 Responses API 与 Anthropic Messages API（output_config.effort / reasoning.effort）。",
+        "官方称 K3 对思考历史敏感，中途从其他模型切换会话可能导致质量不稳定。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k3-quickstart",
+        "https://platform.kimi.com/docs/api/chat",
+        "https://platform.kimi.com/docs/api/messages",
+        "https://platform.kimi.com/docs/api/responses",
+        "https://platform.kimi.com/docs/pricing/chat",
+        "https://www.kimi.com/blog/kimi-k3"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 3,
+        "output": 15,
+        "cache_read": 0.3,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "USD 表取自 platform.kimi.ai（国际站）；platform.kimi.com 同页为 CNY 表。",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-latest",
+      "vendor": "moonshot",
+      "family": "Kimi Latest（滚动别名）",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-02-17 上线（自动指向最新模型）；2026-01-28 下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "滚动别名，指向行为随官方更新变化，已下线。",
+        "官方要求直接改用 kimi-k3。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-01-28 下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "kimi-thinking-preview",
+      "vendor": "moonshot",
+      "family": "Kimi Thinking",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-11 下线，官方建议升级至最新思考模型",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "早期思考预览模型，2025-11-11 下线，2026 年不可用。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2025-11-11 下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "moonshot-v1-128k",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 国内外全平台下线，调用返回 404",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-08-31 16:00 全平台下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "moonshot-v1-128k-vision-preview",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 随 moonshot-v1 全系列下线",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-08-31 16:00 全平台下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "moonshot-v1-32k",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 国内外全平台下线，调用返回 404",
+      "context_window": 32768,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-08-31 16:00 全平台下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "moonshot-v1-32k-vision-preview",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 随 moonshot-v1 全系列下线",
+      "context_window": 32768,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-08-31 16:00 全平台下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "moonshot-v1-8k",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 国内外全平台下线，调用返回 404",
+      "context_window": 8192,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线，官方建议迁移至 kimi-k3。",
+        "历史上支持 Tool Calling（2024-04-30 上线）与 Context Caching。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-08-31 16:00 全平台下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "moonshot-v1-8k-vision-preview",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-01-13 上线；2026-08-31 16:00 随 moonshot-v1 全系列下线",
+      "context_window": 8192,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "视觉预览版，已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-08-31 16:00 全平台下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "moonshot-v1-auto",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2024-08-28 上线；2026-08-31 16:00 随 moonshot-v1 全系列下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "自动选择上下文档位的路由模型，已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（2026-08-31 16:00 全平台下线）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.kimi.ai/docs/pricing/chat"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

@@ -1,23 +1,31 @@
 #!/usr/bin/env node
-// validate-catalog.mjs — catalog.json 结构与取值校验（零依赖 / ESM，CI 使用）
+// validate-catalog.mjs — catalog/ 与 catalog.json 校验（零依赖 / ESM，CI 使用）
 //
-// 与 legacy-python/tools/validate_catalog.py 1:1 对齐：相同的检查项、报告格式与退出码。
+// catalog/ 是唯一数据源（一厂商一文件）；catalog.json 是由 build-catalog.mjs
+// 生成的 bundle。默认校验两者：厂商文件结构 + 逐条 schema + 全局 id 唯一 +
+// 来源白名单 + bundle 一致性。
 //
 // 检查项：
-//   1. 合法 JSON，顶层为 {version, updated_at, models: [...]}；
-//   2. id 不重复（大小写不敏感），id/vendor 为合法字符串；
+//   1. catalog/ 下每个 *.json 为 {vendor, updated_at, models: [...]}，条目 vendor 与文件一致；
+//   2. id 跨全部厂商文件全局唯一（大小写不敏感）；
 //   3. 每个条目具备必需键（merge-catalog.mjs 的 REQUIRED_TOP schema）；
 //   4. 无明显畸形值（context_window 正整数、range 形状、枚举、sources 链接等）；
-//   5. 每个 vendor 至少 1 条。
+//   5. sources 只含第一方厂商来源（白名单见 tools/source-whitelist.mjs）；
+//   6. catalog.json 与 catalog/ 生成的 bundle 完全一致（否则提示 npm run build）；
+//   7. 每个 vendor 至少 1 条。
 //
 // 退出码：0 通过（可能有 warning）；1 有 error。
 //
 // 用法：
-//   node tools/validate-catalog.mjs [catalog.json]
+//   node tools/validate-catalog.mjs            # 校验 catalog/ + catalog.json 一致性
+//   node tools/validate-catalog.mjs FILE       # 校验指定 bundle 文件（兼容旧用法）
 
-import { readFileSync } from "node:fs";
+import { readFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+
+import { isOfficialSource } from "./source-whitelist.mjs";
+import { buildCatalog, CATALOG_DIR } from "./build-catalog.mjs";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const DEFAULT_PATH = path.join(ROOT, "catalog.json");
@@ -37,80 +45,8 @@ const LIFECYCLES = new Set(["current", "legacy", "retired", "unreleased"]);
 const CONFIDENCES = new Set(["high", "medium", "low"]);
 const ID_RE = /^[A-Za-z0-9][A-Za-z0-9._:/\-]*$/;
 
-// --------------------------------------------------------------------------
-// 来源白名单：sources 只接受**第一方厂商域名**（详见 CONTRIBUTING.md「来源白名单」）
-//
-// 规则：
-//   - URL host 等于某后缀，或是它的子域，即视为该 vendor 的官方来源；
-//   - github.com 之类的通用托管平台用 PATH_RULES 限定（仅特定组织路径算官方）；
-//   - 云平台文档（AWS/Azure）对**非**云厂商的模型不算官方来源；
-//   - 第三方聚合站/中转站/博客一律不接受。
-// 注意：sources 为空数组是合法的（条目可能尚无来源）；只对"有值但非官方"报错。
-// --------------------------------------------------------------------------
-
-const OFFICIAL_DOMAINS = {
-  openai: ["openai.com"],
-  anthropic: ["claude.com", "anthropic.com"],
-  google: ["google.dev", "google.com", "googleapis.com"],
-  deepseek: ["deepseek.com"],
-  alibaba: ["aliyun.com", "alibabacloud.com", "aliyuncs.com", "qwencloud.com", "qianwenai.com"],
-  zhipu: ["z.ai", "bigmodel.cn"],
-  moonshot: ["kimi.ai", "kimi.com", "moonshot.cn", "moonshot.ai"],
-  baidu: ["baidu.com"],
-  xai: ["x.ai"],
-  meta: ["meta.ai", "meta.com"],
-  mistral: ["mistral.ai"],
-  cohere: ["cohere.com"],
-  tencent: ["tencent.com", "tencent.cn", "tencentcloud.com"],
-  volcengine: ["volcengine.com", "bytedance.com", "seed.bytedance.com"],
-  nvidia: ["nvidia.com"],
-  microsoft: ["microsoft.com", "azure.com"],
-  amazon: ["aws.amazon.com", "amazon.com"],
-  minimax: ["minimax.io", "minimaxi.com", "minimax.cn"],
-  iflytek: ["xfyun.cn", "xf-yun.com"],
-  "01ai": ["lingyiwanwu.com"],
-  ai21: ["ai21.com"],
-  writer: ["writer.com"],
-};
-
-// 通用托管平台：host 命中还不够，路径前缀也必须命中（vendor 必须匹配）。
-const SOURCE_PATH_RULES = [
-  { vendor: "alibaba", host: "github.com", pathPrefix: "/QwenLM/" },
-];
-
-function sourceHost(url) {
-  try {
-    const parsed = new URL(url);
-    let host = parsed.hostname.toLowerCase();
-    if (host.startsWith("www.")) host = host.slice(4);
-    return { host, path: parsed.pathname };
-  } catch {
-    return null;
-  }
-}
-
-// 该 URL 是否为 vendor 的官方来源？
-function isOfficialSource(url, vendor) {
-  const parsed = sourceHost(url);
-  if (!parsed) return false;
-  const { host, path } = parsed;
-
-  for (const rule of SOURCE_PATH_RULES) {
-    if (rule.vendor !== vendor) continue;
-    if (host === rule.host || host.endsWith(`.${rule.host}`)) {
-      if (path.startsWith(rule.pathPrefix)) return true;
-    }
-  }
-
-  const suffixes = OFFICIAL_DOMAINS[vendor] || [];
-  for (const suffix of suffixes) {
-    if (host === suffix || host.endsWith(`.${suffix}`)) return true;
-  }
-  return false;
-}
-
-// sources 白名单校验：报错格式固定为
-//   <id>: sources 含非官方来源 <url>（vendor=<vendor>）
+// 来源白名单在 tools/source-whitelist.mjs（validate 与 merge 共用同一份规则）。
+// 报错格式固定为：<id>: sources 含非官方来源 <url>（vendor=<vendor>）
 function checkSources(modelId, vendor, sources) {
   if (!Array.isArray(sources)) return; // 类型错误由 checkStrList 报告
   for (const src of sources) {
@@ -475,9 +411,119 @@ function checkEntry(entry, index) {
   }
 }
 
-function main(argv) {
-  const filePath = argv.length ? argv[0] : DEFAULT_PATH;
+// 校验 catalog/ 下的厂商文件；返回 {models, vendors, files} 或抛异常。
+// 每个文件必须是 {vendor, updated_at, models}，且条目 vendor 与文件一致；
+// id 在**全部文件之间**全局唯一。
+function validateVendorFiles() {
+  let files;
+  try {
+    files = readdirSync(CATALOG_DIR)
+      .filter((name) => name.endsWith(".json") && name !== ".order.json")
+      .sort();
+  } catch (error) {
+    throw new Error(`无法读取 ${CATALOG_DIR}: ${error.message}`);
+  }
+  if (!files.length) throw new Error(`${CATALOG_DIR} 下没有厂商文件（*.json）`);
 
+  const models = [];
+  const seen = new Map(); // 小写 id -> "文件:索引"
+  let index = 0;
+  for (const name of files) {
+    let data;
+    try {
+      data = JSON.parse(readFileSync(path.join(CATALOG_DIR, name), "utf8"));
+    } catch (error) {
+      err(`catalog/${name}: 不是合法 JSON（${error.message}）`);
+      continue;
+    }
+    if (!isDict(data)) {
+      err(`catalog/${name}: 顶层必须是对象`);
+      continue;
+    }
+    const vendor = data.vendor;
+    if (typeof vendor !== "string" || !vendor) {
+      err(`catalog/${name}: 缺少非空字符串 vendor`);
+      continue;
+    }
+    if (data.updated_at === null || data.updated_at === undefined) {
+      warn(`catalog/${name}: 缺少 updated_at`);
+    }
+    if (!Array.isArray(data.models)) {
+      err(`catalog/${name}: 缺少 models 数组`);
+      continue;
+    }
+    if (!data.models.length) warn(`catalog/${name}: models 为空数组`);
+
+    for (const entry of data.models) {
+      const where = `catalog/${name}[${index}]`;
+      if (isDict(entry) && entry.vendor !== vendor) {
+        err(
+          `catalog/${name}: 条目 ${pyRepr(entry.id ?? null)} 的 vendor=${pyRepr(entry.vendor ?? null)}` +
+            ` 与文件 vendor=${pyRepr(vendor)} 不一致`,
+        );
+      }
+      checkEntry(entry, index);
+      if (isDict(entry) && typeof entry.id === "string") {
+        const low = entry.id.toLowerCase();
+        if (seen.has(low)) {
+          err(`id 重复（大小写不敏感，跨文件全局唯一）：${pyRepr(entry.id)} 与 ${seen.get(low)}`);
+        } else {
+          seen.set(low, `${where} 的 ${pyRepr(entry.id)}`);
+        }
+      }
+      models.push(entry);
+      index += 1;
+    }
+  }
+  const vendors = new Set(models.filter(isDict).map((e) => e.vendor));
+  return { models, vendors, files };
+}
+
+// 校验 catalog.json 是否等于由 catalog/ 生成的 bundle。
+function checkBundle() {
+  let built;
+  try {
+    built = buildCatalog();
+  } catch (error) {
+    err(`catalog/: 打包失败（${error.message}）`);
+    return;
+  }
+  let current = null;
+  try {
+    current = readFileSync(DEFAULT_PATH, "utf8");
+  } catch {
+    err("catalog.json: 无法读取（应由 npm run build 生成）");
+    return;
+  }
+  if (current !== built.content) {
+    err("catalog.json 与 catalog/ 不一致，请运行 npm run build");
+  }
+}
+
+function main(argv) {
+  // 无参数：校验 catalog/（数据源）+ catalog.json（生成物）一致性。
+  // 带参数：沿用旧行为，校验指定的 bundle 文件（CI/临时对拍用）。
+  if (!argv.length) {
+    let result;
+    try {
+      result = validateVendorFiles();
+    } catch (error) {
+      process.stderr.write(`[x] ${error.message}\n`);
+      return 1;
+    }
+    checkBundle();
+    if (!result.vendors.size) err("没有任何 vendor");
+
+    for (const item of warnings) process.stdout.write(`[!] ${item}\n`);
+    for (const item of errors) process.stdout.write(`[x] ${item}\n`);
+    process.stdout.write(
+      `[i] catalog/: ${result.files.length} 个厂商文件，${result.models.length} 条，` +
+        `${result.vendors.size} 个 vendor，${errors.length} 个 error，${warnings.length} 个 warning\n`,
+    );
+    return errors.length ? 1 : 0;
+  }
+
+  const filePath = argv[0];
   let data;
   let text;
   try {

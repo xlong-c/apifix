@@ -1,0 +1,257 @@
+{
+  "vendor": "01ai",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "yi-large",
+      "vendor": "01ai",
+      "family": "Yi",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "retired",
+      "lifecycle_note": "历史旗舰（千亿参数），随平台停服下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "历史参数"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "yi-medium",
+          "note": "历史中档"
+        },
+        {
+          "id": "yi-spark",
+          "note": "历史轻量档"
+        },
+        {
+          "id": "yi-vl-plus",
+          "note": "历史视觉模型"
+        }
+      ],
+      "gotchas": [
+        "ID未在官方当前文档核实（平台已停服）",
+        "开源权重仍可用于本地部署"
+      ],
+      "sources": [
+        "https://platform.lingyiwanwu.com/",
+        "https://www.lingyiwanwu.com/yi"
+      ],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "平台已停服，无公开定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.lingyiwanwu.com/"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "yi-lightning",
+      "vendor": "01ai",
+      "family": "Yi",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "retired",
+      "lifecycle_note": "开放平台API已于2026-09-03 24:00停止服务；新注册/充值2026-08-10起停止",
+      "context_window": 16384,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数，官方文档已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "历史参数"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "平台停服，余额退款窗口开放至2026-12-03",
+        "16k上下文为第三方收录值，官方页面已不可访问",
+        "公司转型企业级AI，不再自营C端API"
+      ],
+      "sources": [
+        "https://platform.lingyiwanwu.com/"
+      ],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "平台已停服，无公开定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.lingyiwanwu.com/"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "yi-vision-v2",
+      "vendor": "01ai",
+      "family": "Yi",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "retired",
+      "lifecycle_note": "随开放平台停服（2026-09-03）一并停止",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "历史参数"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "图像理解/图文问答",
+        "官方平台已停服，ID来自第三方目录，未获官方当前确认"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "平台已停服，无公开定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://platform.lingyiwanwu.com/"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

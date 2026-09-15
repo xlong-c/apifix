@@ -11,6 +11,7 @@
   },
   "scripts": {
     "start": "node apifix.mjs --ui",
+    "build": "node tools/build-catalog.mjs",
     "validate": "node tools/validate-catalog.mjs",
     "merge": "node tools/merge-catalog.mjs"
   },
@@ -19,6 +20,7 @@
     "lib/",
     "ui/",
     "tools/",
+    "catalog/",
     "catalog.json",
     "index.html",
     "README.md",

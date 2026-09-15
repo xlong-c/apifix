@@ -1,0 +1,570 @@
+{
+  "vendor": "microsoft",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "MAI-Thinking-1",
+      "vendor": "microsoft",
+      "family": "MAI",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "unreleased",
+      "lifecycle_note": "Azure 模型目录标 Preview；微软自研推理模型，能力细节未公开",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "Preview，参数细节未公开"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "未公开"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未公开"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未公开"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅目录页可见，官方模型卡未发布",
+        "预览状态，不建议生产"
+      ],
+      "sources": [
+        "https://ai.azure.com/catalog/models?selectedCollection=Phi"
+      ],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2,
+        "output": 8,
+        "cache_read": 0.2,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Azure Foundry Global 按量价；Azure 零售价 API 以每 1K tokens 列出（$0.002/$0.008/$0.0002），已×1000 换算为每百万 tokens",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+          "https://prices.azure.com/api/retail/prices"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "Phi-4",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；14B 开源权重",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持工具调用",
+        "上下文仅 16K，属受限场景模型"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.125,
+        "output": 0.5,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Azure 零售价以每 1K tokens 计价（$0.000125/$0.0005），已×1000 换算为每百万 tokens",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+          "https://prices.azure.com/api/retail/prices"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "Phi-4-mini-instruct",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；小尺寸指令模型",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持工具调用",
+        "支持 23 种语言"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.075,
+        "output": 0.3,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Azure 零售价以每 1K tokens 计价（$0.000075/$0.0003），已×1000 换算为每百万 tokens",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+          "https://prices.azure.com/api/retail/prices"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "Phi-4-mini-reasoning",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；紧凑推理模型，面向端侧/教育",
+      "context_window": 128000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅英文",
+        "不支持工具调用"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.075,
+        "output": 0.3,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Azure 零售价以每 1K tokens 计价（$0.000075/$0.0003），已×1000 换算为每百万 tokens",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+          "https://prices.azure.com/api/retail/prices"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "Phi-4-multimodal-instruct",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；文本+图像+音频输入",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持工具调用",
+        "支持音频输入，是 Phi 系中少见的模态组合"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.08,
+        "output": 0.32,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "文本/图像输入价（Phi-4-Mini MM）；Azure 零售价以每 1K tokens 计价（$0.00008/$0.00032）已×1000；音频输入另计 $4.00/百万（$0.004/1K）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+          "https://prices.azure.com/api/retail/prices"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "Phi-4-reasoning",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；2025-04-30 发布，14B 推理模型",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "输出分 reasoning 块 + summary 块两段",
+        "无思考档位控制",
+        "不支持工具调用"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners",
+        "https://ai.azure.com/catalog/models/microsoft-phi-4-reasoning"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.125,
+        "output": 0.5,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Azure 零售价以每 1K tokens 计价（$0.000125/$0.0005），已×1000 换算为每百万 tokens",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+          "https://prices.azure.com/api/retail/prices"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "Phi-4-reasoning-plus",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure 模型目录在架（microsoft-phi-4-reasoning-plus）；RL 强化版",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "比 Phi-4-reasoning 平均多生成约 50% token，延迟更高",
+        "训练用 32k 最大长度，实测可到 64k",
+        "不支持工具调用"
+      ],
+      "sources": [
+        "https://ai.azure.com/catalog/models/microsoft-phi-4-reasoning-plus",
+        "https://ai.azure.com/catalog/models/Phi-4-reasoning-plus"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.125,
+        "output": 0.5,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Azure 零售价以每 1K tokens 计价（$0.000125/$0.0005），已×1000 换算为每百万 tokens",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://azure.microsoft.com/en-us/pricing/details/ai-foundry-models/microsoft/",
+          "https://prices.azure.com/api/retail/prices"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

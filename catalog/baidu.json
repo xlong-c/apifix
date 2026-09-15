@@ -1,0 +1,1542 @@
+{
+  "vendor": "baidu",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "ernie-3.5-8k",
+      "vendor": "baidu",
+      "family": "ERNIE-3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "已于2026-06-30退役，替代ERNIE-4.5-Turbo-128K",
+      "context_window": 8192,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-3.5-8K-0613",
+          "note": "2026-06-30退役"
+        },
+        {
+          "id": "ERNIE-3.5-8K-0701",
+          "note": "2026-06-30退役"
+        }
+      ],
+      "gotchas": [
+        "2026-05-28登记，2026-06-30退役"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于2026-06-30退役，现行官方价格页未列出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ernie-4.0-8k",
+      "vendor": "baidu",
+      "family": "ERNIE-4.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "已于2026-06-30退役，替代ERNIE-4.5-Turbo-128K",
+      "context_window": 8192,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-4.0-Turbo-8K",
+          "note": "2026-06-30退役"
+        },
+        {
+          "id": "ERNIE-4.0-Turbo-128K",
+          "note": "2026-06-30退役"
+        }
+      ],
+      "gotchas": [
+        "2026-05-28登记，2026-06-30退役"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于2026-06-30退役，现行官方价格页未列出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ernie-4.5-21b-a3b",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "开源模型托管版，已于2026-06-09退役",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-4.5-21B-A3B-Thinking",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-4.5-VL-28B-A3B",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-4.5-0.3B",
+          "note": "2026-06-30退役"
+        }
+      ],
+      "gotchas": [
+        "ERNIE开源系列托管版，均已退役"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3",
+        "https://ai.baidu.com/ai-doc/WENXINWORKSHOP/4mchtzl8s"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于2026-06-09退役，现行官方价格页未列出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ernie-4.5-turbo-128k",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "旗舰列表在售，性价比档，官方称超强通用Agent能力",
+      "context_window": 131072,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-4.5-Turbo-128K-Preview",
+          "note": "2026-04-23下线"
+        },
+        {
+          "id": "ERNIE-4.5-Turbo-Latest",
+          "note": "2026-02-26下线"
+        }
+      ],
+      "gotchas": [
+        "最大输入123k/输出12288",
+        "命中缓存价格0.0002元/千tokens"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.11,
+        "output": 0.45,
+        "cache_read": 0.03,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方国际站美元价（$/M tokens）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-4.5-turbo-20260402",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-04-02快照版",
+      "context_window": 131072,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "限流RPM=60/TPM=150000"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1111,
+        "output": 0.4444,
+        "cache_read": 0.0278,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 0.0008/0.0032 元每千tokens（命中缓存 0.0002 元每千tokens），已换算为百万tokens 并按 1 USD = 7.2 CNY 折算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-4.5-turbo-32k",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "短上下文性价比档，在售",
+      "context_window": 32768,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入27k/输出12288",
+        "ERIE-4.5开源300B-A47B的商业托管版"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "https://ai.baidu.com/ai-doc/WENXINWORKSHOP/4mchtzl8s"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.11,
+        "output": 0.45,
+        "cache_read": 0.03,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方国际站美元价（$/M tokens）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-4.5-turbo-vl",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "视觉语言模型，在售",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-4.5-Turbo-VL-Preview",
+          "note": "2026-04-23下线"
+        }
+      ],
+      "gotchas": [
+        "最大输入123k/输出16384",
+        "纯文本模型会自动fallback到此模型做图像识别"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.42,
+        "output": 1.27,
+        "cache_read": 0.11,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方国际站美元价（$/M tokens）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-4.5-turbo-vl-32k",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "视觉语言短上下文版",
+      "context_window": 32768,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.42,
+        "output": 1.27,
+        "cache_read": 0.11,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方国际站美元价（$/M tokens）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-5.0",
+      "vendor": "baidu",
+      "family": "ERNIE 5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "旗舰在架；原生全模态（文/图/音/视统一建模）",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": {
+          "min": null,
+          "max": 60000,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未在模型列表页记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "ernie-5.0-thinking-preview",
+        "ernie-5.0-thinking-latest",
+        "ernie-5.0-thinking-exp"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "输入模态为 text+image+voice+video->text",
+        "思维链长度上限 60K",
+        "thinking-exp 限流极低（RPM=6/TPM=32000），仅适合实验",
+        "分档计费：32K 内与 32K-128K 单价不同"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "https://cloud.baidu.com/doc/qianfan-api/s/Dmba8k71y"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.84,
+        "output": 3.38,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "max_input": 32768,
+            "input": 0.84,
+            "output": 3.38
+          },
+          {
+            "max_input": 131072,
+            "input": 1.4,
+            "output": 5.6
+          }
+        ],
+        "note": "官方国际站美元价（$/M tokens）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-5.0-thinking-exp",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "文心5.0思考实验版，限流更低（RPM=6）",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "限流RPM=6/TPM=32000，不适合生产"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.84,
+        "output": 3.38,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "max_input": 32768,
+            "input": 0.84,
+            "output": 3.38
+          },
+          {
+            "max_input": 131072,
+            "input": 1.4,
+            "output": 5.6
+          }
+        ],
+        "note": "官方国际站将 ERNIE-5.0-Thinking-Preview/Latest/Exp 与 ERNIE 5.0 合并为同一价格行（美元价）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-5.0-thinking-latest",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "文心5.0思考最新版，滚动更新",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "思维链60k"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.84,
+        "output": 3.38,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "max_input": 32768,
+            "input": 0.84,
+            "output": 3.38
+          },
+          {
+            "max_input": 131072,
+            "input": 1.4,
+            "output": 5.6
+          }
+        ],
+        "note": "官方国际站将 ERNIE-5.0-Thinking-Preview/Latest/Exp 与 ERNIE 5.0 合并为同一价格行（美元价）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-5.0-thinking-preview",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "文心5.0思考预览版",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "思维链60k"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.84,
+        "output": 3.38,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "max_input": 32768,
+            "input": 0.84,
+            "output": 3.38
+          },
+          {
+            "max_input": 131072,
+            "input": 1.4,
+            "output": 5.6
+          }
+        ],
+        "note": "官方国际站将 ERNIE-5.0-Thinking-Preview/Latest/Exp 与 ERNIE 5.0 合并为同一价格行（美元价）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-5.1",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-05-09发布，当前旗舰；ERNIE-X1.1的官方替代模型",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数，官方未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "API模型列表返回context_length=248832，与文档128k口径不一致",
+        "ernie系列思考模型不支持thinking_budget，max_tokens限制reasoning+content总长",
+        "价格4元/18元每百万tokens（≤32k输入）"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "https://cloud.baidu.com/doc/qianfan-api/s/Dmba8k71y"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.56,
+        "output": 2.53,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "max_input": 32768,
+            "input": 0.56,
+            "output": 2.53
+          },
+          {
+            "max_input": 131072,
+            "input": 0.84,
+            "output": 3.1
+          }
+        ],
+        "note": "官方国际站美元价（$/M tokens）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://intl.cloud.baidu.com/en/doc/qianfan/s/Jm8r1826a-intl-en"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ernie-bot-turbo",
+      "vendor": "baidu",
+      "family": "ERNIE-Bot",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "初代文心模型，已于2026-06-30退役",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-Character-8K",
+          "note": "2026-04-23/06-09退役"
+        },
+        {
+          "id": "ERNIE-Lite-8K",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-Speed-8K",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-Tiny-8K",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-Novel-8K",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-Functions-8K",
+          "note": "2026-06-09退役"
+        }
+      ],
+      "gotchas": [
+        "ERNIE-3.5/4.0/Lite/Speed/Tiny/Character系列旧模型已批量退役",
+        "Yi-34B-Chat亦于2025-05-30在千帆退役"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于2026-06-30退役，现行官方价格页未列出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ernie-x1-turbo-32k",
+      "vendor": "baidu",
+      "family": "ERNIE-X1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "已于2026-06-30退役，替代ERNIE-4.5-Turbo-128K",
+      "context_window": 32768,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-X1-Turbo-32K-Preview",
+          "note": "2026-06-30退役"
+        },
+        {
+          "id": "ERNIE-X1-Turbo-Preview",
+          "note": "2026-06-30退役"
+        },
+        {
+          "id": "ERNIE-X1-Turbo-Latest",
+          "note": "2026-06-09退役"
+        }
+      ],
+      "gotchas": [
+        "X1系列推理模型，已被X1.1/5.1取代"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于2026-06-30退役，现行官方价格页未列出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ernie-x1.1",
+      "vendor": "baidu",
+      "family": "ERNIE-X1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "将于2026-09-29下线，官方替代ERNIE-5.1",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "深度思考模型，思维链64k",
+        "2026-09-29下线（登记2026-09-01）",
+        "不支持thinking_budget"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3",
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方价格页仅列出 ERNIE-X1.1-Preview 价格行，未单独文档化该版本单价；该版本将于2026-09-29下线",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya",
+          "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "ernie-x1.1-preview",
+      "vendor": "baidu",
+      "family": "ERNIE-X1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "预览版，将于2026-09-29下线",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "2026-09-29下线"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1389,
+        "output": 0.5556,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 0.001/0.004 元每千tokens（输入/输出），已换算为百万tokens 并按 1 USD = 7.2 CNY 折算；该版本即将下线",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.baidu.com/doc/qianfan/s/wmh4sv6ya"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

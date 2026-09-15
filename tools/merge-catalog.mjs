@@ -1,40 +1,45 @@
 #!/usr/bin/env node
-// merge-catalog.mjs — 把 incoming/*.json 批次合并进 catalog.json（零依赖 / ESM）
+// merge-catalog.mjs — 把 incoming/*.json 批次合并进 catalog/（零依赖 / ESM）
 //
 // 与 legacy-python/tools/merge_catalog.py 1:1 对齐：相同的规范化、去重优先级、
 // 报告格式与退出码（模型条目部分）。
 //
 // 做三件事：
-//   1. 读取 incoming/ 下所有批次文件（有 models 列表的）+ 现有 catalog.json；
+//   1. 读取 incoming/ 下所有批次文件（有 models 列表的）+ 现有 catalog/（或 catalog.json）；
 //   2. 规范化条目 schema（缺失字段补 null/[]、sampling range 字符串转数组等）；
-//   3. 按 id 去重并写回 catalog.json（version 2 包装）。
+//   3. 按 id 去重，写回 catalog/<vendor>.json，再调用 build-catalog.mjs 打包 catalog.json。
+//
+// catalog/ 是唯一数据源（一厂商一文件，人工编辑这里）；catalog.json 是生成物。
+// 合并脚本不再直接写 catalog.json —— 写完 catalog/ 后统一走 buildCatalog()。
 //
 // 另外处理官方定价：incoming/pricing-*.json 是**独立**的 cost 来源（不是模型批次），
 // 按 id 精确匹配 catalog 条目，写入 cost 字段（详见 normalizeCost / applyCosts）。
 //
 // 去重优先级：
-//   * catalog.json 的手工条目 优先于 批次条目（同一 id），
+//   * catalog/ 的手工条目 优先于 批次条目（同一 id），
 //     但批次 verified=true 而 catalog verified 非 true 时，批次优先；
 //   * 批次之间：非空字段多者优先；同分时 confidence 高者优先；
 //   * 云镜像重复：保留原生 vendor / 原生批次；
 //   * 其余同分情况按 原生批次 > -full 批次 > 文件名字典序 兜底。
 //
 // 定价优先级：
-//   * pricing 文件（最新研究）覆盖 catalog.json 里的旧 cost（价格会过时）；
+//   * pricing 文件（最新研究）覆盖 catalog/ 里的旧 cost（价格会过时）；
 //   * 多个 pricing 文件提到同一 id：confidence 高者优先，同分取文件名字典序靠后者；
 //   * 未被任何 pricing 文件提及 → cost: null（cost 完全由 pricing 文件派生）。
 //
 // 用法：
-//   node tools/merge-catalog.mjs            # 合并并写回
+//   node tools/merge-catalog.mjs            # 合并并写回 catalog/ + catalog.json
 //   node tools/merge-catalog.mjs --dry-run  # 只打印报告，不写文件
 
-import { readFileSync, writeFileSync, existsSync, readdirSync, unlinkSync, renameSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
+import { buildCatalog, writeBundle, writeVendorFiles, CATALOG_DIR, CATALOG_PATH } from "./build-catalog.mjs";
+import { filterOfficialSources } from "./source-whitelist.mjs";
+
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const INCOMING_DIR = path.join(ROOT, "incoming");
-const CATALOG_PATH = path.join(ROOT, "catalog.json");
 const UPDATED_AT = "2026-09-15";
 const CATALOG_VERSION = 2;
 
@@ -487,6 +492,9 @@ const REQUIRED_TOP = [
 // catalog 条目缺失这些键时，允许用批次条目补齐（不覆盖 catalog 已有的值）
 const BACKFILL_KEYS = ["lifecycle", "lifecycle_note", "legacy_ids", "aliases", "sources", "gotchas"];
 
+// 仅剩非官方来源时的降级标记（与上一轮人工清理的文案完全一致）
+const SOURCE_DOWNGRADE_GOTCHA = "非官方来源，规格待核验（原来源为第三方/云平台文档）";
+
 function asObj(value) {
   return typeof value === "object" && value !== null && !Array.isArray(value) ? value : {};
 }
@@ -597,6 +605,28 @@ function normalizeEntry(raw, src, report) {
     confidence,
   };
 
+  // 来源白名单在合并阶段兜底：incoming 批次里的第三方/云平台链接一律丢弃，
+  // 避免它们覆盖 catalog/ 中已清理过的条目（否则 merge 会撤销人工清理）。
+  // 若某条目**原本只有非官方来源**，过滤后 provenance 不成立：按项目约定降级
+  // （verified=false、confidence=low、gotchas 首位注明），与手工清理保持一致。
+  const vendor = entry.vendor;
+  if (entry.sources.length && typeof vendor === "string" && vendor) {
+    const { kept, dropped } = filterOfficialSources(entry.sources, vendor);
+    if (dropped.length) {
+      entry.sources = kept;
+      for (const url of dropped) {
+        report.sources_dropped.push(`${where}: 非官方来源 ${url}（vendor=${vendor}）`);
+      }
+      if (!kept.length) {
+        entry.verified = false;
+        entry.confidence = "low";
+        const marker = SOURCE_DOWNGRADE_GOTCHA;
+        if (!entry.gotchas.includes(marker)) entry.gotchas.unshift(marker);
+        report.sources_downgraded.push(`${where}: 仅剩非官方来源 → verified=false, confidence=low`);
+      }
+    }
+  }
+
   const missing = REQUIRED_TOP.filter((k) => !(k in entry));
   if (missing.length) throw new Error(`schema 漏字段: ${missing.join(",")}`);
   return entry;
@@ -652,7 +682,23 @@ function loadInputs(report) {
   }
 
   const catalog = [];
-  if (existsSync(CATALOG_PATH)) {
+  // 数据源优先 catalog/（一厂商一文件）；目录不存在时回退旧的 catalog.json（迁移兼容）。
+  const catalogFiles = existsSync(CATALOG_DIR)
+    ? readdirSync(CATALOG_DIR).filter((name) => name.endsWith(".json") && name !== ".order.json").sort()
+    : [];
+  if (catalogFiles.length) {
+    for (const name of catalogFiles) {
+      try {
+        const data = JSON.parse(readFileSync(path.join(CATALOG_DIR, name), "utf8"));
+        for (const raw of data.models || []) {
+          const entry = normalizeEntry(raw, `catalog/${name}`, report);
+          if (entry) catalog.push(entry);
+        }
+      } catch (err) {
+        report.file_skipped.push(`catalog/${name}: 读取失败 ${err.message}`);
+      }
+    }
+  } else if (existsSync(CATALOG_PATH)) {
     try {
       const data = JSON.parse(readFileSync(CATALOG_PATH, "utf8"));
       for (const raw of data.models || []) {
@@ -708,7 +754,7 @@ function merge(catalogEntries, batches, report) {
   }
   for (const entry of catalogEntries) {
     if (!byId.has(entry.id)) byId.set(entry.id, []);
-    byId.get(entry.id).push(["catalog.json", entry, "catalog"]);
+    byId.get(entry.id).push(["catalog/", entry, "catalog"]);
   }
 
   const merged = [];
@@ -847,6 +893,7 @@ function newReport() {
     dropped: [], superseded: [], backfilled: [], range_ok: 0,
     range_open: [], range_bad: [], type_fixed: [], sampling_fixed: [],
     self_alias: [], alias_dropped: [], legacy_dropped: [], legacy_coerced: [],
+    sources_dropped: [], sources_downgraded: [],
     // 定价（cost）
     cost_files_used: [], cost_file_skipped: [], cost_dropped: [],
     cost_converted: [], cost_superseded: [], cost_applied: [],
@@ -863,11 +910,11 @@ function printReport(report, merged, catalogCount, batchCount, costStats) {
 
   const out = [];
   out.push("=".repeat(72));
-  out.push("合并报告 — incoming/*.json + catalog.json → catalog.json");
+  out.push("合并报告 — incoming/*.json + catalog/ → catalog/ + catalog.json");
   out.push("=".repeat(72));
   out.push(`使用批次文件 (${report.files_used.length}): ` + report.files_used.join(", "));
   for (const item of report.file_skipped) out.push(`  [跳过] ${item}`);
-  out.push(`catalog.json 已有条目: ${catalogCount}`);
+  out.push(`catalog/ 已有条目: ${catalogCount}`);
   out.push(`批次条目（规范化后）: ${batchCount}`);
   out.push(`合并后总条目: ${merged.length}`);
   out.push("");
@@ -901,6 +948,16 @@ function printReport(report, merged, catalogCount, batchCount, costStats) {
   for (const item of report.entry_dropped) out.push(`      ${item}`);
   out.push(`  元数据补齐（catalog 缺失键 ← 批次）: ${report.backfilled.length}`);
   for (const item of report.backfilled) out.push(`      ${item}`);
+  out.push(`  丢弃非官方来源（第三方/云平台文档）: ${report.sources_dropped.length}`);
+  for (const item of report.sources_dropped.slice(0, 20)) out.push(`      ${item}`);
+  if (report.sources_dropped.length > 20) {
+    out.push(`      ... 其余 ${report.sources_dropped.length - 20} 条同类`);
+  }
+  out.push(`  provenance 降级（仅剩非官方来源 → verified=false/confidence=low）: ${report.sources_downgraded.length}`);
+  for (const item of report.sources_downgraded.slice(0, 20)) out.push(`      ${item}`);
+  if (report.sources_downgraded.length > 20) {
+    out.push(`      ... 其余 ${report.sources_downgraded.length - 20} 条同类`);
+  }
 
   // ---- 定价（cost）----
   out.push("");
@@ -925,17 +982,6 @@ function printReport(report, merged, catalogCount, batchCount, costStats) {
   process.stdout.write(out.join("\n") + "\n");
 }
 
-function writeCatalog(filePath, models) {
-  const payload = { version: CATALOG_VERSION, updated_at: UPDATED_AT, models };
-  const tmp = path.join(path.dirname(filePath), `.catalog.${process.pid}.tmp`);
-  try {
-    writeFileSync(tmp, JSON.stringify(payload, null, 2) + "\n", "utf8");
-    renameSync(tmp, filePath);
-  } finally {
-    if (existsSync(tmp)) unlinkSync(tmp);
-  }
-}
-
 function main(argv) {
   let dryRun = false;
   for (const arg of argv) {
@@ -954,12 +1000,30 @@ function main(argv) {
   printReport(report, merged, catalogEntries.length, batches.length, costStats);
 
   if (dryRun) {
-    process.stdout.write("[i] --dry-run：未写入 catalog.json\n");
+    process.stdout.write("[i] --dry-run：未写入 catalog/ 或 catalog.json\n");
     return 0;
   }
-  writeCatalog(CATALOG_PATH, merged);
+
+  // 写 catalog/（唯一数据源）→ 再用共享的打包逻辑生成 catalog.json
+  let written;
+  try {
+    written = writeVendorFiles(CATALOG_DIR, merged, UPDATED_AT);
+  } catch (err) {
+    process.stderr.write(`[x] 写入 catalog/ 失败: ${err.message}\n`);
+    return 2;
+  }
+  process.stdout.write(`[ok] 已写入 catalog/：${written.length} 个厂商文件\n`);
+
+  let built;
+  try {
+    built = buildCatalog();
+  } catch (err) {
+    process.stderr.write(`[x] 打包 catalog.json 失败: ${err.message}\n`);
+    return 2;
+  }
+  writeBundle(CATALOG_PATH, built.content);
   process.stdout.write(
-    `[ok] 已写入 ${CATALOG_PATH}（version ${CATALOG_VERSION}, updated_at ${UPDATED_AT}, ${merged.length} 条）\n`,
+    `[ok] 已写入 ${CATALOG_PATH}（version ${CATALOG_VERSION}, updated_at ${UPDATED_AT}, ${built.models.length} 条）\n`,
   );
   return 0;
 }

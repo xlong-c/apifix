@@ -1,0 +1,26 @@
+{
+  "order": [
+    "01ai.json",
+    "ai21.json",
+    "alibaba.json",
+    "amazon.json",
+    "anthropic.json",
+    "baidu.json",
+    "cohere.json",
+    "deepseek.json",
+    "google.json",
+    "iflytek.json",
+    "meta.json",
+    "microsoft.json",
+    "minimax.json",
+    "mistral.json",
+    "moonshot.json",
+    "nvidia.json",
+    "openai.json",
+    "tencent.json",
+    "volcengine.json",
+    "writer.json",
+    "xai.json",
+    "zhipu.json"
+  ]
+}

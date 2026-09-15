@@ -1,0 +1,678 @@
+{
+  "vendor": "nvidia",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "mistral-nemotron",
+      "vendor": "nvidia",
+      "family": "Nemotron",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；NVIDIA 基于 Mistral 打造的 agentic 模型",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方模型卡未在本轮抓取，规格缺失",
+        "定位代码、指令跟随与函数调用"
+      ],
+      "sources": [
+        "https://build.nvidia.com/models"
+      ],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "开放权重，无官方 API 定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://build.nvidia.com/mistralai/mistral-nemotron"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "nvidia.nemotron-nano-3-30b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "native",
+      "verified": false,
+      "lifecycle": "current",
+      "lifecycle_note": "Active；2025-12-15 上线 Bedrock，EOL 不早于 2026-12-15",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Converse 支持"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "Converse 支持"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "Bedrock structured outputs（bedrock-runtime）"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "us-gov.nvidia.nemotron-nano-3-30b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "Bedrock 与 build.nvidia.com 的上下文不一致（此处 256K/8K）",
+        "bedrock-mantle 端点不支持服务端工具调用",
+        "支持 GovCloud 跨区"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.06,
+        "output": 0.24,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "NVIDIA 开放权重、无官方按 token 定价；此为 AWS Bedrock 托管价（US East N. Virginia，NVIDIA Nemotron 3 Nano 30B A3B）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://aws.amazon.com/bedrock/pricing/"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "nvidia.nemotron-nano-9b-v2",
+      "vendor": "nvidia",
+      "family": "Nemotron 2",
+      "api_protocol": "native",
+      "verified": false,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；上一代 9B 小模型",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "nvidia.nemotron-nano-12b-v2-vl-bf16"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "Bedrock 模型 ID 未在已抓取页面直接给出，需控制台确认",
+        "12B VL 版为视觉变体"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.06,
+        "output": 0.23,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "NVIDIA 开放权重、无官方按 token 定价；此为 AWS Bedrock 托管价（US East N. Virginia，NVIDIA Nemotron Nano 2）；同族 VL 12B 为 $0.20/$0.60",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://aws.amazon.com/bedrock/pricing/"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-30b-a3b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "v1.0；2025-12-15 发布，30B/3.5B 激活 MoE",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "推理建议 1.0，工具调用建议 0.6"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "推理建议 1.0，工具调用建议 0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs 环境训练"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "模型卡写最大输入 128K，但 quickstart 称可扩到 1M、默认 256K，规格存在矛盾",
+        "推理关时建议贪心解码",
+        "reasoning 解析器为 nano_v3"
+      ],
+      "sources": [
+        "https://build.nvidia.com/nvidia/nemotron-3-nano-30b-a3b"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "开放权重，无官方 API 定价；build.nvidia.com 提供免费 Endpoint（无按 token 定价）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://build.nvidia.com/nvidia/nemotron-3-nano-30b-a3b"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；全模态推理（图像/视频/语音/文本）",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "页面未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "页面未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅 build.nvidia.com 目录页可见，规格未在模型卡给出"
+      ],
+      "sources": [
+        "https://build.nvidia.com/models"
+      ],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "开放权重，无官方 API 定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://build.nvidia.com/nvidia/nemotron-3-nano-omni-30b-a3b-reasoning"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v1.0；2026-03-11 发布，代理/高并发定位",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low"
+        ],
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方要求全场景 temperature=1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方要求全场景 top_p=0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs 环境训练"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "nvidia/nemotron-3-super"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "默认 256K 上下文，1M 需显式放开",
+        "推荐采样参数固定为 1.0/0.95",
+        "reasoning 解析器为 super_v3"
+      ],
+      "sources": [
+        "https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "开放权重，无官方 API 定价；build.nvidia.com 提供免费 Endpoint；同模型在 AWS Bedrock 有托管定价 $0.15/$0.65（非 NVIDIA 官方）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v1.0；2026-06-04 发布，旗舰开源推理模型",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium"
+        ],
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方推荐 temperature=1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方推荐 top_p=0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "SFT 覆盖 structured outputs 环境"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "nvidia/nemotron-3-ultra"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "enable_thinking 开关在 chat template 里，不是顶层参数",
+        "低/中档用 low_effort/medium_effort 模板开关",
+        "SGLang 下必须传 chat_template_kwargs.force_nonempty_content 才能解析工具调用",
+        "1M 上下文需设 VLLM_ALLOW_LONG_MAX_MODEL_LEN=1"
+      ],
+      "sources": [
+        "https://build.nvidia.com/nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "开放权重，无官方 API 定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://build.nvidia.com/nvidia/nemotron-3-ultra-550b-a55b"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "1.0-preview；2026-08-11 发布，最快 30B A3B 档",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方推荐 temperature=1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方推荐 top_p=0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs 环境训练"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "版本标 1.0-preview",
+        "NVFP4 量化，Hopper/Blackwell 才可用 NVFP4，Ampere 走 W4A16",
+        "长跑代理/子代理场景定位"
+      ],
+      "sources": [
+        "https://build.nvidia.com/nvidia/nemotron-3.5-lightning-30b-a3b"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "开放权重，无官方 API 定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://build.nvidia.com/nvidia/nemotron-3.5-lightning-30b-a3b"
+        ],
+        "confidence": "low"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1127 @@
+{
+  "vendor": "volcengine",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "ark-code-latest",
+      "vendor": "volcengine",
+      "family": "ark-coding-plan",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Coding Plan智能路由别名，非真实模型ID",
+      "context_window": 256000,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": null
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": null
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": null
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": null
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "volcengine/ark-code-latest",
+        "volcengine-plan/ark-code-latest",
+        "doubao/ark-code-latest"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "不是模型而是路由别名：控制台/Auto 模式决定真实后端（doubao-seed / glm / kimi / deepseek / minimax），规格随选择变化",
+        "必须用 Coding Plan 专用 base URL：OpenAI 兼容 https://ark.cn-beijing.volces.com/api/coding/v3 或 Anthropic Messages https://ark.cn-beijing.volces.com/api/coding；用 /api/v3 会另行计费且不消耗套餐额度",
+        "控制台切换模型需 3-5 分钟生效"
+      ],
+      "sources": [
+        "https://docs.volcengine.com/docs/82379/2628970?lang=zh"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Coding Plan 智能路由别名，非真实模型 ID，无按 token 单价；套餐参考价：Lite ¥40/月（≈$5.5556）、Pro ¥200/月（≈$27.7778），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "doubao-seed-1.6",
+      "vendor": "volcengine",
+      "family": "doubao-seed-1.x",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025世代模型，第三方网关仍在售，官方文档未列入2026推荐",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-1.6-thinking"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "ID未在官方2026文档直接核实（来自第三方路由目录）",
+        "256K上下文，已被Seed 2.x取代"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1111,
+        "output": 0.2778,
+        "cache_read": 0.0222,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "condition": "输入长度[0,32] 且输出长度(0.2,+∞)",
+            "input": 0.1111,
+            "output": 1.1111,
+            "cache_read": 0.0222
+          },
+          {
+            "condition": "输入长度(32,128]",
+            "input": 0.1667,
+            "output": 2.2222,
+            "cache_read": 0.0222
+          },
+          {
+            "condition": "输入长度(128,256]",
+            "input": 0.3333,
+            "output": 3.3333,
+            "cache_read": 0.0222
+          }
+        ],
+        "note": "原文 ¥0.8/¥2.0/¥0.16 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算；base 档条件：输入长度[0,32]千token 且输出长度[0,0.2]千token",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "doubao-seed-1.8",
+      "vendor": "volcengine",
+      "family": "doubao-seed-1.x",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Seed1.8，增强Agent能力，被Seed2.0 Lite超越",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "ID未在官方2026文档直接核实",
+        "官方称Seed2.0 Lite全面优于1.8"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1111,
+        "output": 0.2778,
+        "cache_read": 0.0222,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "condition": "输入长度[0,32] 且输出长度(0.2,+∞)",
+            "input": 0.1111,
+            "output": 1.1111,
+            "cache_read": 0.0222
+          },
+          {
+            "condition": "输入长度(32,128]",
+            "input": 0.1667,
+            "output": 2.2222,
+            "cache_read": 0.0222
+          },
+          {
+            "condition": "输入长度(128,256]",
+            "input": 0.3333,
+            "output": 3.3333,
+            "cache_read": 0.0222
+          }
+        ],
+        "note": "原文 ¥0.8/¥2.0/¥0.16 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算；base 档条件：输入长度[0,32]千token 且输出长度[0,0.2]千token",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "doubao-seed-2.0-code",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-15发布，编程加强版，已并入Coding Plan路由",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-0-code-preview-260215"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "支持多模态视觉理解（UI设计图生成前端代码）",
+        "原生兼容Anthropic API，可直接替换Claude Code",
+        "Coding Plan内model名可写doubao-seed-2.0-code"
+      ],
+      "sources": [
+        "https://www.volcengine.com/article/37482"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.4444,
+        "output": 2.2222,
+        "cache_read": 0.0889,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "condition": "输入长度(32,128]",
+            "input": 0.6667,
+            "output": 3.3333,
+            "cache_read": 0.1333
+          },
+          {
+            "condition": "输入长度(128,256]",
+            "input": 1.3333,
+            "output": 6.6667,
+            "cache_read": 0.2667
+          }
+        ],
+        "note": "原文 ¥3.2/¥16.0/¥0.64 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "doubao-seed-2.0-lite",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-14发布，2026-04-28升级全模态理解",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-0-lite-260215"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "豆包家族首款全模态理解模型（视频/图像/音频/文本统一理解）",
+        "≤32k输入0.6元/3.6元每百万tokens",
+        "TheRouter等第三方暴露上下文仅131k"
+      ],
+      "sources": [
+        "https://developer.volcengine.com/articles/7636596381943070763"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.0833,
+        "output": 0.5,
+        "cache_read": 0.0167,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "condition": "输入长度(32,128]",
+            "input": 0.125,
+            "output": 0.75,
+            "cache_read": 0.025
+          },
+          {
+            "condition": "输入长度(128,256]",
+            "input": 0.25,
+            "output": 1.5,
+            "cache_read": 0.05
+          }
+        ],
+        "note": "原文 ¥0.6/¥3.6/¥0.12 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算；音频输入另计 ¥9/百万token（base 档）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "doubao-seed-2.0-mini",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-14发布，低时延高并发档",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-0-mini-260215"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "四档思考长度",
+        "≤32k输入0.2元/2元每百万tokens（最便宜档）"
+      ],
+      "sources": [
+        "https://seed.bytedance.com/zh/seed2"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.0278,
+        "output": 0.2778,
+        "cache_read": 0.0056,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "condition": "输入长度(32,128]",
+            "input": 0.0556,
+            "output": 0.5556,
+            "cache_read": 0.0111
+          },
+          {
+            "condition": "输入长度(128,256]",
+            "input": 0.1111,
+            "output": 1.1111,
+            "cache_read": 0.0222
+          }
+        ],
+        "note": "原文 ¥0.2/¥2.0/¥0.04 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "doubao-seed-2.0-pro",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-14发布，已被2.1系列取代，仍可调用",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-0-pro-260215"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文规格各来源冲突（128k vs 256k），以方舟控制台为准",
+        "≤32k输入3.2元/16元每百万tokens",
+        "深度思考模型不支持stop字段"
+      ],
+      "sources": [
+        "https://developer.volcengine.com/articles/7610285824933445675"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.4444,
+        "output": 2.2222,
+        "cache_read": 0.0889,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "condition": "输入长度(32,128]",
+            "input": 0.6667,
+            "output": 3.3333,
+            "cache_read": 0.1333
+          },
+          {
+            "condition": "输入长度(128,256]",
+            "input": 1.3333,
+            "output": 6.6667,
+            "cache_read": 0.2667
+          }
+        ],
+        "note": "原文 ¥3.2/¥16.0/¥0.64 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "doubao-seed-2.1-pro",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-06-23 FORCE大会发布，旗舰深度推理/Agent",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format/structured_outputs(JSON Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-1-pro-260628"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "精确ID为doubao-seed-2-1-pro-260628（连字符格式）",
+        "多模态能力灰度中，文本为主；超过256k直接400",
+        "缓存命中1.2元/百万tokens"
+      ],
+      "sources": [
+        "https://ai.volcengine.com/model",
+        "https://www.volcengine.com/article/2608172"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.8333,
+        "output": 4.1667,
+        "cache_read": 0.1667,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥6/¥30/¥1.2 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算；缓存存储另计 ¥0.017/百万token/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "doubao-seed-2.1-turbo",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.1",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "current",
+      "lifecycle_note": "Seed 2.1高吞吐生产档，定价为Pro的50%",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format/structured_outputs(JSON Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-1-turbo-260628"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "在线3元/15元每百万tokens（输入/输出）",
+        "上下文窗口与Pro一致为256k"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.4167,
+        "output": 2.0833,
+        "cache_read": 0.0833,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥3/¥15/¥0.6 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "doubao-seed-code",
+      "vendor": "volcengine",
+      "family": "doubao-seed-code",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-11-11发布，第一代编程模型，仍可通过Coding Plan调用",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-code-preview-251028",
+        "doubao-seed-code-preview-latest"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "国内首个支持视觉理解的编程模型",
+        "最大输入224k/思考内容32k",
+        "新项目建议用Seed 2.0 Code"
+      ],
+      "sources": [
+        "https://developer.volcengine.com/articles/7575512654534410294"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1667,
+        "output": 1.1111,
+        "cache_read": 0.0333,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "condition": "输入长度(32,128]",
+            "input": 0.1944,
+            "output": 1.6667,
+            "cache_read": 0.0333
+          },
+          {
+            "condition": "输入长度(128,256]",
+            "input": 0.3889,
+            "output": 2.2222,
+            "cache_read": 0.0333
+          }
+        ],
+        "note": "原文 ¥1.2/¥8.0/¥0.24 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "doubao-seed-evolving",
+      "vendor": "volcengine",
+      "family": "doubao-seed",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-07-15上线，固定ID周级滚动升级，Coding/Agent定位",
+      "context_window": 1000000,
+      "max_output_tokens": 262144,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format/structured_outputs(JSON Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "ID永久不变，无日期快照，不支持Batch，评测结果不可复现",
+        "价格6元/30元每百万tokens（输入/输出）",
+        "1M上下文为最新规格，部分第三方网关仍标256K"
+      ],
+      "sources": [
+        "https://developer.volcengine.com/articles/7665633658704298010",
+        "https://ai.volcengine.com/model"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.8333,
+        "output": 4.1667,
+        "cache_read": 0.1667,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥6/¥30/¥1.2 每百万tokens（在线推理常规档），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.volcengine.com/docs/82379/1544106"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1051 @@
+{
+  "vendor": "mistral",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "codestral-25-08",
+      "vendor": "mistral",
+      "family": "Codestral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v25.08，2025-07-30 发布，代码补全/FIM 专用",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "codestral-2501",
+          "note": "2025-11-30 退役"
+        },
+        {
+          "id": "codestral-2405",
+          "note": "2025-06-16 退役"
+        }
+      ],
+      "gotchas": [
+        "支持 FIM（fill-in-the-middle）",
+        "低延迟高并发定位"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/models/codestral-25-08"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.3,
+        "output": 0.9,
+        "cache_read": 0.03,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "codestral-2501",
+      "vendor": "mistral",
+      "family": "Codestral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-30 退役；替代 codestral-25-08",
+      "context_window": 262144,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "已退役"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "Azure 版仅返回文本"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Azure Foundry 上仍显示为在架，但 Mistral 平台已退役，属平台差异"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "devstral-2-123b",
+      "vendor": "mistral",
+      "family": "Devstral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；Mistral 平台侧 devstral-2512 已于 2026-07-31 退役",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "devstral-2512",
+          "note": "Mistral 平台 2026-07-31 退役"
+        },
+        {
+          "id": "devstral-medium-2507",
+          "note": "2026-05-31 退役"
+        },
+        {
+          "id": "devstral-small-2507",
+          "note": "2026-05-31 退役"
+        },
+        {
+          "id": "devstral-small-2505",
+          "note": "2025-11-30 退役"
+        }
+      ],
+      "gotchas": [
+        "平台间生命周期不一致：Bedrock 在架但 Mistral 平台已退役同名代系"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页未列出；平台侧 devstral-2512 已于 2026-07-31 退役（Bedrock 仍可调用）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "magistral-medium-2509",
+      "vendor": "mistral",
+      "family": "Magistral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-07-31 退役；替代 Mistral Medium 3.5",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "已退役"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "magistral-medium-2507",
+          "note": "2025-11-30 退役"
+        },
+        {
+          "id": "magistral-medium-2506",
+          "note": "2025-11-30 退役"
+        }
+      ],
+      "gotchas": [
+        "Magistral 系列已全部退役，推理能力由 Mistral Small 4 / Medium 3.5 承接"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "magistral-small-2507",
+      "vendor": "mistral",
+      "family": "Magistral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-30 退役；替代 Mistral Small 4",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "已退役"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "magistral-small-2506",
+          "note": "2025-11-30 退役"
+        },
+        {
+          "id": "magistral-small-2509",
+          "note": "2026-07-31 退役"
+        }
+      ],
+      "gotchas": [
+        "已退役"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ministral-3-14b-25-12",
+      "vendor": "mistral",
+      "family": "Ministral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "14B 版，Bedrock 在架（Ministral 14B 3.0）",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "ministral-14b-3-0"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上模型 ID 未在文档中直接给出，需在控制台确认"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.2,
+        "output": 0.2,
+        "cache_read": 0.02,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ministral-3-3b-25-12",
+      "vendor": "mistral",
+      "family": "Ministral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "v25.12 最小型号",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文长度未列出"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1,
+        "output": 0.1,
+        "cache_read": 0.01,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "ministral-3-8b-25-12",
+      "vendor": "mistral",
+      "family": "Ministral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "v25.12 小模型，官方列为 Ministral 8B/3B 旧版的替代",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ministral-8b-2410",
+          "note": "2025-12-31 退役"
+        },
+        {
+          "id": "ministral-3b-2410",
+          "note": "2025-12-31 退役"
+        }
+      ],
+      "gotchas": [
+        "上下文长度未在页面列出，需查 API 参考"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.15,
+        "output": 0.15,
+        "cache_read": 0.015,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "mistral-large-3-25-12",
+      "vendor": "mistral",
+      "family": "Mistral Large",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v25.12，2025-12-02 发布，开放权重旗舰",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs / JSON schema"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "mistral-large-2411",
+          "note": "2026-05-31 退役"
+        },
+        {
+          "id": "mistral-large-2407",
+          "note": "2025-03-30 退役"
+        }
+      ],
+      "gotchas": [
+        "MoE 675B 总参 / 41B 激活，自托管门槛高",
+        "价格 $0.5/$1.5 每 M token"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/models/mistral-large-3-25-12",
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.5,
+        "output": 1.5,
+        "cache_read": 0.05,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "mistral-medium-3-5-26-04",
+      "vendor": "mistral",
+      "family": "Mistral Medium",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v26.04，官方列为多款退役模型的替代",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "mistral-medium-2508",
+          "note": "2026-08-31 退役"
+        },
+        {
+          "id": "mistral-medium-2505",
+          "note": "2026-08-31 退役"
+        },
+        {
+          "id": "mistral-medium-2503",
+          "note": "更早版本已退役"
+        }
+      ],
+      "gotchas": [
+        "官方将 Medium 3.5 作为 Medium 3/3.1、Devstral、Magistral 等的统一替代",
+        "支持 predicted outputs"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/models/mistral-medium-3-5-26-04",
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.5,
+        "output": 7.5,
+        "cache_read": 0.15,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "mistral-small-4-0-26-03",
+      "vendor": "mistral",
+      "family": "Mistral Small",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v26.03，2026-03-16 发布；统一 instruct/reasoning/coding",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "mistral-small-2506",
+          "note": "2026-07-31 退役"
+        },
+        {
+          "id": "mistral-small-2503",
+          "note": "2025-11-30 退役"
+        },
+        {
+          "id": "mistral-small-2501",
+          "note": "2025-11-30 退役"
+        }
+      ],
+      "gotchas": [
+        "119B 总参 / 6.5B 激活",
+        "价格 $0.15/$0.6 每 M token"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/models/mistral-small-4-0-26-03",
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.15,
+        "output": 0.6,
+        "cache_read": 0.015,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "pixtral-large-2411",
+      "vendor": "mistral",
+      "family": "Pixtral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-31 退役；替代 Mistral Medium 3.5",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "已退役"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上仍以 Pixtral Large 名义在架，与 Mistral 平台退役状态不一致"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://mistral.ai/pricing/api",
+          "https://docs.mistral.ai/inference/pricing"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

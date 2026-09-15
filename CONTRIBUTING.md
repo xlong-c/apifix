@@ -56,6 +56,11 @@ apifix 的模型目录（`catalog.json`）是**人工核验的静态快照**。�
 
 ## 如何新增一个模型
 
+> **编辑 `catalog/<vendor>.json`，然后运行 `npm run build`。**
+> `catalog/` 是唯一数据源（一厂商一文件，手工编辑这里）；`catalog.json` 是**生成物**，
+> **不要手工编辑**。CI 会运行 `node tools/build-catalog.mjs --check`，
+> 改了 `catalog/` 却忘记 rebuild 的 PR 会直接失败。
+
 1. 在 `incoming/` 下新建批次文件（或追加到已有批次），结构：
 
    ```json
@@ -82,23 +87,32 @@ apifix 的模型目录（`catalog.json`）是**人工核验的静态快照**。�
     | `gotchas` / `sources` / `confidence` | 踩坑点 / 官方链接 / `high|medium|low` |
     | `cost` | 官方定价（见下节）；merge 脚本会自动维护，手工编辑请保持结构一致 |
 
-3. 运行合并脚本（会把批次与现有目录按 id 去重、规范化后写回 `catalog.json`）：
+3. 运行合并脚本（会把批次与现有目录按 id 去重、规范化后写回 `catalog/<vendor>.json`，
+   再自动打包 `catalog.json`）：
 
    ```bash
    node tools/merge-catalog.mjs --dry-run   # 先看报告
-   node tools/merge-catalog.mjs             # 写回 catalog.json
+   node tools/merge-catalog.mjs             # 写 catalog/ + catalog.json
    ```
 
    同一 id 冲突时：手工目录条目优先；批次条目 `verified: true` 可覆盖未核验的目录条目；
    批次之间取信息量更大者；云镜像重复（同一模型出现在多个 vendor 批次）保留原生 vendor。
+   合并阶段会再次执行来源白名单过滤：批次里的第三方/云平台链接一律丢弃；
+   若某条目过滤后只剩非官方来源，会自动降级为 `verified: false` + `confidence: low`
+   并在 `gotchas` 首位注明。
 
-4. 本地自检：
+4. 直接编辑 `catalog/<vendor>.json`（推荐）或改完批次后跑 merge，然后重建 + 自检：
 
    ```bash
-   node tools/validate-catalog.mjs
+   npm run build                            # catalog/ → catalog.json（生成物）
+   node tools/build-catalog.mjs --check     # 确认 catalog.json 与 catalog/ 一致
+   node tools/validate-catalog.mjs          # 结构 + 来源白名单 + bundle 一致性
    node apifix.mjs --list | head
    node apifix.mjs <你的模型 id>
    ```
+
+   厂商文件格式：`{"vendor": "<vendor>", "updated_at": "YYYY-MM-DD", "models": [ ... ]}`；
+   条目 `vendor` 必须与文件名/文件 `vendor` 一致，`id` 在所有厂商文件间全局唯一。
 
 ## 如何补充定价（cost）
 
@@ -168,11 +182,13 @@ merge 会原样保留你写的那一侧：
 
 ## PR 检查清单
 
-- [ ] 只改必要文件（`incoming/*.json`、`catalog.json`，必要时 `apifix.mjs` / `lib/core.mjs` / README）
-- [ ] 条目只引用官方文档，`sources` 为可访问的 http(s) 链接
+- [ ] 只改必要文件（`incoming/*.json`、`catalog/<vendor>.json`，必要时 `apifix.mjs` / `lib/core.mjs` / README）
+- [ ] 改过 `catalog/` 后已运行 `npm run build`（`catalog.json` 是生成物，不要手工编辑）
+- [ ] 条目只引用官方文档，`sources` 为可访问的 http(s) 链接且通过来源白名单
 - [ ] 未文档化的值写 `null`，没有臆造数值
 - [ ] 定价文件放在 `incoming/pricing-*.json`，`unit` 为 `per_1m_tokens`、币种为 USD（或注明 CNY 原价）
 - [ ] `node --check apifix.mjs && node --check lib/core.mjs && node --check tools/*.mjs` 通过
+- [ ] `node tools/build-catalog.mjs --check` 通过（bundle 与 catalog/ 一致）
 - [ ] `node tools/validate-catalog.mjs` 0 error
 - [ ] `node apifix.mjs <id>` 输出符合预期，legacy id 有 `legacy_ids` note
 - [ ] PR 描述里写清依据的官方页面

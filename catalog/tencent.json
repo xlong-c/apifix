@@ -1,0 +1,975 @@
+{
+  "vendor": "tencent",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "hunyuan-2.0-instruct",
+      "vendor": "tencent",
+      "family": "hunyuan-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-22下线，迁移hy3-preview",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-2.0-instruct-20251111",
+          "note": "快照"
+        }
+      ],
+      "gotchas": [
+        "Token Plan套餐内旧模型，2026-06-22下线"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/131925",
+        "https://cloud.tencent.cn/document/product/1823/130060"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于 2026-06-22 下线，官方现行价格页未列出，无官方定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1823/130055",
+          "https://cloud.tencent.com/document/product/1729/97731"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hunyuan-2.0-thinking",
+      "vendor": "tencent",
+      "family": "hunyuan-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-22下线，迁移hy3-preview",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-2.0-thinking-20251109",
+          "note": "快照"
+        },
+        {
+          "id": "hunyuan-2.0-thinking-dev-20251012",
+          "note": "开发版快照"
+        }
+      ],
+      "gotchas": [
+        "Tencent HY 2.0 Think，2026-06-22下线"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/131925"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于 2026-06-22 下线，官方现行价格页未列出，无官方定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1823/130055",
+          "https://cloud.tencent.com/document/product/1729/97731"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hunyuan-a13b",
+      "vendor": "tencent",
+      "family": "hunyuan",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "旧混元平台模型，原平台2026-09-30全面停服",
+      "context_window": 229376,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "首个混合推理模型，默认慢思考；query前加/no_think可切换快思考",
+        "最大输入224k/输出32k",
+        "原混元平台2026-09-30停服"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/104753"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.0694,
+        "output": 0.2778,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥0.5/¥2 每百万tokens，按 1 USD = 7.2 CNY 换算；旧混元平台模型，原平台 2026-09-30 全面停服",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1729/97731"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hunyuan-role-latest",
+      "vendor": "tencent",
+      "family": "hy-role",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "角色扮演模型，仍在TokenHub服务",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "hy-role"
+      ],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-large-role",
+          "note": "2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-role",
+          "note": "2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-role-plus",
+          "note": "2026-06-22下线"
+        }
+      ],
+      "gotchas": [
+        "最大输入28k/输出4k（旧文档）",
+        "Anthropic协议支持，OpenAI Responses不支持"
+      ],
+      "sources": [
+        "https://cloud.tencent.cn/document/product/1823/130079",
+        "https://cloud.tencent.com/document/product/1729/104753"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.3333,
+        "output": 1.3333,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥2.4/¥9.6 每百万tokens（TokenHub Hy-Role-Latest），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1823/130055",
+          "https://cloud.tencent.com/document/product/1729/97731"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "hunyuan-t1",
+      "vendor": "tencent",
+      "family": "hunyuan",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-22下线，迁移hy3-preview",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-t1-latest",
+          "note": "2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-t1-20250321",
+          "note": "快照"
+        },
+        {
+          "id": "hunyuan-t1-20250822",
+          "note": "最后快照"
+        }
+      ],
+      "gotchas": [
+        "深度思考模型",
+        "已被hy3取代"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/131925"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于 2026-06-22 下线，官方现行价格页未列出，无官方定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1823/130055",
+          "https://cloud.tencent.com/document/product/1729/97731"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hunyuan-t1-vision-20250916",
+      "vendor": "tencent",
+      "family": "hunyuan-vision",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "视觉深度思考模型（HY-Vision-1.5-Thinking）",
+      "context_window": 40960,
+      "max_output_tokens": 24576,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入28k/输出20k（TokenHub表列40k/16k/24k）",
+        "图文问答、视觉定位、OCR、拍题解题"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/104753",
+        "https://cloud.tencent.cn/document/product/1823/130051"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.4167,
+        "output": 1.25,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥3/¥9 每百万tokens（Hunyuan-t1-vision 刊例价），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1729/97731"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hunyuan-turbos",
+      "vendor": "tencent",
+      "family": "hunyuan",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-22下线，迁移hy3-preview",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-turbos-latest",
+          "note": "2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-turbos-20250226",
+          "note": "快照，2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-turbos-20250926",
+          "note": "最后快照，2026-06-22下线"
+        }
+      ],
+      "gotchas": [
+        "Function Calling仅对turbos/t1/functioncall生效",
+        "已被hy3取代"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/131925",
+        "https://cloud.tencent.com/announce/detail/2301"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已于 2026-06-22 下线，官方现行价格页未列出，无官方定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1823/130055",
+          "https://cloud.tencent.com/document/product/1729/97731"
+        ],
+        "confidence": "low"
+      }
+    },
+    {
+      "id": "hunyuan-vision-1.5-instruct",
+      "vendor": "tencent",
+      "family": "hunyuan-vision",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "图生文快思考模型，2025-12-17更新",
+      "context_window": 24576,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入24k/输出16k",
+        "混元多模态模型2026-06-05起迁移通知"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/104753"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.4167,
+        "output": 1.25,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥3/¥9 每百万tokens（Tencent HY Vision 1.5 Instruct 刊例价），按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1729/97731"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hy3",
+      "vendor": "tencent",
+      "family": "Hunyuan Hy3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Hy3正式版，基于真实业务场景打磨，性价比档",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "none"
+        ],
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方示例用 0.9"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方示例用 1.0"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": null
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.type=json_schema"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "hunyuan-hy3",
+        "tencent-hy3",
+        "tencent/Hy3"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "hy3 是官方 id；hy3-preview 是另一个模型（默认关闭思考）",
+        "带 tools 时 reasoning_effort=low 会被自动改写为 high",
+        "官方文档对默认思考状态自相矛盾（深度思考页说开启，API 规范页说默认关闭/effort low），需运行时确认",
+        "json_schema 需要 additionalProperties:false，否则报错",
+        "最大输入 192k，256k 上下文并非全部可用于输入+输出"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1823/132252"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1389,
+        "output": 0.5556,
+        "cache_read": 0.0347,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥1/¥4/¥0.25 每百万tokens，按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1823/130055"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "hy3-preview",
+      "vendor": "tencent",
+      "family": "hy3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "已于2026-08-31下线（官方列表标注）",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "disabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方示例用0.9"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "结构化输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "295B/21B激活MoE，256K上下文",
+        "默认不开启思考（与hy3相反）",
+        "2026-08-31已下线，迁移至hy3"
+      ],
+      "sources": [
+        "https://cloud.tencent.cn/document/product/1823/130051",
+        "https://cloud.tencent.cn/document/product/1823/130060"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1667,
+        "output": 0.5556,
+        "cache_read": 0.0556,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": [
+          {
+            "condition": "输入长度 [16k,32k)",
+            "input": 0.2222,
+            "output": 0.8889,
+            "cache_read": 0.0833
+          },
+          {
+            "condition": "输入长度 [32k+)",
+            "input": 0.2778,
+            "output": 1.1111,
+            "cache_read": 0.1111
+          }
+        ],
+        "note": "原文 ¥1.2/¥4/¥0.4（输入长度 0-16k 档），按 1 USD = 7.2 CNY 换算；2026-08-31 已下线但价格页仍列出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1823/130055"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "hy4-preview",
+      "vendor": "tencent",
+      "family": "hy4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "新一代生产力模型预览版，Agent与复杂任务能力升级",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "high",
+          "none"
+        ],
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方示例用0.9"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "结构化输出（官方能力列表）"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入960k（1M上下文）",
+        "默认开启深度思考",
+        "Anthropic协议路径同样支持（TokenHub /v1/messages）"
+      ],
+      "sources": [
+        "https://cloud.tencent.cn/document/product/1823/130051",
+        "https://cloud.tencent.com/document/product/1823/131208"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.8333,
+        "output": 2.5,
+        "cache_read": 0.0417,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "原文 ¥6/¥18/¥0.3 每百万tokens，按 1 USD = 7.2 CNY 换算",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cloud.tencent.com/document/product/1823/130055"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

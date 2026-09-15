@@ -14,15 +14,19 @@ apifix.mjs                 CLI 入口：参数解析、--list/--match、emit 调
 lib/core.mjs               唯一共享核心：匹配 / 卡片 / emit（浏览器与 Node 通用，零 Node API）
 ui/index.html, ui/app.js, ui/style.css
                            纯静态 UI（SPA）；app.js 内置一套降级实现，见不变量 2
-tools/merge-catalog.mjs    incoming/*.json + catalog.json → catalog.json（含 pricing 处理）
-tools/validate-catalog.mjs catalog.json 结构与取值校验（CI 用）
+catalog/                   唯一数据源：一厂商一文件（catalog/<vendor>.json，手工编辑这里）
+catalog/.order.json        vendor 文件的规范顺序清单（build 生成，保证确定性）
+catalog.json               **生成物**：由 catalog/ 打包的 bundle，CLI/UI 只读它
+tools/build-catalog.mjs    catalog/*.json → catalog.json（导出 buildCatalog()，供 merge 复用）
+tools/merge-catalog.mjs    incoming/*.json + catalog/ → catalog/ + catalog.json（含 pricing 处理）
+tools/validate-catalog.mjs catalog/ 逐条校验 + 来源白名单 + catalog.json 与 catalog/ 一致性（CI 用）
+tools/source-whitelist.mjs 官方来源白名单（validate / merge 共用）
 incoming/                  原始调研批次（模型批次 + pricing-*.json 定价文件），格式允许宽松
-catalog.json               唯一数据源：{"version": 2, "updated_at": "...", "models": [...]}
 index.html                 站点根：重定向到 /ui/（GitHub Pages 用）
 legacy-python/             最初的 Python 实现，仅作行为对拍参考，不参与构建
 .github/workflows/validate.yml
-                           CI：node --check → validate → 冒烟测试
-package.json               scripts: start / merge / validate；bin: apifix
+                           CI：node --check → build --check → validate → 冒烟测试
+package.json               scripts: start / build / merge / validate；bin: apifix
 ```
 
 ## 不变量（改代码前必读）
@@ -39,8 +43,15 @@ package.json               scripts: start / merge / validate；bin: apifix
    定价页）；聚合站、中转后台、论坛不作来源。
 5. **stderr 提示不污染 stdout**：stdout 必须是可直接粘贴的纯 JSON/文本；所有 `[i]`/`[!]`
    提示走 stderr（`apifix.mjs` 的 `stderr()`；core 内通过 `onNote` 回调转交）。
-6. `incoming/` 是原始调研批次（允许宽松格式），**手工修正写 `catalog.json`**（合并时手工
-   条目优先，不会被批次覆盖）。
+6. `incoming/` 是原始调研批次（允许宽松格式）；**手工修正写 `catalog/<vendor>.json`**
+   （合并时手工条目优先，不会被批次覆盖）。
+7. **`catalog/` 是唯一数据源，`catalog.json` 是构建产物**：改数据只改 `catalog/<vendor>.json`，
+   然后 `npm run build`（或 `npm run merge`）重新生成 `catalog.json`；**永远不要手工编辑
+   `catalog.json`**。`tools/build-catalog.mjs --check` 与 `tools/validate-catalog.mjs` 会强制
+   两者一致（CI 第一步就跑 `--check`），不一致时报
+   `catalog.json 与 catalog/ 不一致，请运行 npm run build`。
+   厂商文件格式为 `{vendor, updated_at, models: [...]}`，条目 `vendor` 必须与文件一致、
+   `id` 跨文件全局唯一；全局顺序由 `catalog/.order.json` 固定。
 
 ## 凭证安全（AI 助手必读）
 
@@ -92,8 +103,10 @@ node apifix.mjs <id>                    # 冒烟（默认输出 opencode 片段�
 node apifix.mjs <id> --card             # 规格卡片（含 gotchas / sources）
 node apifix.mjs <id> -f                 # 完整模式（含 cost / status / modalities）
 npm start                               # UI (127.0.0.1:7788)
-npm run merge                           # 合并 incoming → catalog
-npm run validate                        # 校验（CI 用）
+npm run build                           # catalog/ → catalog.json（生成物）
+node tools/build-catalog.mjs --check    # 确认 catalog.json 与 catalog/ 一致（CI 第一步）
+npm run merge                           # 合并 incoming → catalog/ + catalog.json
+npm run validate                        # 校验 catalog/ + 一致性（CI 用）
 node --check <file>.mjs                 # 语法检查（所有 .mjs；ui/app.js 也查）
 ```
 
@@ -105,10 +118,13 @@ Python 输出 `null`；且 Python 版没有 `-f`）。
 ## 如何新增/更新模型（简版流程，详见 CONTRIBUTING.md）
 
 1. 调研：**只查官方文档**（模型页 / API 文档 / 定价页），记下链接；
-2. 写 `incoming/<batch>.json`（模型批次）或 `incoming/pricing-<group>.json`（定价）；
+2. 写 `incoming/<batch>.json`（模型批次）或 `incoming/pricing-<group>.json`（定价），
+   或直接编辑 `catalog/<vendor>.json`（一厂商一文件，推荐小改动）；
 3. `npm run merge`（先 `node tools/merge-catalog.mjs --dry-run` 看报告）；
-4. `npm run validate`，必须 0 error；
-5. `git diff catalog.json` 复核改动（只应出现预期的条目/字段）。
+   合并会写 `catalog/` 并自动重建 `catalog.json`；
+4. `npm run build -- --check` 或 `node tools/build-catalog.mjs --check` 确认 bundle 一致；
+5. `npm run validate`，必须 0 error；
+6. `git diff catalog/ catalog.json` 复核改动（只应出现预期的条目/字段）。
 
 ## 数据格式速查
 

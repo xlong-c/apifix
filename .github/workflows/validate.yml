@@ -27,7 +27,10 @@ jobs:
             node --check "$f"
           done
 
-      - name: Validate catalog.json
+      - name: Check catalog.json is up to date with catalog/
+        run: node tools/build-catalog.mjs --check
+
+      - name: Validate catalog (catalog/ + catalog.json)
         run: node tools/validate-catalog.mjs
 
       - name: Smoke test (list / match / emit)

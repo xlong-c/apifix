@@ -1,0 +1,1515 @@
+{
+  "vendor": "google",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "gemini-2.0-flash",
+      "vendor": "google",
+      "family": "Gemini 2.0",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-02-05 发布，2026-06-01 关停；替代 gemini-3.6-flash",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已停用"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "已停用"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "已停用"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-2.0-flash-001",
+          "note": "2026-06-01 关停"
+        },
+        {
+          "id": "gemini-2.0-flash-lite",
+          "note": "2026-06-01 关停"
+        },
+        {
+          "id": "gemini-2.0-flash-lite-001",
+          "note": "2026-06-01 关停"
+        }
+      ],
+      "gotchas": [
+        "2.0 全系已于 2026-06-01 关停",
+        "老中转站若仍映射此 ID 会直接报错"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-2.5-flash",
+      "vendor": "google",
+      "family": "Gemini 2.5",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2025-06-17 发布，无停用日期",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-2.5-flash-preview-09-25",
+          "note": "2026-02-17 关停，推荐迁移到 3.6 Flash"
+        }
+      ],
+      "gotchas": [
+        "知识截止 2025-01"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash",
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.3,
+        "output": 2.5,
+        "cache_read": 0.03,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "输入为文本/图像/视频档（音频 $1.00）；缓存读同档（音频 $0.10）；无 cache_write 一次性费用，缓存存储 $1.00/1M tokens/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-2.5-flash-lite",
+      "vendor": "google",
+      "family": "Gemini 2.5",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2025-07-22 发布，无停用日期",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "off",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-2.5-flash-lite-preview-09-2025",
+          "note": "2026-03-31 关停"
+        }
+      ],
+      "gotchas": [
+        "默认关闭思考（2.5 系中唯一默认 off）",
+        "token 上限按同族推断"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/thinking",
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1,
+        "output": 0.4,
+        "cache_read": 0.01,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "输入为文本/图像/视频档（音频 $0.30）；缓存读同档（音频 $0.03）；缓存存储 $1.00/1M tokens/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-2.5-pro",
+      "vendor": "google",
+      "family": "Gemini 2.5",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2.5 代旗舰，仍为稳定版且无停用日期；属上一代",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-2.5-pro-preview-03-25",
+          "note": "2025-12-02 关停"
+        },
+        {
+          "id": "gemini-2.5-pro-preview-05-06",
+          "note": "2025-12-02 关停"
+        },
+        {
+          "id": "gemini-2.5-pro-preview-06-05",
+          "note": "2025-12-02 关停"
+        }
+      ],
+      "gotchas": [
+        "知识截止 2025-01",
+        "上一代模型，新项目建议 3.x"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro",
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.25,
+        "output": 10,
+        "cache_read": 0.125,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页对 prompts <= 200k 与 > 200k 分档；本字段按约定仅记录标准档（>200k 档：输入 $2.50 / 输出 $15.00 / 缓存读 $0.25）。缓存存储 $4.50/1M tokens/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3-flash-preview",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "预览版，2025-12-17 发布，文档推荐迁移到 gemini-3.6-flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "预览模型停用仅提前 2 周通知"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models",
+        "https://ai.google.dev/gemini-api/docs/thinking"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.5,
+        "output": 3,
+        "cache_read": 0.05,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "输入为文本/图像/视频档（音频 $1.00）；缓存读同档（音频 $0.10）；缓存存储 $1.00/1M tokens/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3-pro-preview",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-18 发布，2026-03-09 关停；替代 gemini-3.1-pro-preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已停用"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "已停用"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "已停用"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "端点已完全关闭，不可调用"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3.1-flash-lite",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2026-05-07 发布，预计 2027-05-07 停用",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-3.1-flash-lite-preview",
+          "note": "预览版，2026-05-25 已关停"
+        }
+      ],
+      "gotchas": [
+        "不支持 computer use",
+        "已公布停用日期 2027-05-07"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite",
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.25,
+        "output": 1.5,
+        "cache_read": 0.025,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "输入为文本/图像/视频档（音频 $0.50）；缓存读同档（音频 $0.05）；缓存存储 $1.00/1M tokens/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3.1-pro-preview",
+      "vendor": "google",
+      "family": "gemini-3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "预览版，2026-02-19 发布，无停用日期",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "保持默认 1.0；调低可能导致循环/退化"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": null
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": null
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "generationConfig.responseFormat.text (mimeType+schema)"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 4096,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google/gemini-3.1-pro-preview",
+        "gemini-3.1-pro-preview-customtools"
+      ],
+      "legacy_ids": [
+        {
+          "id": "gemini-3-pro-preview",
+          "note": "2026-03-09 已关停，替代为 3.1 Pro"
+        }
+      ],
+      "gotchas": [
+        "用 thinkingConfig.thinkingLevel（low/medium/high，默认 high）；旧版 thinkingBudget 仅兼容保留，同时传两者报 400",
+        "3.1 Pro 无法关闭思考",
+        "maxOutputTokens 同时限制思考+可见输出，默认仅 8192，需显式调高",
+        "函数调用轮次必须回传 thought signature（缺失报 400）",
+        "candidateCount>1 报 400",
+        "preview 状态；知识截止 2025-01"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2,
+        "output": 12,
+        "cache_read": 0.2,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页对 prompts <= 200k 与 > 200k 分档；本字段按约定仅记录标准档（>200k 档：输入 $4.00 / 输出 $18.00 / 缓存读 $0.40）。缓存存储 $4.50/1M tokens/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3.5-flash",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2026-05-19 发布",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-3-flash-preview",
+          "note": "预览版，同一模型代系，文档标为其 Preview 版本"
+        }
+      ],
+      "gotchas": [
+        "computer use 为 Preview"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1.5,
+        "output": 9,
+        "cache_read": 0.15,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "无 cache_write 一次性费用；缓存存储 $1.00/1M tokens/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3.5-flash-lite",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2026-07-21 发布",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "minimal",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "token 上限按同族推断",
+        "被列为 gemini-3.1-flash-lite 的推荐替代"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models",
+        "https://ai.google.dev/gemini-api/docs/thinking"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.3,
+        "output": 2.5,
+        "cache_read": 0.03,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "输入含文本/图像/视频/音频；缓存存储 $1.00/1M tokens/小时",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3.6-flash",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2026-07-21 发布；也是 3-flash-preview 的推荐替代",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "token 上限按 3.x Flash 同族推断，未逐页核对"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models",
+        "https://ai.google.dev/gemini-api/docs/thinking"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.75,
+        "output": 3.75,
+        "cache_read": 0.075,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "2026-12-31 前优惠价；2027-01-01 起 $1.50/$7.50、缓存 $0.15。缓存存储 $0.50/1M tokens/小时（2027 起 $1.00）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3.7-flash",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "上一代 Flash 稳定版，2026-08-13 发布",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "minimal 不支持",
+        "computer use 为 Preview",
+        "file search 全量支持"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.75,
+        "output": 3.75,
+        "cache_read": 0.075,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "2026-12-31 前优惠价；2027-01-01 起 $1.50/$7.50、缓存 $0.15。缓存存储 $0.50/1M tokens/小时（2027 起 $1.00）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemini-3.8-flash",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "最新稳定版，2026-09-02 发布，无停用日期",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_json_schema / structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "minimal 思考档位不支持，传入会报错",
+        "思考 token 计入输出计费",
+        "max_output_tokens 含思考 token，设小会截断"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
+        "https://ai.google.dev/gemini-api/docs/thinking"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.75,
+        "output": 3.75,
+        "cache_read": 0.075,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "2026-12-31 前优惠价；2027-01-01 起 $1.50/$7.50、缓存 $0.15。缓存存储 $0.50/1M tokens/小时（2027 起 $1.00）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemma-3-27b-it",
+      "vendor": "google",
+      "family": "Gemma 3",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "legacy",
+      "lifecycle_note": "上一代 Gemma，Bedrock 以 27B PT 形式在架",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google.gemma-3-27b-pt",
+        "google.gemma-3-12b-it",
+        "google.gemma-3-4b-it"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "Bedrock 上 27B 为 PT（预训练）而非 IT 版本",
+        "建议优先用 Gemma 4"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "已从定价页移除（定价页无 Gemma 3 条目）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemma-4-26b-a4b",
+      "vendor": "google",
+      "family": "Gemma 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "开放权重 MoE 版，Bedrock 在架",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google.gemma-4-26b-a4b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "MoE 全量权重需全部载入显存",
+        "上下文按 Gemma 4 medium 档 256K 推断"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemma/docs/core"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Gemini API 定价页 Gemma 4 段：免费层免费，付费层 Not available（无按量价格）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemma-4-31b",
+      "vendor": "google",
+      "family": "Gemma 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "开放权重，2026-03-31 上线 Bedrock；EOL 不早于 2027-03-31",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Bedrock 未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "Bedrock 未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": false,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未在模型卡记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google.gemma-4-31b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上仅 bedrock-mantle 端点，路径为 /openai/v1/responses",
+        "不支持单轮并行多工具调用",
+        "请求体上限 3.5MB（含图/视频）",
+        "Chat Completions 不返回推理内容，仅 Responses API 返回"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemma/docs/core"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Gemini API 定价页 Gemma 4 段：免费层免费，付费层 Not available（无按量价格）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gemma-4-e2b",
+      "vendor": "google",
+      "family": "Gemma 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "端侧小模型，Bedrock 在架；E2B/E4B 为 effective 参数架构",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google.gemma-4-e2b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "小模型 128K 上下文",
+        "静态权重内存需求高于有效参数量"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemma/docs/core"
+      ],
+      "confidence": "medium",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Gemini API 定价页 Gemma 4 段：免费层免费，付费层 Not available（无按量价格）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://ai.google.dev/gemini-api/docs/pricing"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

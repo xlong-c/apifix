@@ -1,0 +1,86 @@
+{
+  "vendor": "writer",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "palmyra-x5",
+      "vendor": "writer",
+      "family": "Palmyra",
+      "api_protocol": "native",
+      "verified": false,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；Writer 长上下文旗舰",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "palmyra-x4"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "规格未在本轮逐页复核",
+        "另有 Palmyra Vision 7B"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.6,
+        "output": 6,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Writer AI Studio 官方定价页（dev.writer.com/home/pricing）列为 Palmyra X5；同页 X6 $2/$8、X4 $2.50/$10。writer.com/pricing 仅平台/坐席定价",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://dev.writer.com/home/pricing"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

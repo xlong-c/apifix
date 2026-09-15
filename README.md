@@ -170,12 +170,16 @@ apifix/
 ├── apifix.mjs        CLI + 本地 UI 服务器（零依赖）
 ├── lib/core.mjs      共享核心（纯 ESM，浏览器可直接 import）
 ├── ui/               Web UI（纯静态）
-├── catalog.json      325 个模型的官方规格（数据源）
-├── tools/            合并 + 校验脚本（CI 用）
+├── catalog/          数据源：一厂商一文件（catalog/<vendor>.json，手工编辑这里）
+├── catalog.json      **生成物**：由 catalog/ 打包的 bundle（CLI/UI 只读它，勿手工编辑）
+├── tools/            打包 + 合并 + 校验脚本（CI 用）
 ├── incoming/         原始调研批次（可追溯数据来源）
 ├── legacy-python/    初版 Python 实现（仅参考）
 └── skills/           配套 AI 技能（model-spec-lookup / catalog-maintain）
 ```
+
+改数据：编辑 `catalog/<vendor>.json` → `npm run build` 重建 `catalog.json`（详见
+[CONTRIBUTING.md](CONTRIBUTING.md)）。
 
 ## 常见问题
 

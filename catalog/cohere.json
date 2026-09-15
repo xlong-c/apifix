@@ -1,0 +1,1248 @@
+{
+  "vendor": "cohere",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "c4ai-aya-expanse-32b",
+      "vendor": "cohere",
+      "family": "Aya",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；23 语言 32B",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "c4ai-aya-expanse-8b",
+          "note": "2026-04-04 退役"
+        }
+      ],
+      "gotchas": [
+        "8B 版本已于 2026-04-04 退役"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.5,
+        "output": 1.5,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官网定价页 FAQ：Aya Expanse 8B/32B API 按 $0.50/1M 输入、$1.50/1M 输出计费",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "c4ai-aya-vision-32b",
+      "vendor": "cohere",
+      "family": "Aya",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；多模态 32B",
+      "context_window": 16384,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "c4ai-aya-vision-8b",
+          "note": "2026-04-04 退役"
+        }
+      ],
+      "gotchas": [
+        "上下文仅 16K",
+        "8B 版本已退役"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页未列出（开放权重，无公开按量 token 价）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "command",
+      "vendor": "cohere",
+      "family": "Command",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-09-15 弃用；初代 Command，4K 上下文",
+      "context_window": 4096,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "弃用状态"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "弃用状态"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "弃用状态"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "command-light",
+        "command-light-nightly",
+        "command-nightly"
+      ],
+      "legacy_ids": [
+        {
+          "id": "command-light",
+          "note": "2025-09-15 弃用"
+        },
+        {
+          "id": "command-text-v14",
+          "note": "Bedrock 上 ID，属初代"
+        }
+      ],
+      "gotchas": [
+        "上下文仅 4K",
+        "已于 2025-09-15 弃用"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1,
+        "output": 2,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官网定价页 FAQ 旧版定价（现有客户）；同族 Command-light 为 $0.30/$0.60",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "command-a-03-2025",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；256K 上下文、8K 输出",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上标注 Coming Soon；Oracle OCI 上 ID 为 cohere.command-a-03-2025",
+        "仅 2 张 GPU 即可运行"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页未列出（无公开按量 token 价）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "command-a-plus-05-2026",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live，2026-05-20 发布；首个 MoE，家族最强",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs / JSON schema"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "MoE 218B 总参 / 25B 激活，1×B200 或 2×H100 可部署",
+        "支持 48 种语言",
+        "思考预算需给最终回答留至少 1K token"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models",
+        "https://docs.cohere.com/docs/command-a-plus"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0,
+        "output": 0,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页标注 Free（Apache 2.0 开放权重；API key 与模型下载 $0）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "command-a-reasoning-08-2025",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；Cohere 首个推理模型",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "thinking 默认开启，可 {\"type\":\"disabled\"} 关闭",
+        "token_budget 建议 31K 并留 1K 给回答",
+        "预算耗尽会立即输出最终回答",
+        "支持 23 种语言"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models",
+        "https://docs.cohere.com/v2/docs/reasoning"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页未列出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "command-a-translate-08-2025",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；专用机器翻译模型",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文仅 8K，不适合长文档翻译",
+        "覆盖 23 种语言"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0,
+        "output": 0,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方文档：试用与生产 key 在速率限制内免费；超出后/生产部署需联系销售",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://docs.cohere.com/docs/command-a-translate",
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "command-a-vision-07-2025",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；Cohere 首个视觉模型",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方支持语言仅英/葡/意/法/德/西"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页未列出",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "command-r-08-2024",
+      "vendor": "cohere",
+      "family": "Command R",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；2024-08 更新版",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "cohere.command-r-v1:0"
+      ],
+      "legacy_ids": [
+        {
+          "id": "command-r-03-2024",
+          "note": "2025-09-15 弃用"
+        },
+        {
+          "id": "command-r",
+          "note": "弃用别名，指向 03-2024"
+        }
+      ],
+      "gotchas": [
+        "别名 command-r 已弃用"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.15,
+        "output": 0.6,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "定价页列为 Command R",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "command-r-plus-04-2024",
+      "vendor": "cohere",
+      "family": "Command R",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-09-15 弃用（deprecated），文档仍在架但建议迁移",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "弃用状态"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "弃用状态"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "弃用状态"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "command-r-plus"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "别名 command-r-plus 指向本 ID",
+        "Bedrock 上 cohere.command-r-plus-v1:0 仍是此代系"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 3,
+        "output": 15,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官网定价页 FAQ 旧版定价（现有客户）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "command-r-plus-08-2024",
+      "vendor": "cohere",
+      "family": "Command R",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；2024-08 更新版",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "cohere.command-r-plus-v1:0"
+      ],
+      "legacy_ids": [
+        {
+          "id": "command-r-plus-04-2024",
+          "note": "2025-09-15 弃用，Bedrock ID cohere.command-r-plus-v1:0 仍指向旧版"
+        }
+      ],
+      "gotchas": [
+        "别名 command-r-plus 已弃用并指向 04-2024 旧版",
+        "Bedrock ID 与平台版本可能不一致"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2.5,
+        "output": 10,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官网定价页 FAQ 旧版定价（现有客户）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "command-r7b-12-2024",
+      "vendor": "cohere",
+      "family": "Command R",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；小模型 RAG/工具场景",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock/SageMaker/Azure 均无此模型"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.0375,
+        "output": 0.15,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "north-mini-code-1-0",
+      "vendor": "cohere",
+      "family": "North",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；30B 总参 / 3B 激活 MoE，agentic coding",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "生产部署需走 Model Vault",
+        "ID 使用连字符 north-mini-code-1-0（文档正文写作 1.0）"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0,
+        "output": 0,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页标注 Free（Apache 2.0 开放权重；API key 与模型下载 $0）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "north-small-translate-1-0",
+      "vendor": "cohere",
+      "family": "North",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；218B 总参 / 25B 激活，50+ 语言翻译",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文仅 16K"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页未列出；文档：Chat V2 API 免费层可用，商用需经 Model Vault（定制定价）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing",
+          "https://docs.cohere.com/docs/north-small-translate-1.0"
+        ],
+        "confidence": "medium"
+      }
+    },
+    {
+      "id": "tiny-aya-global",
+      "vendor": "cohere",
+      "family": "Aya",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；3.35B 多语言小模型",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "tiny-aya-earth",
+        "tiny-aya-fire",
+        "tiny-aya-water"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文仅 8K",
+        "四个区域特化版本 ID 分别为 earth/fire/water"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": null,
+        "output": null,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页未列出（开放权重）",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://cohere.com/pricing"
+        ],
+        "confidence": "medium"
+      }
+    }
+  ]
+}

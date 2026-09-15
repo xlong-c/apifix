@@ -1,0 +1,86 @@
+{
+  "vendor": "ai21",
+  "updated_at": "2026-09-15",
+  "models": [
+    {
+      "id": "jamba-1.5-large",
+      "vendor": "ai21",
+      "family": "Jamba",
+      "api_protocol": "native",
+      "verified": false,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；Mamba-Transformer 混合架构",
+      "context_window": 256000,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "jamba-1.5-mini"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
+        "上下文/输出规格未在本轮逐页复核",
+        "同族 mini 版本存在"
+      ],
+      "sources": [],
+      "confidence": "low",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2,
+        "output": 8,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "AI21 官方定价页列为 Jamba Large（$2/1M 输入、$8/1M 输出）；同页 Jamba Mini 为 $0.2/$0.4",
+        "as_of": "2026-09-15",
+        "sources": [
+          "https://www.ai21.com/pricing"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}
