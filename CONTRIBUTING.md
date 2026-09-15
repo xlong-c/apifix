@@ -5,14 +5,54 @@ apifix 的模型目录（`catalog.json`）是**人工核验的静态快照**。�
 ## 数据原则
 
 1. **只引用官方文档**：厂商官方文档 / 官方模型页 / 官方定价页。博客、聚合站、中转站后台、
-   论坛帖子**不能**作为规格来源。云平台（Azure / Bedrock / Vertex）文档仅在厂商原生文档
-   未覆盖、且条目明确标注云口径时可用。
+   论坛帖子**不能**作为规格来源。云平台（AWS / Azure / Vertex）文档对**非**云厂商的模型
+   不能作为来源（例外：`vendor` 为 `amazon` / `microsoft` 时，其自有云文档即第一方文档）。
+   完整规则见下方「来源白名单」，`tools/validate-catalog.mjs` 会强制校验。
 2. **未文档化就留 null**：不猜、不抄本地配置、不抄中转商页面。`null` 表示「官方未文档化」，
    渲染时会显示 `未知/not documented`。
 3. **不确定就降 confidence**：`high`（官方文档明确）/ `medium`（多源交叉推断）/
    `low`（间接来源、待核验）。
 4. **每条都要有 `sources`**（http/https 链接），否则 CI 不通过。
 5. 不要修改与本次贡献无关的条目。
+
+### 来源白名单
+
+`sources` 只接受**第一方厂商域名**（host 等于后缀或为其子域）。判定规则由
+`tools/validate-catalog.mjs` 的 `checkSources` 执行，违规会以
+`<id>: sources 含非官方来源 <url>（vendor=<vendor>）` 报 error。
+
+- 云平台文档（`docs.aws.amazon.com`、`learn.microsoft.com`、`ai.azure.com`）**不是**
+  另一家厂商模型的官方来源；仅当条目 `vendor` 本身就是 `amazon` / `microsoft` 时才接受。
+- 第三方聚合站 / 中转站 / 博客 / 新闻站（如 therouter.ai、atlascloud.ai、ithome.com 等）
+  **永远不接受**。
+- `github.com` 仅当路径以 `/QwenLM/` 开头且 `vendor=alibaba` 时算官方。
+- `sources: []` 是合法的（条目可能尚未找到官方来源）；此时应置 `verified: false`、
+  `confidence: "low"`，并在 `gotchas` 首位注明「非官方来源，规格待核验」。
+
+| vendor | 官方域名后缀 |
+| --- | --- |
+| openai | openai.com |
+| anthropic | claude.com、anthropic.com |
+| google | google.dev、google.com、googleapis.com |
+| deepseek | deepseek.com |
+| alibaba | aliyun.com、alibabacloud.com、aliyuncs.com、qwencloud.com、qianwenai.com |
+| zhipu | z.ai、bigmodel.cn |
+| moonshot | kimi.ai、kimi.com、moonshot.cn、moonshot.ai |
+| baidu | baidu.com |
+| xai | x.ai |
+| meta | meta.ai、meta.com |
+| mistral | mistral.ai |
+| cohere | cohere.com |
+| tencent | tencent.com、tencent.cn、tencentcloud.com |
+| volcengine | volcengine.com、bytedance.com |
+| nvidia | nvidia.com |
+| microsoft | microsoft.com、azure.com |
+| amazon | aws.amazon.com、amazon.com |
+| minimax | minimax.io、minimaxi.com、minimax.cn |
+| iflytek | xfyun.cn、xf-yun.com |
+| 01ai | lingyiwanwu.com |
+| ai21 | ai21.com |
+| writer | writer.com |
 
 ## 如何新增一个模型
 

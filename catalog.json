@@ -155,8 +155,7 @@
         "公司转型企业级AI，不再自营C端API"
       ],
       "sources": [
-        "https://platform.lingyiwanwu.com/",
-        "https://www.ithome.com/0/987/951.htm"
+        "https://platform.lingyiwanwu.com/"
       ],
       "confidence": "low",
       "cost": {
@@ -231,12 +230,11 @@
       "aliases": [],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "图像理解/图文问答",
         "官方平台已停服，ID来自第三方目录，未获官方当前确认"
       ],
-      "sources": [
-        "https://api.tu-zi.com/docs/providers/yi"
-      ],
+      "sources": [],
       "confidence": "low",
       "cost": {
         "currency": "USD",
@@ -260,7 +258,7 @@
       "vendor": "ai21",
       "family": "Jamba",
       "api_protocol": "native",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "Bedrock 在架；Mamba-Transformer 混合架构",
       "context_window": 256000,
@@ -312,12 +310,11 @@
       ],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "上下文/输出规格未在本轮逐页复核",
         "同族 mini 版本存在"
       ],
-      "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-ai21-labs.html"
-      ],
+      "sources": [],
       "confidence": "low",
       "cost": {
         "currency": "USD",
@@ -5970,7 +5967,7 @@
       "vendor": "anthropic",
       "family": "Claude 4.x",
       "api_protocol": "native",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "GA；轻量档",
       "context_window": 200000,
@@ -6020,12 +6017,11 @@
       "aliases": [],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "上下文 200K，与 5 系 1M 差距明显"
       ],
-      "sources": [
-        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
-      ],
-      "confidence": "medium",
+      "sources": [],
+      "confidence": "low",
       "cost": {
         "currency": "USD",
         "unit": "per_1m_tokens",
@@ -8221,8 +8217,7 @@
         "纯文本模型会自动fallback到此模型做图像识别"
       ],
       "sources": [
-        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
-        "https://docs.cowagent.ai/zh/models/qianfan"
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
       ],
       "confidence": "high",
       "cost": {
@@ -12540,7 +12535,7 @@
       "vendor": "google",
       "family": "Gemma 3",
       "api_protocol": "chat_completions",
-      "verified": true,
+      "verified": false,
       "lifecycle": "legacy",
       "lifecycle_note": "上一代 Gemma，Bedrock 以 27B PT 形式在架",
       "context_window": 131072,
@@ -12594,13 +12589,12 @@
       ],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "Bedrock 上 27B 为 PT（预训练）而非 IT 版本",
         "建议优先用 Gemma 4"
       ],
-      "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-google.html"
-      ],
-      "confidence": "medium",
+      "sources": [],
+      "confidence": "low",
       "cost": {
         "currency": "USD",
         "unit": "per_1m_tokens",
@@ -12679,7 +12673,6 @@
         "上下文按 Gemma 4 medium 档 256K 推断"
       ],
       "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-google.html",
         "https://ai.google.dev/gemma/docs/core"
       ],
       "confidence": "medium",
@@ -12763,7 +12756,6 @@
         "Chat Completions 不返回推理内容，仅 Responses API 返回"
       ],
       "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-google-gemma-4-31b.html",
         "https://ai.google.dev/gemma/docs/core"
       ],
       "confidence": "high",
@@ -12845,7 +12837,6 @@
         "静态权重内存需求高于有效参数量"
       ],
       "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-google.html",
         "https://ai.google.dev/gemma/docs/core"
       ],
       "confidence": "medium",
@@ -13333,8 +13324,7 @@
         "需以星火控制台实际模型ID为准"
       ],
       "sources": [
-        "https://xinghuo.xfyun.cn/sparkapi",
-        "https://doc.iocoder.cn/ai/xinghuo/"
+        "https://xinghuo.xfyun.cn/sparkapi"
       ],
       "confidence": "low",
       "cost": {
@@ -13516,7 +13506,7 @@
       "vendor": "meta",
       "family": "Llama 4",
       "api_protocol": "native",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "Bedrock 在架；Llama 4 主力",
       "context_window": null,
@@ -13566,13 +13556,12 @@
       "aliases": [],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "Bedrock 上 ID 需在控制台确认",
         "Llama 3.x 系列仍在架但已属上一代"
       ],
-      "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-meta.html"
-      ],
-      "confidence": "medium",
+      "sources": [],
+      "confidence": "low",
       "cost": {
         "currency": "USD",
         "unit": "per_1m_tokens",
@@ -13595,7 +13584,7 @@
       "vendor": "meta",
       "family": "Llama 4",
       "api_protocol": "chat_completions",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "在架；Bedrock 与 Azure Foundry 均有",
       "context_window": 131072,
@@ -13645,14 +13634,12 @@
       "aliases": [],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "Azure 版本不支持工具调用",
         "仅英文"
       ],
-      "sources": [
-        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners",
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-meta.html"
-      ],
-      "confidence": "high",
+      "sources": [],
+      "confidence": "low",
       "cost": {
         "currency": "USD",
         "unit": "per_1m_tokens",
@@ -15345,8 +15332,7 @@
         "Azure Foundry 上仍显示为在架，但 Mistral 平台已退役，属平台差异"
       ],
       "sources": [
-        "https://docs.mistral.ai/getting-started/models/models_overview/",
-        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
       ],
       "confidence": "high",
       "cost": {
@@ -15442,7 +15428,6 @@
         "平台间生命周期不一致：Bedrock 在架但 Mistral 平台已退役同名代系"
       ],
       "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-mistral-ai.html",
         "https://docs.mistral.ai/getting-started/models/models_overview/"
       ],
       "confidence": "medium",
@@ -15700,7 +15685,6 @@
         "Bedrock 上模型 ID 未在文档中直接给出，需在控制台确认"
       ],
       "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-mistral-ai.html",
         "https://docs.mistral.ai/getting-started/models/models_overview/"
       ],
       "confidence": "medium",
@@ -17968,7 +17952,7 @@
       "vendor": "nvidia",
       "family": "Nemotron 3",
       "api_protocol": "native",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "Active；2025-12-15 上线 Bedrock，EOL 不早于 2026-12-15",
       "context_window": 262144,
@@ -18020,14 +18004,13 @@
       ],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "Bedrock 与 build.nvidia.com 的上下文不一致（此处 256K/8K）",
         "bedrock-mantle 端点不支持服务端工具调用",
         "支持 GovCloud 跨区"
       ],
-      "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-nvidia-nemotron-nano-3-30b.html"
-      ],
-      "confidence": "high",
+      "sources": [],
+      "confidence": "low",
       "cost": {
         "currency": "USD",
         "unit": "per_1m_tokens",
@@ -18050,7 +18033,7 @@
       "vendor": "nvidia",
       "family": "Nemotron 2",
       "api_protocol": "native",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "Bedrock 在架；上一代 9B 小模型",
       "context_window": null,
@@ -18102,12 +18085,11 @@
       ],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "Bedrock 模型 ID 未在已抓取页面直接给出，需控制台确认",
         "12B VL 版为视觉变体"
       ],
-      "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-nvidia.html"
-      ],
+      "sources": [],
       "confidence": "low",
       "cost": {
         "currency": "USD",
@@ -25682,12 +25664,11 @@
       ],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "ID未在官方2026文档直接核实（来自第三方路由目录）",
         "256K上下文，已被Seed 2.x取代"
       ],
-      "sources": [
-        "https://therouter.ai/zh/blog/volcengine-ark-doubao-api-complete-guide/"
-      ],
+      "sources": [],
       "confidence": "low",
       "cost": {
         "currency": "USD",
@@ -25786,12 +25767,11 @@
       "aliases": [],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "ID未在官方2026文档直接核实",
         "官方称Seed2.0 Lite全面优于1.8"
       ],
-      "sources": [
-        "https://therouter.ai/zh/blog/volcengine-ark-doubao-api-complete-guide/"
-      ],
+      "sources": [],
       "confidence": "low",
       "cost": {
         "currency": "USD",
@@ -25906,8 +25886,7 @@
         "Coding Plan内model名可写doubao-seed-2.0-code"
       ],
       "sources": [
-        "https://www.volcengine.com/article/37482",
-        "https://www.atlascloud.ai/zh/models/bytedance/doubao-seed-2.0-code-preview-260215"
+        "https://www.volcengine.com/article/37482"
       ],
       "confidence": "high",
       "cost": {
@@ -26017,8 +25996,7 @@
         "TheRouter等第三方暴露上下文仅131k"
       ],
       "sources": [
-        "https://developer.volcengine.com/articles/7636596381943070763",
-        "https://therouter.ai/zh/models/doubao--doubao-seed-2-0-lite/"
+        "https://developer.volcengine.com/articles/7636596381943070763"
       ],
       "confidence": "medium",
       "cost": {
@@ -26127,7 +26105,6 @@
         "≤32k输入0.2元/2元每百万tokens（最便宜档）"
       ],
       "sources": [
-        "https://news.qq.com/rain/a/20260214A04AJ700",
         "https://seed.bytedance.com/zh/seed2"
       ],
       "confidence": "medium",
@@ -26238,8 +26215,7 @@
         "深度思考模型不支持stop字段"
       ],
       "sources": [
-        "https://developer.volcengine.com/articles/7610285824933445675",
-        "https://docs.evolink.ai/cn/api-manual/language-series/doubao-seed-2.0/doubao-seed-2.0-reference"
+        "https://developer.volcengine.com/articles/7610285824933445675"
       ],
       "confidence": "medium",
       "cost": {
@@ -26375,7 +26351,7 @@
       "vendor": "volcengine",
       "family": "doubao-seed-2.1",
       "api_protocol": "chat_completions",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "Seed 2.1高吞吐生产档，定价为Pro的50%",
       "context_window": 262144,
@@ -26442,14 +26418,12 @@
       ],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "在线3元/15元每百万tokens（输入/输出）",
         "上下文窗口与Pro一致为256k"
       ],
-      "sources": [
-        "https://howaiworks.ai/models/doubao-pro",
-        "https://therouter.ai/zh/blog/doubao-seed-21-volcengine-ark-coding-agent-guide/"
-      ],
-      "confidence": "medium",
+      "sources": [],
+      "confidence": "low",
       "cost": {
         "currency": "USD",
         "unit": "per_1m_tokens",
@@ -26540,8 +26514,7 @@
         "新项目建议用Seed 2.0 Code"
       ],
       "sources": [
-        "https://developer.volcengine.com/articles/7575512654534410294",
-        "https://blog.laozhang.ai/zh/posts/doubao-seed-code"
+        "https://developer.volcengine.com/articles/7575512654534410294"
       ],
       "confidence": "high",
       "cost": {
@@ -26670,7 +26643,7 @@
       "vendor": "writer",
       "family": "Palmyra",
       "api_protocol": "native",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "Bedrock 在架；Writer 长上下文旗舰",
       "context_window": null,
@@ -26722,12 +26695,11 @@
       ],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "规格未在本轮逐页复核",
         "另有 Palmyra Vision 7B"
       ],
-      "sources": [
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-writer.html"
-      ],
+      "sources": [],
       "confidence": "low",
       "cost": {
         "currency": "USD",
@@ -27752,7 +27724,7 @@
       "vendor": "xai",
       "family": "Grok 4",
       "api_protocol": "chat_completions",
-      "verified": true,
+      "verified": false,
       "lifecycle": "current",
       "lifecycle_note": "Preview；上一代，Azure 目录与 Bedrock 在架",
       "context_window": 200000,
@@ -27802,13 +27774,11 @@
       "aliases": [],
       "legacy_ids": [],
       "gotchas": [
+        "非官方来源，规格待核验（原来源为第三方/云平台文档）",
         "输出上限仅 8K"
       ],
-      "sources": [
-        "https://ai.azure.com/catalog/models?selectedCollection=Phi",
-        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-xai.html"
-      ],
-      "confidence": "medium",
+      "sources": [],
+      "confidence": "low",
       "cost": {
         "currency": "USD",
         "unit": "per_1m_tokens",

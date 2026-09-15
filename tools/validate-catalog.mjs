@@ -37,6 +37,90 @@ const LIFECYCLES = new Set(["current", "legacy", "retired", "unreleased"]);
 const CONFIDENCES = new Set(["high", "medium", "low"]);
 const ID_RE = /^[A-Za-z0-9][A-Za-z0-9._:/\-]*$/;
 
+// --------------------------------------------------------------------------
+// 来源白名单：sources 只接受**第一方厂商域名**（详见 CONTRIBUTING.md「来源白名单」）
+//
+// 规则：
+//   - URL host 等于某后缀，或是它的子域，即视为该 vendor 的官方来源；
+//   - github.com 之类的通用托管平台用 PATH_RULES 限定（仅特定组织路径算官方）；
+//   - 云平台文档（AWS/Azure）对**非**云厂商的模型不算官方来源；
+//   - 第三方聚合站/中转站/博客一律不接受。
+// 注意：sources 为空数组是合法的（条目可能尚无来源）；只对"有值但非官方"报错。
+// --------------------------------------------------------------------------
+
+const OFFICIAL_DOMAINS = {
+  openai: ["openai.com"],
+  anthropic: ["claude.com", "anthropic.com"],
+  google: ["google.dev", "google.com", "googleapis.com"],
+  deepseek: ["deepseek.com"],
+  alibaba: ["aliyun.com", "alibabacloud.com", "aliyuncs.com", "qwencloud.com", "qianwenai.com"],
+  zhipu: ["z.ai", "bigmodel.cn"],
+  moonshot: ["kimi.ai", "kimi.com", "moonshot.cn", "moonshot.ai"],
+  baidu: ["baidu.com"],
+  xai: ["x.ai"],
+  meta: ["meta.ai", "meta.com"],
+  mistral: ["mistral.ai"],
+  cohere: ["cohere.com"],
+  tencent: ["tencent.com", "tencent.cn", "tencentcloud.com"],
+  volcengine: ["volcengine.com", "bytedance.com", "seed.bytedance.com"],
+  nvidia: ["nvidia.com"],
+  microsoft: ["microsoft.com", "azure.com"],
+  amazon: ["aws.amazon.com", "amazon.com"],
+  minimax: ["minimax.io", "minimaxi.com", "minimax.cn"],
+  iflytek: ["xfyun.cn", "xf-yun.com"],
+  "01ai": ["lingyiwanwu.com"],
+  ai21: ["ai21.com"],
+  writer: ["writer.com"],
+};
+
+// 通用托管平台：host 命中还不够，路径前缀也必须命中（vendor 必须匹配）。
+const SOURCE_PATH_RULES = [
+  { vendor: "alibaba", host: "github.com", pathPrefix: "/QwenLM/" },
+];
+
+function sourceHost(url) {
+  try {
+    const parsed = new URL(url);
+    let host = parsed.hostname.toLowerCase();
+    if (host.startsWith("www.")) host = host.slice(4);
+    return { host, path: parsed.pathname };
+  } catch {
+    return null;
+  }
+}
+
+// 该 URL 是否为 vendor 的官方来源？
+function isOfficialSource(url, vendor) {
+  const parsed = sourceHost(url);
+  if (!parsed) return false;
+  const { host, path } = parsed;
+
+  for (const rule of SOURCE_PATH_RULES) {
+    if (rule.vendor !== vendor) continue;
+    if (host === rule.host || host.endsWith(`.${rule.host}`)) {
+      if (path.startsWith(rule.pathPrefix)) return true;
+    }
+  }
+
+  const suffixes = OFFICIAL_DOMAINS[vendor] || [];
+  for (const suffix of suffixes) {
+    if (host === suffix || host.endsWith(`.${suffix}`)) return true;
+  }
+  return false;
+}
+
+// sources 白名单校验：报错格式固定为
+//   <id>: sources 含非官方来源 <url>（vendor=<vendor>）
+function checkSources(modelId, vendor, sources) {
+  if (!Array.isArray(sources)) return; // 类型错误由 checkStrList 报告
+  for (const src of sources) {
+    if (typeof src !== "string") continue;
+    if (!isOfficialSource(src, vendor)) {
+      err(`${modelId}: sources 含非官方来源 ${src}（vendor=${vendor}）`);
+    }
+  }
+}
+
 const errors = [];
 const warnings = [];
 
@@ -382,6 +466,8 @@ function checkEntry(entry, index) {
         err(`${where}.sources: 非 http(s) 链接 ${pyRepr(src)}`);
       }
     }
+    // 只接受第一方厂商来源（空数组合法；有值但非官方 → error）
+    checkSources(modelId, vendor, sources);
   }
 
   if (lifecycle === "unreleased" && isPosInt(entry.context_window)) {
