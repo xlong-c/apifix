@@ -1,0 +1,1953 @@
+{
+  "batch": "anthropic-2026-full",
+  "researched_at": "2026-09-15",
+  "source": "lib-10 full-lineup sweep (official platform.claude.com docs)",
+  "models": [
+    {
+      "id": "claude-fable-5-1",
+      "vendor": "anthropic",
+      "family": "fable",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-09-01 发布，最新旗舰；退役承诺不早于 2027-09-01。需 30 天数据保留，默认不适用 ZDR。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "非默认值返回 400；仅 1.0 为向后兼容接受"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400；仅 >=0.99 接受"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 512,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-fable-5-1"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考始终开启，thinking.type 的 enabled 与 disabled 均返回 400",
+        "强制工具调用不可用：tool_choice 的 any 与 tool 返回 400",
+        "prefill 不支持，返回 400",
+        "thinking 块只在产生它的模型或更新模型间可读，且要求前缀未变（新账号 2026-08-31 起强制校验）",
+        "display 默认 omitted，需显式设 summarized 才可见思考摘要",
+        "缓存读取价格为 0.025x（$0.25/MTok），非标准 0.1x",
+        "无 Priority Tier 支持"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/fable-5-1/overview",
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-mythos-5-1",
+      "vendor": "anthropic",
+      "family": "mythos",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-09-01 发布，仅限 Project Glasswing 受邀客户；与 Fable 5.1 同规格同价。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "非默认值返回 400"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 512,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-mythos-5-1"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅限受邀访问，无自助开通渠道",
+        "思考始终开启，不可禁用",
+        "强制工具调用（any/tool）返回 400",
+        "prefill 返回 400",
+        "不做对话前缀绑定校验（与 Fable 5.1 的差异）",
+        "缓存读取价格 0.025x"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/mythos-5-1/overview",
+        "https://platform.claude.com/docs/en/models/fable-5-1/migration-guide",
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-5",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-07-24 发布，最新 Opus；退役承诺不早于 2027-07-24。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "非默认值返回 400；仅 1.0 接受"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400；仅 >=0.99 接受"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 512,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-opus-5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考默认开启；在 effort 为 xhigh 或 max 时设置 disabled 返回 400（仅 high 及以下可禁用）",
+        "禁用思考时模型可能把工具调用写成纯文本或泄漏内部 XML 标签",
+        "prefill 不支持，返回 400",
+        "display 默认 omitted",
+        "web fetch 工具不可用；Priority Tier 不支持",
+        "支持 fast mode（研究预览，$10/$50 计价）",
+        "支持 mid-conversation system messages 与 per-message effort（beta）"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/opus-5/overview",
+        "https://platform.claude.com/docs/en/models/opus-5/migration-guide",
+        "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-sonnet-5",
+      "vendor": "anthropic",
+      "family": "sonnet",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-06-30 发布，最新 Sonnet；退役承诺不早于 2027-06-30。$2/$10 为正式价。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "非默认值返回 400；仅 1.0 接受"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400；仅 >=0.99 接受"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 1024,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-sonnet-5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "新 tokenizer：同样文本约多 30% token",
+        "思考默认开启，可 disabled；manual extended thinking 返回 400",
+        "prefill 返回 400",
+        "首个带实时网络安全防护的 Sonnet，可能返回 stop_reason: refusal",
+        "不支持 mid-conversation system messages（需用顶层 system 字段）",
+        "Priority Tier 不支持"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/sonnet-5/overview",
+        "https://platform.claude.com/docs/en/models/sonnet-5/migration-guide",
+        "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-haiku-4-5-20251001",
+      "vendor": "anthropic",
+      "family": "haiku",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2025-10-15 发布，最新 Haiku；退役承诺不早于 2026-10-15。别名 claude-haiku-4-5 指向该快照。",
+      "context_window": 200000,
+      "max_output_tokens": 64000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "temperature 与 top_p 只能二选一，同时设置返回 400"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "不能与 temperature 同时设置"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "高级用法，范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 4096,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-haiku-4-5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅支持 manual extended thinking（type=enabled + budget_tokens），adaptive 返回 400",
+        "不支持 effort 参数",
+        "不支持 interleaved thinking（beta header 被接受但忽略）",
+        "prefill 支持",
+        "缓存最小长度 4096 token，偏高",
+        "支持 context awareness"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/haiku-4-5/overview",
+        "https://platform.claude.com/docs/en/models/haiku-4-5/migration-guide",
+        "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-fable-5",
+      "vendor": "anthropic",
+      "family": "fable",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-06-09 发布，仍可用但已标记 legacy，建议迁移到 Fable 5.1；退役承诺不早于 2027-06-09。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "非默认值返回 400"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 512,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-fable-5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考始终开启，disabled 与 enabled 均返回 400",
+        "prefill 返回 400",
+        "运行安全分类器，可能返回 refusal（含 reasoning_extraction 类别）",
+        "支持 Priority Tier（Fable 5.1 不支持）",
+        "缓存读取为 $1/MTok（标准 0.1x），Fable 5.1 为 $0.25",
+        "需 30 天数据保留"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/fable-5/overview",
+        "https://platform.claude.com/docs/en/models/fable-5/migration-guide",
+        "https://platform.claude.com/docs/en/build-with-claude/effort"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-mythos-5",
+      "vendor": "anthropic",
+      "family": "mythos",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-06-09 发布，仅限 Project Glasswing 受邀客户；已被 Mythos 5.1 取代但仍可用，退役承诺不早于 2027-06-09。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "非默认值返回 400"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 512,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-mythos-5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅限受邀访问",
+        "不运行安全分类器（与 Fable 5 的关键差异）",
+        "思考始终开启，不可禁用",
+        "prefill 返回 400",
+        "无 Priority Tier 支持",
+        "需 30 天数据保留"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/mythos-5/overview",
+        "https://platform.claude.com/docs/en/models/fable-5/migration-guide",
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-8",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-05-28 发布，仍可用但已标记 legacy，建议迁移到 Opus 5；退役承诺不早于 2027-05-28。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "非默认值返回 400；仅 1.0 接受"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400；仅 >=0.99 接受"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 1024,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-opus-4-8"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考默认关闭，需显式 type=adaptive；manual extended thinking 返回 400",
+        "prefill 返回 400",
+        "display 默认 omitted",
+        "支持 fast mode（$10/$50）与 mid-conversation system messages",
+        "支持 computer use / browser use 工具集",
+        "仍支持 Priority Tier（Opus 5 不支持）"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/opus-4-8/overview",
+        "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting",
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-7",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-04-16 发布，仍可用但已标记 legacy；退役承诺不早于 2027-04-16。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "非默认值返回 400；仅 1.0 接受"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400；仅 >=0.99 接受"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 2048,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-opus-4-7"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "首个拒绝采样参数的模型（4.7 起 temperature/top_p/top_k 非默认值 400）",
+        "新 tokenizer，同样文本约多 30% token",
+        "思考默认关闭，需显式 type=adaptive",
+        "prefill 返回 400",
+        "fast mode 已于 2026-07-24 移除，speed=fast 现返回错误",
+        "高分辨率图像输入（长边 2576px）"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/opus-4-7/overview",
+        "https://platform.claude.com/docs/en/release-notes/api",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-6",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-05 发布，仍可用但已标记 legacy；退役承诺不早于 2027-02-05。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "4.6 及更早支持；temperature 与 top_p 建议不并用"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 4096,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-opus-4-6"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "adaptive 与 extended 两种思考模式均支持，但 extended 已弃用（仍可用）",
+        "不支持 xhigh effort",
+        "prefill 返回 400",
+        "缓存最小长度 4096 token，偏高",
+        "manual 模式下无 interleaved thinking（仅 adaptive 模式支持）",
+        "Bedrock ID 带 -v1 后缀（最后一个带此后缀的模型）",
+        "fast mode 已移除，speed=fast 静默降级为标准速度"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/opus-4-6/overview",
+        "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-5-20251101",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-11-24 发布，仍可用但已标记 legacy；退役承诺不早于 2026-11-24。别名 claude-opus-4-5。",
+      "context_window": 200000,
+      "max_output_tokens": 64000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "4.6 及更早支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 4096,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-opus-4-5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅支持 extended thinking，adaptive 返回 400",
+        "是唯一支持 effort 的 extended-only 模型；effort 与 budget_tokens 组合使用",
+        "不支持 xhigh 与 max effort",
+        "prefill 支持",
+        "缓存最小长度 4096 token",
+        "manual 模式 interleaved thinking 需 interleaved-thinking-2025-05-14 beta 头",
+        "thinking 块默认保留（与 Haiku/Sonnet 4.5 不同）"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/opus-4-5/overview",
+        "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+        "https://platform.claude.com/docs/en/build-with-claude/effort"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-sonnet-4-6",
+      "vendor": "anthropic",
+      "family": "sonnet",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-17 发布，仍可用但已标记 legacy，建议迁移到 Sonnet 5；退役承诺不早于 2027-02-17。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "4.6 及更早支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 1024,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-sonnet-4-6"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "adaptive 与 extended 均支持，extended 已弃用",
+        "不支持 xhigh effort",
+        "prefill 返回 400（自 4.6 起移除）",
+        "支持 300k 输出（Batch API + output-300k-2026-03-24 beta）",
+        "manual 模式 interleaved thinking 的 beta 头仍可用但已弃用",
+        "支持 context awareness"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/sonnet-4-6/overview",
+        "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-sonnet-4-5-20250929",
+      "vendor": "anthropic",
+      "family": "sonnet",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-09-29 发布，仍可用但已标记 legacy；退役承诺不早于 2026-09-29。别名 claude-sonnet-4-5。",
+      "context_window": 200000,
+      "max_output_tokens": 64000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "4.6 及更早支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 1024,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [
+        "claude-sonnet-4-5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅支持 extended thinking，adaptive 返回 400",
+        "不支持 effort 参数",
+        "prefill 支持",
+        "manual 模式 interleaved thinking 需 beta 头",
+        "支持 context awareness",
+        "1M 上下文 beta 已于 2026 年退役，超过 200k 返回错误",
+        "thinking 块默认被剥离（不保留历史）"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/models/sonnet-4-5/overview",
+        "https://platform.claude.com/docs/en/build-with-claude/extended-thinking",
+        "https://platform.claude.com/docs/en/release-notes/api"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-1-20250805",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-05 宣布弃用，2026-08-05 在 Claude API 正式退役（请求报错）；Bedrock/Google Cloud 仍可用。",
+      "context_window": 200000,
+      "max_output_tokens": 32000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型支持采样参数"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 1024,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "claude-opus-4-1-20250805",
+          "note": "Claude API 已退役，Bedrock 与 Google Cloud 仍提供服务"
+        }
+      ],
+      "gotchas": [
+        "仅支持 extended thinking（type=enabled）",
+        "不支持 strict tool use 与结构化输出",
+        "Claude API 请求已返回错误；如需继续使用需走 Bedrock/Google Cloud",
+        "缓存读取 $1.50/MTok（旧定价）"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/release-notes/api",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-opus-4-20250514",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-04-14 宣布弃用，2026-06-15 在 Claude API 退役；Google Cloud 仍可用。",
+      "context_window": 200000,
+      "max_output_tokens": 32000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型支持采样参数"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 1024,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "claude-opus-4-20250514",
+          "note": "Claude API 已退役，Google Cloud 仍可用"
+        }
+      ],
+      "gotchas": [
+        "仅支持 extended thinking",
+        "不支持 strict tool use / 结构化输出",
+        "Claude API 请求已报错",
+        "缓存读取 $1.50/MTok"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/release-notes/api"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-sonnet-4-20250514",
+      "vendor": "anthropic",
+      "family": "sonnet",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-04-14 宣布弃用，2026-06-15 在 Claude API 退役；Bedrock/Google Cloud 仍可用。",
+      "context_window": 200000,
+      "max_output_tokens": 64000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型支持采样参数"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 1024,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "claude-sonnet-4-20250514",
+          "note": "Claude API 已退役，Bedrock/Google Cloud 仍可用"
+        }
+      ],
+      "gotchas": [
+        "仅支持 extended thinking",
+        "不支持 strict tool use / 结构化输出",
+        "1M 上下文 beta 已退役",
+        "prefill 支持",
+        "缓存读取 $0.30/MTok"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/release-notes/api",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-3-7-sonnet-20250219",
+      "vendor": "anthropic",
+      "family": "sonnet",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-10-28 宣布弃用，2026-02-19 退役（Claude API 与 Bedrock 均不可用）。",
+      "context_window": 200000,
+      "max_output_tokens": 64000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型支持采样参数"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已完全退役，所有请求报错",
+        "曾支持 128k 输出 beta（output-128k-2025-02-19）",
+        "extended thinking 为其主要特性"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/release-notes/api"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-3-5-haiku-20241022",
+      "vendor": "anthropic",
+      "family": "haiku",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-12-19 宣布弃用，2026-02-19 在 Claude API 退役；Bedrock/Google Cloud 仍可用。",
+      "context_window": 200000,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型支持采样参数"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 2048,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "claude-3-5-haiku-20241022",
+          "note": "Claude API 已退役，Bedrock/Google Cloud 仍可用；定价 $0.80/$4"
+        }
+      ],
+      "gotchas": [
+        "不支持思考（extended thinking）",
+        "Claude API 请求已报错",
+        "缓存最小 2048 token"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-3-haiku-20240307",
+      "vendor": "anthropic",
+      "family": "haiku",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-02-19 宣布弃用，2026-04-20 退役。",
+      "context_window": 200000,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型支持采样参数"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持思考",
+        "已完全退役",
+        "推荐替代 claude-haiku-4-5-20251001"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/release-notes/api"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-3-opus-20240229",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-06-30 宣布弃用，2026-01-05 退役（2026 年初仍在用）。",
+      "context_window": 200000,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型支持采样参数"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "2026-01-05 退役",
+        "不支持思考",
+        "无 PDF 支持（Claude 3 系列）",
+        "推荐替代 claude-opus-4-8"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/release-notes/api"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-mythos-preview",
+      "vendor": "anthropic",
+      "family": "mythos",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "研究预览模型，仅限受邀客户；已弃用，官方建议迁移到 claude-mythos-5，退役日期未在页面明确列出。",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "summarized",
+          "omitted"
+        ],
+        "can_disable": false,
+        "thinking_budget": {
+          "min": 1024,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "4.7 起系列，非默认值返回 400"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "非默认值返回 400"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "任何值均返回 400"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic|explicit",
+        "min_tokens": 2048,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "唯一同时支持 adaptive 与 extended 思考的 4.7+ 系列模型，但 disabled 返回 400",
+        "思考默认开启",
+        "prefill 返回 400",
+        "仅限受邀访问，Bedrock 上提供",
+        "缓存最小 2048 token"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations",
+        "https://platform.claude.com/docs/en/build-with-claude/thinking-troubleshooting",
+        "https://platform.claude.com/docs/en/build-with-claude/effort",
+        "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-3-5-sonnet-20240620",
+      "vendor": "anthropic",
+      "family": "sonnet",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-08-13 宣布弃用，2025-10-28 退役（早于 2026 年，仅作历史记录）。",
+      "context_window": 200000,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "2025-10-28 退役，早于 2026 年",
+        "不支持思考"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-3-5-sonnet-20241022",
+      "vendor": "anthropic",
+      "family": "sonnet",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-08-13 宣布弃用，2025-10-28 退役（早于 2026 年，仅作历史记录）。",
+      "context_window": 200000,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "旧模型"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "范围 [0,1]"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "范围 >=0"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": false,
+        "choice_modes": [
+          "auto",
+          "any",
+          "tool",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_config.format"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": [
+          "5m",
+          "1h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "2025-10-28 退役",
+        "不支持思考"
+      ],
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/model-deprecations"
+      ],
+      "confidence": "medium"
+    }
+  ]
+}

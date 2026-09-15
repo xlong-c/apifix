@@ -1,0 +1,1328 @@
+{
+  "batch": "pricing-openai-anthropic",
+  "researched_at": "2026-09-15",
+  "unit": "per_1m_tokens",
+  "models": [
+    {
+      "id": "claude-3-5-haiku-20241022",
+      "currency": "USD",
+      "input": 0.8,
+      "output": 4.0,
+      "cache_read": 0.08,
+      "cache_write": 1.0,
+      "context_over_200k": null,
+      "note": "1h cache write $1.60",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-3-5-sonnet-20240620",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2025-10-28 退役）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-3-5-sonnet-20241022",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2025-10-28 退役）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-3-7-sonnet-20250219",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-02-19 退役）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-3-haiku-20240307",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-04-20 退役）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-3-opus-20240229",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-01-05 退役）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-fable-5",
+      "currency": "USD",
+      "input": 10.0,
+      "output": 50.0,
+      "cache_read": 1.0,
+      "cache_write": 12.5,
+      "context_over_200k": null,
+      "note": "1h cache write $20",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-fable-5-1",
+      "currency": "USD",
+      "input": 10.0,
+      "output": 50.0,
+      "cache_read": 0.25,
+      "cache_write": 12.5,
+      "context_over_200k": null,
+      "note": "1h cache write $20",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-haiku-4-5",
+      "currency": "USD",
+      "input": 1.0,
+      "output": 5.0,
+      "cache_read": 0.1,
+      "cache_write": 1.25,
+      "context_over_200k": null,
+      "note": "1h cache write $2",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-haiku-4-5-20251001",
+      "currency": "USD",
+      "input": 1.0,
+      "output": 5.0,
+      "cache_read": 0.1,
+      "cache_write": 1.25,
+      "context_over_200k": null,
+      "note": "1h cache write $2",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-mythos-5",
+      "currency": "USD",
+      "input": 10.0,
+      "output": 50.0,
+      "cache_read": 1.0,
+      "cache_write": 12.5,
+      "context_over_200k": null,
+      "note": "1h cache write $20",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-mythos-5-1",
+      "currency": "USD",
+      "input": 10.0,
+      "output": 50.0,
+      "cache_read": 0.25,
+      "cache_write": 12.5,
+      "context_over_200k": null,
+      "note": "1h cache write $20",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-mythos-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "定价页未列出（研究预览模型，退役日期未明示）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-1-20250805",
+      "currency": "USD",
+      "input": 15.0,
+      "output": 75.0,
+      "cache_read": 1.5,
+      "cache_write": 18.75,
+      "context_over_200k": null,
+      "note": "1h cache write $30",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-20250514",
+      "currency": "USD",
+      "input": 15.0,
+      "output": 75.0,
+      "cache_read": 1.5,
+      "cache_write": 18.75,
+      "context_over_200k": null,
+      "note": "1h cache write $30",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-5-20251101",
+      "currency": "USD",
+      "input": 5.0,
+      "output": 25.0,
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "context_over_200k": null,
+      "note": "1h cache write $10",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-6",
+      "currency": "USD",
+      "input": 5.0,
+      "output": 25.0,
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "context_over_200k": null,
+      "note": "1h cache write $10",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-7",
+      "currency": "USD",
+      "input": 5.0,
+      "output": 25.0,
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "context_over_200k": null,
+      "note": "1h cache write $10",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-8",
+      "currency": "USD",
+      "input": 5.0,
+      "output": 25.0,
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "context_over_200k": null,
+      "note": "1h cache write $10",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-5",
+      "currency": "USD",
+      "input": 5.0,
+      "output": 25.0,
+      "cache_read": 0.5,
+      "cache_write": 6.25,
+      "context_over_200k": null,
+      "note": "1h cache write $10",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-sonnet-4-20250514",
+      "currency": "USD",
+      "input": 3.0,
+      "output": 15.0,
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "context_over_200k": null,
+      "note": "1h cache write $6",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-sonnet-4-5-20250929",
+      "currency": "USD",
+      "input": 3.0,
+      "output": 15.0,
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "context_over_200k": null,
+      "note": "1h cache write $6",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-sonnet-4-6",
+      "currency": "USD",
+      "input": 3.0,
+      "output": 15.0,
+      "cache_read": 0.3,
+      "cache_write": 3.75,
+      "context_over_200k": null,
+      "note": "1h cache write $6",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-sonnet-5",
+      "currency": "USD",
+      "input": 2.0,
+      "output": 10.0,
+      "cache_read": 0.2,
+      "cache_write": 2.5,
+      "context_over_200k": null,
+      "note": "1h cache write $4",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.claude.com/docs/en/about-claude/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "chat-latest",
+      "currency": "USD",
+      "input": 5.0,
+      "output": 30.0,
+      "cache_read": 0.5,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "Specialized models / ChatGPT 表",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "chatgpt-4o-latest",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-02-17 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "codex-mini-latest",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-02-12 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "computer-use-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-3.5-turbo",
+      "currency": "USD",
+      "input": 0.5,
+      "output": 1.5,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4",
+      "currency": "USD",
+      "input": 30.0,
+      "output": 60.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "定价页以 gpt-4-0613 列出",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4-turbo",
+      "currency": "USD",
+      "input": 10.0,
+      "output": 30.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "定价页以 gpt-4-turbo-2024-04-09 列出",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4-turbo-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-03-26 下线）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4.1",
+      "currency": "USD",
+      "input": 2.0,
+      "output": 8.0,
+      "cache_read": 0.5,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4.1-mini",
+      "currency": "USD",
+      "input": 0.4,
+      "output": 1.6,
+      "cache_read": 0.1,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4.1-nano",
+      "currency": "USD",
+      "input": 0.1,
+      "output": 0.4,
+      "cache_read": 0.025,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4.5-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2025-07-14 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4o",
+      "currency": "USD",
+      "input": 2.5,
+      "output": 10.0,
+      "cache_read": 1.25,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4o-mini",
+      "currency": "USD",
+      "input": 0.15,
+      "output": 0.6,
+      "cache_read": 0.075,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4o-mini-search-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-4o-search-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5",
+      "currency": "USD",
+      "input": 1.25,
+      "output": 10.0,
+      "cache_read": 0.125,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5-chat-latest",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5-codex",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5-mini",
+      "currency": "USD",
+      "input": 0.25,
+      "output": 2.0,
+      "cache_read": 0.025,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5-nano",
+      "currency": "USD",
+      "input": 0.05,
+      "output": 0.4,
+      "cache_read": 0.005,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5-pro",
+      "currency": "USD",
+      "input": 15.0,
+      "output": 120.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5-search-api",
+      "currency": "USD",
+      "input": 1.25,
+      "output": 10.0,
+      "cache_read": 0.125,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "Specialized models / Search 表",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.1",
+      "currency": "USD",
+      "input": 1.25,
+      "output": 10.0,
+      "cache_read": 0.125,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.1-chat-latest",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.1-codex",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.1-codex-max",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.1-codex-mini",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.2",
+      "currency": "USD",
+      "input": 1.75,
+      "output": 14.0,
+      "cache_read": 0.175,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.2-chat-latest",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-08-10 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.2-codex",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.2-pro",
+      "currency": "USD",
+      "input": 21.0,
+      "output": 168.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.3-chat-latest",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-08-10 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.3-codex",
+      "currency": "USD",
+      "input": 1.75,
+      "output": 14.0,
+      "cache_read": 0.175,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "Specialized models / Codex 表（Standard）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.4",
+      "currency": "USD",
+      "input": 2.5,
+      "output": 15.0,
+      "cache_read": 0.25,
+      "cache_write": null,
+      "context_over_200k": {
+        "input": 5.0,
+        "output": 22.5,
+        "cache_read": 0.5
+      },
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.4-cyber",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-09-11 公告弃用，2026-10-01 下线）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.4-mini",
+      "currency": "USD",
+      "input": 0.75,
+      "output": 4.5,
+      "cache_read": 0.075,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.4-nano",
+      "currency": "USD",
+      "input": 0.2,
+      "output": 1.25,
+      "cache_read": 0.02,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.4-pro",
+      "currency": "USD",
+      "input": 30.0,
+      "output": 180.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": {
+        "input": 60.0,
+        "output": 270.0
+      },
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.5",
+      "currency": "USD",
+      "input": 5.0,
+      "output": 30.0,
+      "cache_read": 0.5,
+      "cache_write": null,
+      "context_over_200k": {
+        "input": 10.0,
+        "output": 45.0,
+        "cache_read": 1.0
+      },
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.5-cyber",
+      "currency": "USD",
+      "input": 12.5,
+      "output": 75.0,
+      "cache_read": 1.25,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "Cyber models 表",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.5-pro",
+      "currency": "USD",
+      "input": 30.0,
+      "output": 180.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": {
+        "input": 60.0,
+        "output": 270.0
+      },
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.6",
+      "currency": "USD",
+      "input": 4.0,
+      "output": 20.0,
+      "cache_read": 0.4,
+      "cache_write": 5.0,
+      "context_over_200k": {
+        "input": 8.0,
+        "output": 30.0,
+        "cache_read": 0.8,
+        "cache_write": 10.0
+      },
+      "note": "别名，官方文档指向 gpt-5.6-sol，价格按 sol 计",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.6-cyber",
+      "currency": "USD",
+      "input": 12.5,
+      "output": 75.0,
+      "cache_read": 1.25,
+      "cache_write": 15.625,
+      "context_over_200k": null,
+      "note": "Cyber models 表",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.6-luna",
+      "currency": "USD",
+      "input": 0.2,
+      "output": 1.2,
+      "cache_read": 0.02,
+      "cache_write": 0.25,
+      "context_over_200k": {
+        "input": 0.4,
+        "output": 1.8,
+        "cache_read": 0.04,
+        "cache_write": 0.5
+      },
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.6-sol",
+      "currency": "USD",
+      "input": 4.0,
+      "output": 20.0,
+      "cache_read": 0.4,
+      "cache_write": 5.0,
+      "context_over_200k": {
+        "input": 8.0,
+        "output": 30.0,
+        "cache_read": 0.8,
+        "cache_write": 10.0
+      },
+      "note": "促销价，官方注明至少持续至 2026-11-21",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.6-terra",
+      "currency": "USD",
+      "input": 2.0,
+      "output": 12.0,
+      "cache_read": 0.2,
+      "cache_write": 2.5,
+      "context_over_200k": {
+        "input": 4.0,
+        "output": 18.0,
+        "cache_read": 0.4,
+        "cache_write": 5.0
+      },
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-6-astra",
+      "currency": "USD",
+      "input": 10.0,
+      "output": 50.0,
+      "cache_read": 1.0,
+      "cache_write": 12.5,
+      "context_over_200k": {
+        "input": 20.0,
+        "output": 75.0,
+        "cache_read": 2.0,
+        "cache_write": 25.0
+      },
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-daybreak-blue-latest",
+      "currency": "USD",
+      "input": 4.0,
+      "output": 20.0,
+      "cache_read": 0.4,
+      "cache_write": 5.0,
+      "context_over_200k": {
+        "input": 8.0,
+        "output": 30.0,
+        "cache_read": 0.8,
+        "cache_write": 10.0
+      },
+      "note": "别名，当前指向 gpt-5.6-sol，价格按 sol 计",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-daybreak-red-latest",
+      "currency": "USD",
+      "input": 12.5,
+      "output": 75.0,
+      "cache_read": 1.25,
+      "cache_write": 15.625,
+      "context_over_200k": null,
+      "note": "别名，当前指向 gpt-5.6-cyber，价格按 cyber 计",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-oss-120b",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "开放权重模型，未列入官方定价页（官方 API 限流为 0）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-oss-20b",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "开放权重模型，未列入官方定价页（官方 API 限流为 0）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-rosalind-research",
+      "currency": "USD",
+      "input": 5.0,
+      "output": 25.0,
+      "cache_read": 0.5,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "2026-10-05 起开始计费；cache write 不适用",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o1",
+      "currency": "USD",
+      "input": 15.0,
+      "output": 60.0,
+      "cache_read": 7.5,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o1-mini",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2025-10-27 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o1-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2025-07-28 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o1-pro",
+      "currency": "USD",
+      "input": 150.0,
+      "output": 600.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o3",
+      "currency": "USD",
+      "input": 2.0,
+      "output": 8.0,
+      "cache_read": 0.5,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o3-deep-research",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o3-mini",
+      "currency": "USD",
+      "input": 1.1,
+      "output": 4.4,
+      "cache_read": 0.55,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o3-pro",
+      "currency": "USD",
+      "input": 20.0,
+      "output": 80.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o4-mini",
+      "currency": "USD",
+      "input": 1.1,
+      "output": 4.4,
+      "cache_read": 0.275,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "o4-mini-deep-research",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "note": "已从定价页移除（2026-07-23 移除）",
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

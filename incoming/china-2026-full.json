@@ -1,0 +1,6785 @@
+{
+  "batch": "china-2026-full",
+  "researched_at": "2026-09-15",
+  "source": "librarian full-lineup sweep (official vendor docs)",
+  "models": [
+    {
+      "id": "qwen3.8-max",
+      "vendor": "alibaba",
+      "family": "qwen3.8",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026年旗舰，官方当前最强推理模型",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "xhigh"
+        ],
+        "default_effort": "xhigh",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "reasoning_effort与thinking_budget不可同时设置，同时传会报错",
+        "enable_thinking/preserve_thinking为非OpenAI标准参数，Python SDK需放extra_body",
+        "preserve_thinking默认开启并计入输入计费"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-8-max",
+        "https://docs.qwencloud.com/developer-guides/text-generation/thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.8-max-0902",
+      "vendor": "alibaba",
+      "family": "qwen3.8",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "qwen3.8-max的快照版本（2026-09-02）",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "xhigh"
+        ],
+        "default_effort": "xhigh",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen3.8-max-2026-09-02"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "别名qwen3.8-max-2026-09-02与0902等价"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-8-max"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.8-flash",
+      "vendor": "alibaba",
+      "family": "qwen3.8",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "轻量低成本档，官方称效果接近旗舰",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "兼容OpenAI与Anthropic双协议，可接入Claude Code/Codex",
+        "内置工具与结构化输出均支持"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-8-flash",
+        "https://help.aliyun.com/zh/model-studio/vision-model/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.7-max",
+      "vendor": "alibaba",
+      "family": "qwen3.7",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版模型区列出，仍可调用；快照含preview/0608/0520/0517",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方列表标注结构化输出不支持"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "qwen3.7-max-preview",
+          "note": "仅思考模式，纯文本预览版"
+        },
+        {
+          "id": "qwen3.7-max-2026-06-08",
+          "note": "新增视觉模态理解"
+        },
+        {
+          "id": "qwen3.7-max-2026-05-20",
+          "note": "纯文本正式快照"
+        },
+        {
+          "id": "qwen3.7-max-2026-05-17",
+          "note": "早期快照，仅思考模式"
+        }
+      ],
+      "gotchas": [
+        "2026-06-08快照起支持视觉输入",
+        "qwen3.7-max-preview与05-17快照仅支持思考模式，无法关闭"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-7-max",
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.7-plus",
+      "vendor": "alibaba",
+      "family": "qwen3.7",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "官方推荐Agent/Coding主力，1M上下文",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen3.7-plus-2026-05-26"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "默认开启思考，思考Token可占输出60%以上，简单任务务必显式enable_thinking=false",
+        "思考模式下建议流式调用避免网关超时"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-7-plus",
+        "https://platform.qianwenai.com/docs/developer-guides/text-generation/thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.7-flash",
+      "vendor": "alibaba",
+      "family": "qwen3.7",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Qwen3.7轻量档，多模态Agent能力升级",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen3.7-flash-2026-07-15"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "价格极低（≤32k输入0.2元/百万tokens）",
+        "支持视频输入，最长2小时"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-7-flash"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.6-max-preview",
+      "vendor": "alibaba",
+      "family": "qwen3.6",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "将于2026-10-10下线，建议迁移qwen3.7-max",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "2026-10-10下线，官方替代qwen3.7-max",
+        "无内置工具（官方列表标注不支持）"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model",
+        "https://platform.qianwenai.com/docs/changelog/model-deprecations/mainline-models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.6-plus",
+      "vendor": "alibaba",
+      "family": "qwen3.6",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版模型区，仍可调用；快照2026-04-02",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen3.6-plus-2026-04-02"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大思维链81920",
+        "思考模式下max_tokens有效范围[1,32768]，建议改用max_completion_tokens"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-6-plus",
+        "https://platform.qianwenai.com/docs/developer-guides/text-generation/thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.6-flash",
+      "vendor": "alibaba",
+      "family": "qwen3.6",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "官方当前轻量推荐档（替代旧3.6-plus推荐位）",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen3.6-flash-2026-04-16"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文缓存仅支持显式缓存",
+        "最大思维链131072（高于Plus）"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-6-flash",
+        "https://help.aliyun.com/zh/model-studio/vision-model/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.5-plus",
+      "vendor": "alibaba",
+      "family": "qwen3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版模型区，仍可调用；快照02-15/04-20",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen3.5-plus-2026-02-15",
+        "qwen3.5-plus-2026-04-20"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "混合思考模式，默认开启思考",
+        "被TokenHub等平台转售（Tencent TokenHub model=qwen3.5-plus）"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-5-plus",
+        "https://help.aliyun.com/zh/model-studio/deep-thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.5-flash",
+      "vendor": "alibaba",
+      "family": "qwen3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版模型区，仍可调用；快照2026-02-23",
+      "context_window": 1000000,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "gotchas": [
+        "仅支持显式缓存",
+        "支持非流式输出"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-5-flash",
+        "https://help.aliyun.com/zh/model-studio/vision-model/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.5-397b-a17b",
+      "vendor": "alibaba",
+      "family": "qwen3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Qwen3.5开源版（商业API托管），默认开启思考",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "开源版混合思考模型支持/no_think与/think提示词级开关"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/deep-thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.5-122b-a10b",
+      "vendor": "alibaba",
+      "family": "qwen3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Qwen3.5开源版（商业API托管）",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "同系列开源权重，支持本地部署"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/deep-thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.5-27b",
+      "vendor": "alibaba",
+      "family": "qwen3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Qwen3.5开源版（商业API托管）",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/deep-thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3.5-35b-a3b",
+      "vendor": "alibaba",
+      "family": "qwen3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Qwen3.5开源版（商业API托管）",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/deep-thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-max",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "将于2026-10-10下线，官方替代qwen3.7-max",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "qwen3-max-2026-01-23",
+          "note": "正式快照，等同qwen3-max功能"
+        },
+        {
+          "id": "qwen3-max-2025-09-23",
+          "note": "2025-09快照"
+        },
+        {
+          "id": "qwen3-max-preview",
+          "note": "预览版"
+        }
+      ],
+      "gotchas": [
+        "混合思考模式，默认不开启思考",
+        "2026-10-10下线，Coding Plan/Token Plan内相关模型同步下线"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/model-qwen3-max",
+        "https://platform.qianwenai.com/docs/changelog/model-deprecations/mainline-models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-coder-plus",
+      "vendor": "alibaba",
+      "family": "qwen3-coder",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "将于2026-10-10下线，替代qwen3.7-plus",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "qwen3-coder-plus-2025-09-23",
+          "note": "2025-09快照"
+        },
+        {
+          "id": "qwen3-coder-plus-2025-07-22",
+          "note": "2025-07快照"
+        }
+      ],
+      "gotchas": [
+        "官方建议用最新通用模型替代Coder系列",
+        "支持前缀续写（Partial Mode）"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-coder-plus",
+        "https://help.aliyun.com/zh/model-studio/qwen-coder"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-coder-flash",
+      "vendor": "alibaba",
+      "family": "qwen3-coder",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版模型区，仍可调用；快照2025-07-28",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen3-coder-flash-2025-07-28"
+      ],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-coder-next",
+      "vendor": "alibaba",
+      "family": "qwen3-coder",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版模型区；开源权重模型托管",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入204800，最大输出65536",
+        "官方模型卡与模型列表对Function Calling标注不一致（模型卡标不支持）",
+        "开源版80B-A3B，256K上下文可YaRN扩展至1M"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-coder-next",
+        "https://github.com/QwenLM/Qwen3-Coder/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-coder-480b-a35b-instruct",
+      "vendor": "alibaba",
+      "family": "qwen3-coder",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版托管，非思考模型",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方列表标注思考模式不支持"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-coder-30b-a3b-instruct",
+      "vendor": "alibaba",
+      "family": "qwen3-coder",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版托管，非思考模型",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-vl-plus",
+      "vendor": "alibaba",
+      "family": "qwen3-vl",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "视觉理解系列，仍可调用；快照2025-12-19/2025-09-23",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)，仅非思考模式"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "qwen3-vl-plus-2025-12-19",
+          "note": "12月快照，响应更快"
+        },
+        {
+          "id": "qwen3-vl-plus-2025-09-23",
+          "note": "9月快照"
+        }
+      ],
+      "gotchas": [
+        "混合思考模式，默认不开启思考（与3.5/3.6相反）",
+        "最大思维链81920，最长视频1小时/2GB"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-vl-plus",
+        "https://help.aliyun.com/zh/model-studio/vision-model/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-vl-flash",
+      "vendor": "alibaba",
+      "family": "qwen3-vl",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "视觉理解轻量档；主线将于2026-10-10下线，替代qwen3.6-flash",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)，仅非思考模式"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "qwen3-vl-flash-2026-01-22",
+          "note": "最新快照，Function Calling/结构化输出不支持"
+        },
+        {
+          "id": "qwen3-vl-flash-2025-10-15",
+          "note": "10月快照"
+        }
+      ],
+      "gotchas": [
+        "2026-10-10下线，官方替代qwen3.6-flash",
+        "快照版能力弱于稳定版（无FC/结构化输出）"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen3-vl-flash",
+        "https://platform.qianwenai.com/docs/changelog/model-deprecations/mainline-models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-235b-a22b",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Qwen3开源版托管（混合思考，默认开启）",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "开源版Qwen3混合思考模型仅支持流式输出",
+        "支持/no_think与/think提示词开关"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-235b-a22b-thinking-2507",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版思考专用（2507），仅思考模式",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方标注不支持"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅思考模式，无法关闭"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-235b-a22b-instruct-2507",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版非思考（2507）",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-next-80b-a3b-thinking",
+      "vendor": "alibaba",
+      "family": "qwen3-next",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版Qwen3-Next思考专用",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方标注不支持"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅思考模式"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-next-80b-a3b-instruct",
+      "vendor": "alibaba",
+      "family": "qwen3-next",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版Qwen3-Next非思考",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-32b",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版托管，混合思考（默认开启）",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅支持流式输出"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-30b-a3b",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版托管，混合思考（默认开启）",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅支持流式输出"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-30b-a3b-thinking-2507",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版思考专用（2507）",
+      "context_window": 81920,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方标注不支持"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文仅80k，仅思考模式"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-30b-a3b-instruct-2507",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版非思考（2507）",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-14b",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版托管，混合思考",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen3-8b",
+      "vendor": "alibaba",
+      "family": "qwen3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "开源版托管，混合思考",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen-plus",
+      "vendor": "alibaba",
+      "family": "qwen-legacy",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版主线，滚动更新；快照至2025-12-01",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen-plus-latest"
+      ],
+      "legacy_ids": [
+        {
+          "id": "qwen-plus-2025-12-01",
+          "note": "12月快照，Agent能力增强"
+        },
+        {
+          "id": "qwen-plus-2025-09-11",
+          "note": "9月快照"
+        },
+        {
+          "id": "qwen-plus-2025-07-28",
+          "note": "首次支持1M上下文"
+        },
+        {
+          "id": "qwen-plus-2025-04-28",
+          "note": "Qwen3混合思考首版，支持/think提示词"
+        }
+      ],
+      "gotchas": [
+        "默认不开启思考",
+        "qwen-plus-2025-04-28及之后快照支持提示词级思考开关"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/qwen-plus"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen-max",
+      "vendor": "alibaba",
+      "family": "qwen2.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "千问2.5系列千亿级模型，仍在服务；快照2025-01-25",
+      "context_window": 32768,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "qwen-max-2025-01-25",
+          "note": "功能等同快照"
+        }
+      ],
+      "gotchas": [
+        "Qwen2.5世代，无思考模式",
+        "内置工具支持"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen-flash",
+      "vendor": "alibaba",
+      "family": "qwen-legacy",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版轻量主线，混合思考（默认关闭）",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "快照自2025-07-28起支持"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen-turbo",
+      "vendor": "alibaba",
+      "family": "qwen-legacy",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "旧版极速档，混合思考（默认关闭）",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": 1,
+          "max": 32768,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwq-plus",
+      "vendor": "alibaba",
+      "family": "qwq",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "QwQ推理模型，仅思考模式",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方标注不支持"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "enable_thinking/thinking_budget对QwQ无效"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qvq-max",
+      "vendor": "alibaba",
+      "family": "qvq",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "视觉推理模型，仅思考模式",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方标注不支持"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方标注Function Calling不支持"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen-long",
+      "vendor": "alibaba",
+      "family": "qwen-long",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "超长文档专用，10M上下文",
+      "context_window": 10000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object/json_schema)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "qwen-long-latest"
+      ],
+      "legacy_ids": [
+        {
+          "id": "qwen-long-2025-01-25",
+          "note": "快照版"
+        }
+      ],
+      "gotchas": [
+        "Function Calling不支持",
+        "官方推荐用于超长文档（合同、文献）场景"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "qwen2.5-omni-7b",
+      "vendor": "alibaba",
+      "family": "qwen2.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Qwen2.5全模态小模型，仍在旧版列表",
+      "context_window": 32768,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "建议与top_p二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "与temperature二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "range": null,
+          "constraint": "商业版API不支持"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方标注不支持"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Qwen2.5世代多模态，功能有限"
+      ],
+      "sources": [
+        "https://help.aliyun.com/zh/model-studio/text-generation-model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M3",
+      "vendor": "minimax",
+      "family": "M3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-06-01发布，当前旗舰，1M上下文原生多模态",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "M3默认0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "OpenAI兼容文档未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Schema/Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "MiniMax-M3-highspeed"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "thinking.type支持disabled/adaptive，省略时默认开启思考",
+        "content含<think>标签必须完整回传；reasoning_split=true可分离思维链",
+        "1M上下文按两档计价（≤512K与512K~1M）",
+        "service_tier=priority价格为标准1.5倍"
+      ],
+      "sources": [
+        "https://platform.minimax.io/docs/api-reference/text-openai-api",
+        "https://www.minimaxi.com/blog/minimax-m3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M2.7",
+      "vendor": "minimax",
+      "family": "M2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-03-18发布，自我进化模型",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "M2.x默认0.9"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "OpenAI兼容文档未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Schema/Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "MiniMax-M2.7-highspeed"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "M2.x思考不可关闭（传disabled仍会思考）",
+        "输出速度约60tps，highspeed约100tps"
+      ],
+      "sources": [
+        "https://platform.minimax.io/docs/api-reference/text-openai-api",
+        "https://www.minimax.cn/news/minimax-m27-zh"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M2.5",
+      "vendor": "minimax",
+      "family": "M2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02发布，官方已归入Legacy Models，仍可调用",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.9"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "OpenAI兼容文档未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Schema/Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "MiniMax-M2.5-highspeed"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考不可关闭",
+        "被阿里云百炼/腾讯TokenHub/火山方舟转售"
+      ],
+      "sources": [
+        "https://platform.minimax.io/docs/guides/models-intro",
+        "https://platform.minimax.io/docs/release-notes/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M2.1",
+      "vendor": "minimax",
+      "family": "M2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Legacy Models区，230B总参/10B激活",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.9"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "OpenAI兼容文档未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Schema/Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "MiniMax-M2.1-highspeed"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考不可关闭"
+      ],
+      "sources": [
+        "https://platform.minimax.io/docs/guides/models-intro"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M2",
+      "vendor": "minimax",
+      "family": "M2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Legacy Models区，M2代基础版",
+      "context_window": 204800,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.9"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "OpenAI兼容文档未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Schema/Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输出128k含CoT",
+        "思考不可关闭"
+      ],
+      "sources": [
+        "https://platform.minimax.io/docs/guides/models-intro",
+        "https://platform.minimax.io/docs/api-reference/text-openai-api"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hy4-preview",
+      "vendor": "tencent",
+      "family": "hy4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "新一代生产力模型预览版，Agent与复杂任务能力升级",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "high",
+          "none"
+        ],
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方示例用0.9"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "结构化输出（官方能力列表）"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入960k（1M上下文）",
+        "默认开启深度思考",
+        "Anthropic协议路径同样支持（TokenHub /v1/messages）"
+      ],
+      "sources": [
+        "https://cloud.tencent.cn/document/product/1823/130051",
+        "https://cloud.tencent.com/document/product/1823/131208"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hy3",
+      "vendor": "tencent",
+      "family": "hy3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Hy3正式版，基于真实业务场景打磨，性价比档",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "none"
+        ],
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方示例用0.9"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "结构化输出（官方能力列表）"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "toolcall场景具备adaptive thinking；携带tools时reasoning_effort=low会被自动映射为high",
+        "最大输入192k"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1823/132252",
+        "https://cloud.tencent.com/document/product/1823/131208"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hy3-preview",
+      "vendor": "tencent",
+      "family": "hy3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "已于2026-08-31下线（官方列表标注）",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "disabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方示例用0.9"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "结构化输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "295B/21B激活MoE，256K上下文",
+        "默认不开启思考（与hy3相反）",
+        "2026-08-31已下线，迁移至hy3"
+      ],
+      "sources": [
+        "https://cloud.tencent.cn/document/product/1823/130051",
+        "https://cloud.tencent.cn/document/product/1823/130060"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hunyuan-role-latest",
+      "vendor": "tencent",
+      "family": "hy-role",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "角色扮演模型，仍在TokenHub服务",
+      "context_window": 32768,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "hy-role"
+      ],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-large-role",
+          "note": "2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-role",
+          "note": "2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-role-plus",
+          "note": "2026-06-22下线"
+        }
+      ],
+      "gotchas": [
+        "最大输入28k/输出4k（旧文档）",
+        "Anthropic协议支持，OpenAI Responses不支持"
+      ],
+      "sources": [
+        "https://cloud.tencent.cn/document/product/1823/130079",
+        "https://cloud.tencent.com/document/product/1729/104753"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "hunyuan-a13b",
+      "vendor": "tencent",
+      "family": "hunyuan",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "旧混元平台模型，原平台2026-09-30全面停服",
+      "context_window": 229376,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "首个混合推理模型，默认慢思考；query前加/no_think可切换快思考",
+        "最大输入224k/输出32k",
+        "原混元平台2026-09-30停服"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/104753"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hunyuan-turbos",
+      "vendor": "tencent",
+      "family": "hunyuan",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-22下线，迁移hy3-preview",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-turbos-latest",
+          "note": "2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-turbos-20250226",
+          "note": "快照，2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-turbos-20250926",
+          "note": "最后快照，2026-06-22下线"
+        }
+      ],
+      "gotchas": [
+        "Function Calling仅对turbos/t1/functioncall生效",
+        "已被hy3取代"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/131925",
+        "https://cloud.tencent.com/announce/detail/2301"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hunyuan-t1",
+      "vendor": "tencent",
+      "family": "hunyuan",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-22下线，迁移hy3-preview",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-t1-latest",
+          "note": "2026-06-22下线"
+        },
+        {
+          "id": "hunyuan-t1-20250321",
+          "note": "快照"
+        },
+        {
+          "id": "hunyuan-t1-20250822",
+          "note": "最后快照"
+        }
+      ],
+      "gotchas": [
+        "深度思考模型",
+        "已被hy3取代"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/131925"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hunyuan-2.0-instruct",
+      "vendor": "tencent",
+      "family": "hunyuan-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-22下线，迁移hy3-preview",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-2.0-instruct-20251111",
+          "note": "快照"
+        }
+      ],
+      "gotchas": [
+        "Token Plan套餐内旧模型，2026-06-22下线"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/131925",
+        "https://cloud.tencent.cn/document/product/1823/130060"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hunyuan-2.0-thinking",
+      "vendor": "tencent",
+      "family": "hunyuan-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-06-22下线，迁移hy3-preview",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "hunyuan-2.0-thinking-20251109",
+          "note": "快照"
+        },
+        {
+          "id": "hunyuan-2.0-thinking-dev-20251012",
+          "note": "开发版快照"
+        }
+      ],
+      "gotchas": [
+        "Tencent HY 2.0 Think，2026-06-22下线"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/131925"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "hunyuan-vision-1.5-instruct",
+      "vendor": "tencent",
+      "family": "hunyuan-vision",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "图生文快思考模型，2025-12-17更新",
+      "context_window": 24576,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入24k/输出16k",
+        "混元多模态模型2026-06-05起迁移通知"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/104753"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "hunyuan-t1-vision-20250916",
+      "vendor": "tencent",
+      "family": "hunyuan-vision",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "视觉深度思考模型（HY-Vision-1.5-Thinking）",
+      "context_window": 40960,
+      "max_output_tokens": 24576,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "官方未列"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入28k/输出20k（TokenHub表列40k/16k/24k）",
+        "图文问答、视觉定位、OCR、拍题解题"
+      ],
+      "sources": [
+        "https://cloud.tencent.com/document/product/1729/104753",
+        "https://cloud.tencent.cn/document/product/1823/130051"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "doubao-seed-evolving",
+      "vendor": "volcengine",
+      "family": "doubao-seed",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-07-15上线，固定ID周级滚动升级，Coding/Agent定位",
+      "context_window": 1000000,
+      "max_output_tokens": 262144,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format/structured_outputs(JSON Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "ID永久不变，无日期快照，不支持Batch，评测结果不可复现",
+        "价格6元/30元每百万tokens（输入/输出）",
+        "1M上下文为最新规格，部分第三方网关仍标256K"
+      ],
+      "sources": [
+        "https://developer.volcengine.com/articles/7665633658704298010",
+        "https://ai.volcengine.com/model"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "doubao-seed-2.1-pro",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-06-23 FORCE大会发布，旗舰深度推理/Agent",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format/structured_outputs(JSON Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-1-pro-260628"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "精确ID为doubao-seed-2-1-pro-260628（连字符格式）",
+        "多模态能力灰度中，文本为主；超过256k直接400",
+        "缓存命中1.2元/百万tokens"
+      ],
+      "sources": [
+        "https://ai.volcengine.com/model",
+        "https://www.volcengine.com/article/2608172"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "doubao-seed-2.1-turbo",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Seed 2.1高吞吐生产档，定价为Pro的50%",
+      "context_window": 262144,
+      "max_output_tokens": 262144,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format/structured_outputs(JSON Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-1-turbo-260628"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "在线3元/15元每百万tokens（输入/输出）",
+        "上下文窗口与Pro一致为256k"
+      ],
+      "sources": [
+        "https://howaiworks.ai/models/doubao-pro",
+        "https://therouter.ai/zh/blog/doubao-seed-21-volcengine-ark-coding-agent-guide/"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "doubao-seed-2.0-pro",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-14发布，已被2.1系列取代，仍可调用",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-0-pro-260215"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文规格各来源冲突（128k vs 256k），以方舟控制台为准",
+        "≤32k输入3.2元/16元每百万tokens",
+        "深度思考模型不支持stop字段"
+      ],
+      "sources": [
+        "https://developer.volcengine.com/articles/7610285824933445675",
+        "https://docs.evolink.ai/cn/api-manual/language-series/doubao-seed-2.0/doubao-seed-2.0-reference"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "doubao-seed-2.0-lite",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-14发布，2026-04-28升级全模态理解",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-0-lite-260215"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "豆包家族首款全模态理解模型（视频/图像/音频/文本统一理解）",
+        "≤32k输入0.6元/3.6元每百万tokens",
+        "TheRouter等第三方暴露上下文仅131k"
+      ],
+      "sources": [
+        "https://developer.volcengine.com/articles/7636596381943070763",
+        "https://therouter.ai/zh/models/doubao--doubao-seed-2-0-lite/"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "doubao-seed-2.0-mini",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-14发布，低时延高并发档",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-0-mini-260215"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "四档思考长度",
+        "≤32k输入0.2元/2元每百万tokens（最便宜档）"
+      ],
+      "sources": [
+        "https://news.qq.com/rain/a/20260214A04AJ700",
+        "https://seed.bytedance.com/zh/seed2"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "doubao-seed-2.0-code",
+      "vendor": "volcengine",
+      "family": "doubao-seed-2.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-15发布，编程加强版，已并入Coding Plan路由",
+      "context_window": 262144,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-2-0-code-preview-260215"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "支持多模态视觉理解（UI设计图生成前端代码）",
+        "原生兼容Anthropic API，可直接替换Claude Code",
+        "Coding Plan内model名可写doubao-seed-2.0-code"
+      ],
+      "sources": [
+        "https://www.volcengine.com/article/37482",
+        "https://www.atlascloud.ai/zh/models/bytedance/doubao-seed-2.0-code-preview-260215"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "doubao-seed-code",
+      "vendor": "volcengine",
+      "family": "doubao-seed-code",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-11-11发布，第一代编程模型，仍可通过Coding Plan调用",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object/Schema)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-code-preview-251028",
+        "doubao-seed-code-preview-latest"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "国内首个支持视觉理解的编程模型",
+        "最大输入224k/思考内容32k",
+        "新项目建议用Seed 2.0 Code"
+      ],
+      "sources": [
+        "https://developer.volcengine.com/articles/7575512654534410294",
+        "https://blog.laozhang.ai/zh/posts/doubao-seed-code"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ark-code-latest",
+      "vendor": "volcengine",
+      "family": "router",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Coding Plan智能路由别名，非真实模型ID",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "随路由目标模型而定"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "随路由目标模型而定"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "随路由目标模型而定"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "随路由目标模型而定"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "控制台选择Auto模式后按效果+速度智能路由（覆盖doubao-seed-2.0-code、GLM-4.7、Kimi-K2.5等10+模型）",
+        "控制台切换后3-5分钟生效",
+        "必须用Coding专用Base URL（/api/coding或/api/coding/v3），否则不计套餐额度"
+      ],
+      "sources": [
+        "https://www.volcengine.com/article/37482",
+        "https://codepick.dev/zh/guides/cline-ark-setup/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "doubao-seed-1.6",
+      "vendor": "volcengine",
+      "family": "doubao-seed-1.x",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025世代模型，第三方网关仍在售，官方文档未列入2026推荐",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "doubao-seed-1.6-thinking"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "ID未在官方2026文档直接核实（来自第三方路由目录）",
+        "256K上下文，已被Seed 2.x取代"
+      ],
+      "sources": [
+        "https://therouter.ai/zh/blog/volcengine-ark-doubao-api-complete-guide/"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "doubao-seed-1.8",
+      "vendor": "volcengine",
+      "family": "doubao-seed-1.x",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Seed1.8，增强Agent能力，被Seed2.0 Lite超越",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "[0,1]",
+          "constraint": "默认0.7"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "ID未在官方2026文档直接核实",
+        "官方称Seed2.0 Lite全面优于1.8"
+      ],
+      "sources": [
+        "https://therouter.ai/zh/blog/volcengine-ark-doubao-api-complete-guide/"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "ernie-5.1",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-05-09发布，当前旗舰；ERNIE-X1.1的官方替代模型",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数，官方未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "API模型列表返回context_length=248832，与文档128k口径不一致",
+        "ernie系列思考模型不支持thinking_budget，max_tokens限制reasoning+content总长",
+        "价格4元/18元每百万tokens（≤32k输入）"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "https://cloud.baidu.com/doc/qianfan-api/s/Dmba8k71y"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-5.0",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "文心5.0原生全模态，被5.1取代但仍在旗舰列表",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "原生全模态：text+image+voice+video→text",
+        "思维链长度60k",
+        "价格6元/24元每百万tokens（≤32k输入）"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-5.0-thinking-preview",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "文心5.0思考预览版",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "思维链60k"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-5.0-thinking-latest",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "文心5.0思考最新版，滚动更新",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "思维链60k"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-5.0-thinking-exp",
+      "vendor": "baidu",
+      "family": "ERNIE-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "文心5.0思考实验版，限流更低（RPM=6）",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "限流RPM=6/TPM=32000，不适合生产"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-x1.1",
+      "vendor": "baidu",
+      "family": "ERNIE-X1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "将于2026-09-29下线，官方替代ERNIE-5.1",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "深度思考模型，思维链64k",
+        "2026-09-29下线（登记2026-09-01）",
+        "不支持thinking_budget"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3",
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-x1.1-preview",
+      "vendor": "baidu",
+      "family": "ERNIE-X1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "预览版，将于2026-09-29下线",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "2026-09-29下线"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-turbo-128k",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "旗舰列表在售，性价比档，官方称超强通用Agent能力",
+      "context_window": 131072,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-4.5-Turbo-128K-Preview",
+          "note": "2026-04-23下线"
+        },
+        {
+          "id": "ERNIE-4.5-Turbo-Latest",
+          "note": "2026-02-26下线"
+        }
+      ],
+      "gotchas": [
+        "最大输入123k/输出12288",
+        "命中缓存价格0.0002元/千tokens"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-turbo-32k",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "短上下文性价比档，在售",
+      "context_window": 32768,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "最大输入27k/输出12288",
+        "ERIE-4.5开源300B-A47B的商业托管版"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "https://ai.baidu.com/ai-doc/WENXINWORKSHOP/4mchtzl8s"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-turbo-20260402",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-04-02快照版",
+      "context_window": 131072,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "限流RPM=60/TPM=150000"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-turbo-vl",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "视觉语言模型，在售",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-4.5-Turbo-VL-Preview",
+          "note": "2026-04-23下线"
+        }
+      ],
+      "gotchas": [
+        "最大输入123k/输出16384",
+        "纯文本模型会自动fallback到此模型做图像识别"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "https://docs.cowagent.ai/zh/models/qianfan"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-turbo-vl-32k",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "视觉语言短上下文版",
+      "context_window": 32768,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆标准参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(JSON Object)"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.0-8k",
+      "vendor": "baidu",
+      "family": "ERNIE-4.0",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "已于2026-06-30退役，替代ERNIE-4.5-Turbo-128K",
+      "context_window": 8192,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-4.0-Turbo-8K",
+          "note": "2026-06-30退役"
+        },
+        {
+          "id": "ERNIE-4.0-Turbo-128K",
+          "note": "2026-06-30退役"
+        }
+      ],
+      "gotchas": [
+        "2026-05-28登记，2026-06-30退役"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-3.5-8k",
+      "vendor": "baidu",
+      "family": "ERNIE-3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "已于2026-06-30退役，替代ERNIE-4.5-Turbo-128K",
+      "context_window": 8192,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-3.5-8K-0613",
+          "note": "2026-06-30退役"
+        },
+        {
+          "id": "ERNIE-3.5-8K-0701",
+          "note": "2026-06-30退役"
+        }
+      ],
+      "gotchas": [
+        "2026-05-28登记，2026-06-30退役"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-x1-turbo-32k",
+      "vendor": "baidu",
+      "family": "ERNIE-X1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "已于2026-06-30退役，替代ERNIE-4.5-Turbo-128K",
+      "context_window": 32768,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-X1-Turbo-32K-Preview",
+          "note": "2026-06-30退役"
+        },
+        {
+          "id": "ERNIE-X1-Turbo-Preview",
+          "note": "2026-06-30退役"
+        },
+        {
+          "id": "ERNIE-X1-Turbo-Latest",
+          "note": "2026-06-09退役"
+        }
+      ],
+      "gotchas": [
+        "X1系列推理模型，已被X1.1/5.1取代"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-21b-a3b",
+      "vendor": "baidu",
+      "family": "ERNIE-4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "开源模型托管版，已于2026-06-09退役",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-4.5-21B-A3B-Thinking",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-4.5-VL-28B-A3B",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-4.5-0.3B",
+          "note": "2026-06-30退役"
+        }
+      ],
+      "gotchas": [
+        "ERNIE开源系列托管版，均已退役"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3",
+        "https://ai.baidu.com/ai-doc/WENXINWORKSHOP/4mchtzl8s"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-bot-turbo",
+      "vendor": "baidu",
+      "family": "ERNIE-Bot",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "初代文心模型，已于2026-06-30退役",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "历史模型"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ERNIE-Character-8K",
+          "note": "2026-04-23/06-09退役"
+        },
+        {
+          "id": "ERNIE-Lite-8K",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-Speed-8K",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-Tiny-8K",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-Novel-8K",
+          "note": "2026-06-09退役"
+        },
+        {
+          "id": "ERNIE-Functions-8K",
+          "note": "2026-06-09退役"
+        }
+      ],
+      "gotchas": [
+        "ERNIE-3.5/4.0/Lite/Speed/Tiny/Character系列旧模型已批量退役",
+        "Yi-34B-Chat亦于2025-05-30在千帆退役"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/zmh4stou3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "spark-x",
+      "vendor": "iflytek",
+      "family": "Spark X",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "X2/X1.5共用model=spark-x，按base_url区分版本",
+      "context_window": 65536,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "(0,2]",
+          "constraint": "默认1.2，数学/推理/代码建议调高"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "默认0.95"
+        },
+        "top_k": {
+          "supported": true,
+          "range": "[1,6]",
+          "constraint": "默认6"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required",
+          "force",
+          "allowed_tools"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(仅json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "x1"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "X2用https://spark-api-open.xf-yun.com/x2/，X1.5用/v2/，同一model名不同端点",
+        "X2输入64K/输出128K；X1.5最大输出65535",
+        "thinking.type支持enabled/disabled/auto",
+        "web_search与function不可同时传",
+        "历史x1传参指向X1.5"
+      ],
+      "sources": [
+        "https://www.xfyun.cn/doc/spark/X1http.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "spark-x2-flash",
+      "vendor": "iflytek",
+      "family": "Spark X2",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "current",
+      "lifecycle_note": "官方产品页显示Spark-X2-Flash已发布，价格1~2元/百万tokens",
+      "context_window": null,
+      "max_output_tokens": 262144,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "(0,2]",
+          "constraint": "官方未列Flash专属范围"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "官方未列Flash专属范围"
+        },
+        "top_k": {
+          "supported": true,
+          "range": "[1,6]",
+          "constraint": "官方未列Flash专属范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required",
+          "force",
+          "allowed_tools"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方HTTP文档未给出精确model参数值，第三方文档用x2-flash/262144输出",
+        "需以星火控制台实际模型ID为准"
+      ],
+      "sources": [
+        "https://xinghuo.xfyun.cn/sparkapi",
+        "https://doc.iocoder.cn/ai/xinghuo/"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "4.0Ultra",
+      "vendor": "iflytek",
+      "family": "Spark Ultra",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Ultra版本已升级至X1.5快思考模式；Max套餐于2026-03-10下线后授权并入Ultra",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "默认1"
+        },
+        "top_k": {
+          "supported": true,
+          "range": "[1,6]",
+          "constraint": "默认4"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "支持搜索/天气/日期/诗词/字词/股票内置插件",
+        "支持system与Function Call（仅HTTP协议）",
+        "返回联网检索信源标题及地址"
+      ],
+      "sources": [
+        "https://www.xfyun.cn/doc/spark/HTTP%E8%B0%83%E7%94%A8%E6%96%87%E6%A1%A3.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "generalv3.5",
+      "vendor": "iflytek",
+      "family": "Spark Max",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "Max版本套餐已于2026-03-10下线，后端服务升级为Ultra",
+      "context_window": 32768,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "默认1"
+        },
+        "top_k": {
+          "supported": true,
+          "range": "[1,6]",
+          "constraint": "默认4"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "max-32k"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "2026-03-10下线，授权用量与Ultra合并",
+        "WebSocket domain=generalv3.5"
+      ],
+      "sources": [
+        "https://www.xfyun.cn/doc/spark/HTTP%E8%B0%83%E7%94%A8%E6%96%87%E6%A1%A3.html",
+        "https://www.xfyun.cn/doc/spark/Web.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "generalv3",
+      "vendor": "iflytek",
+      "family": "Spark Pro",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Pro专业级模型，仍在售",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": "[0,2]",
+          "constraint": "默认1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": "(0,1]",
+          "constraint": "默认1"
+        },
+        "top_k": {
+          "supported": true,
+          "range": "[1,6]",
+          "constraint": "默认4"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format(json_object)"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "pro-128k",
+        "max-32k",
+        "lite"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "pro-128k最大输出32768；lite免费但输出仅4096",
+        "Function Call仅Max/Ultra支持（HTTP）"
+      ],
+      "sources": [
+        "https://www.xfyun.cn/doc/spark/HTTP%E8%B0%83%E7%94%A8%E6%96%87%E6%A1%A3.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "Spark-X2.5-4B",
+      "vendor": "iflytek",
+      "family": "Spark X2.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "4B级端侧通用Dense模型，200+语言支持",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "产品页标注文本生成/多语言1M上下文",
+        "端侧定位，能力有限"
+      ],
+      "sources": [
+        "https://xinghuo.xfyun.cn/sparkapi"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "Spark-X2.5-1.7B",
+      "vendor": "iflytek",
+      "family": "Spark X2.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "1.7B级端侧通用Dense模型",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未列"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "官方未列"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "端侧小模型，官方未公开API细节"
+      ],
+      "sources": [
+        "https://xinghuo.xfyun.cn/sparkapi"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "yi-lightning",
+      "vendor": "01ai",
+      "family": "Yi",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "retired",
+      "lifecycle_note": "开放平台API已于2026-09-03 24:00停止服务；新注册/充值2026-08-10起停止",
+      "context_window": 16384,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "历史参数，官方文档已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "历史参数"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "平台停服，余额退款窗口开放至2026-12-03",
+        "16k上下文为第三方收录值，官方页面已不可访问",
+        "公司转型企业级AI，不再自营C端API"
+      ],
+      "sources": [
+        "https://platform.lingyiwanwu.com/",
+        "https://www.ithome.com/0/987/951.htm"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "yi-vision-v2",
+      "vendor": "01ai",
+      "family": "Yi",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "retired",
+      "lifecycle_note": "随开放平台停服（2026-09-03）一并停止",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "历史参数"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "图像理解/图文问答",
+        "官方平台已停服，ID来自第三方目录，未获官方当前确认"
+      ],
+      "sources": [
+        "https://api.tu-zi.com/docs/providers/yi"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "yi-large",
+      "vendor": "01ai",
+      "family": "Yi",
+      "api_protocol": "chat_completions",
+      "verified": false,
+      "lifecycle": "retired",
+      "lifecycle_note": "历史旗舰（千亿参数），随平台停服下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史参数"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "历史参数"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "yi-medium",
+          "note": "历史中档"
+        },
+        {
+          "id": "yi-spark",
+          "note": "历史轻量档"
+        },
+        {
+          "id": "yi-vl-plus",
+          "note": "历史视觉模型"
+        }
+      ],
+      "gotchas": [
+        "ID未在官方当前文档核实（平台已停服）",
+        "开源权重仍可用于本地部署"
+      ],
+      "sources": [
+        "https://platform.lingyiwanwu.com/",
+        "https://www.lingyiwanwu.com/yi"
+      ],
+      "confidence": "low"
+    }
+  ]
+}

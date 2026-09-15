@@ -1,0 +1,39 @@
+name: validate
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Syntax check (node --check, all .mjs)
+        run: |
+          for f in apifix.mjs lib/*.mjs tools/*.mjs; do
+            echo "checking $f"
+            node --check "$f"
+          done
+
+      - name: Validate catalog.json
+        run: node tools/validate-catalog.mjs
+
+      - name: Smoke test (list / match / emit)
+        run: |
+          node apifix.mjs --list > /dev/null
+          node apifix.mjs deepseek-v4.1-flash > /dev/null
+          node apifix.mjs claude-opus-5 --emit pi > /dev/null
+          printf 'deepseek-v4.1-flash\ngpt-6-astra\nclaude-opus-5\n' > /tmp/ids.txt
+          node apifix.mjs --match /tmp/ids.txt > /dev/null

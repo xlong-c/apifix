@@ -1,0 +1,1659 @@
+{
+  "batch": "xai-meta-2026-full",
+  "researched_at": "2026-09-15",
+  "source": "lib-12 full-lineup sweep (docs.x.ai + dev.meta.ai)",
+  "models": [
+    {
+      "id": "grok-4.6",
+      "vendor": "xai",
+      "family": "grok-4",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-08-12 发布，当前旗舰；官方称无文本输出上限；Batch API 不支持。Chat Completions 亦可用（Responses 为首选）",
+      "context_window": 500000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "auto",
+          "concise",
+          "detailed"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "官方对推理模型不建议调低；与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一，不建议同时调整"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持（最小 1，未设置即禁用）；Chat Completions 上标记为 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema（Chat Completions）/ text.format（Responses）；支持 JSON Schema 子集，工具参数隐式 strict"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "prompt ≥200k tokens 时全量请求按长上下文价计费（输入 $4/输出 $12），跨 1 token 即整单翻倍",
+        "Batch API 不支持",
+        "logprobs/top_logprobs 被静默忽略（grok-4.20 及更新）",
+        "presencePenalty、frequencyPenalty、stop 与推理模型同用会报错",
+        "官方称无输出上限，但 Chat Completions 未设 max_completion_tokens 时默认 128k",
+        "xhigh 需 4.6 及以上；模型页未列出任何别名（4.5/4.3 页有 -latest）",
+        "PDF 需经 Files API 附件（走文档检索 agentic 流程），图像仅支持 jpg/jpeg/png、上限 20MiB"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/models/grok-4.6",
+        "https://docs.x.ai/developers/grok-4-6",
+        "https://docs.x.ai/developers/release-notes",
+        "https://x.ai/news/grok-4-6",
+        "https://docs.x.ai/developers/model-capabilities/text/reasoning",
+        "https://docs.x.ai/developers/rest-api-reference/inference/chat-completions"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4.5",
+      "vendor": "xai",
+      "family": "grok-4",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-07-16 发布（API 2026-07 上线）；仍为现行模型；Batch API 不支持",
+      "context_window": 500000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "auto",
+          "concise",
+          "detailed"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "推理模型不建议调低；与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持；Chat Completions 上 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；工具参数隐式 strict"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4.5-latest",
+        "grok-build-latest"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "xhigh 在 4.5 上等同 high（4.6 起才真正生效）",
+        "grok-build-latest 指向本模型，而非 grok-build-0.1，勿混淆",
+        "Batch API 不支持",
+        "logprobs 静默忽略",
+        "200k 长上下文阈值全量计费",
+        "PDF 走 Files API 文档检索"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/models/grok-4.5",
+        "https://docs.x.ai/developers/release-notes",
+        "https://x.ai/news/grok-4-5",
+        "https://docs.x.ai/developers/model-capabilities/text/reasoning"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4.3",
+      "vendor": "xai",
+      "family": "grok-4",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-04-30 发布（官方新闻页无公告；API 全面开放约 2026-05-06，日期据第三方）；仍是 5 个 2026-05-15 退役模型的统一重定向目标",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "none",
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "default_effort": "low",
+        "summary_values": [
+          "auto",
+          "concise",
+          "detailed"
+        ],
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持；Chat Completions 上 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；工具参数隐式 strict"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4.3-latest"
+      ],
+      "legacy_ids": [
+        {
+          "id": "grok-4-1-fast-reasoning",
+          "note": "2026-05-15 起重定向到 grok-4.3 + low effort"
+        },
+        {
+          "id": "grok-4-1-fast-non-reasoning",
+          "note": "重定向到 grok-4.3 + none effort"
+        },
+        {
+          "id": "grok-4-fast-reasoning",
+          "note": "重定向到 grok-4.3 + low effort"
+        },
+        {
+          "id": "grok-4-fast-non-reasoning",
+          "note": "重定向到 grok-4.3 + none effort"
+        },
+        {
+          "id": "grok-4-0709",
+          "note": "重定向到 grok-4.3 + low effort"
+        },
+        {
+          "id": "grok-3",
+          "note": "重定向到 grok-4.3 + none effort"
+        }
+      ],
+      "gotchas": [
+        "是 2026-05-15 退役潮的兜底重定向目标，旧 slug 继续可用但按 4.3 价格计费",
+        "reasoning 可关闭（none），与 4.5/4.6 不同",
+        "200k 长上下文阈值全量计费",
+        "Batch API 支持，享 20% 折扣"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/models/grok-4.3",
+        "https://docs.x.ai/developers/migration/may-15-retirement",
+        "https://docs.x.ai/developers/rate-limits"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4.20-0309-reasoning",
+      "vendor": "xai",
+      "family": "grok-4.20",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-03 发布（release notes『March』；slug 0309 指 3 月 9 日），仍为现行模型",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持；Chat Completions 上 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；工具参数隐式 strict"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4.20-reasoning-latest",
+        "grok-4.20",
+        "grok-4.20-reasoning",
+        "grok-4.20-0309",
+        "grok-4.20-beta-0309-reasoning",
+        "grok-4.20-beta",
+        "grok-4.20-beta-0309",
+        "grok-4.20-beta-latest",
+        "grok-4.20-beta-latest-reasoning",
+        "grok-4.20-beta-reasoning",
+        "grok-4.20-experimental-beta-0304-reasoning",
+        "grok-4.20-experimental-beta-0304",
+        "grok-4.20-experimental-beta-reasoning-latest",
+        "grok-4.20-experimental-beta-latest",
+        "grok-4.20-reasoning-gv2"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "模型页未文档化 reasoning effort 档位（4.3/4.5/4.6 页有列出）",
+        "别名极多（beta/experimental 系列均指向本模型）",
+        "logprobs/top_logprobs 自本代起被静默忽略",
+        "200k 长上下文阈值全量计费",
+        "Batch API 支持，享 20% 折扣"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/models/grok-4.20-0309-reasoning",
+        "https://docs.x.ai/developers/release-notes",
+        "https://docs.x.ai/developers/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4.20-0309-non-reasoning",
+      "vendor": "xai",
+      "family": "grok-4.20",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-03 发布，非推理变体，仍为现行模型",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持；Chat Completions 上 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；工具参数隐式 strict"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4.20-non-reasoning",
+        "grok-4.20-non-reasoning-latest",
+        "grok-4.20-beta-non-reasoning",
+        "grok-4.20-beta-latest-non-reasoning",
+        "grok-4.20-experimental-beta-0304-non-reasoning",
+        "grok-4.20-experimental-beta-non-reasoning-latest",
+        "grok-4.20-beta-0309-non-reasoning",
+        "grok-4.20-non-reasoning-gv2"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "非推理变体，无 reasoning 能力",
+        "logprobs 自本代起静默忽略",
+        "200k 长上下文阈值全量计费",
+        "Batch API 支持"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/models/grok-4.20-0309-non-reasoning",
+        "https://docs.x.ai/developers/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4.20-multi-agent-0309",
+      "vendor": "xai",
+      "family": "grok-4.20",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-03 发布（beta），多智能体研究变体，仍为现行模型",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "模型页标注支持；但无客户端函数工具，仅内置工具（web_search/x_search/code_execution/collections_search）与远程 MCP"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4.20-multi-agent",
+        "grok-4.20-multi-agent-latest",
+        "grok-4.20-multi-agent-beta-latest",
+        "grok-4.20-multi-agent-experimental-beta-0304",
+        "grok-4.20-multi-agent-experimental-beta-latest",
+        "grok-4.20-multi-agent-beta-0309"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持 Chat Completions API，仅 Responses/xAI SDK",
+        "不支持客户端函数工具与自定义工具（模型页写 Yes，能力页明确不支持，冲突以能力页为准）",
+        "max_tokens 不支持",
+        "reasoning.effort 控制的是智能体数量：low/medium=4 个，high/xhigh=16 个，非推理深度",
+        "子智能体状态加密，仅 use_encrypted_content 时可回传",
+        "多智能体请求 token/工具消耗显著高于单智能体"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
+        "https://docs.x.ai/developers/model-capabilities/text/multi-agent"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-build-0.1",
+      "vendor": "xai",
+      "family": "grok-build",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-05-29 公共 beta 上线 API；grok-code-fast-1 自 2026-05-15 起成为其别名（真实可请求 ID）",
+      "context_window": 256000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持；Chat Completions 上 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；工具参数隐式 strict"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-code-fast-1",
+        "grok-code-fast",
+        "grok-code-fast-1-0825"
+      ],
+      "legacy_ids": [
+        {
+          "id": "grok-code-fast-1",
+          "note": "2026-05-15 起不再独立存在，作为 grok-build-0.1 的别名继续解析"
+        },
+        {
+          "id": "grok-code-fast",
+          "note": "历史别名"
+        },
+        {
+          "id": "grok-code-fast-1-0825",
+          "note": "历史别名（2025-08-25 版本）"
+        }
+      ],
+      "gotchas": [
+        "公共 beta 阶段，接口可能变化",
+        "Batch API 不支持",
+        "256k 上下文小于 grok-4.x 系列",
+        "模型页未列出 reasoning effort 档位",
+        "grok-build-latest 别名指向 grok-4.5，不是本模型"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/models/grok-build-0.1",
+        "https://docs.x.ai/developers/release-notes",
+        "https://x.ai/news/grok-build-0-1",
+        "https://docs.x.ai/developers/migration/may-15-retirement"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4-0709",
+      "vendor": "xai",
+      "family": "grok-4",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "Grok 4 的 API 快照 ID（别名 grok-4 / grok-4-latest），2025-07 发布，2026-05-15 12:00 PT 退役并重定向到 grok-4.3 + low effort",
+      "context_window": 256000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持；Chat Completions 上 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4",
+        "grok-4-latest"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "退役后 slug 仍可解析，但由 grok-4.3 + low effort 服务并按 4.3 价格计费",
+        "原价高于 grok-4.3，保留旧 slug 会造成成本上升",
+        "上下文 256k（管理 API 集群配置示例）"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/migration/may-15-retirement",
+        "https://docs.x.ai/developers/rest-api-reference/management",
+        "https://x.ai/news/grok-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4-fast-reasoning",
+      "vendor": "xai",
+      "family": "grok-4-fast",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-09-19 发布，2026-05-15 12:00 PT 退役，重定向到 grok-4.3 + low reasoning effort",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4-fast"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "退役后按 grok-4.3 价格计费",
+        "现行文档已删除该模型规格页，上下文/模态未再官方列出"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/migration/may-15-retirement",
+        "https://x.ai/news/grok-4-fast"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4-fast-non-reasoning",
+      "vendor": "xai",
+      "family": "grok-4-fast",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-09-19 发布，2026-05-15 12:00 PT 退役，重定向到 grok-4.3 + none reasoning effort",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4-fast"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "退役后按 grok-4.3 价格计费",
+        "非推理变体，重定向后使用 none effort"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/migration/may-15-retirement",
+        "https://x.ai/news/grok-4-fast"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4-1-fast-reasoning",
+      "vendor": "xai",
+      "family": "grok-4.1",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-19 发布，2026-05-15 12:00 PT 退役，重定向到 grok-4.3 + low reasoning effort",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4-1-fast"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "退役后按 grok-4.3 价格计费",
+        "grok-4.1 基座本身从未作为独立 API ID 出现在现行文档中，4.1 代 API 模型即本系列两个 fast 变体"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/migration/may-15-retirement",
+        "https://x.ai/news/grok-4-1-fast"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4-1-fast-non-reasoning",
+      "vendor": "xai",
+      "family": "grok-4.1",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-19 发布，2026-05-15 12:00 PT 退役，重定向到 grok-4.3 + none reasoning effort",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-4-1-fast"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "退役后按 grok-4.3 价格计费",
+        "非推理变体，重定向后使用 none effort"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/migration/may-15-retirement",
+        "https://x.ai/news/grok-4-1-fast"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-code-fast-1",
+      "vendor": "xai",
+      "family": "grok-code",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-08-28 发布，2026-05-15 12:00 PT 从独立模型退役，改由 grok-build-0.1 服务（slug 仍解析，现为 grok-build-0.1 别名）",
+      "context_window": 256000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "仅 Responses API/gRPC 支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-code-fast",
+        "grok-code-fast-1-0825"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "现已不是独立模型：请求会由 grok-build-0.1 服务，价格/行为随之变化",
+        "官方建议迁移到 grok-build-0.1",
+        "原模型仅文本输入（管理 API 集群配置示例）"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/migration/may-15-retirement",
+        "https://docs.x.ai/developers/models/grok-build-0.1",
+        "https://x.ai/news/grok-code-fast-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-3",
+      "vendor": "xai",
+      "family": "grok-3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-02 发布，2026-05-15 12:00 PT 退役（2026 年内仍可用至该日），重定向到 grok-4.3 + none reasoning effort",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一；presence/frequency penalty 不支持（grok-3）"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "Chat Completions 上标记 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-3-latest",
+        "grok-3-beta",
+        "grok-3-fast",
+        "grok-3-fast-latest",
+        "grok-3-fast-beta"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "presence_penalty/frequency_penalty 不受 grok-3 支持",
+        "退役后按 grok-4.3 价格计费",
+        "无推理能力"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/migration/may-15-retirement",
+        "https://docs.x.ai/developers/rest-api-reference/management",
+        "https://x.ai/news/grok-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-3-mini",
+      "vendor": "xai",
+      "family": "grok-3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-02 发布；未出现在 2026 年现行模型列表，也未列入 2026-05-15 退役公告，官方未给出 2026 生命周期说明；仅见于管理 API 集群配置示例",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "与 temperature 二选一"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "Chat Completions 上标记 Unsupported"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none",
+          "named_function"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "grok-3-mini-latest",
+        "grok-3-mini-beta",
+        "grok-3-mini-fast",
+        "grok-3-mini-fast-latest",
+        "grok-3-mini-fast-beta"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方 2026 文档无此模型的规格页或退役公告，状态不确定",
+        "不在 2026-05-15 退役清单中，是否仍可请求需以 /v1/models 实测为准"
+      ],
+      "sources": [
+        "https://docs.x.ai/developers/rest-api-reference/management",
+        "https://docs.x.ai/developers/migration/may-15-retirement"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "muse-spark-1.3",
+      "vendor": "meta",
+      "family": "muse-spark",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-09-02 发布，官方推荐用于新工作；Standard 层（数据不用于训练）；同时提供 Chat Completions 与 Anthropic Messages 协议",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high",
+          "xhigh",
+          "max"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "concise",
+          "detailed"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认 1.0，官方称模型在 1.0 调校最佳；与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "默认 1.0，须满足 0 < top_p ≤ 1，top_p=0 返回 400"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "Meta Model API 文档未提供 top_k 参数"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema（Chat Completions）/ text.format（Responses）；约束解码保证符合 schema，递归 schema 返回 400"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": [
+          "in_memory",
+          "24h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "始终推理，reasoning_effort:\"none\" 返回 400",
+        "max 档仅 Standard 层 1.3 支持，Contributor 版不可用",
+        "logprobs/top_logprobs 不支持（返回 400）",
+        "n>1 不支持",
+        "stop、logit_bias、prediction、verbosity、modalities、audio 等 OpenAI 参数不支持",
+        "web_search 仅 Responses API 提供；Chat Completions 无搜索接地",
+        "Chat Completions 不跨轮保留推理（reasoning_content 对外部调用者清空），agentic 场景应用 Responses",
+        "1.3 的音频理解未完全支持、质量可能下降，建议改用 1.2",
+        "输出与输入共享上下文预算；推理 token 计入输出上限与计费",
+        "输出上限 131072 来自官方 OpenCode 配置示例（非规格表）"
+      ],
+      "sources": [
+        "https://dev.meta.ai/docs/models",
+        "https://dev.meta.ai/docs/reasoning",
+        "https://dev.meta.ai/docs/pricing-rate-limits",
+        "https://dev.meta.ai/docs/quickstart",
+        "https://dev.meta.ai/docs/tool-calling",
+        "https://dev.meta.ai/docs/structured-output",
+        "https://dev.meta.ai/docs/prompt-caching",
+        "https://research.meta.ai/blog/introducing-muse-spark-1-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "muse-spark-1.3-contributor",
+      "vendor": "meta",
+      "family": "muse-spark",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-09-02 随 1.3 一同提供；Contributor 折扣层，代价是提示与补全会被用于训练未来模型",
+      "context_window": 1048576,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "concise",
+          "detailed"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认 1.0；与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "默认 1.0，须 >0 且 ≤1"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "文档未提供"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；约束解码"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": [
+          "in_memory",
+          "24h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "数据会被用于训练（这是折扣的交换条件）",
+        "不支持 max 推理档",
+        "限流更低：100 RPM / 3M TPM",
+        "价格 $0.10/$0.002/$0.20（输入/缓存/输出每 1M）",
+        "其余 gotcha 同 muse-spark-1.3（none 400、logprobs 400、仅 auto tool_choice 等）"
+      ],
+      "sources": [
+        "https://dev.meta.ai/docs/models",
+        "https://dev.meta.ai/docs/pricing-rate-limits",
+        "https://dev.meta.ai/docs/reasoning"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "muse-spark-1.2",
+      "vendor": "meta",
+      "family": "muse-spark",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-08-05 发布（Muse Code 同期 beta 上线，全球访问扩大）；仍为现行 Standard 模型",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "concise",
+          "detailed"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认 1.0；与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "默认 1.0，须 >0 且 ≤1"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "文档未提供"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；约束解码"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": [
+          "in_memory",
+          "24h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "音频理解建议使用本版本（1.3 音频质量可能下降）",
+        "始终推理，none 返回 400",
+        "logprobs 不支持",
+        "n>1、stop 等不支持",
+        "无官方输出上限文档（131072 仅对 1.3 有配置示例）"
+      ],
+      "sources": [
+        "https://dev.meta.ai/docs/models",
+        "https://dev.meta.ai/docs/reasoning",
+        "https://dev.meta.ai/docs/video-understanding",
+        "https://research.meta.ai/blog/introducing-muse-code-and-muse-spark-1-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "muse-spark-1.2-contributor",
+      "vendor": "meta",
+      "family": "muse-spark",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-08-05 随 1.2 提供；Contributor 折扣层，数据用于训练",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "concise",
+          "detailed"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认 1.0；与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "默认 1.0，须 >0 且 ≤1"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "文档未提供"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；约束解码"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": [
+          "in_memory",
+          "24h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "数据会被用于训练",
+        "限流 100 RPM / 3M TPM",
+        "价格 $0.10/$0.002/$0.20",
+        "无 max 推理档",
+        "其余 gotcha 同 muse-spark-1.2"
+      ],
+      "sources": [
+        "https://dev.meta.ai/docs/models",
+        "https://dev.meta.ai/docs/pricing-rate-limits"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "muse-spark-1.1",
+      "vendor": "meta",
+      "family": "muse-spark",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-07-08 公测首发（Meta Model API 公共预览）；最早已可用版本，仍为现行 Standard 模型",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high",
+          "xhigh"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "concise",
+          "detailed"
+        ],
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认 1.0；与 top_p 二选一"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "默认 1.0，须 >0 且 ≤1"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "文档未提供"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": true,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format.json_schema / text.format；约束解码"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": [
+          "in_memory",
+          "24h"
+        ]
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "没有 Contributor 变体（Contributor 层仅 1.2/1.3）",
+        "1.1 代模型页仍将音频列为支持输入，但部分能力页示例已改用 1.2",
+        "始终推理，none 返回 400",
+        "logprobs 不支持"
+      ],
+      "sources": [
+        "https://dev.meta.ai/docs/models",
+        "https://dev.meta.ai/docs/reasoning",
+        "https://developer.meta.com/ai/resources/blog/build-with-muse-spark/"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

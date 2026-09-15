@@ -1,0 +1,3602 @@
+{
+  "batch": "dsk-zhipu-moonshot-2026-full",
+  "researched_at": "2026-09-15",
+  "source": "librarian full-lineup sweep (official vendor docs)",
+  "models": [
+    {
+      "id": "deepseek-flash",
+      "vendor": "deepseek",
+      "family": "DeepSeek-V4.1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-09-10 正式发布（DeepSeek-V4.1-Flash），当前主力模型；旧名 deepseek-v4-flash 与 deepseek-v4-flash-vision-exp 临时路由到本模型",
+      "context_window": 1000000,
+      "max_output_tokens": 393216,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "思考模式下无效（不报错但不生效）"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "思考模式下限 0.95，低于 0.95 被抬升；非思考模式固定 1.0"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "Anthropic 协议下 top_k 被忽略"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "none",
+          "auto",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object（需在提示中要求输出 JSON）"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "deepseek-v4-flash",
+          "note": "V4-Flash 已于 2026-09-10 退役，该名临时路由到 V4.1-Flash 并按 Flash 价格计费"
+        },
+        {
+          "id": "deepseek-v4-flash-vision-exp",
+          "note": "视觉实验模型已于 2026-09-10 退役，该名临时路由到 V4.1-Flash"
+        }
+      ],
+      "gotchas": [
+        "思考模式为默认开启；temperature/presence_penalty/frequency_penalty 不生效。",
+        "带 tools 的请求必须回传全部 reasoning_content，否则返回 400。",
+        "max_tokens 默认 8K（非思考）/64K（思考）/128K（effort=max），上限 384K。",
+        "另支持 Anthropic /messages 与 OpenAI Responses 协议；并发上限 2500。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/quick_start/pricing",
+        "https://api-docs.deepseek.com/guides/thinking_mode",
+        "https://api-docs.deepseek.com/guides/vision",
+        "https://api-docs.deepseek.com/api/create-chat-completion",
+        "https://api-docs.deepseek.com/news/news260910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "vendor": "deepseek",
+      "family": "DeepSeek-V4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-08-13 GA（DeepSeek-V4-Pro-0813）；2026-09-10 曾公告 9/14 起路由到 V4.1-Flash，但同日更新与定价页改为继续提供 V4 Pro 服务、计费不变",
+      "context_window": 1000000,
+      "max_output_tokens": 393216,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "思考模式下无效"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "思考模式下限 0.95；非思考模式固定 1.0"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "none",
+          "auto",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持视觉输入；定价约为 Flash 的 3-4 倍。",
+        "Anthropic 协议下 claude-opus 前缀的模型名会被映射到本模型并按 Pro 价格计费。",
+        "并发上限 500。",
+        "官方公告存在冲突：news260910 称 9/14 起路由到 V4.1-Flash，changelog 与定价页脚注称继续提供服务，请以定价页为准并关注后续通知。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing",
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/news/news260813",
+        "https://api-docs.deepseek.com/guides/anthropic_api"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-v4-flash",
+      "vendor": "deepseek",
+      "family": "DeepSeek-V4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-07-31 GA；2026-09-10 随 V4.1-Flash 发布退役，模型名临时路由到 V4.1-Flash",
+      "context_window": 1000000,
+      "max_output_tokens": 393216,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "思考模式下无效"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "思考模式下限 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "none",
+          "auto",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "现已退役，同名请求实际由 V4.1-Flash 回答，不应再依赖该名。",
+        "版本为 V4-Flash-0731。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-v4-flash-vision-exp",
+      "vendor": "deepseek",
+      "family": "DeepSeek-V4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-21 发布（实验性视觉模型）；2026-09-10 退役，模型名临时路由到 V4.1-Flash",
+      "context_window": 1000000,
+      "max_output_tokens": 393216,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "思考模式下无效"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "思考模式下限 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "none",
+          "auto",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "纯文本能力与 V4-Flash 持平，视觉 Agent 能力接近 Opus-4.8（官方表述）。",
+        "现已退役，同名请求由 V4.1-Flash 回答。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/guides/vision"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-v4.1-flash-expires-on-0910",
+      "vendor": "deepseek",
+      "family": "DeepSeek-V4.1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-09-08 内部限时测试 ID（名称含过期日），2026-09-10 到期下线；正式版改名为 deepseek-flash",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "未单独公布，沿用 V4-Flash 参数"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "未单独公布"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未单独公布"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "测试期按 V4-Flash 价格计费，账户级并发限制 20（生产 Flash 为 2500）。",
+        "无模型卡与 changelog 条目，规格未公开；现已过期，调用会报模型不存在。",
+        "生产环境不应使用此 ID。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/news/news260910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-v4.1-pro",
+      "vendor": "deepseek",
+      "family": "DeepSeek-V4.1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "unreleased",
+      "lifecycle_note": "官方在 2026-09-10 公告中确认为后续旗舰（V4 Pro 路由安排的终点），截至 2026-09-15 未发布，无模型卡、无日期、无定价",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "未公布"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "未公布"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "未公布"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未公布"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅有路线图确认，任何具体发布日期均属猜测。",
+        "官方称 V4 Pro 服务将延续至 V4.1 Pro 发布，但未给出时间表。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/news/news260910"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-chat",
+      "vendor": "deepseek",
+      "family": "DeepSeek-V3.x（历史别名）",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-04-24 起指向 V4-Flash 非思考模式，2026-07-24 15:59 UTC 正式停用不可访问",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线，不再适用"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "DeepSeek-V3.2",
+          "note": "2025-12-01 起该别名对应 V3.2 非思考模式"
+        },
+        {
+          "id": "DeepSeek-V3.2-Exp",
+          "note": "2025-09-29 起对应 V3.2-Exp 非思考模式"
+        },
+        {
+          "id": "DeepSeek-V3.1-Terminus",
+          "note": "2025-09-22 起对应 V3.1-Terminus 非思考模式"
+        },
+        {
+          "id": "DeepSeek-V3.1",
+          "note": "2025-08-21 起对应 V3.1 非思考模式"
+        },
+        {
+          "id": "DeepSeek-V3-0324",
+          "note": "2025-03-24 起对应 V3-0324"
+        }
+      ],
+      "gotchas": [
+        "该别名自 2026-07-24 起完全不可用（非静默路由）。",
+        "历史版本 V3/V3.1/V3.2 均通过此别名提供，没有独立 API ID。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/news/news260424"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-reasoner",
+      "vendor": "deepseek",
+      "family": "DeepSeek-R1/V3.x（历史别名）",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-04-24 起指向 V4-Flash 思考模式，2026-07-24 15:59 UTC 正式停用不可访问",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线，不再适用"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "DeepSeek-V3.2",
+          "note": "2025-12-01 起该别名对应 V3.2 思考模式"
+        },
+        {
+          "id": "DeepSeek-V3.2-Exp",
+          "note": "2025-09-29 起对应 V3.2-Exp 思考模式"
+        },
+        {
+          "id": "DeepSeek-V3.1-Terminus",
+          "note": "2025-09-22 起对应 V3.1-Terminus 思考模式"
+        },
+        {
+          "id": "DeepSeek-V3.1",
+          "note": "2025-08-21 起对应 V3.1 思考模式"
+        },
+        {
+          "id": "DeepSeek-R1-0528",
+          "note": "2025-05-28 起对应 R1-0528"
+        },
+        {
+          "id": "DeepSeek-R1",
+          "note": "2025-01-20 上线"
+        }
+      ],
+      "gotchas": [
+        "该别名自 2026-07-24 起完全不可用。",
+        "V3.2 起支持思考模式下工具调用；R1 时代不支持。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/news/news260424"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-coder",
+      "vendor": "deepseek",
+      "family": "DeepSeek-Coder",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2024-09-05 与 deepseek-chat 合并升级为 DeepSeek-V2.5，此后不再单独服务；2026 年官方文档已无任何 coder 模型在线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "DeepSeek-Coder-V2-0724",
+          "note": "2024-07-24 版本"
+        },
+        {
+          "id": "DeepSeek-Coder-V2-0614",
+          "note": "2024-06-14 版本"
+        }
+      ],
+      "gotchas": [
+        "截至 2026-09-15 没有任何 coder 专属 API ID 在服务；代码能力已并入 chat/flash 主线。",
+        "FIM 补全（/beta 端点）由 deepseek-flash 非思考模式提供。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/guides/fim_completion"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "deepseek-v3.2-speciale",
+      "vendor": "deepseek",
+      "family": "DeepSeek-V3.2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-12-01 上线临时端点，2025-12-15 15:59 UTC 到期下线（2026 年已不可用）",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "临时端点已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "通过专用 base_url（v3.2_speciale_expires_on_20251215）提供，不支持工具调用。",
+        "定价与 V3.2 相同；已于 2025-12-15 到期。"
+      ],
+      "sources": [
+        "https://api-docs.deepseek.com/updates",
+        "https://api-docs.deepseek.com/news/news251201"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5.3",
+      "vendor": "zhipu",
+      "family": "GLM-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-08-18 正式发布（博客标注 8/14），Z.ai 最新旗舰，纯文本",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "max",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0，官方建议 temperature 与 top_p 只调其一"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "官方参数表未提供 top_k"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object（提示词中给出结构）"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "强制思考：thinking.type 只能 enabled，传 disabled 报错；迁移时须改为 enabled+reasoning_effort=low。",
+        "tool_choice 仅支持 auto；支持 tool_stream 流式工具参数。",
+        "支持 OpenAI Chat/Responses 与 Anthropic Messages 三种协议。",
+        "推理内容可跨轮保留（clear_thinking=false 开启保留式思考）。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-5.3",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/api-reference/llm/chat-completion",
+        "https://docs.z.ai/guides/overview/concept-param",
+        "https://docs.z.ai/release-notes/new-released"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5.3-flash",
+      "vendor": "zhipu",
+      "family": "GLM-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-08-26 发布，GLM-5 系列首个原生多模态模型，发布前以 ox-alpha 匿名测试",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "max",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "官方参数表未提供 top_k"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ox-alpha",
+          "note": "发布前在 OpenCode/OpenRouter 的匿名测试名（stealth/ox-alpha），非 Z.ai 官方 API ID"
+        }
+      ],
+      "gotchas": [
+        "强制思考，thinking.type 仅 enabled；建议 thinking.clear_thinking=false。",
+        "原生多模态：支持 image_url、video_url 与 file（pdf/txt/word/jsonl/xlsx/pptx，单文件 50M）。",
+        "320B 总参 / 18B 激活，MIT 开源权重；推荐 temperature 1、top_p 0.95、reasoning_effort max。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/vlm/glm-5.3-flash",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/api-reference/llm/chat-completion",
+        "https://z.ai/blog/glm-5.3-flash"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5.2",
+      "vendor": "zhipu",
+      "family": "GLM-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-06-16 发布，1M 上下文旗舰；仍在线并在售",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "max",
+          "xhigh",
+          "high",
+          "medium",
+          "low",
+          "minimal",
+          "none"
+        ],
+        "default_effort": "max",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "唯一支持 none/minimal 关闭思考的 GLM-5 系模型；low/medium 映射到 high，xhigh 映射到 max。",
+        "thinking.type 可设 disabled；启用时模型自动决定是否思考。",
+        "支持 tool_stream 流式工具参数。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-5.2",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/api-reference/llm/chat-completion",
+        "https://docs.z.ai/guides/capabilities/thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5.1",
+      "vendor": "zhipu",
+      "family": "GLM-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-04-07 发布，长时任务（单任务 8 小时）旗舰；已被 5.2/5.3 取代但仍在线在售",
+      "context_window": 200000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持 reasoning_effort（该参数仅 GLM-5.2 及以上）。",
+        "thinking 默认开启但模型自动决定是否思考，可 disabled。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-5.1",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/guides/overview/concept-param"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5",
+      "vendor": "zhipu",
+      "family": "GLM-5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2026-02-12 发布（发布前匿名代号 Pony Alpha，第三方报道）；仍在线在售但已被 5.x 后续版本取代",
+      "context_window": 200000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持 reasoning_effort。",
+        "集成了 DeepSeek Sparse Attention（官方技术描述）。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-5",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/release-notes/new-released"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.7",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2025-12-22 发布，引入 Turn-level Thinking；仍在售（$0.6/$2.2）",
+      "context_window": 200000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "API 参考称 GLM-4.7 强制思考（thinking.type 不能 disabled），但 GLM-4.7 文档又宣称支持回合级关闭思考，两处官方描述冲突，以 API 参考为准。",
+        "不支持 reasoning_effort（仅 GLM-5.2+）。",
+        "支持保留式思考（自动保留历史 reasoning_content）。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-4.7",
+        "https://docs.z.ai/api-reference/llm/chat-completion",
+        "https://docs.z.ai/guides/capabilities/thinking-mode",
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.7-flashx",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GLM-4.7 轻量高速版，仍在售（$0.07/$0.4）",
+      "context_window": 200000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "强制思考；不支持 reasoning_effort。",
+        "定位为高性价比高速版。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-4.7",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/api-reference/llm/chat-completion"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.7-flash",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-01-19 发布，GLM-4.7 免费轻量版，完全免费",
+      "context_window": 200000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "免费模型，输入/输出/缓存均 $0。",
+        "强制思考；不支持 reasoning_effort。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-4.7",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/release-notes/new-released"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.6",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-09-30 发布，上下文扩至 200K；仍在线在售但已被 4.7/5.x 取代",
+      "context_window": 200000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "混合思考：thinking.type 默认 enabled 且模型自动决定是否思考，可 disabled。",
+        "不支持 reasoning_effort。",
+        "支持 tool_stream 流式工具参数。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-4.6",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/api-reference/llm/chat-completion"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-07-28 发布（355B-A32B MoE）；仍在线在售但已被后续版本取代",
+      "context_window": 128000,
+      "max_output_tokens": 98304,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.6（4.5 系列）"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "temperature 默认值 0.6，与其他 GLM 系列（1.0）不同。",
+        "支持交错思考（工具调用间思考）。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-4.5",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/api-reference/llm/chat-completion"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5-air",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-07-28 与 GLM-4.5 同批发布（106B-A12B MoE）；仍在线在售",
+      "context_window": 128000,
+      "max_output_tokens": 98304,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.6"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "temperature 默认 0.6。",
+        "MIT 开源权重。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/llm/glm-4.5",
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5-x",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "GLM-4.5 超高速版；仍在线在售（$2.2/$8.9）",
+      "context_window": 128000,
+      "max_output_tokens": 98304,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.6"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "价格高于 GLM-4.5 标准版，定位低延迟高并发。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/guides/overview/overview",
+        "https://docs.z.ai/api-reference/llm/chat-completion"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5-airx",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "GLM-4.5-Air 超高速版；仍在线在售（$1.1/$4.5）",
+      "context_window": 128000,
+      "max_output_tokens": 98304,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.6"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "温度默认 0.6；定位轻量超高速。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/guides/overview/overview"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5-flash",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "GLM-4.5 免费轻量版；仍在线且免费",
+      "context_window": 200000,
+      "max_output_tokens": 98304,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.6"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方概览页把上下文标为 200K，而 GLM-4.5 家族其余成员均为 128K，数据可能不一致。",
+        "完全免费。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/overview/overview",
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/guides/overview/concept-param"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "glm-4-32b-0414-128k",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "GLM-4 时代旧模型，仍在售（$0.1/$0.1）但已非推荐",
+      "context_window": 128000,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.75（该模型特有）"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.9（该模型特有）"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": false,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "默认温度 0.75、top_p 0.9，与其他 GLM 模型不同。",
+        "不支持 thinking。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing",
+        "https://docs.z.ai/api-reference/llm/chat-completion",
+        "https://docs.z.ai/guides/overview/concept-param"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.6v",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-12-08 发布，首个原生函数调用的视觉模型；仍在线在售（$0.3/$0.9）",
+      "context_window": 128000,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.8（视觉系列）"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.6（视觉系列）"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "视觉参数默认 temperature 0.8 / top_p 0.6。",
+        "支持图片（≤150 张）、视频（≤2 个，≤200MB）与 file（pdf/word/xlsx 等，≤50 个）。",
+        "thinking 可开关。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/vlm/glm-4.6v",
+        "https://docs.z.ai/api-reference/llm/chat-completion",
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.6v-flashx",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "GLM-4.6V 轻量高速版；仍在线在售（$0.04/$0.4）",
+      "context_window": 128000,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.8"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.6"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "与 GLM-4.6V 同规格，价格更低。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/vlm/glm-4.6v",
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.6v-flash",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "GLM-4.6V 免费版；仍在线且免费",
+      "context_window": 128000,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.8"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.6"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "完全免费，支持原生函数调用。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/vlm/glm-4.6v",
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5v",
+      "vendor": "zhipu",
+      "family": "GLM-4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-08-11 发布（106B-A12B 视觉推理模型）；仍在线在售（$0.6/$1.8）",
+      "context_window": 64000,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.8"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.6"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_object"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "API 参考称 GLM-4.5V 强制思考（thinking 不可 disabled）。",
+        "不支持原生函数调用（tools 仅 GLM-5.3-Flash / GLM-4.6V 系列 / autoglm-phone-multilingual 支持）。",
+        "上下文 64K、输出上限 16K，明显低于 4.6V 系列。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/vlm/glm-4.5v",
+        "https://docs.z.ai/api-reference/llm/chat-completion",
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "autoglm-phone-multilingual",
+      "vendor": "zhipu",
+      "family": "AutoGLM",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2025-12-11 发布的多语言手机操作智能体模型，通过 Chat Completion 视觉接口调用，仍在线",
+      "context_window": null,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "默认 0.0（该模型特有，确定性输出）"
+        },
+        "top_p": {
+          "supported": true,
+          "range": [
+            0.01,
+            1
+          ],
+          "constraint": "默认 0.85"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto"
+        ]
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未文档化"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "温度默认 0.0、top_p 0.85。",
+        "输出上限仅 4K；上下文长度未在文档中给出。",
+        "属于视觉/Agent 模型而非通用对话模型。"
+      ],
+      "sources": [
+        "https://docs.z.ai/api-reference/llm/chat-completion",
+        "https://docs.z.ai/guides/overview/overview",
+        "https://docs.z.ai/release-notes/new-released"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "ox-alpha",
+      "vendor": "zhipu",
+      "family": "GLM-5",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-20 至 08-26 在 OpenCode/OpenRouter 匿名测试（stealth/ox-alpha、x-preview-f-free），2026-08-26 揭晓为 GLM-5.3-Flash 并同日下线匿名路由；非 Z.ai 官方 API ID",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "max",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "第三方平台参数，官方未文档化"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方未文档化"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "官方未文档化"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "官方未文档化（第三方列出结构化输出支持）"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "stealth/ox-alpha",
+          "note": "OpenRouter 匿名 ID，页面保留历史记录并注明由 ZAI 运营"
+        },
+        {
+          "id": "x-preview-f-free",
+          "note": "OpenCode Zen 匿名 ID，已从模型表移除"
+        }
+      ],
+      "gotchas": [
+        "Z.ai 官方确认它是 GLM-5.3-Flash 的发布前匿名测试；stealth/ox-alpha 现已无可用供应商。",
+        "匿名期间的用量数据与隐私条款来自第三方平台，不等同于 Z.ai 官方 API 条款。"
+      ],
+      "sources": [
+        "https://docs.z.ai/guides/vlm/glm-5.3-flash",
+        "https://z.ai/blog/glm-5.3-flash"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k3",
+      "vendor": "moonshot",
+      "family": "Kimi K3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-07-16 发布（2.8T 参数、1M 上下文），2026-07-27 开源权重；当前旗舰",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high",
+          "max"
+        ],
+        "default_effort": "max",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 1.0，传其他值报错，建议不要显式传入"
+        },
+        "top_p": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 0.95，传其他值报错"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none",
+          "required"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_schema + strict（token 级约束解码，符合 MFJS 规范）"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "始终思考且保留式思考（Preserved Thinking）始终开启，多轮/工具调用必须原样回传完整 assistant message（含 reasoning_content）。",
+        "max_completion_tokens 默认 131072、最大 1048576；输入+输出超出上下文会报错。",
+        "温度/top_p/n/presence_penalty/frequency_penalty 均为固定值。",
+        "视觉输入不支持公网图片 URL，仅 base64 或 ms://<file-id>。",
+        "另支持 Responses API 与 Anthropic Messages API（output_config.effort / reasoning.effort）。",
+        "官方称 K3 对思考历史敏感，中途从其他模型切换会话可能导致质量不稳定。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k3-quickstart",
+        "https://platform.kimi.com/docs/api/chat",
+        "https://platform.kimi.com/docs/api/messages",
+        "https://platform.kimi.com/docs/api/responses",
+        "https://platform.kimi.com/docs/pricing/chat",
+        "https://www.kimi.com/blog/kimi-k3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2.7-code",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-06-12 发布，代码专用模型（基于 K2.6，思考 token 约减少 30%）；当前在售",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 1.0，传其他值报错"
+        },
+        "top_p": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 0.95，传其他值报错"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_schema + strict（对嵌套/anyOf/oneOf/$ref 支持最稳）"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "始终开启思考且不可禁用，传 thinking.type=disabled 报错；Preserved Thinking 始终开启。",
+        "不支持 reasoning_effort。",
+        "tool_choice 不支持 required（传入报错）。",
+        "max_tokens 默认 32768（文档仅给出默认值，未公布上限）。",
+        "支持文本/图片/视频输入。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart",
+        "https://platform.kimi.com/docs/api/models-overview",
+        "https://platform.kimi.com/docs/api/chat",
+        "https://platform.kimi.com/docs/pricing/chat"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2.7-code-highspeed",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "与 kimi-k2.7-code 同一模型的高速版，输出约 180 tok/s（短上下文可达 260 tok/s）；当前在售",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 1.0，传其他值报错"
+        },
+        "top_p": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 0.95，传其他值报错"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_schema + strict"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "参数约束与 kimi-k2.7-code 完全一致，仅输出速度不同。",
+        "官方提示高速版资源有限，体验可能偶有波动。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k2-7-code-quickstart",
+        "https://platform.kimi.com/docs/api/models-overview",
+        "https://platform.kimi.com/docs/pricing/chat"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2.6",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-04-20 发布（1T MoE、256K 上下文、原生多模态）；当前在售",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "思考固定 1.0 / 非思考固定 0.6，传其他值报错"
+        },
+        "top_p": {
+          "supported": false,
+          "range": null,
+          "constraint": "固定 0.95，传其他值报错"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": true,
+        "choice_modes": [
+          "auto",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format json_schema + strict（复杂 schema 偶有不稳定）"
+      },
+      "vision": true,
+      "pdf": false,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "thinking.type 支持 enabled（默认）/disabled；thinking.keep 可选 all 启用保留式思考（默认 null 不保留）。",
+        "不支持 reasoning_effort；tool_choice 不支持 required。",
+        "思考模式下内置 $web_search 工具不兼容，需先关闭思考。",
+        "复杂 JSON Schema（$ref/oneOf）可能返回 Markdown 代码块，建议业务层二次校验。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k2-6-quickstart",
+        "https://platform.kimi.com/docs/api/models-overview",
+        "https://platform.kimi.com/docs/guide/use-thinking-models",
+        "https://platform.kimi.com/docs/guide/response_format"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2.5",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-01-27 发布（开源视觉 Agent 模型）；2026-08-31 16:00 国内外全平台下线，调用返回 404",
+      "context_window": 262144,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "官方文档已下线；历史推荐思考 1.0 / 非思考 0.6"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "历史推荐 0.95"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已于 2026-08-31 下线，官方建议迁移至 kimi-k3。",
+        "上下文/输出上限来自下线前文档与第三方模型卡（AWS Bedrock：256K / 16K），官方文档已不可查。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "kimi-k2",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "K2 系列整体于 2026-05-25 下线（含 kimi-k2-0905-preview、kimi-k2-0711-preview、kimi-k2-turbo-preview、kimi-k2-thinking、kimi-k2-thinking-turbo）",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "kimi-k2-0905-preview",
+          "note": "2026-05-25 下线"
+        },
+        {
+          "id": "kimi-k2-0711-preview",
+          "note": "2026-05-25 下线"
+        },
+        {
+          "id": "kimi-k2-turbo-preview",
+          "note": "2026-05-25 下线"
+        },
+        {
+          "id": "kimi-k2-thinking",
+          "note": "2026-05-25 下线"
+        },
+        {
+          "id": "kimi-k2-thinking-turbo",
+          "note": "2026-05-25 下线"
+        }
+      ],
+      "gotchas": [
+        "官方模型页以“kimi-k2 系列”整体标注下线，无单独基础 ID 条目。",
+        "基础模型 kimi-k2（非 preview）是否曾作为独立 API ID 未在文档中确认。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2-0905-preview",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线，官方建议迁移至 kimi-k3。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2-0711-preview",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2-turbo-preview",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2-thinking",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考变体，已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-k2-thinking-turbo",
+      "vendor": "moonshot",
+      "family": "Kimi K2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-25 随 K2 系列整体下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "思考高速变体，已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "moonshot-v1-8k",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 国内外全平台下线，调用返回 404",
+      "context_window": 8192,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线，官方建议迁移至 kimi-k3。",
+        "历史上支持 Tool Calling（2024-04-30 上线）与 Context Caching。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "moonshot-v1-32k",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 国内外全平台下线，调用返回 404",
+      "context_window": 32768,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "moonshot-v1-128k",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 国内外全平台下线，调用返回 404",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "moonshot-v1-auto",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2024-08-28 上线；2026-08-31 16:00 随 moonshot-v1 全系列下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "自动选择上下文档位的路由模型，已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "moonshot-v1-8k-vision-preview",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-01-13 上线；2026-08-31 16:00 随 moonshot-v1 全系列下线",
+      "context_window": 8192,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "视觉预览版，已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "moonshot-v1-32k-vision-preview",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 随 moonshot-v1 全系列下线",
+      "context_window": 32768,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "moonshot-v1-128k-vision-preview",
+      "vendor": "moonshot",
+      "family": "Moonshot V1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-08-31 16:00 随 moonshot-v1 全系列下线",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "已下线。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-latest",
+      "vendor": "moonshot",
+      "family": "Kimi Latest（滚动别名）",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-02-17 上线（自动指向最新模型）；2026-01-28 下线",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "滚动别名，指向行为随官方更新变化，已下线。",
+        "官方要求直接改用 kimi-k3。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models",
+        "https://platform.kimi.com/docs/changelog/changelog/changelog"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "kimi-thinking-preview",
+      "vendor": "moonshot",
+      "family": "Kimi Thinking",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-11 下线，官方建议升级至最新思考模型",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_p": {
+          "supported": null,
+          "range": null,
+          "constraint": "已下线"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "已下线"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "已下线"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "早期思考预览模型，2025-11-11 下线，2026 年不可用。"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/models"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

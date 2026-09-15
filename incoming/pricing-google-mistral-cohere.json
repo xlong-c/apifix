@@ -1,0 +1,703 @@
+{
+  "batch": "pricing-google-mistral-cohere",
+  "researched_at": "2026-09-15",
+  "unit": "per_1m_tokens",
+  "models": [
+    {
+      "id": "jamba-1.5-large",
+      "currency": "USD",
+      "input": 2.0,
+      "output": 8.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://www.ai21.com/pricing"
+      ],
+      "confidence": "high",
+      "note": "AI21 官方定价页列为 Jamba Large（$2/1M 输入、$8/1M 输出）；同页 Jamba Mini 为 $0.2/$0.4"
+    },
+    {
+      "id": "c4ai-aya-expanse-32b",
+      "currency": "USD",
+      "input": 0.5,
+      "output": 1.5,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "high",
+      "note": "官网定价页 FAQ：Aya Expanse 8B/32B API 按 $0.50/1M 输入、$1.50/1M 输出计费"
+    },
+    {
+      "id": "c4ai-aya-vision-32b",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "medium",
+      "note": "官方定价页未列出（开放权重，无公开按量 token 价）"
+    },
+    {
+      "id": "command",
+      "currency": "USD",
+      "input": 1.0,
+      "output": 2.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "high",
+      "note": "官网定价页 FAQ 旧版定价（现有客户）；同族 Command-light 为 $0.30/$0.60"
+    },
+    {
+      "id": "command-a-03-2025",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "medium",
+      "note": "官方定价页未列出（无公开按量 token 价）"
+    },
+    {
+      "id": "command-a-plus-05-2026",
+      "currency": "USD",
+      "input": 0.0,
+      "output": 0.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "high",
+      "note": "官方定价页标注 Free（Apache 2.0 开放权重；API key 与模型下载 $0）"
+    },
+    {
+      "id": "command-a-reasoning-08-2025",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "medium",
+      "note": "官方定价页未列出"
+    },
+    {
+      "id": "command-a-translate-08-2025",
+      "currency": "USD",
+      "input": 0.0,
+      "output": 0.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.cohere.com/docs/command-a-translate",
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "medium",
+      "note": "官方文档：试用与生产 key 在速率限制内免费；超出后/生产部署需联系销售"
+    },
+    {
+      "id": "command-a-vision-07-2025",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "medium",
+      "note": "官方定价页未列出"
+    },
+    {
+      "id": "command-r-08-2024",
+      "currency": "USD",
+      "input": 0.15,
+      "output": 0.6,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "high",
+      "note": "定价页列为 Command R"
+    },
+    {
+      "id": "command-r-plus-04-2024",
+      "currency": "USD",
+      "input": 3.0,
+      "output": 15.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "high",
+      "note": "官网定价页 FAQ 旧版定价（现有客户）"
+    },
+    {
+      "id": "command-r-plus-08-2024",
+      "currency": "USD",
+      "input": 2.5,
+      "output": 10.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "high",
+      "note": "官网定价页 FAQ 旧版定价（现有客户）"
+    },
+    {
+      "id": "command-r7b-12-2024",
+      "currency": "USD",
+      "input": 0.0375,
+      "output": 0.15,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "north-mini-code-1-0",
+      "currency": "USD",
+      "input": 0.0,
+      "output": 0.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "high",
+      "note": "官方定价页标注 Free（Apache 2.0 开放权重；API key 与模型下载 $0）"
+    },
+    {
+      "id": "north-small-translate-1-0",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing",
+        "https://docs.cohere.com/docs/north-small-translate-1.0"
+      ],
+      "confidence": "medium",
+      "note": "官方定价页未列出；文档：Chat V2 API 免费层可用，商用需经 Model Vault（定制定价）"
+    },
+    {
+      "id": "tiny-aya-global",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://cohere.com/pricing"
+      ],
+      "confidence": "medium",
+      "note": "官方定价页未列出（开放权重）"
+    },
+    {
+      "id": "gemini-2.0-flash",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除"
+    },
+    {
+      "id": "gemini-2.5-flash",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 2.5,
+      "cache_read": 0.03,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "输入为文本/图像/视频档（音频 $1.00）；缓存读同档（音频 $0.10）；无 cache_write 一次性费用，缓存存储 $1.00/1M tokens/小时"
+    },
+    {
+      "id": "gemini-2.5-flash-lite",
+      "currency": "USD",
+      "input": 0.1,
+      "output": 0.4,
+      "cache_read": 0.01,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "输入为文本/图像/视频档（音频 $0.30）；缓存读同档（音频 $0.03）；缓存存储 $1.00/1M tokens/小时"
+    },
+    {
+      "id": "gemini-2.5-pro",
+      "currency": "USD",
+      "input": 1.25,
+      "output": 10.0,
+      "cache_read": 0.125,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "官方定价页对 prompts <= 200k 与 > 200k 分档；本字段按约定仅记录标准档（>200k 档：输入 $2.50 / 输出 $15.00 / 缓存读 $0.25）。缓存存储 $4.50/1M tokens/小时"
+    },
+    {
+      "id": "gemini-3-flash-preview",
+      "currency": "USD",
+      "input": 0.5,
+      "output": 3.0,
+      "cache_read": 0.05,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "输入为文本/图像/视频档（音频 $1.00）；缓存读同档（音频 $0.10）；缓存存储 $1.00/1M tokens/小时"
+    },
+    {
+      "id": "gemini-3-pro-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除"
+    },
+    {
+      "id": "gemini-3.1-flash-lite",
+      "currency": "USD",
+      "input": 0.25,
+      "output": 1.5,
+      "cache_read": 0.025,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "输入为文本/图像/视频档（音频 $0.50）；缓存读同档（音频 $0.05）；缓存存储 $1.00/1M tokens/小时"
+    },
+    {
+      "id": "gemini-3.1-pro-preview",
+      "currency": "USD",
+      "input": 2.0,
+      "output": 12.0,
+      "cache_read": 0.2,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "官方定价页对 prompts <= 200k 与 > 200k 分档；本字段按约定仅记录标准档（>200k 档：输入 $4.00 / 输出 $18.00 / 缓存读 $0.40）。缓存存储 $4.50/1M tokens/小时"
+    },
+    {
+      "id": "gemini-3.5-flash",
+      "currency": "USD",
+      "input": 1.5,
+      "output": 9.0,
+      "cache_read": 0.15,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "无 cache_write 一次性费用；缓存存储 $1.00/1M tokens/小时"
+    },
+    {
+      "id": "gemini-3.5-flash-lite",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 2.5,
+      "cache_read": 0.03,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "输入含文本/图像/视频/音频；缓存存储 $1.00/1M tokens/小时"
+    },
+    {
+      "id": "gemini-3.6-flash",
+      "currency": "USD",
+      "input": 0.75,
+      "output": 3.75,
+      "cache_read": 0.075,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "2026-12-31 前优惠价；2027-01-01 起 $1.50/$7.50、缓存 $0.15。缓存存储 $0.50/1M tokens/小时（2027 起 $1.00）"
+    },
+    {
+      "id": "gemini-3.7-flash",
+      "currency": "USD",
+      "input": 0.75,
+      "output": 3.75,
+      "cache_read": 0.075,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "2026-12-31 前优惠价；2027-01-01 起 $1.50/$7.50、缓存 $0.15。缓存存储 $0.50/1M tokens/小时（2027 起 $1.00）"
+    },
+    {
+      "id": "gemini-3.8-flash",
+      "currency": "USD",
+      "input": 0.75,
+      "output": 3.75,
+      "cache_read": 0.075,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "2026-12-31 前优惠价；2027-01-01 起 $1.50/$7.50、缓存 $0.15。缓存存储 $0.50/1M tokens/小时（2027 起 $1.00）"
+    },
+    {
+      "id": "gemma-3-27b-it",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（定价页无 Gemma 3 条目）"
+    },
+    {
+      "id": "gemma-4-26b-a4b",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "Gemini API 定价页 Gemma 4 段：免费层免费，付费层 Not available（无按量价格）"
+    },
+    {
+      "id": "gemma-4-31b",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "Gemini API 定价页 Gemma 4 段：免费层免费，付费层 Not available（无按量价格）"
+    },
+    {
+      "id": "gemma-4-e2b",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/pricing"
+      ],
+      "confidence": "high",
+      "note": "Gemini API 定价页 Gemma 4 段：免费层免费，付费层 Not available（无按量价格）"
+    },
+    {
+      "id": "codestral-25-08",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 0.9,
+      "cache_read": 0.03,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "codestral-2501",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除"
+    },
+    {
+      "id": "devstral-2-123b",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high",
+      "note": "官方定价页未列出；平台侧 devstral-2512 已于 2026-07-31 退役（Bedrock 仍可调用）"
+    },
+    {
+      "id": "magistral-medium-2509",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除"
+    },
+    {
+      "id": "magistral-small-2507",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除"
+    },
+    {
+      "id": "ministral-3-14b-25-12",
+      "currency": "USD",
+      "input": 0.2,
+      "output": 0.2,
+      "cache_read": 0.02,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ministral-3-3b-25-12",
+      "currency": "USD",
+      "input": 0.1,
+      "output": 0.1,
+      "cache_read": 0.01,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ministral-3-8b-25-12",
+      "currency": "USD",
+      "input": 0.15,
+      "output": 0.15,
+      "cache_read": 0.015,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "mistral-large-3-25-12",
+      "currency": "USD",
+      "input": 0.5,
+      "output": 1.5,
+      "cache_read": 0.05,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "mistral-medium-3-5-26-04",
+      "currency": "USD",
+      "input": 1.5,
+      "output": 7.5,
+      "cache_read": 0.15,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "mistral-small-4-0-26-03",
+      "currency": "USD",
+      "input": 0.15,
+      "output": 0.6,
+      "cache_read": 0.015,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "pixtral-large-2411",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://mistral.ai/pricing/api",
+        "https://docs.mistral.ai/inference/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除"
+    },
+    {
+      "id": "palmyra-x5",
+      "currency": "USD",
+      "input": 0.6,
+      "output": 6.0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://dev.writer.com/home/pricing"
+      ],
+      "confidence": "high",
+      "note": "Writer AI Studio 官方定价页（dev.writer.com/home/pricing）列为 Palmyra X5；同页 X6 $2/$8、X4 $2.50/$10。writer.com/pricing 仅平台/坐席定价"
+    }
+  ]
+}

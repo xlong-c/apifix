@@ -1,0 +1,5913 @@
+{
+  "batch": "western-2026-full",
+  "researched_at": "2026-09-15",
+  "source": "librarian full-lineup sweep (official vendor docs)",
+  "models": [
+    {
+      "id": "gemini-3.8-flash",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "最新稳定版，2026-09-02 发布，无停用日期",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_json_schema / structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "minimal 思考档位不支持，传入会报错",
+        "思考 token 计入输出计费",
+        "max_output_tokens 含思考 token，设小会截断"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.8-flash",
+        "https://ai.google.dev/gemini-api/docs/thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-3.7-flash",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "上一代 Flash 稳定版，2026-08-13 发布",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "minimal 不支持",
+        "computer use 为 Preview",
+        "file search 全量支持"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.7-flash"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-3.6-flash",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2026-07-21 发布；也是 3-flash-preview 的推荐替代",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "token 上限按 3.x Flash 同族推断，未逐页核对"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models",
+        "https://ai.google.dev/gemini-api/docs/thinking"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "gemini-3.5-flash",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2026-05-19 发布",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-3-flash-preview",
+          "note": "预览版，同一模型代系，文档标为其 Preview 版本"
+        }
+      ],
+      "gotchas": [
+        "computer use 为 Preview"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.5-flash"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-3.5-flash-lite",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2026-07-21 发布",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "minimal",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "token 上限按同族推断",
+        "被列为 gemini-3.1-flash-lite 的推荐替代"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models",
+        "https://ai.google.dev/gemini-api/docs/thinking"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "gemini-3.1-flash-lite",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2026-05-07 发布，预计 2027-05-07 停用",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-3.1-flash-lite-preview",
+          "note": "预览版，2026-05-25 已关停"
+        }
+      ],
+      "gotchas": [
+        "不支持 computer use",
+        "已公布停用日期 2027-05-07"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-flash-lite",
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-3.1-pro-preview",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "预览版，2026-02-19 发布，无停用日期",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "gemini-3.1-pro-preview-customtools"
+      ],
+      "legacy_ids": [
+        {
+          "id": "gemini-3-pro-preview",
+          "note": "2026-03-09 已关停，替代为 3.1 Pro"
+        }
+      ],
+      "gotchas": [
+        "customtools 端点更偏向自定义工具但部分场景质量波动",
+        "file search 仅 AI Studio 可用"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-3-flash-preview",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "预览版，2025-12-17 发布，文档推荐迁移到 gemini-3.6-flash",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "minimal",
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "预览模型停用仅提前 2 周通知"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models",
+        "https://ai.google.dev/gemini-api/docs/thinking"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-2.5-pro",
+      "vendor": "google",
+      "family": "Gemini 2.5",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2.5 代旗舰，仍为稳定版且无停用日期；属上一代",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-2.5-pro-preview-03-25",
+          "note": "2025-12-02 关停"
+        },
+        {
+          "id": "gemini-2.5-pro-preview-05-06",
+          "note": "2025-12-02 关停"
+        },
+        {
+          "id": "gemini-2.5-pro-preview-06-05",
+          "note": "2025-12-02 关停"
+        }
+      ],
+      "gotchas": [
+        "知识截止 2025-01",
+        "上一代模型，新项目建议 3.x"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-pro",
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-2.5-flash",
+      "vendor": "google",
+      "family": "Gemini 2.5",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2025-06-17 发布，无停用日期",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-2.5-flash-preview-09-25",
+          "note": "2026-02-17 关停，推荐迁移到 3.6 Flash"
+        }
+      ],
+      "gotchas": [
+        "知识截止 2025-01"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/models/gemini-2.5-flash",
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-2.5-flash-lite",
+      "vendor": "google",
+      "family": "Gemini 2.5",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "稳定版，2025-07-22 发布，无停用日期",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "off",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-2.5-flash-lite-preview-09-2025",
+          "note": "2026-03-31 关停"
+        }
+      ],
+      "gotchas": [
+        "默认关闭思考（2.5 系中唯一默认 off）",
+        "token 上限按同族推断"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/thinking",
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "gemini-3-pro-preview",
+      "vendor": "google",
+      "family": "Gemini 3",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-18 发布，2026-03-09 关停；替代 gemini-3.1-pro-preview",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "high"
+        ],
+        "default_effort": "high",
+        "summary_values": [
+          "auto",
+          "none"
+        ],
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已停用"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "已停用"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "已停用"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "端点已完全关闭，不可调用"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemini-2.0-flash",
+      "vendor": "google",
+      "family": "Gemini 2.0",
+      "api_protocol": "gemini",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-02-05 发布，2026-06-01 关停；替代 gemini-3.6-flash",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已停用"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "已停用"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "已停用"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": true,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "gemini-2.0-flash-001",
+          "note": "2026-06-01 关停"
+        },
+        {
+          "id": "gemini-2.0-flash-lite",
+          "note": "2026-06-01 关停"
+        },
+        {
+          "id": "gemini-2.0-flash-lite-001",
+          "note": "2026-06-01 关停"
+        }
+      ],
+      "gotchas": [
+        "2.0 全系已于 2026-06-01 关停",
+        "老中转站若仍映射此 ID 会直接报错"
+      ],
+      "sources": [
+        "https://ai.google.dev/gemini-api/docs/deprecations"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemma-4-31b",
+      "vendor": "google",
+      "family": "Gemma 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "开放权重，2026-03-31 上线 Bedrock；EOL 不早于 2027-03-31",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Bedrock 未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Bedrock 未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": false,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未在模型卡记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google.gemma-4-31b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上仅 bedrock-mantle 端点，路径为 /openai/v1/responses",
+        "不支持单轮并行多工具调用",
+        "请求体上限 3.5MB（含图/视频）",
+        "Chat Completions 不返回推理内容，仅 Responses API 返回"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-google-gemma-4-31b.html",
+        "https://ai.google.dev/gemma/docs/core"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gemma-4-26b-a4b",
+      "vendor": "google",
+      "family": "Gemma 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "开放权重 MoE 版，Bedrock 在架",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google.gemma-4-26b-a4b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "MoE 全量权重需全部载入显存",
+        "上下文按 Gemma 4 medium 档 256K 推断"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-google.html",
+        "https://ai.google.dev/gemma/docs/core"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "gemma-4-e2b",
+      "vendor": "google",
+      "family": "Gemma 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "端侧小模型，Bedrock 在架；E2B/E4B 为 effective 参数架构",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google.gemma-4-e2b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "小模型 128K 上下文",
+        "静态权重内存需求高于有效参数量"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-google.html",
+        "https://ai.google.dev/gemma/docs/core"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "gemma-3-27b-it",
+      "vendor": "google",
+      "family": "Gemma 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "上一代 Gemma，Bedrock 以 27B PT 形式在架",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "google.gemma-3-27b-pt",
+        "google.gemma-3-12b-it",
+        "google.gemma-3-4b-it"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上 27B 为 PT（预训练）而非 IT 版本",
+        "建议优先用 Gemma 4"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-google.html"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "mistral-large-3-25-12",
+      "vendor": "mistral",
+      "family": "Mistral Large",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v25.12，2025-12-02 发布，开放权重旗舰",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs / JSON schema"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "mistral-large-2411",
+          "note": "2026-05-31 退役"
+        },
+        {
+          "id": "mistral-large-2407",
+          "note": "2025-03-30 退役"
+        }
+      ],
+      "gotchas": [
+        "MoE 675B 总参 / 41B 激活，自托管门槛高",
+        "价格 $0.5/$1.5 每 M token"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/models/mistral-large-3-25-12",
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "mistral-medium-3-5-26-04",
+      "vendor": "mistral",
+      "family": "Mistral Medium",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v26.04，官方列为多款退役模型的替代",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "mistral-medium-2508",
+          "note": "2026-08-31 退役"
+        },
+        {
+          "id": "mistral-medium-2505",
+          "note": "2026-08-31 退役"
+        },
+        {
+          "id": "mistral-medium-2503",
+          "note": "更早版本已退役"
+        }
+      ],
+      "gotchas": [
+        "官方将 Medium 3.5 作为 Medium 3/3.1、Devstral、Magistral 等的统一替代",
+        "支持 predicted outputs"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/models/mistral-medium-3-5-26-04",
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "mistral-small-4-0-26-03",
+      "vendor": "mistral",
+      "family": "Mistral Small",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v26.03，2026-03-16 发布；统一 instruct/reasoning/coding",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "mistral-small-2506",
+          "note": "2026-07-31 退役"
+        },
+        {
+          "id": "mistral-small-2503",
+          "note": "2025-11-30 退役"
+        },
+        {
+          "id": "mistral-small-2501",
+          "note": "2025-11-30 退役"
+        }
+      ],
+      "gotchas": [
+        "119B 总参 / 6.5B 激活",
+        "价格 $0.15/$0.6 每 M token"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/models/mistral-small-4-0-26-03",
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "codestral-25-08",
+      "vendor": "mistral",
+      "family": "Codestral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v25.08，2025-07-30 发布，代码补全/FIM 专用",
+      "context_window": 131072,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "codestral-2501",
+          "note": "2025-11-30 退役"
+        },
+        {
+          "id": "codestral-2405",
+          "note": "2025-06-16 退役"
+        }
+      ],
+      "gotchas": [
+        "支持 FIM（fill-in-the-middle）",
+        "低延迟高并发定位"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/models/codestral-25-08"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ministral-3-8b-25-12",
+      "vendor": "mistral",
+      "family": "Ministral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "v25.12 小模型，官方列为 Ministral 8B/3B 旧版的替代",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "ministral-8b-2410",
+          "note": "2025-12-31 退役"
+        },
+        {
+          "id": "ministral-3b-2410",
+          "note": "2025-12-31 退役"
+        }
+      ],
+      "gotchas": [
+        "上下文长度未在页面列出，需查 API 参考"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "ministral-3-3b-25-12",
+      "vendor": "mistral",
+      "family": "Ministral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "v25.12 最小型号",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文长度未列出"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "ministral-3-14b-25-12",
+      "vendor": "mistral",
+      "family": "Ministral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "14B 版，Bedrock 在架（Ministral 14B 3.0）",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "ministral-14b-3-0"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上模型 ID 未在文档中直接给出，需在控制台确认"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-mistral-ai.html",
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "devstral-2-123b",
+      "vendor": "mistral",
+      "family": "Devstral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；Mistral 平台侧 devstral-2512 已于 2026-07-31 退役",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "devstral-2512",
+          "note": "Mistral 平台 2026-07-31 退役"
+        },
+        {
+          "id": "devstral-medium-2507",
+          "note": "2026-05-31 退役"
+        },
+        {
+          "id": "devstral-small-2507",
+          "note": "2026-05-31 退役"
+        },
+        {
+          "id": "devstral-small-2505",
+          "note": "2025-11-30 退役"
+        }
+      ],
+      "gotchas": [
+        "平台间生命周期不一致：Bedrock 在架但 Mistral 平台已退役同名代系"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-mistral-ai.html",
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "magistral-medium-2509",
+      "vendor": "mistral",
+      "family": "Magistral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-07-31 退役；替代 Mistral Medium 3.5",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "已退役"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "已退役"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "magistral-medium-2507",
+          "note": "2025-11-30 退役"
+        },
+        {
+          "id": "magistral-medium-2506",
+          "note": "2025-11-30 退役"
+        }
+      ],
+      "gotchas": [
+        "Magistral 系列已全部退役，推理能力由 Mistral Small 4 / Medium 3.5 承接"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "magistral-small-2507",
+      "vendor": "mistral",
+      "family": "Magistral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-30 退役；替代 Mistral Small 4",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "已退役"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "已退役"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": null,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "magistral-small-2506",
+          "note": "2025-11-30 退役"
+        },
+        {
+          "id": "magistral-small-2509",
+          "note": "2026-07-31 退役"
+        }
+      ],
+      "gotchas": [
+        "已退役"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "codestral-2501",
+      "vendor": "mistral",
+      "family": "Codestral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2025-11-30 退役；替代 codestral-25-08",
+      "context_window": 262144,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "已退役"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "已退役"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "Azure 版仅返回文本"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Azure Foundry 上仍显示为在架，但 Mistral 平台已退役，属平台差异"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/",
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "pixtral-large-2411",
+      "vendor": "mistral",
+      "family": "Pixtral",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "retired",
+      "lifecycle_note": "2026-05-31 退役；替代 Mistral Medium 3.5",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "已退役"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "已退役"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "已退役"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上仍以 Pixtral Large 名义在架，与 Mistral 平台退役状态不一致"
+      ],
+      "sources": [
+        "https://docs.mistral.ai/getting-started/models/models_overview/"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "command-a-plus-05-2026",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live，2026-05-20 发布；首个 MoE，家族最强",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs / JSON schema"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "MoE 218B 总参 / 25B 激活，1×B200 或 2×H100 可部署",
+        "支持 48 种语言",
+        "思考预算需给最终回答留至少 1K token"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models",
+        "https://docs.cohere.com/docs/command-a-plus"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command-a-03-2025",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；256K 上下文、8K 输出",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上标注 Coming Soon；Oracle OCI 上 ID 为 cohere.command-a-03-2025",
+        "仅 2 张 GPU 即可运行"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command-a-reasoning-08-2025",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；Cohere 首个推理模型",
+      "context_window": 262144,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "thinking 默认开启，可 {\"type\":\"disabled\"} 关闭",
+        "token_budget 建议 31K 并留 1K 给回答",
+        "预算耗尽会立即输出最终回答",
+        "支持 23 种语言"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models",
+        "https://docs.cohere.com/v2/docs/reasoning"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command-a-vision-07-2025",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；Cohere 首个视觉模型",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方支持语言仅英/葡/意/法/德/西"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command-a-translate-08-2025",
+      "vendor": "cohere",
+      "family": "Command A",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；专用机器翻译模型",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文仅 8K，不适合长文档翻译",
+        "覆盖 23 种语言"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command-r7b-12-2024",
+      "vendor": "cohere",
+      "family": "Command R",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；小模型 RAG/工具场景",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock/SageMaker/Azure 均无此模型"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command-r-plus-08-2024",
+      "vendor": "cohere",
+      "family": "Command R",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；2024-08 更新版",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "cohere.command-r-plus-v1:0"
+      ],
+      "legacy_ids": [
+        {
+          "id": "command-r-plus-04-2024",
+          "note": "2025-09-15 弃用，Bedrock ID cohere.command-r-plus-v1:0 仍指向旧版"
+        }
+      ],
+      "gotchas": [
+        "别名 command-r-plus 已弃用并指向 04-2024 旧版",
+        "Bedrock ID 与平台版本可能不一致"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command-r-08-2024",
+      "vendor": "cohere",
+      "family": "Command R",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；2024-08 更新版",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "cohere.command-r-v1:0"
+      ],
+      "legacy_ids": [
+        {
+          "id": "command-r-03-2024",
+          "note": "2025-09-15 弃用"
+        },
+        {
+          "id": "command-r",
+          "note": "弃用别名，指向 03-2024"
+        }
+      ],
+      "gotchas": [
+        "别名 command-r 已弃用"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "north-mini-code-1-0",
+      "vendor": "cohere",
+      "family": "North",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；30B 总参 / 3B 激活 MoE，agentic coding",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "生产部署需走 Model Vault",
+        "ID 使用连字符 north-mini-code-1-0（文档正文写作 1.0）"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "north-small-translate-1-0",
+      "vendor": "cohere",
+      "family": "North",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；218B 总参 / 25B 激活，50+ 语言翻译",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文仅 16K"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "tiny-aya-global",
+      "vendor": "cohere",
+      "family": "Aya",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；3.35B 多语言小模型",
+      "context_window": 8192,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "tiny-aya-earth",
+        "tiny-aya-fire",
+        "tiny-aya-water"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文仅 8K",
+        "四个区域特化版本 ID 分别为 earth/fire/water"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "c4ai-aya-expanse-32b",
+      "vendor": "cohere",
+      "family": "Aya",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；23 语言 32B",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "c4ai-aya-expanse-8b",
+          "note": "2026-04-04 退役"
+        }
+      ],
+      "gotchas": [
+        "8B 版本已于 2026-04-04 退役"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "c4ai-aya-vision-32b",
+      "vendor": "cohere",
+      "family": "Aya",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Live；多模态 32B",
+      "context_window": 16384,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "模型页未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "模型页未列范围"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [
+        {
+          "id": "c4ai-aya-vision-8b",
+          "note": "2026-04-04 退役"
+        }
+      ],
+      "gotchas": [
+        "上下文仅 16K",
+        "8B 版本已退役"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command-r-plus-04-2024",
+      "vendor": "cohere",
+      "family": "Command R",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-09-15 弃用（deprecated），文档仍在架但建议迁移",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "弃用状态"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "弃用状态"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "弃用状态"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "command-r-plus"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "别名 command-r-plus 指向本 ID",
+        "Bedrock 上 cohere.command-r-plus-v1:0 仍是此代系"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "command",
+      "vendor": "cohere",
+      "family": "Command",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "2025-09-15 弃用；初代 Command，4K 上下文",
+      "context_window": 4096,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "弃用状态"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "弃用状态"
+        },
+        "top_k": {
+          "supported": true,
+          "constraint": "弃用状态"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "command-light",
+        "command-light-nightly",
+        "command-nightly"
+      ],
+      "legacy_ids": [
+        {
+          "id": "command-light",
+          "note": "2025-09-15 弃用"
+        },
+        {
+          "id": "command-text-v14",
+          "note": "Bedrock 上 ID，属初代"
+        }
+      ],
+      "gotchas": [
+        "上下文仅 4K",
+        "已于 2025-09-15 弃用"
+      ],
+      "sources": [
+        "https://docs.cohere.com/docs/models"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "amazon.nova-2-lite-v1:0",
+      "vendor": "amazon",
+      "family": "Nova 2",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Active；2025-12-02 发布，EOL 不早于 2026-12-02，遗留期至少 6 个月",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Converse/inferenceConfig 支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Converse/inferenceConfig 支持"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "Bedrock 明确不支持 structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 1000,
+        "ttl_options": [
+          "5m"
+        ]
+      },
+      "aliases": [
+        "us.amazon.nova-2-lite-v1:0",
+        "eu.amazon.nova-2-lite-v1:0",
+        "jp.amazon.nova-2-lite-v1:0",
+        "global.amazon.nova-2-lite-v1:0"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅 bedrock-runtime，无 Chat Completions/Responses 端点",
+        "缓存上限 20K token，最多 4 个检查点",
+        "不支持 knowledge base / agents / flows"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-lite.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "amazon.nova-premier-v1:0",
+      "vendor": "amazon",
+      "family": "Nova",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "legacy",
+      "lifecycle_note": "Legacy；2025-10-31 发布，EOL 2026-09-14（已临近），支持推理",
+      "context_window": 1048576,
+      "max_output_tokens": 25600,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "inferenceConfig 支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "inferenceConfig 支持"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "不支持"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 1000,
+        "ttl_options": [
+          "5m"
+        ]
+      },
+      "aliases": [
+        "us.amazon.nova-premier-v1:0"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "已于 2026-09-14 EOL，文档标 Legacy",
+        "仅 US Geo 跨区，无 Global",
+        "知识截止 2024-10"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-premier.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "amazon.nova-pro-v1:0",
+      "vendor": "amazon",
+      "family": "Nova",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Active；初代 Nova 多模态均衡款",
+      "context_window": 300000,
+      "max_output_tokens": 5120,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "inferenceConfig 支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "inferenceConfig 支持"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "不支持"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 1000,
+        "ttl_options": [
+          "5m"
+        ]
+      },
+      "aliases": [
+        "us.amazon.nova-pro-v1:0",
+        "eu.amazon.nova-pro-v1:0"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文 300K 与输出 5K 未在本轮逐页复核，按初代 Nova 家族规格填写",
+        "建议优先 Nova 2 Lite"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-amazon.html"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "amazon.nova-lite-v1:0",
+      "vendor": "amazon",
+      "family": "Nova",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Active；低成本多模态款",
+      "context_window": 300000,
+      "max_output_tokens": 5120,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "inferenceConfig 支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "inferenceConfig 支持"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "不支持"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 1000,
+        "ttl_options": [
+          "5m"
+        ]
+      },
+      "aliases": [
+        "us.amazon.nova-lite-v1:0",
+        "eu.amazon.nova-lite-v1:0"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "规格未逐页复核",
+        "缓存上限 20K token"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-amazon.html"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "amazon.nova-micro-v1:0",
+      "vendor": "amazon",
+      "family": "Nova",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Active；2024-12-05 发布，EOL 不早于 2025-12-05（已过但文档仍标 Active）",
+      "context_window": 131072,
+      "max_output_tokens": 5120,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "inferenceConfig 支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "inferenceConfig 支持"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "不支持"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": 1000,
+        "ttl_options": [
+          "5m"
+        ]
+      },
+      "aliases": [
+        "us.amazon.nova-micro-v1:0",
+        "eu.amazon.nova-micro-v1:0"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "纯文本模型，无视觉",
+        "仅 Standard 服务层，无 Priority/Flex"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-micro.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "amazon.nova-2-sonic-v1:0",
+      "vendor": "amazon",
+      "family": "Nova 2",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Active；2025-12-02 发布，语音到语音实时对话",
+      "context_window": 1048576,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "双向流式接口，参数模型不同于文本接口"
+        },
+        "top_p": {
+          "supported": null,
+          "constraint": "未记载"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "不支持"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅 InvokeModelWithBidirectionalStream，无 Converse/Invoke",
+        "不支持 Guardrails"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-amazon-nova-2-sonic.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "amazon.nova-sonic-v1:0",
+      "vendor": "amazon",
+      "family": "Nova",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Active；初代语音到语音模型，2025-04 发布",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "双向流式接口"
+        },
+        "top_p": {
+          "supported": null,
+          "constraint": "未记载"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "不支持"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文规格未在本轮复核",
+        "建议迁移 Nova 2 Sonic"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-amazon.html"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "Phi-4",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；14B 开源权重",
+      "context_window": 16384,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持工具调用",
+        "上下文仅 16K，属受限场景模型"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "Phi-4-mini-instruct",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；小尺寸指令模型",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持工具调用",
+        "支持 23 种语言"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "Phi-4-multimodal-instruct",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；文本+图像+音频输入",
+      "context_window": 131072,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持工具调用",
+        "支持音频输入，是 Phi 系中少见的模态组合"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "Phi-4-reasoning",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；2025-04-30 发布，14B 推理模型",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "输出分 reasoning 块 + summary 块两段",
+        "无思考档位控制",
+        "不支持工具调用"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners",
+        "https://ai.azure.com/catalog/models/microsoft-phi-4-reasoning"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "Phi-4-mini-reasoning",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure Foundry 在架；紧凑推理模型，面向端侧/教育",
+      "context_window": 128000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅英文",
+        "不支持工具调用"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "Phi-4-reasoning-plus",
+      "vendor": "microsoft",
+      "family": "Phi",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Azure 模型目录在架（microsoft-phi-4-reasoning-plus）；RL 强化版",
+      "context_window": 32768,
+      "max_output_tokens": 32768,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 页面未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "比 Phi-4-reasoning 平均多生成约 50% token，延迟更高",
+        "训练用 32k 最大长度，实测可到 64k",
+        "不支持工具调用"
+      ],
+      "sources": [
+        "https://ai.azure.com/catalog/models/microsoft-phi-4-reasoning-plus",
+        "https://ai.azure.com/catalog/models/Phi-4-reasoning-plus"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MAI-Thinking-1",
+      "vendor": "microsoft",
+      "family": "MAI",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "unreleased",
+      "lifecycle_note": "Azure 模型目录标 Preview；微软自研推理模型，能力细节未公开",
+      "context_window": 262144,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "Preview，参数细节未公开"
+        },
+        "top_p": {
+          "supported": null,
+          "constraint": "未公开"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未公开"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未公开"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅目录页可见，官方模型卡未发布",
+        "预览状态，不建议生产"
+      ],
+      "sources": [
+        "https://ai.azure.com/catalog/models?selectedCollection=Phi"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "nvidia/nemotron-3-ultra-550b-a55b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v1.0；2026-06-04 发布，旗舰开源推理模型",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium"
+        ],
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方推荐 temperature=1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "官方推荐 top_p=0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "SFT 覆盖 structured outputs 环境"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "nvidia/nemotron-3-ultra"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "enable_thinking 开关在 chat template 里，不是顶层参数",
+        "低/中档用 low_effort/medium_effort 模板开关",
+        "SGLang 下必须传 chat_template_kwargs.force_nonempty_content 才能解析工具调用",
+        "1M 上下文需设 VLLM_ALLOW_LONG_MAX_MODEL_LEN=1"
+      ],
+      "sources": [
+        "https://build.nvidia.com/nvidia/nemotron-3-ultra-550b-a55b"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "nvidia/nemotron-3-super-120b-a12b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA v1.0；2026-03-11 发布，代理/高并发定位",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low"
+        ],
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方要求全场景 temperature=1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "官方要求全场景 top_p=0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs 环境训练"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "nvidia/nemotron-3-super"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "默认 256K 上下文，1M 需显式放开",
+        "推荐采样参数固定为 1.0/0.95",
+        "reasoning 解析器为 super_v3"
+      ],
+      "sources": [
+        "https://build.nvidia.com/nvidia/nemotron-3-super-120b-a12b"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-30b-a3b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "v1.0；2025-12-15 发布，30B/3.5B 激活 MoE",
+      "context_window": 1000000,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "推理建议 1.0，工具调用建议 0.6"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "推理建议 1.0，工具调用建议 0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs 环境训练"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "模型卡写最大输入 128K，但 quickstart 称可扩到 1M、默认 256K，规格存在矛盾",
+        "推理关时建议贪心解码",
+        "reasoning 解析器为 nano_v3"
+      ],
+      "sources": [
+        "https://build.nvidia.com/nvidia/nemotron-3-nano-30b-a3b"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "nvidia/nemotron-3.5-lightning-30b-a3b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "1.0-preview；2026-08-11 发布，最快 30B A3B 档",
+      "context_window": 1000000,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": {
+          "min": null,
+          "max": null,
+          "less_than_max_tokens": true
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "官方推荐 temperature=1.0"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "官方推荐 top_p=0.95"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs 环境训练"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "版本标 1.0-preview",
+        "NVFP4 量化，Hopper/Blackwell 才可用 NVFP4，Ampere 走 W4A16",
+        "长跑代理/子代理场景定位"
+      ],
+      "sources": [
+        "https://build.nvidia.com/nvidia/nemotron-3.5-lightning-30b-a3b"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "nvidia/nemotron-3-nano-omni-30b-a3b-reasoning",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；全模态推理（图像/视频/语音/文本）",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "页面未列"
+        },
+        "top_p": {
+          "supported": null,
+          "constraint": "页面未列"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": null,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "仅 build.nvidia.com 目录页可见，规格未在模型卡给出"
+      ],
+      "sources": [
+        "https://build.nvidia.com/models"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "nvidia.nemotron-nano-3-30b",
+      "vendor": "nvidia",
+      "family": "Nemotron 3",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Active；2025-12-15 上线 Bedrock，EOL 不早于 2026-12-15",
+      "context_window": 262144,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Converse 支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Converse 支持"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "Bedrock structured outputs（bedrock-runtime）"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "us-gov.nvidia.nemotron-nano-3-30b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 与 build.nvidia.com 的上下文不一致（此处 256K/8K）",
+        "bedrock-mantle 端点不支持服务端工具调用",
+        "支持 GovCloud 跨区"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-nvidia-nemotron-nano-3-30b.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "nvidia.nemotron-nano-9b-v2",
+      "vendor": "nvidia",
+      "family": "Nemotron 2",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；上一代 9B 小模型",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "nvidia.nemotron-nano-12b-v2-vl-bf16"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 模型 ID 未在已抓取页面直接给出，需控制台确认",
+        "12B VL 版为视觉变体"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-nvidia.html"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "mistral-nemotron",
+      "vendor": "nvidia",
+      "family": "Nemotron",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；NVIDIA 基于 Mistral 打造的 agentic 模型",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": null,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "未列"
+        },
+        "top_p": {
+          "supported": null,
+          "constraint": "未列"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未列"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方模型卡未在本轮抓取，规格缺失",
+        "定位代码、指令跟随与函数调用"
+      ],
+      "sources": [
+        "https://build.nvidia.com/models"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "ernie-5.1",
+      "vendor": "baidu",
+      "family": "ERNIE 5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "旗舰在架；文心最新模型，主打智能体/推理/深度搜索",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未在模型列表页记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "API 模型列表返回 context_length 248832 / max_completions_tokens 126976，与文档 128k/119k/65536 不一致，以文档接入表为准",
+        "限流 RPM=60 / TPM=150000"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "https://cloud.baidu.com/doc/qianfan-api/s/Dmba8k71y"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-5.0",
+      "vendor": "baidu",
+      "family": "ERNIE 5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "旗舰在架；原生全模态（文/图/音/视统一建模）",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": {
+          "min": null,
+          "max": 60000,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未在模型列表页记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "ernie-5.0-thinking-preview",
+        "ernie-5.0-thinking-latest",
+        "ernie-5.0-thinking-exp"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "输入模态为 text+image+voice+video->text",
+        "思维链长度上限 60K",
+        "thinking-exp 限流极低（RPM=6/TPM=32000），仅适合实验",
+        "分档计费：32K 内与 32K-128K 单价不同"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j",
+        "https://cloud.baidu.com/doc/qianfan-api/s/Dmba8k71y"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-5.0-thinking-preview",
+      "vendor": "baidu",
+      "family": "ERNIE 5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；5.0 显式思考版（preview 通道）",
+      "context_window": 131072,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": {
+          "min": null,
+          "max": 60000,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "preview 通道可能随时切到 latest",
+        "全模态输入"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-x1.1",
+      "vendor": "baidu",
+      "family": "ERNIE X1",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；X1 系列推理模型正式版",
+      "context_window": 65536,
+      "max_output_tokens": 65536,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "enabled",
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": {
+          "min": null,
+          "max": 65536,
+          "less_than_max_tokens": null
+        }
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "ernie-x1.1-preview"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文仅 64K，最大输入 55K",
+        "思维链上限 64K（与上下文同宽）",
+        "限流 RPM=300/TPM=300000"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-turbo-128k",
+      "vendor": "baidu",
+      "family": "ERNIE 4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；长历史对话/长文档理解定位",
+      "context_window": 131072,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "ernie-4.5-turbo-32k"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "输出上限 12288，最小 2",
+        "限流高（RPM=5000/TPM=400000）",
+        "32k 版为同族短上下文变体"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-turbo-vl",
+      "vendor": "baidu",
+      "family": "ERNIE 4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；4.5 Turbo 视觉版",
+      "context_window": 131072,
+      "max_output_tokens": 16384,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "ernie-4.5-turbo-vl-32k"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "视觉版输出上限 16384",
+        "32k 变体存在",
+        "RPM=1000/TPM=200000"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ernie-4.5-turbo-20260402",
+      "vendor": "baidu",
+      "family": "ERNIE 4.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；4.5 Turbo 的日期快照版本",
+      "context_window": 131072,
+      "max_output_tokens": 12288,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "千帆文档未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "快照版限流低（RPM=60/TPM=150000），不适合高并发"
+      ],
+      "sources": [
+        "https://cloud.baidu.com/doc/qianfan/s/rmh4stp0j"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-5",
+      "vendor": "anthropic",
+      "family": "Claude 5",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA；Bedrock/Azure 均在架，1M 上下文",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "Azure 明确不支持 temperature"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "必须为 0.99"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_format（视 thinking 模式而定）"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Azure 上 thinking=disabled 时 effort 上限为 high",
+        "top_p 低于 0.99 会被 400 拒绝"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners",
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-anthropic.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-sonnet-5",
+      "vendor": "anthropic",
+      "family": "Claude 5",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA；Bedrock/Azure 在架",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "Azure 明确不支持 temperature"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "必须为 0.99"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_format 仅 thinking=adaptive 时支持"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "thinking={\"type\":\"enabled\"} 不支持，需用 adaptive",
+        "Azure 与 Bedrock 生命周期可能不同步"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners",
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-anthropic.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "claude-opus-4-8",
+      "vendor": "anthropic",
+      "family": "Claude 4.x",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA；上一代旗舰，仍在架",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "不支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "必须为 0.99"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_format"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 与 Azure 均有 4-8 两个版本号（1/2）"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-haiku-4-5",
+      "vendor": "anthropic",
+      "family": "Claude 4.x",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA；轻量档",
+      "context_window": 200000,
+      "max_output_tokens": 64000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "Azure 未列限制"
+        },
+        "top_p": {
+          "supported": null,
+          "constraint": "Azure 未列限制"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "output_format"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文 200K，与 5 系 1M 差距明显"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "claude-fable-5-1",
+      "vendor": "anthropic",
+      "family": "Claude 5",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Preview；Azure 目录在架",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "明确不支持"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "必须为 0.99"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "output_format 不支持"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "claude-fable-5"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "thinking 开关参数不被支持",
+        "Bedrock 上亦有 Claude Fable 5.1"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "gpt-6-astra",
+      "vendor": "openai",
+      "family": "GPT-6",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA；2026-09-03 上线，最新旗舰",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": false,
+          "range": null,
+          "constraint": "不支持自定义 temperature"
+        },
+        "top_p": {
+          "supported": false,
+          "constraint": "不支持自定义 top_p"
+        },
+        "top_k": {
+          "supported": false,
+          "constraint": "不支持"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs / JSON schema"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "不支持 none 思考档",
+        "工具调用需用 Responses API；Chat Completions + 工具需 reasoning_effort=none",
+        "不支持 logprobs",
+        "输入 922K 是实际 API 上限，不等于 1.05M 窗口"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-direct-others",
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-openai.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.6-sol",
+      "vendor": "openai",
+      "family": "GPT-5.6",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA；2026-07-09 发布",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 未列限制"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 未列限制"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "gpt-5.6-terra",
+        "gpt-5.6-luna"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "同代三个变体 sol/terra/luna 规格一致",
+        "Chat Completions + 工具需 reasoning_effort=none"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-direct-others"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.5",
+      "vendor": "openai",
+      "family": "GPT-5.5",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA；2026-04-24 发布；chat-latest 底层指向它",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 未列限制"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 未列限制"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "gpt-chat-latest"
+      ],
+      "legacy_ids": [
+        {
+          "id": "gpt-5.5-instant",
+          "note": "OpenAI 侧名称，Azure 产品名为 gpt-chat-latest"
+        }
+      ],
+      "gotchas": [
+        "gpt-chat-latest 使用固定思考档，不能用 reasoning_effort 配置",
+        "生成预算 = 922000 - prompt tokens，可能返回 200 但 incomplete"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-direct-others"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-5.4",
+      "vendor": "openai",
+      "family": "GPT-5.4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "GA；2026-03-05 发布",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 未列限制"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 未列限制"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": true,
+        "strict": null,
+        "choice_modes": [
+          "auto",
+          "required",
+          "none"
+        ]
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "explicit",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "gpt-5.4-pro",
+        "gpt-5.4-mini",
+        "gpt-5.4-nano"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "mini/nano 上下文为 400K/272K 输入，与 pro 不同",
+        "gpt-5.4-pro 无 Chat Completions"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-direct-others"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "gpt-oss-120b",
+      "vendor": "openai",
+      "family": "gpt-oss",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Preview；开放权重推理模型，多平台在架",
+      "context_window": 131072,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 未列限制"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 未列限制"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "structured outputs"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "gpt-oss-20b"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "Azure 上需 Foundry 项目才能部署 120b",
+        "20b 仅 managed compute 与 Foundry Local"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-sold-directly-by-azure?pivots=azure-direct-others",
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-openai.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "grok-4.6",
+      "vendor": "xai",
+      "family": "Grok 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Preview；Azure 目录与 Bedrock 均在架",
+      "context_window": 200000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "目录页未列"
+        },
+        "top_p": {
+          "supported": null,
+          "constraint": "目录页未列"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Azure 标 Preview，Bedrock 直接提供 Grok 4.6"
+      ],
+      "sources": [
+        "https://ai.azure.com/catalog/models?selectedCollection=Phi",
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-xai.html"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "grok-4.3",
+      "vendor": "xai",
+      "family": "Grok 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Preview；上一代，Azure 目录与 Bedrock 在架",
+      "context_window": 200000,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": null,
+          "range": null,
+          "constraint": "目录页未列"
+        },
+        "top_p": {
+          "supported": null,
+          "constraint": "目录页未列"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "输出上限仅 8K"
+      ],
+      "sources": [
+        "https://ai.azure.com/catalog/models?selectedCollection=Phi",
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-xai.html"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "llama-4-scout-17b-16e-instruct",
+      "vendor": "meta",
+      "family": "Llama 4",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "在架；Bedrock 与 Azure Foundry 均有",
+      "context_window": 131072,
+      "max_output_tokens": 8192,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "Azure 未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "Azure 未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": false,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": false,
+        "mechanism": "仅文本输出"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Azure 版本不支持工具调用",
+        "仅英文"
+      ],
+      "sources": [
+        "https://learn.microsoft.com/en-us/azure/ai-foundry/foundry-models/concepts/models-from-partners",
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-meta.html"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "llama-4-maverick-17b-instruct",
+      "vendor": "meta",
+      "family": "Llama 4",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；Llama 4 主力",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Bedrock 上 ID 需在控制台确认",
+        "Llama 3.x 系列仍在架但已属上一代"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-meta.html"
+      ],
+      "confidence": "medium"
+    },
+    {
+      "id": "jamba-1.5-large",
+      "vendor": "ai21",
+      "family": "Jamba",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；Mamba-Transformer 混合架构",
+      "context_window": 256000,
+      "max_output_tokens": 4096,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "jamba-1.5-mini"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "上下文/输出规格未在本轮逐页复核",
+        "同族 mini 版本存在"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-ai21-labs.html"
+      ],
+      "confidence": "low"
+    },
+    {
+      "id": "palmyra-x5",
+      "vendor": "writer",
+      "family": "Palmyra",
+      "api_protocol": "native",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "Bedrock 在架；Writer 长上下文旗舰",
+      "context_window": null,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": false,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": null,
+          "constraint": "未列范围"
+        },
+        "top_p": {
+          "supported": true,
+          "constraint": "未列范围"
+        },
+        "top_k": {
+          "supported": null,
+          "constraint": "未记载"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {
+        "supported": null,
+        "mechanism": "未记载"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "none",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "palmyra-x4"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "规格未在本轮逐页复核",
+        "另有 Palmyra Vision 7B"
+      ],
+      "sources": [
+        "https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards-writer.html"
+      ],
+      "confidence": "low"
+    }
+  ]
+}

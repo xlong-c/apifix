@@ -1,0 +1,36 @@
+# Node
+node_modules/
+npm-debug.log*
+.catalog.*.tmp
+
+# Python（legacy-python/ 为最初实现，仅参考）
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+venv/
+.venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# 本地临时文件
+*.log
+*.tmp
+/tmp/

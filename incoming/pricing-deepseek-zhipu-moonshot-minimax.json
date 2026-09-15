@@ -1,0 +1,832 @@
+{
+  "batch": "pricing-deepseek-zhipu-moonshot-minimax",
+  "researched_at": "2026-09-15",
+  "unit": "per_1m_tokens",
+  "models": [
+    {
+      "id": "deepseek-chat",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-07-24 15:59 UTC 停用）"
+    },
+    {
+      "id": "deepseek-coder",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2024-09-05 起不再单独提供）"
+    },
+    {
+      "id": "deepseek-flash",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.006,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "高峰（标准）价；空闲时段为半价：输入 $0.15 / 缓存命中 $0.003 / 输出 $0.6。高峰=UTC 周一至周五 01:00-04:00 与 06:00-10:00。"
+    },
+    {
+      "id": "deepseek-reasoner",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-07-24 15:59 UTC 停用）"
+    },
+    {
+      "id": "deepseek-v3.2-speciale",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2025-12-15 到期下线）"
+    },
+    {
+      "id": "deepseek-v4-flash",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.006,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "已退役；官方脚注：同名请求由 deepseek-flash 服务并按 Flash 价格计费。取高峰价，空闲时段半价：$0.15 / $0.003 / $0.6。"
+    },
+    {
+      "id": "deepseek-v4-flash-vision-exp",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.006,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "已退役；官方脚注：同名请求由 deepseek-flash 服务并按 Flash 价格计费。取高峰价，空闲时段半价：$0.15 / $0.003 / $0.6。"
+    },
+    {
+      "id": "deepseek-v4-pro",
+      "currency": "USD",
+      "input": 1.32,
+      "output": 3.96,
+      "cache_read": 0.044,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "高峰（标准）价；空闲时段为半价：输入 $0.66 / 缓存命中 $0.022 / 输出 $1.98。"
+    },
+    {
+      "id": "deepseek-v4.1-flash-expires-on-0910",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-09-10 到期下线）"
+    },
+    {
+      "id": "deepseek-v4.1-pro",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://api-docs.deepseek.com/quick_start/pricing"
+      ],
+      "confidence": "high",
+      "note": "未发布（unreleased），官方无定价"
+    },
+    {
+      "id": "autoglm-phone-multilingual",
+      "currency": "USD",
+      "input": 0,
+      "output": 0,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "medium",
+      "note": "未列入 Z.ai 定价表；官方模型页标注『限时免费』（free for a limited time），故按 $0 记录。"
+    },
+    {
+      "id": "glm-4-32b-0414-128k",
+      "currency": "USD",
+      "input": 0.1,
+      "output": 0.1,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5",
+      "currency": "USD",
+      "input": 0.6,
+      "output": 2.2,
+      "cache_read": 0.11,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5-air",
+      "currency": "USD",
+      "input": 0.2,
+      "output": 1.1,
+      "cache_read": 0.03,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5-airx",
+      "currency": "USD",
+      "input": 1.1,
+      "output": 4.5,
+      "cache_read": 0.22,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5-flash",
+      "currency": "USD",
+      "input": 0,
+      "output": 0,
+      "cache_read": 0,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5-x",
+      "currency": "USD",
+      "input": 2.2,
+      "output": 8.9,
+      "cache_read": 0.45,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.5v",
+      "currency": "USD",
+      "input": 0.6,
+      "output": 1.8,
+      "cache_read": 0.11,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.6",
+      "currency": "USD",
+      "input": 0.6,
+      "output": 2.2,
+      "cache_read": 0.11,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.6v",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 0.9,
+      "cache_read": 0.05,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.6v-flash",
+      "currency": "USD",
+      "input": 0,
+      "output": 0,
+      "cache_read": 0,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.6v-flashx",
+      "currency": "USD",
+      "input": 0.04,
+      "output": 0.4,
+      "cache_read": 0.004,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.7",
+      "currency": "USD",
+      "input": 0.6,
+      "output": 2.2,
+      "cache_read": 0.11,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.7-flash",
+      "currency": "USD",
+      "input": 0,
+      "output": 0,
+      "cache_read": 0,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-4.7-flashx",
+      "currency": "USD",
+      "input": 0.07,
+      "output": 0.4,
+      "cache_read": 0.01,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5",
+      "currency": "USD",
+      "input": 1,
+      "output": 3.2,
+      "cache_read": 0.2,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5.1",
+      "currency": "USD",
+      "input": 1.4,
+      "output": 4.4,
+      "cache_read": 0.26,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5.2",
+      "currency": "USD",
+      "input": 1.4,
+      "output": 4.4,
+      "cache_read": 0.26,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5.3",
+      "currency": "USD",
+      "input": 1.4,
+      "output": 4.4,
+      "cache_read": 0.26,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "glm-5.3-flash",
+      "currency": "USD",
+      "input": 0.15,
+      "output": 0.5,
+      "cache_read": 0.03,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "ox-alpha",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（匿名测试 ID，非 Z.ai 官方 API ID，2026-08-26 下线）"
+    },
+    {
+      "id": "kimi-k2",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-05-25 随 K2 系列下线）"
+    },
+    {
+      "id": "kimi-k2-0711-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-05-25 随 K2 系列下线）"
+    },
+    {
+      "id": "kimi-k2-0905-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-05-25 随 K2 系列下线）"
+    },
+    {
+      "id": "kimi-k2-thinking",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-05-25 随 K2 系列下线）"
+    },
+    {
+      "id": "kimi-k2-thinking-turbo",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-05-25 随 K2 系列下线）"
+    },
+    {
+      "id": "kimi-k2-turbo-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-05-25 随 K2 系列下线）"
+    },
+    {
+      "id": "kimi-k2.5",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-08-31 退役）"
+    },
+    {
+      "id": "kimi-k2.6",
+      "currency": "USD",
+      "input": 0.95,
+      "output": 4.0,
+      "cache_read": 0.16,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "USD 表取自 platform.kimi.ai（国际站）；platform.kimi.com 同页为 CNY 表。"
+    },
+    {
+      "id": "kimi-k2.7-code",
+      "currency": "USD",
+      "input": 0.95,
+      "output": 4.0,
+      "cache_read": 0.19,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "USD 表取自 platform.kimi.ai（国际站）；platform.kimi.com 同页为 CNY 表。"
+    },
+    {
+      "id": "kimi-k2.7-code-highspeed",
+      "currency": "USD",
+      "input": 1.9,
+      "output": 8.0,
+      "cache_read": 0.38,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "USD 表取自 platform.kimi.ai（国际站）；platform.kimi.com 同页为 CNY 表。"
+    },
+    {
+      "id": "kimi-k3",
+      "currency": "USD",
+      "input": 3.0,
+      "output": 15.0,
+      "cache_read": 0.3,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "USD 表取自 platform.kimi.ai（国际站）；platform.kimi.com 同页为 CNY 表。"
+    },
+    {
+      "id": "kimi-latest",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-01-28 下线）"
+    },
+    {
+      "id": "kimi-thinking-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2025-11-11 下线）"
+    },
+    {
+      "id": "moonshot-v1-128k",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-08-31 16:00 全平台下线）"
+    },
+    {
+      "id": "moonshot-v1-128k-vision-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-08-31 16:00 全平台下线）"
+    },
+    {
+      "id": "moonshot-v1-32k",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-08-31 16:00 全平台下线）"
+    },
+    {
+      "id": "moonshot-v1-32k-vision-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-08-31 16:00 全平台下线）"
+    },
+    {
+      "id": "moonshot-v1-8k",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-08-31 16:00 全平台下线）"
+    },
+    {
+      "id": "moonshot-v1-8k-vision-preview",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-08-31 16:00 全平台下线）"
+    },
+    {
+      "id": "moonshot-v1-auto",
+      "currency": "USD",
+      "input": null,
+      "output": null,
+      "cache_read": null,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "note": "已从定价页移除（2026-08-31 16:00 全平台下线）"
+    },
+    {
+      "id": "MiniMax-M2",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.03,
+      "cache_write": 0.375,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.minimax.io/docs/guides/pricing-paygo"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M2.1",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.03,
+      "cache_write": 0.375,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.minimax.io/docs/guides/pricing-paygo"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M2.5",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.03,
+      "cache_write": 0.375,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.minimax.io/docs/guides/pricing-paygo"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M2.7",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.06,
+      "cache_write": 0.375,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.minimax.io/docs/guides/pricing-paygo"
+      ],
+      "confidence": "high"
+    },
+    {
+      "id": "MiniMax-M3",
+      "currency": "USD",
+      "input": 0.3,
+      "output": 1.2,
+      "cache_read": 0.06,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-15",
+      "sources": [
+        "https://platform.minimax.io/docs/guides/pricing-paygo"
+      ],
+      "confidence": "high",
+      "note": "官方档位阈值为 512K 输入 tokens（非 200K），>512K 档见 tiers 字段：输入 $0.60 / 输出 $2.40 / 缓存读取 $0.12。≤512K 档为永久 5 折价（划线标准价 $0.60 / $2.40 / $0.12）。Priority 服务层按标准价 1.5 倍。",
+      "tiers": [
+        {
+          "min_input_tokens": 512000,
+          "input": 0.6,
+          "output": 2.4,
+          "cache_read": 0.12
+        }
+      ]
+    }
+  ]
+}
