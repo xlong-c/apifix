@@ -10,7 +10,7 @@
 Give it a model ID — usually a legacy name a relay kept alive — and get back the **official spec** plus a
 paste-ready config snippet for opencode or pi.
 
-Zero dependencies, zero network requests, and it never reads your local config.
+Zero dependencies, zero network requests; configs are read locally only, on demand (`audit` / `fix` / `protocols`).
 
 ## Why you need this
 
@@ -67,6 +67,7 @@ node apifix.mjs <id> --name MCGDS      # override the display name in the snippe
 node apifix.mjs <id> --canonical-id    # key uses the canonical ID (e.g. deepseek-flash)
 node apifix.mjs --list                 # all IDs grouped by vendor; --list --json for scripts
 node apifix.mjs --match ids.txt        # batch-match a file, one verdict per line
+node apifix.mjs fix <file> --dry-run   # preview config fixes (y applies / --yes for scripts)
 node apifix.mjs --version | --help
 ```
 
@@ -88,6 +89,30 @@ required)` / `? protocol uncertain` and summarizes mismatching providers at the 
 Supports opencode (`npm` + `baseURL` inference), pi (`api` field), claude-code
 (`ANTHROPIC_BASE_URL`), and codex (`wire_api` in `config.toml`); multi-protocol pipe values (e.g.
 `chat_completions|responses|anthropic_messages`) count as a match for any listed protocol.
+
+### Config repair (`fix`)
+
+Turn the discrepancies `audit` reports back into the official spec with one command: it shows a diff plan,
+then asks `[y/N]` — `y` applies, `n` cancels.
+
+```bash
+node apifix.mjs fix opencode                 # ~/.config/opencode/opencode.json
+node apifix.mjs fix pi                       # ~/.pi/agent/models.json
+node apifix.mjs fix ./my-config.json         # any file: opencode / pi format auto-detected
+node apifix.mjs fix opencode --dry-run       # show the diff plan only, write nothing
+node apifix.mjs fix opencode --yes           # skip the [y/N] prompt (for scripts)
+```
+
+Only fields documented on the official spec are changed (opencode's `limit.context`/`limit.output`/
+`reasoning`/`temperature`/`tool_call`/`attachment`/`variants` (effort levels); pi's `contextWindow`/
+`maxTokens`/`reasoning`/`thinkingLevelMap`/`input`). Fields your config doesn't declare are left alone;
+undocumented values are never guessed — they are skipped with a note. **Credentials (`apiKey`/`token`) are
+never touched and never echoed.** Before writing, a backup is saved as `<file>.bak-<timestamp>`; the write
+is an atomic replace (tmp + rename) followed by automatic re-verification. `--json` gives machine-readable
+output, and `--no-backup` turns the automatic backup off.
+
+Exit codes: `0` fixed or nothing to fix, `1` differences exist but were not applied (cancelled / `--dry-run`),
+`2` usage or read error.
 
 ## Web UI
 
@@ -221,8 +246,9 @@ Prices come from official pricing pages, are stamped with `as_of`, and carry a `
 converted at a 1 USD = 7.2 CNY reference rate, with originals preserved in `cost.note`.
 
 **Does it read or upload my config?**
-No. apifix never touches `opencode.json` / `models.json` and makes zero network requests. It only does
-"input ID → official spec → snippet".
+Locally only, and never over the network: `audit` / `fix` read the config file you point them at, and
+`protocols` scans known paths by default (`--file` for explicit paths). Credential fields are stripped at
+extraction time and never echoed in any output; `fix` backs up the file before writing.
 
 **How does it relate to cc-switch?**
 It doesn't — no dependency either way. The generated snippets paste straight into your relay config, so the two

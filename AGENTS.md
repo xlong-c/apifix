@@ -10,7 +10,7 @@ opencode / pi 配置片段；零依赖 Node（>= 18，ESM），内置纯静态 W
 ## 架构树
 
 ```
-apifix.mjs                 CLI 入口：参数解析、--list/--match、emit 调度、本地 UI 静态服务器
+apifix.mjs                 CLI 入口：参数解析、--list/--match、emit 调度、audit/fix 子命令、本地 UI 静态服务器
 lib/core.mjs               唯一共享核心：匹配 / 卡片 / emit（浏览器与 Node 通用，零 Node API）
 ui/index.html, ui/app.js, ui/style.css
                            纯静态 UI（SPA）；app.js 内置一套降级实现，见不变量 2
@@ -88,6 +88,8 @@ jq '.provider.ark.models["glm-5.3-flash"].limit.context = 1048576' \
 ```
 或使用编辑工具的精确字符串替换（只替换目标字段，不整文件输出）。
 
+推荐用 `apifix fix <file>` 做结构化修复——只改官方规格字段、凭证永不进入计划、自动备份 + 原子写入。
+
 **绝对禁止**：
 - 把配置文件内容粘贴进对话、提交到 git、写进日志或测试夹具
 - 用 `sed -i` / `awk` 整文件重写（容易破坏 JSON 且中间态可能入日志）
@@ -102,6 +104,7 @@ jq '.provider.ark.models["glm-5.3-flash"].limit.context = 1048576' \
 node apifix.mjs <id>                    # 冒烟（默认输出 opencode 片段）
 node apifix.mjs <id> --card             # 规格卡片（含 gotchas / sources）
 node apifix.mjs <id> -f                 # 完整模式（含 cost / status / modalities）
+node apifix.mjs fix <file> --dry-run    # 配置差异修复预览（y 应用 / --yes 脚本用）
 npm start                               # UI (127.0.0.1:7788)
 npm run build                           # catalog/ → catalog.json（生成物）
 node tools/build-catalog.mjs --check    # 确认 catalog.json 与 catalog/ 一致（CI 第一步）
@@ -152,6 +155,7 @@ catalog 条目关键字段：
 - 模糊匹配只建议（相似度 ≥ 0.75），命中失败返回 exit 1；用法错误 exit 2。
 - 三种阶梯价格式都必须被 merge/validate 接受，改 schema 时三者一起改。
 - `audit` 输出已强制凭证脱敏（key/token/secret → `[REDACTED]`），但其他脚本/命令不保证——读写配置一律走结构化路径。
+- pi 的 `input` 比较**不含 `pdf`**（pi 只支持 text/image，见 pi-ai 类型定义）；`audit` 不再对 pi 报「缺 pdf」。
 
 ## 风格约定
 

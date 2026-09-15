@@ -40,3 +40,16 @@ jobs:
           node apifix.mjs claude-opus-5 --emit pi > /dev/null
           printf 'deepseek-v4.1-flash\ngpt-6-astra\nclaude-opus-5\n' > /tmp/ids.txt
           node apifix.mjs --match /tmp/ids.txt > /dev/null
+
+      - name: Smoke test (fix)
+        run: |
+          cp tools/fixtures/opencode-broken.json /tmp/fix-oc.json
+          cp tools/fixtures/pi-broken.json /tmp/fix-pi.json
+          # dry-run 期望有差异（exit 1）且不写入
+          node apifix.mjs fix /tmp/fix-oc.json --dry-run && exit 1 || test $? -eq 1
+          node apifix.mjs fix /tmp/fix-pi.json --dry-run && exit 1 || test $? -eq 1
+          # --yes 应用后 audit 复验应完全一致
+          node apifix.mjs fix /tmp/fix-oc.json --yes --no-backup
+          node apifix.mjs fix /tmp/fix-pi.json --yes --no-backup
+          node apifix.mjs audit /tmp/fix-oc.json
+          node apifix.mjs audit /tmp/fix-pi.json

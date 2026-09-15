@@ -9,7 +9,7 @@
 
 输入一个模型 id（通常是中转沿用的 legacy 名字），拿到它的**官网规格**，以及可直接粘贴的 opencode / pi 配置片段。
 
-零依赖、零网络请求、不读你的本地配置。
+零依赖、零网络请求；配置只在本地按需读取（`audit` / `fix` / `protocols`）。
 
 ## 为什么需要它
 
@@ -57,6 +57,7 @@ node apifix.mjs <id> --name MCGDS      # 覆盖片段里的展示名
 node apifix.mjs <id> --canonical-id    # key 用官网规范 id（如 deepseek-flash）
 node apifix.mjs --list                 # 全部 id（按 vendor 分组）；--list --json 供脚本用
 node apifix.mjs --match ids.txt        # 逐行批量匹配，逐行给结论
+node apifix.mjs fix <file> --dry-run   # 配置差异修复预览（y 应用 / --yes 脚本用）
 node apifix.mjs --version | --help
 ```
 
@@ -76,6 +77,26 @@ node apifix.mjs protocols --json     # 机器可读；--no-defaults 只扫 --fil
 支持 opencode（`npm` + `baseURL` 推断）、pi（`api` 字段）、claude-code（`ANTHROPIC_BASE_URL`）、
 codex（`config.toml` 的 `wire_api`）；多路协议值（如 `chat_completions|responses|anthropic_messages`）
 按"任一皆可"判定为匹配。
+
+### 配置修复（fix）
+
+`audit` 报出的差异，一条命令改回官网规格：先显示差异计划，再询问 `[y/N]`——`y` 应用，`n` 取消。
+
+```bash
+node apifix.mjs fix opencode                 # ~/.config/opencode/opencode.json
+node apifix.mjs fix pi                       # ~/.pi/agent/models.json
+node apifix.mjs fix ./my-config.json         # 任意文件：自动识别 opencode / pi 格式
+node apifix.mjs fix opencode --dry-run       # 只看差异计划，不写入
+node apifix.mjs fix opencode --yes           # 跳过 [y/N] 询问（脚本用）
+```
+
+只改官网已文档化的规格字段（opencode 的 `limit.context`/`limit.output`/`reasoning`/`temperature`/
+`tool_call`/`attachment`/`variants`（effort 档位）；pi 的 `contextWindow`/`maxTokens`/`reasoning`/
+`thinkingLevelMap`/`input`）。配置里未声明的字段不动；官网未文档化的值不猜，跳过并注明。
+**凭证（`apiKey`/`token`）永不触碰、永不回显。** 写入前自动备份为 `<file>.bak-<时间戳>`，
+经临时文件原子替换，写后自动复验。`--json` 输出机器可读结果，`--no-backup` 关闭自动备份。
+
+退出码：`0` 已修复或无需修复、`1` 存在差异但未应用（取消 / `--dry-run`）、`2` 用法或读取错误。
 
 ## Web UI
 
@@ -195,7 +216,8 @@ apifix/
 调价频繁的模型请以厂商账单为准。非美元定价按 1 USD = 7.2 CNY 参考汇率换算，原值保留在 `cost.note`。
 
 **会读取或上传我的配置吗？**
-不会。apifix 不读 `opencode.json` / `models.json`，不做任何网络请求，只做「输入 id → 官网规格 → 片段」。
+只在本地读取，全程零网络：`audit` / `fix` 读取你指定的配置文件，`protocols` 默认扫描已知路径
+（`--file` 可指定）。凭证字段在提取阶段即被剥离，任何输出都不回显；`fix` 写入前自动备份。
 
 **和 cc-switch 什么关系？**
 无关，也不依赖它。生成的片段可以直接贴进你的中转配置，两者可以配合使用。

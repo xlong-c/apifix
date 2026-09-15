@@ -1,0 +1,28 @@
+{
+  "providers": {
+    "zhipu": {
+      "api": "openai-completions",
+      "apiKey": "sk-TEST",
+      "models": [
+        {
+          "id": "glm-5.3-flash",
+          "name": "GLM-5.3 Flash",
+          "reasoning": false,
+          "input": ["text"],
+          "contextWindow": 1000000,
+          "maxTokens": 65536,
+          "thinkingLevelMap": {
+            "off": null,
+            "minimal": null,
+            "low": null,
+            "medium": "medium",
+            "high": null,
+            "xhigh": null,
+            "max": null,
+            "custom": "custom"
+          }
+        }
+      ]
+    }
+  }
+}

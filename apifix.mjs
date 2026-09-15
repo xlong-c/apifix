@@ -8,7 +8,7 @@
 //
 // 与 legacy-python/apifix.py 行为对齐；核心逻辑在 ./lib/core.mjs（浏览器通用）。
 
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync, renameSync, statSync, existsSync, copyFileSync, unlinkSync, chmodSync } from "node:fs";
 import { createServer } from "node:http";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
@@ -25,6 +25,9 @@ import {
   detectConfigFormat,
   auditConfig,
   renderAudit,
+  planConfigFixes,
+  applyConfigFixes,
+  renderFixPlan,
   searchModels,
   renderSearch,
   compareModels,
@@ -99,6 +102,7 @@ const HELP = `usage: apifix [-h] [--json] [--card]
               [--catalog PATH] [--ui] [--port PORT] [--no-open] [--version]
               [model_id]
        apifix audit <file|-> [--format {auto,opencode,pi,generic}] [--json]
+       apifix fix {opencode|pi|<file>} [--format {auto,opencode,pi}] [--dry-run] [--yes] [--json] [--no-backup]
        apifix search [filters] [--json]
        apifix compare <id1> <id2> [<id3>] [<id4>] [--usage IN/OUT] [--json]
        apifix protocols [--file <path>]... [--json] [--no-defaults]
@@ -110,6 +114,8 @@ positional arguments:
 
 subcommands:
   audit <file|->        审计配置文件（或 stdin）中的模型条目与官网规格差异
+  fix {opencode|pi|<file>}
+                        交互式修复配置文件（显示差异，按 y 应用 / n 取消）
   search [filters]      按能力/价格/厂商/生命周期检索模型
   compare <id1> <id2>   2-4 个模型并排对比（--usage IN/OUT 附用量成本）
   protocols             跨工具协议总览（各 provider 协议 vs 模型原生协议）
@@ -131,7 +137,7 @@ options:
   --no-open             启动 UI 时不自动打开浏览器
   --version             显示版本并退出
 
-各子命令详情：node apifix.mjs audit --help / search --help / compare --help`;
+各子命令详情：node apifix.mjs audit --help / fix --help / search --help / compare --help`;
 
 function parseArgs(argv) {
   const opts = {
@@ -306,6 +312,27 @@ options:
   -h, --help            显示帮助并退出
 
 退出码：0 全部一致；1 存在差异或未收录；2 用法/解析错误`;
+
+const FIX_HELP = `usage: apifix fix {opencode|pi|<file>} [--format {auto,opencode,pi}] [--dry-run] [--yes] [--json] [--no-backup]
+
+对比配置文件与 catalog 官网规格，显示修复计划并按 y 应用 / n 取消。
+只修正已声明的规格字段，绝不触碰 apiKey/token 等凭证。
+
+target:
+  opencode              ~/.config/opencode/opencode.json
+  pi                    ~/.pi/agent/models.json
+  <file>                其它文件路径（需 --format 或可自动识别）
+
+options:
+  --dry-run             只显示修复计划，不询问、不写入
+  -y, --yes             跳过询问直接应用（脚本用）
+  --json                输出机器可读 JSON；不询问（无 --yes 时只输出计划）
+  --no-backup           不写备份文件
+  --format {auto,opencode,pi}
+                        自定义路径时的格式（默认 auto；auto 失败报错 exit 2）
+  -h, --help            显示帮助并退出
+
+退出码：0 已应用或无差异；1 取消 / 复验仍有差异；2 用法/解析错误`;
 
 const SEARCH_HELP = `usage: apifix search [filters] [--json]
 
@@ -554,6 +581,281 @@ function cmdAudit(args, models) {
     stdout(scrub(renderAudit(report, file), allow));
   }
   return report.summary.with_diffs === 0 ? 0 : 1;
+}
+
+// fix 的目标别名 → 默认文件路径
+function fixTargetPath(target) {
+  if (target === "opencode") return path.join(os.homedir(), ".config", "opencode", "opencode.json");
+  if (target === "pi") return path.join(os.homedir(), ".pi", "agent", "models.json");
+  return target;
+}
+
+// 读取 stdin 的一行（交互询问用）。返回 { text, eof }；EOF 时 eof 为 true。
+function readStdinLine() {
+  return new Promise((resolve) => {
+    let data = "";
+    let settled = false;
+    const finish = (eof) => {
+      if (settled) return;
+      settled = true;
+      process.stdin.off("data", onData);
+      process.stdin.off("end", onEnd);
+      process.stdin.pause();
+      resolve({ text: data, eof });
+    };
+    const onData = (chunk) => {
+      data += chunk;
+      if (data.includes("\n")) finish(false);
+    };
+    const onEnd = () => finish(true);
+    process.stdin.setEncoding("utf8");
+    process.stdin.on("data", onData);
+    process.stdin.on("end", onEnd);
+    process.stdin.resume();
+  });
+}
+
+// 时间戳：YYYYMMDD-HHMMSS（本地时区）
+function backupTimestamp(date) {
+  const p = (n) => String(n).padStart(2, "0");
+  return `${date.getFullYear()}${p(date.getMonth() + 1)}${p(date.getDate())}-${p(date.getHours())}${p(date.getMinutes())}${p(date.getSeconds())}`;
+}
+
+// 生成不冲突的备份路径：<file>.bak-<时间戳>，同名则加 -1 / -2 …
+function uniqueBackupPath(file, date) {
+  const stamp = backupTimestamp(date);
+  let candidate = `${file}.bak-${stamp}`;
+  let seq = 1;
+  while (existsSync(candidate)) {
+    candidate = `${file}.bak-${stamp}-${seq}`;
+    seq += 1;
+  }
+  return candidate;
+}
+
+// 检测原文件的缩进（2 / 4 / tab）；无法判断时回退 2。
+function detectIndent(body) {
+  const m = /\n([ \t]+)"/.exec(body);
+  if (!m) return 2;
+  const ws = m[1];
+  return ws.includes("\t") ? "\t" : ws.length;
+}
+
+// 按原文件风格序列化：保留缩进 / 末尾换行 / CRLF / BOM。
+function serializeConfig(config, style) {
+  let out = JSON.stringify(config, null, style.indent);
+  if (style.trailingNewline) out += "\n";
+  if (style.crlf) out = out.replace(/\n/g, "\r\n");
+  if (style.bom) out = "\ufeff" + out;
+  return out;
+}
+
+// 原子写入：同目录 tmp + rename，保留原文件 mode。失败清理 tmp。
+function writeAtomic(file, text, mode) {
+  const dir = path.dirname(file);
+  const tmp = path.join(dir, `.${path.basename(file)}.apifix-${process.pid}.tmp`);
+  try {
+    writeFileSync(tmp, text, "utf8");
+    if (mode !== null) {
+      try { chmodSync(tmp, mode); } catch { /* mode 保留失败不阻断写入 */ }
+    }
+    renameSync(tmp, file);
+  } catch (err) {
+    try { unlinkSync(tmp); } catch { /* 忽略清理失败 */ }
+    throw err;
+  }
+}
+
+const FIX_FORMATS = ["auto", "opencode", "pi"];
+
+async function cmdFix(args, models) {
+  let target = null;
+  let format = null;
+  let dryRun = false;
+  let yes = false;
+  let json = false;
+  let noBackup = false;
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === "-h" || arg === "--help") {
+      stdout(FIX_HELP);
+      return 0;
+    }
+    if (arg === "--dry-run") { dryRun = true; continue; }
+    if (arg === "-y" || arg === "--yes") { yes = true; continue; }
+    if (arg === "--json") { json = true; continue; }
+    if (arg === "--no-backup") { noBackup = true; continue; }
+    const [key, inline] = splitFlag(arg);
+    if (key === "--format") {
+      const taken = takeValue(args, i, key, inline);
+      format = taken.value;
+      i = taken.next;
+      continue;
+    }
+    if (arg.startsWith("-") && arg !== "-") throw new UsageError(`unrecognized arguments: ${arg}`);
+    if (target !== null) throw new UsageError(`unrecognized arguments: ${arg}`);
+    target = arg;
+  }
+
+  if (target === null) throw new UsageError("需要一个目标：opencode / pi 或配置文件路径");
+  if (target === "-") throw new UsageError("fix 不支持 stdin（-）；请传入配置文件路径");
+  if (format !== null && !FIX_FORMATS.includes(format)) {
+    throw new UsageError(`argument --format: invalid choice: ${JSON.stringify(format)} (choose from ${FIX_FORMATS.join(", ")})`);
+  }
+
+  // 命名目标自带格式（--format 仅用于自定义路径，避免误配导致错误修复）
+  let effectiveFormat;
+  if (target === "opencode" || target === "pi") effectiveFormat = target;
+  else effectiveFormat = format || "auto";
+  const file = fixTargetPath(target);
+  const allow = publicTokens(models);
+
+  let raw;
+  try {
+    raw = readFileSync(file, "utf8");
+  } catch (err) {
+    stderr(scrub(`[x] 无法读取文件 ${file}: ${err && err.code ? err.code : "读取失败"}`, allow));
+    return 2;
+  }
+
+  const bom = raw.charCodeAt(0) === 0xfeff;
+  const body = bom ? raw.slice(1) : raw;
+
+  let parsed = null;
+  try {
+    parsed = JSON.parse(body);
+  } catch (err) {
+    const info = jsonErrorInfo(err, body);
+    const where = info.line !== null && info.column !== null ? `（第 ${info.line} 行第 ${info.column} 列）` : "";
+    stderr(scrub(`[x] 解析 JSON 失败${where}：${info.reason}`, allow));
+    return 2;
+  }
+
+  if (effectiveFormat === "auto") {
+    const detected = detectConfigFormat(parsed);
+    if (detected === null || detected === "generic") {
+      stderr(scrub("[x] 无法识别可自动修复的配置格式（支持 opencode / pi；可用 --format 显式指定）", allow));
+      return 2;
+    }
+    effectiveFormat = detected;
+  }
+  if (effectiveFormat !== "opencode" && effectiveFormat !== "pi") {
+    stderr(scrub("[x] 该格式不支持自动修复", allow));
+    return 2;
+  }
+
+  const plan = planConfigFixes(models, parsed, effectiveFormat);
+  const hasChanges = plan.summary.change_items > 0;
+  const fileLabel = file === "-" ? "-" : file;
+
+  // 样式：缩进 / 末尾换行 / CRLF / BOM / mode
+  const style = {
+    indent: detectIndent(body),
+    trailingNewline: body.endsWith("\n"),
+    crlf: body.includes("\r\n"),
+    bom,
+  };
+  let mode = null;
+  try { mode = statSync(file).mode & 0o777; } catch { mode = null; }
+
+  // --json：不询问；无 --yes 时只输出计划
+  if (json) {
+    let applied = false;
+    let backup = null;
+    if (hasChanges && yes && !dryRun) {
+      const appliedResult = commitFix(file, parsed, plan, style, mode, noBackup);
+      applied = true;
+      backup = appliedResult.backup;
+      const verify = planConfigFixes(models, appliedResult.config, effectiveFormat);
+      const payload = {
+        format: effectiveFormat,
+        file: fileLabel,
+        dry_run: false,
+        applied,
+        backup,
+        entries: plan.entries,
+        summary: plan.summary,
+      };
+      stdout(scrub(JSON.stringify(payload, null, 2), allow));
+      return verify.summary.change_items > 0 ? 1 : 0;
+    }
+    const payload = {
+      format: effectiveFormat,
+      file: fileLabel,
+      dry_run: dryRun,
+      applied,
+      backup,
+      entries: plan.entries,
+      summary: plan.summary,
+    };
+    stdout(scrub(JSON.stringify(payload, null, 2), allow));
+    return hasChanges ? 1 : 0;
+  }
+
+  // 全部一致：不询问
+  if (!hasChanges) {
+    stdout(scrub(renderFixPlan(plan, file), allow));
+    return 0;
+  }
+
+  // 渲染计划（经脱敏）
+  stdout(scrub(renderFixPlan(plan, file), allow));
+
+  // --dry-run：不询问、不写入
+  if (dryRun) {
+    stderr("[i] --dry-run：仅显示修复计划，未写入");
+    return 1;
+  }
+
+  // 询问
+  let answer = "y";
+  if (!yes) {
+    process.stdout.write(`应用以上 ${plan.summary.change_items} 处修正？[y/N] `);
+    const reply = await readStdinLine();
+    if (reply.eof) {
+      stderr("[i] 非交互环境：使用 --yes 应用，或 --dry-run 仅预览");
+      return 1;
+    }
+    answer = reply.text.trim().toLowerCase();
+  }
+
+  if (answer !== "y" && answer !== "yes") {
+    stderr("[i] 已取消，未写入任何更改");
+    return 1;
+  }
+
+  const result = commitFix(file, parsed, plan, style, mode, noBackup);
+
+  // 写后复验：重新计算计划
+  const verify = planConfigFixes(models, result.config, effectiveFormat);
+
+  // 摘要
+  const modelCount = plan.entries.filter((e) => e.changes.length).length;
+  stdout(`已修复 ${plan.summary.change_items} 项 / ${modelCount} 个模型`);
+  if (result.backup) stdout(`备份：${result.backup}`);
+  if (plan.summary.skipped_items) {
+    const manual = [];
+    for (const entry of plan.entries) {
+      for (const skip of entry.skipped) manual.push(`${entry.input}: ${skip.field}（${skip.reason}）`);
+    }
+    stdout(`剩余需人工确认 ${plan.summary.skipped_items} 项：${manual.join("；")}`);
+  }
+
+  return verify.summary.change_items > 0 ? 1 : 0;
+}
+
+// 应用计划：备份（可选）→ 纯函数产出新 config → 按原风格序列化 → 原子写入。
+function commitFix(file, parsed, plan, style, mode, noBackup) {
+  let backup = null;
+  if (!noBackup) {
+    backup = uniqueBackupPath(file, new Date());
+    copyFileSync(file, backup);
+  }
+  const nextConfig = applyConfigFixes(parsed, plan);
+  const text = serializeConfig(nextConfig, style);
+  writeAtomic(file, text, mode);
+  return { config: nextConfig, backup };
 }
 
 function cmdSearch(args, models) {
@@ -1017,9 +1319,9 @@ function startUi(port, autoOpen) {
 // main
 // --------------------------------------------------------------------------
 
-function main(argv) {
-  // 子命令优先：apifix audit|search|compare|protocols ...（其余走原有位置参数解析，行为不变）
-  const SUBCOMMANDS = { audit: cmdAudit, search: cmdSearch, compare: cmdCompare, protocols: cmdProtocols };
+async function main(argv) {
+  // 子命令优先：apifix audit|fix|search|compare|protocols ...（其余走原有位置参数解析，行为不变）
+  const SUBCOMMANDS = { audit: cmdAudit, fix: cmdFix, search: cmdSearch, compare: cmdCompare, protocols: cmdProtocols };
   if (argv.length && Object.prototype.hasOwnProperty.call(SUBCOMMANDS, argv[0])) {
     const name = argv[0];
     const subArgs = argv.slice(1);
@@ -1035,7 +1337,7 @@ function main(argv) {
         stderr("[x] 读取 catalog 失败: catalog.json 结构非法：需要 {version, models: [...]}");
         return 2;
       }
-      return SUBCOMMANDS[name](subArgs, catalog.models);
+      return await SUBCOMMANDS[name](subArgs, catalog.models);
     } catch (err) {
       if (err instanceof UsageError) {
         stderr(scrub(`apifix ${name}: error: ${err.message}`));
@@ -1160,7 +1462,7 @@ process.stdout.on("error", (err) => {
 });
 
 try {
-  process.exitCode = main(process.argv.slice(2));
+  process.exitCode = await main(process.argv.slice(2));
 } catch (err) {
   if (err && err.code === "EPIPE") process.exit(0);
   stderr(`[x] 运行失败: ${err && err.message ? err.message : err}`);
