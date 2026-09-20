@@ -129,3 +129,39 @@ test("normalizeId 返回 normalized 与 stages", () => {
     assert.ok(Array.isArray(stage.ops));
   }
 });
+
+// ---- 厂商前缀（VENDOR_PREFIXES + 目录 vendor 自动并入）与短缩写建议 ----
+
+test("厂商前缀：vendor/<id> 全量归一化命中（新增厂商无需改白名单）", () => {
+  for (const entry of catalog.models) {
+    const input = `${entry.vendor}/${entry.id}`;
+    const r = matchModel(catalog, input);
+    assert.equal(r.matchedId, entry.id, `${input} 应命中 ${entry.id}`);
+    // 前缀写法若已登记为 alias，会在 alias 阶段先命中（更高优先级），同样是正确结果
+    assert.ok(
+      r.kind === "normalized" || r.kind === "alias",
+      `${input} 应为归一化/别名命中，实际 ${r.kind}`,
+    );
+    if (r.kind === "normalized") {
+      assert.ok(r.ops.some((op) => op.includes("去除厂商前缀")), `${input} 的 ops 应说明去除厂商前缀`);
+    }
+  }
+});
+
+test("厂商前缀：stepfun/step-5-preview（回归用例）", () => {
+  const r = matchModel(catalog, "stepfun/step-5-preview");
+  assertHit(r, "normalized", "step-5-preview");
+});
+
+test("短缩写：step5 → 前缀匹配建议（仅建议，不自动纠错）", () => {
+  const r = matchModel(catalog, "step5");
+  assert.equal(r.entry, null);
+  assert.equal(r.kind, "none");
+  assert.equal(r.suggestion, "step-5-preview");
+  assert.equal(r.suggestionKind, "prefix");
+});
+
+test("前缀建议的边界：过短输入 / 无候选都不给建议", () => {
+  assert.equal(matchModel(catalog, "st").suggestion, null, "2 字符不给前缀建议");
+  assert.equal(matchModel(catalog, "zzz-not-a-model").suggestion, null, "无前缀候选不给建议");
+});

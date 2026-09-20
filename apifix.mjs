@@ -2006,7 +2006,8 @@ async function main(argv) {
   const res = matchModel(models, opts.modelId);
   if (!res.entry) {
     if (res.suggestion) {
-      stderr(`[x] ${opts.modelId}: ${NOT_FOUND_TEXT} 最接近: ${res.suggestion}（score=${res.score.toFixed(2)}）`);
+      const detail = res.suggestionKind === "prefix" ? "（前缀匹配）" : `（score=${res.score.toFixed(2)}）`;
+      stderr(`[x] ${opts.modelId}: ${NOT_FOUND_TEXT} 最接近: ${res.suggestion}${detail}`);
     } else {
       stderr(`[x] ${opts.modelId}: ${NOT_FOUND_TEXT}`);
     }

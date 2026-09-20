@@ -24,7 +24,23 @@ const SUFFIX_PATTERNS = [
 ];
 const VENDOR_PREFIXES = new Set(['openai', 'anthropic', 'meta', 'google', 'x-ai', 'xai', 'deepseek',
   'moonshotai', 'moonshot', 'z-ai', 'zhipu', 'qwen', 'dashscope', 'minimax', 'minimaxai',
-  'volcengine', 'volcengine-plan', 'doubao', 'tencent', 'alibaba', 'ark']);
+  'volcengine', 'volcengine-plan', 'doubao', 'tencent', 'alibaba', 'ark',
+  /* 目录内其余厂商 + 常见中转前缀（与 lib/core.mjs 的 VENDOR_PREFIXES 保持一致） */
+  'stepfun', 'mistral', 'mistralai', 'cohere', 'nvidia', 'microsoft', 'azure',
+  'amazon', 'bedrock', 'baidu', 'qianfan', 'iflytek', 'xfyun', '01ai',
+  'lingyiwanwu', 'ai21', 'writer', 'aliyun', 'bigmodel']);
+
+/* 厂商前缀集合 = 静态表 + 目录内实际 vendor（与 lib/core.mjs 的 vendorPrefixSet 对齐） */
+function vendorPrefixSetFallback(models) {
+  const set = new Set(VENDOR_PREFIXES);
+  if (Array.isArray(models)) {
+    for (const entry of models) {
+      const vendor = entry && typeof entry.vendor === 'string' ? entry.vendor.toLowerCase() : '';
+      if (vendor) set.add(vendor);
+    }
+  }
+  return set;
+}
 const PI_LEVELS = ['off', 'minimal', 'low', 'medium', 'high', 'xhigh', 'max'];
 
 export const MISS_TEXT = '未收录（可能是旧版官方 id 或第三方专有命名，需人工确认）';
@@ -63,7 +79,8 @@ export function mapPiApi(protocol) {
 
 const sepKey = (text) => String(text || '').trim().toLowerCase().replace(/[-._]/g, '-');
 
-function normalizeFallback(input) {
+function normalizeFallback(input, prefixes) {
+  const prefixSet = prefixes instanceof Set ? prefixes : VENDOR_PREFIXES;
   let cand = String(input || '').trim();
   const stages = [{ candidate: cand, notes: [] }];
   const notes = [];
@@ -72,7 +89,7 @@ function normalizeFallback(input) {
   if (cand.includes('/')) {
     const idx = cand.indexOf('/');
     const prefix = cand.slice(0, idx).toLowerCase();
-    if (VENDOR_PREFIXES.has(prefix) && cand.slice(idx + 1)) {
+    if (prefixSet.has(prefix) && cand.slice(idx + 1)) {
       cand = cand.slice(idx + 1);
       notes.push('去除厂商前缀 ' + prefix + '/');
       push();
@@ -132,7 +149,8 @@ function noteForFallback(input, canonical, kind, ops, entry) {
 
 export function matchFallback(models, input) {
   const raw = String(input || '').trim();
-  const out = { input: raw, kind: 'none', matchedId: null, note: null, entry: null, suggestion: null };
+  const out = { input: raw, kind: 'none', matchedId: null, note: null, entry: null, suggestion: null,
+    suggestionKind: null };
   if (!raw) return out;
 
   const prio = { exact: 0, alias: 1, legacy: 2 };
@@ -174,7 +192,7 @@ export function matchFallback(models, input) {
   const exact = lookup(raw);
   if (exact) return done(exact.entry, exact.kind, []);
 
-  const norm = normalizeFallback(raw);
+  const norm = normalizeFallback(raw, vendorPrefixSetFallback(models));
   for (const stage of norm.stages) {
     if (!stage.notes.length) continue;
     const hit = lookup(stage.candidate);
@@ -198,7 +216,21 @@ export function matchFallback(models, input) {
     out.suggestion = best.text;
     out.note = MISS_TEXT + ' 最接近: ' + best.text + '（score=' + best.score.toFixed(2) + '）';
   } else {
-    out.note = MISS_TEXT;
+    /* 短缩写兜底建议（如 step5 → step-5-preview）：压缩分隔符后做前缀扫描；
+     * 仅为建议：kind 保持 none，仅在展示层标注"前缀匹配"（与 lib/core.mjs 对齐）。 */
+    const compact = (text) => sepKey(text).replace(/[-._/]/g, '');
+    const compactProbe = compact(raw);
+    if (compactProbe.length >= 3) {
+      const pool = Array.from(new Set(keys.map((k) => String(k.text || '')).filter((t) => t))).sort();
+      const hits = pool.filter((p) => compact(p).startsWith(compactProbe));
+      if (hits.length && hits.length <= 5) {
+        out.suggestion = hits[0];
+        out.suggestionKind = 'prefix';
+      }
+    }
+    out.note = out.suggestion
+      ? MISS_TEXT + ' 最接近: ' + out.suggestion + '（前缀匹配）'
+      : MISS_TEXT;
   }
   return out;
 }

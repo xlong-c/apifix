@@ -45,6 +45,8 @@ function checkMatch(catalog, core, fallback) {
   const inputs = [];
   for (const entry of models) {
     inputs.push(entry.id);
+    // 中转常见写法 vendor/<id>：归一化阶段必须两侧一致（厂商前缀表漂移的护栏）
+    if (typeof entry.vendor === "string" && entry.vendor) inputs.push(`${entry.vendor}/${entry.id}`);
     for (const alias of entry.aliases || []) inputs.push(alias);
     for (const legacy of entry.legacy_ids || []) {
       if (legacy && legacy.id) inputs.push(legacy.id);
