@@ -1,0 +1,8 @@
+# 统一仓库行尾为 LF。
+#
+# 原因：GitHub windows-latest runner 的 Git 默认 core.autocrlf=true，检出时会把
+# 文本文件转成 CRLF；而 tools/build-catalog.mjs --check 与 tools/validate-catalog.mjs
+# 用逐字节比较校验 catalog.json 与 catalog/ 一致，CRLF 会在 Windows 上造成假红
+# （ubuntu 不做转换，所以一直全绿）。eol=lf 的优先级高于 core.autocrlf，
+# 保证各平台检出字节一致，逐字节校验可以继续保持严格。
+* text=auto eol=lf
