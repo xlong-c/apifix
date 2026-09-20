@@ -38,6 +38,10 @@ import {
   claudeProtocolEnv,
   stripCredentials,
   scrub,
+  // 共享的列对齐 / 宽度小工具（--list/--match 的表格渲染依赖，单一实现）
+  displayWidth,
+  pad,
+  groupThousands,
 } from "./lib/core.mjs";
 
 const EMIT_TARGETS = ["opencode", "pi", "codex", "claude-env", "curl", "sdk"];
@@ -52,37 +56,6 @@ const NOT_FOUND_TEXT = "未收录（可能是旧版官方 id 或第三方专有�
 // --------------------------------------------------------------------------
 // 小工具
 // --------------------------------------------------------------------------
-
-function displayWidth(text) {
-  // 与 core.mjs 相同的东亚宽度规则（此处只用于 --list/--match 的列对齐）
-  const WIDE = [
-    [0x1100, 0x115f], [0x2e80, 0x303e], [0x3041, 0x33ff], [0x3400, 0x4dbf],
-    [0x4e00, 0x9fff], [0xa000, 0xa4cf], [0xac00, 0xd7a3], [0xf900, 0xfaff],
-    [0xfe10, 0xfe19], [0xfe30, 0xfe6f], [0xff00, 0xff60], [0xffe0, 0xffe6],
-    [0x1f300, 0x1f64f], [0x1f900, 0x1f9ff], [0x20000, 0x3fffd],
-  ];
-  const COMBINING = /[\p{Mn}\p{Me}]/u;
-  let width = 0;
-  for (const ch of String(text)) {
-    if (COMBINING.test(ch)) continue;
-    const cp = ch.codePointAt(0);
-    let wide = false;
-    for (const [lo, hi] of WIDE) {
-      if (cp >= lo && cp <= hi) { wide = true; break; }
-    }
-    width += wide ? 2 : 1;
-  }
-  return width;
-}
-
-function pad(text, width) {
-  const gap = width - displayWidth(text);
-  return gap > 0 ? text + " ".repeat(gap) : text;
-}
-
-function groupThousands(value) {
-  return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 function stderr(line) {
   process.stderr.write(line + "\n");
@@ -666,6 +639,20 @@ function writeAtomic(file, text, mode) {
   }
 }
 
+// Windows 下 rename 对被占用/只读的目标文件常抛 EPERM/EACCES（Linux 上是原子替换，
+// Windows 上目标被编辑器/同步盘短暂锁定即失败）。给用户可操作的提示；
+// exit code 语义不变（异常继续向上抛，仍是非零失败），提示只走 stderr（不变量 5）。
+function isWindowsFileLockError(err) {
+  return err && (err.code === "EPERM" || err.code === "EACCES") && process.platform === "win32";
+}
+
+function warnWindowsFileLock(err, file, backup) {
+  if (!isWindowsFileLockError(err)) return;
+  const backupNote = backup ? `备份已写至 ${backup}，原文件未被修改` : "原文件未被修改（本次未创建备份）";
+  stderr(`[!] 写入 ${file} 失败（${err.code}）：目标文件可能被其他程序占用或只读，`
+    + `请关闭编辑器/同步盘后重试；${backupNote}`);
+}
+
 const FIX_FORMATS = ["auto", "opencode", "pi"];
 
 async function cmdFix(args, models) {
@@ -846,6 +833,7 @@ async function cmdFix(args, models) {
 }
 
 // 应用计划：备份（可选）→ 纯函数产出新 config → 按原风格序列化 → 原子写入。
+// 顺序语义：备份成功 → 写入失败时，原文件未动、备份已在；错误信息明确说明这两点。
 function commitFix(file, parsed, plan, style, mode, noBackup) {
   let backup = null;
   if (!noBackup) {
@@ -854,7 +842,12 @@ function commitFix(file, parsed, plan, style, mode, noBackup) {
   }
   const nextConfig = applyConfigFixes(parsed, plan);
   const text = serializeConfig(nextConfig, style);
-  writeAtomic(file, text, mode);
+  try {
+    writeAtomic(file, text, mode);
+  } catch (err) {
+    warnWindowsFileLock(err, file, backup);
+    throw err;
+  }
   return { config: nextConfig, backup };
 }
 
