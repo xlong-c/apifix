@@ -172,9 +172,10 @@ catalog 条目关键字段：
   直接命中；parity-check 的 match 弱断言已覆盖 `vendor/<id>` 形态（约 985 组）。
 - 短缩写（如 `step5`）走「前缀匹配」建议：`suggestionKind: "prefix"`，**只建议**（kind 保持 none、
   退出码不变），CLI 展示为「最接近: …（前缀匹配）」。
-- `protocols` 的 `@ai-sdk/openai` 按 **OpenAI 家族**（`OPENAI_FAMILY = chat_completions / responses`）
-  参与比对：模型支持其中任一即 `✓ 匹配`；推断值（`inferred: true`，含 baseURL 里的 `/responses`）
-  与官方不一致时只出 `? 协议不确定`，绝不武断报「需翻译」。
+- `protocols` 的 `@ai-sdk/openai` 是**格式声明**（`OPENCODE_NPM_PROTOCOLS`，`inferred: false`，协议列显示
+  `openai`）：比对按 **OpenAI 家族**（`OPENAI_FAMILY = chat_completions / responses`），模型支持其中任一即
+  `✓ 匹配`；仅 baseURL 含 `/responses` 时细化为 responses（该细化是 URL 启发式、`inferred: true`，
+  与官方不一致只出 `? 协议不确定`，绝不武断报「需翻译」）。
 - 三种阶梯价格式都必须被 merge/validate 接受，改 schema 时三者一起改。
 - `audit` 输出已强制凭证脱敏（key/token/secret → `[REDACTED]`），但其他脚本/命令不保证——读写配置一律走结构化路径。
 - pi 的 `input` 比较**不含 `pdf`**（pi 只支持 text/image，见 pi-ai 类型定义）；`audit` 不再对 pi 报「缺 pdf」。

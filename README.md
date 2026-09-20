@@ -98,9 +98,9 @@ node apifix.mjs protocols --json     # 机器可读；--no-defaults 只扫 --fil
 报告逐行给出 `✓ 匹配` / `⚠ 原生 X（需翻译）` / `? 协议不确定`，末尾汇总不一致的 provider 数量。
 支持 opencode（`npm` + `baseURL` 推断）、pi（`api` 字段）、claude-code（`ANTHROPIC_BASE_URL`）、
 codex（`config.toml` 的 `wire_api`）；多路协议值（如 `chat_completions|responses|anthropic_messages`）
-按"任一皆可"判定为匹配。`@ai-sdk/openai` 按 **OpenAI 家族**处理（chat_completions / responses，
-模型支持其中任一即判匹配）；baseURL 路径含 `/responses` 时按 responses 推断，与官方不一致只提示
-「协议不确定」（推断值不武断报警）。
+按"任一皆可"判定为匹配。`@ai-sdk/openai` 是**接口格式声明**（协议列显示 `openai`，不标「推断」）：
+比对时按 OpenAI 家族（chat_completions / responses）处理，模型支持其中任一即判匹配；只有 baseURL
+路径含 `/responses` 时才细化为 responses（URL 启发式），与官方不一致只提示「协议不确定」。
 
 ### 配置修复（fix）
 

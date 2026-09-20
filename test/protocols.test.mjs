@@ -53,7 +53,8 @@ test("protocols：@ai-sdk/openai（普通 /v1 baseURL）按 OpenAI 家族判定 
     assert.equal(r.status, 0, r.stdout + r.stderr);
     const { provider, model } = modelStatus(r.stdout);
     assert.equal(provider.protocol, "openai");
-    assert.equal(provider.inferred, true);
+    // npm 字段本身就是接口格式声明：不再标"推断"
+    assert.equal(provider.inferred, false);
     assert.equal(model.matchedId, "step-5-preview");
     assert.equal(model.status, "match", `实际 ${model.status}（原生 ${model.native}）`);
     assert.ok(!r.stdout.includes(FAKE_KEY), "输出不得包含假 key");

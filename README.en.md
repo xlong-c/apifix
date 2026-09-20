@@ -112,9 +112,10 @@ required)` / `? protocol uncertain` and summarizes mismatching providers at the 
 Supports opencode (`npm` + `baseURL` inference), pi (`api` field), claude-code
 (`ANTHROPIC_BASE_URL`), and codex (`wire_api` in `config.toml`); multi-protocol pipe values (e.g.
 `chat_completions|responses|anthropic_messages`) count as a match for any listed protocol.
-`@ai-sdk/openai` is treated as the **OpenAI family** (chat_completions / responses — a match when the
-model supports either); a baseURL path containing `/responses` is inferred as responses, and a
-contradiction there is only reported as "protocol uncertain" (inferred values never hard-fail).
+`@ai-sdk/openai` is a **declared interface format** (the protocol column shows `openai`, with no
+"inferred" tag): it is compared as the OpenAI family (chat_completions / responses — a match when the
+model supports either). Only a baseURL path containing `/responses` refines it to responses (a URL
+heuristic); a contradiction there is merely reported as "protocol uncertain".
 
 ### Config repair (`fix`)
 
