@@ -53,9 +53,17 @@ overnight. All of this surfaces in apifix's gotchas and in the generated snippet
 Install straight from GitHub (recommended — you get a global `apifix` command):
 
 ```bash
-npm install -g github:xlong-c/apifix
+npm install -g --install-links=true github:xlong-c/apifix           # track the default branch (latest)
+npm install -g --install-links=true "github:xlong-c/apifix#v0.1.1"  # pin a version (recommended)
 apifix gpt-6-astra                     # works immediately; no dependency install needed (zero deps)
 ```
+
+> Why `--install-links=true` is required: npm 11 defaults `install-links` to `false`, which links
+> (junctions) git dependencies to a cache temp dir instead of packing them, and can yield an
+> incomplete package (symptom: `Cannot find module .../apifix.mjs` when running `apifix`). The flag
+> is a no-op on npm versions that already pack by default.
+> Prefer no flags? Tarball install works too:
+> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.1.1.tar.gz`
 
 Or clone and run from source:
 
