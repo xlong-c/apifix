@@ -54,7 +54,7 @@ Install straight from GitHub (recommended — you get a global `apifix` command)
 
 ```bash
 npm install -g --install-links=true github:xlong-c/apifix           # track the default branch (latest)
-npm install -g --install-links=true "github:xlong-c/apifix#v0.1.2"  # pin a version (recommended)
+npm install -g --install-links=true "github:xlong-c/apifix#v0.2.1"  # pin a version (recommended)
 apifix gpt-6-astra                     # works immediately; no dependency install needed (zero deps)
 ```
 
@@ -63,7 +63,7 @@ apifix gpt-6-astra                     # works immediately; no dependency instal
 > incomplete package (symptom: `Cannot find module .../apifix.mjs` when running `apifix`). The flag
 > is a no-op on npm versions that already pack by default.
 > Prefer no flags? Tarball install works too:
-> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.1.2.tar.gz`
+> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.1.tar.gz`
 
 Or clone and run from source:
 
