@@ -170,6 +170,8 @@ catalog 条目关键字段：
 - 三种阶梯价格式都必须被 merge/validate 接受，改 schema 时三者一起改。
 - `audit` 输出已强制凭证脱敏（key/token/secret → `[REDACTED]`），但其他脚本/命令不保证——读写配置一律走结构化路径。
 - pi 的 `input` 比较**不含 `pdf`**（pi 只支持 text/image，见 pi-ai 类型定义）；`audit` 不再对 pi 报「缺 pdf」。
+- windows CI 矩阵依赖 `.gitattributes`（`* text=auto eol=lf`）统一行尾：`build-catalog.mjs --check`
+  是逐字节比较，runner 默认 `core.autocrlf=true` 会把检出转成 CRLF、在 Windows 上假红——不要删该文件。
 
 ## 风格约定
 
