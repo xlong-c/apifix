@@ -123,3 +123,30 @@ test("audit：stdin（-）也可识别 TOML", () => {
   assert.equal(r.status, 1, r.stdout + r.stderr);
   assert.match(r.stdout, /识别为 codex 配置/);
 });
+
+test("audit：配置识别只认 id/别名 —— 归一化写法报未收录 + 归一化建议（不套用官网规格）", () => {
+  const dir = makeDir();
+  try {
+    const file = path.join(dir, "strict.json");
+    writeFileSync(file, JSON.stringify({
+      provider: {
+        relay: {
+          npm: "@ai-sdk/openai",
+          options: { baseURL: "https://relay.example/v1", apiKey: "sk-TEST-x" },
+          models: {
+            "glm-5.3-flash": { name: "glm-5.3-flash" },
+            "glm-5.3-flash-free": { name: "glm-5.3-flash-free" },
+          },
+        },
+      },
+    }, null, 2), "utf8");
+    const r = runAudit(file);
+    assert.equal(r.status, 1, r.stdout + r.stderr);
+    assert.match(r.stdout, /\[OK\] glm-5\.3-flash/);
+    assert.match(r.stdout, /\[?\] glm-5\.3-flash-free → 未收录/);
+    assert.match(r.stdout, /最接近: glm-5\.3-flash（归一化写法，未自动采用官网规格）/);
+    assert.ok(!r.stdout.includes("sk-TEST"), "输出不得包含假 key");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

@@ -165,3 +165,33 @@ test("前缀建议的边界：过短输入 / 无候选都不给建议", () => {
   assert.equal(matchModel(catalog, "st").suggestion, null, "2 字符不给前缀建议");
   assert.equal(matchModel(catalog, "zzz-not-a-model").suggestion, null, "无前缀候选不给建议");
 });
+
+// ---- 严格模式（配置识别：audit / fix / protocols 用）----
+
+test("严格模式：id / 别名仍然命中", () => {
+  assertHit(matchModel(catalog, "glm-5.3-flash", { strict: true }), "exact", "glm-5.3-flash");
+  const alias = matchModel(catalog, "zhipu/glm-5.3-flash", { strict: true });
+  assert.equal(alias.matchedId, "glm-5.3-flash");
+  assert.equal(alias.kind, "alias");
+});
+
+test("严格模式：归一化写法不自动命中，只给「最接近」建议", () => {
+  const r = matchModel(catalog, "glm-5.3-flash-free", { strict: true });
+  assert.equal(r.entry, null, "严格模式不得自动命中");
+  assert.equal(r.kind, "none");
+  assert.equal(r.suggestion, "glm-5.3-flash");
+  assert.equal(r.suggestionKind, "normalized");
+  assert.ok(r.ops.some((op) => op.includes("relay 后缀")), "ops 应说明去掉了 relay 后缀");
+
+  const vendor = matchModel(catalog, "stepfun/step-5-preview", { strict: true });
+  assert.equal(vendor.entry, null);
+  assert.equal(vendor.suggestion, "step-5-preview");
+  assert.equal(vendor.suggestionKind, "normalized");
+});
+
+test("默认（宽松）模式不受影响：CLI 直接查询仍解析中转写法", () => {
+  assertHit(matchModel(catalog, "zhipu/glm-5.3-flash"), "alias", "glm-5.3-flash");
+  const r = matchModel(catalog, "glm-5.3-flash-free");
+  assert.equal(r.matchedId, "glm-5.3-flash");
+  assert.equal(r.kind, "normalized");
+});
