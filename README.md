@@ -197,10 +197,11 @@ GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
 ## 匹配规则
 
 依次尝试：**canonical id → aliases → legacy_ids** → 去厂商前缀（`openai/`、`anthropic/`、`meta/`、
-`google/`、`x-ai/`、`deepseek/`、`moonshotai/`、`z-ai/`、`qwen/`、`minimax/` 等）→ 去 relay 后缀
+`google/`、`z-ai/`、`stepfun/` 等——静态别名表 + **目录内 vendor 自动并入**，新增厂商无需改代码）→ 去 relay 后缀
 （`-free`、`-preview`、`-exp`、`-latest`、`-build`、`-contributor`、`-vision-exp`、`-expires-on-*`、
 `-ga-*`、`-YYYYMMDD`、`-vN`）→ 分隔符等价（`-` `.` `_` 视为相同，故 `gpt_6_astra` 命中
-`gpt-6-astra`）→ 模糊兜底（相似度 ≥ 0.75，只给建议）。
+`gpt-6-astra`）→ 模糊兜底（相似度 ≥ 0.75，只给建议）→ 短缩写前缀建议（如 `step5` →
+`step-5-preview（前缀匹配）`，同样只给建议、不自动纠错）。
 
 `--match` 标签：`[OK]` 精确、`[A]` 别名、`[L]` legacy、`[~]` 归一化、`[?]` 未收录。
 提示只写到 **stderr**，不污染 stdout 的可粘贴输出：

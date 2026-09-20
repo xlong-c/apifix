@@ -223,10 +223,12 @@ reference, not a live quote.
 ## Matching rules
 
 Tried in order: **canonical ID → aliases → legacy_ids** → strip vendor prefix (`openai/`, `anthropic/`, `meta/`,
-`google/`, `x-ai/`, `deepseek/`, `moonshotai/`, `z-ai/`, `qwen/`, `minimax/`, and more) → strip relay suffix
+`google/`, `z-ai/`, `stepfun/`, and more — a static alias list plus **every vendor from the catalog is added
+automatically**, so new vendors work without code changes) → strip relay suffix
 (`-free`, `-preview`, `-exp`, `-latest`, `-build`, `-contributor`, `-vision-exp`, `-expires-on-*`, `-ga-*`,
 `-YYYYMMDD`, `-vN`) → separator-insensitive (`-`, `.`, `_` are equivalent, so `gpt_6_astra` hits
-`gpt-6-astra`) → fuzzy fallback (similarity ≥ 0.75, suggestion only).
+`gpt-6-astra`) → fuzzy fallback (similarity ≥ 0.75, suggestion only) → short-shorthand prefix suggestion
+(e.g. `step5` → `step-5-preview (prefix match)`, also suggestion-only, never auto-corrected).
 
 `--match` labels: `[OK]` exact, `[A]` alias, `[L]` legacy, `[~]` normalized, `[?]` unmatched.
 Notes go to **stderr** only, so stdout stays paste-ready:

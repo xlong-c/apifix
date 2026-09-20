@@ -167,6 +167,11 @@ catalog 条目关键字段：
 - `lifecycle` → opencode `status` 映射：current→active / legacy·retired→deprecated /
   unreleased→beta。
 - 模糊匹配只建议（相似度 ≥ 0.75），命中失败返回 exit 1；用法错误 exit 2。
+- 厂商前缀（`vendor/id`）识别 = 静态别名表 + **目录内 vendor 自动并入**（core 的 `vendorPrefixSet`，
+  fallback 的 `vendorPrefixSetFallback` 必须同步）——新增厂商后 `stepfun/step-5-preview` 这类中转写法
+  直接命中；parity-check 的 match 弱断言已覆盖 `vendor/<id>` 形态（约 985 组）。
+- 短缩写（如 `step5`）走「前缀匹配」建议：`suggestionKind: "prefix"`，**只建议**（kind 保持 none、
+  退出码不变），CLI 展示为「最接近: …（前缀匹配）」。
 - 三种阶梯价格式都必须被 merge/validate 接受，改 schema 时三者一起改。
 - `audit` 输出已强制凭证脱敏（key/token/secret → `[REDACTED]`），但其他脚本/命令不保证——读写配置一律走结构化路径。
 - pi 的 `input` 比较**不含 `pdf`**（pi 只支持 text/image，见 pi-ai 类型定义）；`audit` 不再对 pi 报「缺 pdf」。
