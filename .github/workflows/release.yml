@@ -1,0 +1,32 @@
+name: release
+
+# tag 推送时自动创建 GitHub Release：
+# 正文取 docs/RELEASE-<tag>.md（如 docs/RELEASE-v0.1.1.md）；找不到则自动生成
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          NOTES="docs/RELEASE-${TAG}.md"
+          if [ ! -f "$NOTES" ]; then
+            NOTES="docs/RELEASE-${TAG#v}.md"
+          fi
+          if [ -f "$NOTES" ]; then
+            gh release create "$TAG" --title "$TAG" --notes-file "$NOTES"
+          else
+            gh release create "$TAG" --title "$TAG" --generate-notes
+          fi
