@@ -13,19 +13,25 @@ opencode / pi 配置片段；零依赖 Node（>= 18，ESM），内置纯静态 W
 apifix.mjs                 CLI 入口：参数解析、--list/--match、emit 调度、audit/fix 子命令、本地 UI 静态服务器
 lib/core.mjs               唯一共享核心：匹配 / 卡片 / emit（浏览器与 Node 通用，零 Node API）
 ui/index.html, ui/app.js, ui/style.css
-                           纯静态 UI（SPA）；app.js 内置一套降级实现，见不变量 2
+                           纯静态 UI（SPA）
+ui/fallback.mjs            UI 降级实现（纯函数模块，零 Node API；与 core 逐字节对拍，见不变量 2）
 catalog/                   唯一数据源：一厂商一文件（catalog/<vendor>.json，手工编辑这里）
 catalog/.order.json        vendor 文件的规范顺序清单（build 生成，保证确定性）
 catalog.json               **生成物**：由 catalog/ 打包的 bundle，CLI/UI 只读它
 tools/build-catalog.mjs    catalog/*.json → catalog.json（导出 buildCatalog()，供 merge 复用）
 tools/merge-catalog.mjs    incoming/*.json + catalog/ → catalog/ + catalog.json（含 pricing 处理）
 tools/validate-catalog.mjs catalog/ 逐条校验 + 来源白名单 + catalog.json 与 catalog/ 一致性（CI 用）
+tools/parity-check.mjs     core 与 ui/fallback 的 1300 组逐字节对拍（不变量 2 的自动化守护，CI 用）
 tools/source-whitelist.mjs 官方来源白名单（validate / merge 共用）
+test/                      node:test 单测（match/emit/scrub/fix/tiers/format，零依赖；node --test 运行）
+skills/                    AI 技能包（catalog-maintain / model-spec-lookup，配套助手工作流）
+docs/                      发布说明与文档资产（docs/RELEASE-*.md、配图）
 incoming/                  原始调研批次（模型批次 + pricing-*.json 定价文件），格式允许宽松
 index.html                 站点根：重定向到 /ui/（GitHub Pages 用）
 legacy-python/             最初的 Python 实现，仅作行为对拍参考，不参与构建
 .github/workflows/validate.yml
-                           CI：node --check → build --check → validate → 冒烟测试
+                           CI（ubuntu+windows 矩阵）：node --check → build --check → validate →
+                           parity-check → node --test → 动态 id 冒烟（list/match/emit/fix）
 package.json               scripts: start / build / merge / validate；bin: apifix
 ```
 
@@ -34,9 +40,11 @@ package.json               scripts: start / build / merge / validate；bin: apif
 1. **`lib/core.mjs` 是唯一共享核心**：CLI（`apifix.mjs`）和 UI（`ui/app.js`）都依赖它；
    它必须**零 Node API**（无 fs/path/process/url/import），因为浏览器直接 `import` 它。
    改动后必须 `node --check lib/core.mjs` 并确认可在浏览器运行。
-2. **`ui/app.js` 的内置 fallback 必须与 `lib/core.mjs` 逐字节一致**：UI 在 core 加载失败时
-   降级使用它。已有对拍口径为 325 模型 × 2 emitter（opencode/pi）× 2 模式（精简/`-f`）
-   = **1300 组零差异**；改 core 的 emit 逻辑必须同步改 fallback。
+2. **`ui/fallback.mjs` 必须与 `lib/core.mjs` 逐字节一致**：UI 在 core 加载失败时降级
+   动态 import 它（`ui/app.js` 接线，fallback 本体是独立纯函数模块，零 Node API）。
+   对拍口径为 模型数 × 2 emitter（opencode/pi）× 2 模式（精简/`-f`），当前 325 × 4
+   = **1300 组零差异**，由 `node tools/parity-check.mjs` 自动守护（CI 必跑）；
+   改 core 的 emit 逻辑必须同步改 fallback，跑对拍确认 0 差异。
 3. **不带 `-f` 的输出是稳定契约**：现有用户依赖它，任何改动不得改变最小输出的字节。
    改动前后用 `diff` 对拍。
 4. **`null` = 官方未文档化，绝不臆造数值**。catalog 只采信厂商官方文档（模型页 / API 文档 /
@@ -108,6 +116,8 @@ node apifix.mjs fix <file> --dry-run    # 配置差异修复预览（y 应用 / 
 npm start                               # UI (127.0.0.1:7788)
 npm run build                           # catalog/ → catalog.json（生成物）
 node tools/build-catalog.mjs --check    # 确认 catalog.json 与 catalog/ 一致（CI 第一步）
+node tools/parity-check.mjs             # core 与 ui/fallback 逐字节对拍（改 emit 后必跑，CI 必跑）
+node --test                             # 运行 test/ 单测（零依赖，Node >= 18 自带）
 npm run merge                           # 合并 incoming → catalog/ + catalog.json
 npm run validate                        # 校验 catalog/ + 一致性（CI 用）
 node --check <file>.mjs                 # 语法检查（所有 .mjs；ui/app.js 也查）
@@ -127,7 +137,9 @@ Python 输出 `null`；且 Python 版没有 `-f`）。
    合并会写 `catalog/` 并自动重建 `catalog.json`；
 4. `npm run build -- --check` 或 `node tools/build-catalog.mjs --check` 确认 bundle 一致；
 5. `npm run validate`，必须 0 error；
-6. `git diff catalog/ catalog.json` 复核改动（只应出现预期的条目/字段）。
+6. `git diff catalog/ catalog.json` 复核改动（只应出现预期的条目/字段）；
+7. 条目数/vendor/verified/定价数有变化时，同步 README 与 README.en 的统计数字，例如：
+   `node -e "const j=require('./catalog.json');console.log(j.models.length, new Set(j.models.map(m=>m.vendor)).size, j.models.filter(m=>m.verified).length)"`。
 
 ## 数据格式速查
 

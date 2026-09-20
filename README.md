@@ -131,7 +131,7 @@ GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
 | microsoft | 7 | meta | 7 | xai | 16 |
 | minimax | 5 | 01ai | 3 | ai21 / writer | 各 1 |
 
-生命周期：`current` 148、`legacy` 92、`retired` 82、`unreleased` 2；315 条已核验官网。
+生命周期：`current` 148、`legacy` 92、`retired` 82、`unreleased` 2（另有 1 条未标注）；305 条已核验官网。
 
 **定价**：**229** 个模型带官方 USD 定价（每 1M tokens）。非美元定价在合并时按固定参考汇率
 1 USD = 7.2 CNY 换算，原始币种数值保留在 `cost.note` 里；该汇率是参考值，不是实时行情。
@@ -177,7 +177,7 @@ node apifix.mjs gpt-5.6-sol --emit pi -f       # pi 完整模式
 
 - **只采信厂商官方文档**（官方模型页 / API 文档 / 定价页）。聚合站、中转商后台、论坛不作为来源。
 - **`null` = 官方未文档化**，不是「等于 0」；渲染为 `未知/not documented`。宁可留空，绝不臆造数值。
-- **`verified`**：`true` 表示已与官方文档逐项核验（315/325）；`false` 表示来源间接或待核验，卡片会显式提示。
+- **`verified`**：`true` 表示已与官方文档逐项核验（305/325）；`false` 表示来源间接或待核验，卡片会显式提示。
 - **`confidence`**（`high`/`medium`/`low`）配合 `sources` 使用，来源可逐条追溯。
 - 生命周期与 `legacy_ids` 记录退役、中转沿用 id 的历史；**退役模型的规格为退役前规格**。
 

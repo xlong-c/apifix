@@ -191,4 +191,5 @@ merge 会原样保留你写的那一侧：
 - [ ] `node tools/build-catalog.mjs --check` 通过（bundle 与 catalog/ 一致）
 - [ ] `node tools/validate-catalog.mjs` 0 error
 - [ ] `node apifix.mjs <id>` 输出符合预期，legacy id 有 `legacy_ids` note
+- [ ] 条目数 / vendor / verified / 定价数有变化时，已同步 README 与 README.en 的统计数字（模型数 badge、支持范围、verified 比例）
 - [ ] PR 描述里写清依据的官方页面

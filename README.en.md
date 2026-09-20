@@ -150,7 +150,7 @@ is enough to run it on GitHub Pages: the root `index.html` redirects to `/ui/`.
 | microsoft | 7 | meta | 7 | xai | 16 |
 | minimax | 5 | 01ai | 3 | ai21 / writer | 1 each |
 
-Lifecycle: `current` 148, `legacy` 92, `retired` 82, `unreleased` 2. 315 entries are verified against official docs.
+Lifecycle: `current` 148, `legacy` 92, `retired` 82, `unreleased` 2 (plus 1 unlabeled). 305 entries are verified against official docs.
 
 **Pricing**: 229 models carry official USD pricing (per 1M tokens). Non-USD prices are converted at merge time
 using a fixed reference rate of 1 USD = 7.2 CNY, with the original values kept in `cost.note`. That rate is a
@@ -202,7 +202,7 @@ node apifix.mjs gpt-5.6-sol --emit pi -f       # full pi mode
 - **Only vendor-official docs** (model pages, API docs, pricing pages). Aggregators, relay dashboards, and
   forums are not sources.
 - **`null` means "not documented"**, not zero; it renders as `未知/not documented`. Better empty than invented.
-- **`verified`**: `true` means every field was checked against official docs (315/325); `false` means the source
+- **`verified`**: `true` means every field was checked against official docs (305/325); `false` means the source
   is indirect or pending, and the card says so explicitly.
 - **`confidence`** (`high`/`medium`/`low`) works together with `sources`, so every value is traceable.
 - Lifecycle and `legacy_ids` record retirements and relay-reused IDs; **retired models show their pre-retirement spec**.
