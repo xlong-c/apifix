@@ -1,0 +1,10 @@
+# codex 配置测试夹具：故意写错两处（effort=ultra、wire_api=responses），
+# 供 apifix fix 演示/回归；无真实凭证（base_url 为 example.invalid 占位）。
+model = "qwen3.8-max-0902"
+model_provider = "relay"
+model_reasoning_effort = "ultra"
+
+[model_providers.relay]
+name = "relay"
+base_url = "https://example.invalid/v1"
+wire_api = "responses"

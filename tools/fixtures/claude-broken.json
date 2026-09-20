@@ -1,0 +1,9 @@
+{
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://example.invalid",
+    "ANTHROPIC_AUTH_TOKEN": "sk-TEST-CLAUDE-0000",
+    "ANTHROPIC_MODEL": "qwen3.8-max",
+    "CLAUDE_CODE_EFFORT_LEVEL": "ultra",
+    "MAX_THINKING_TOKENS": "999999"
+  }
+}
