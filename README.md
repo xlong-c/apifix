@@ -45,7 +45,7 @@
 
 ```bash
 npm install -g --install-links=true github:xlong-c/apifix            # 跟随默认分支（最新）
-npm install -g --install-links=true "github:xlong-c/apifix#v0.1.1"   # 锁定版本（推荐）
+npm install -g --install-links=true "github:xlong-c/apifix#v0.1.2"   # 锁定版本（推荐）
 apifix gpt-6-astra                     # 直接可用，无需 npm install 依赖（零依赖）
 ```
 
@@ -53,7 +53,7 @@ apifix gpt-6-astra                     # 直接可用，无需 npm install 依�
 > 链接（junction）到缓存临时目录而不是打包安装，可能装出不完整的包（症状：运行 `apifix` 报
 > `Cannot find module .../apifix.mjs`）。该参数在其它 npm 版本上没有副作用。
 > 不想带参数也可以用 tarball 安装：
-> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.1.1.tar.gz`
+> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.1.2.tar.gz`
 
 或克隆源码运行：
 

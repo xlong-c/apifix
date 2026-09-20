@@ -50,7 +50,7 @@ import {
 
 const EMIT_TARGETS = ["opencode", "pi", "codex", "claude-env", "curl", "sdk"];
 
-const VERSION = "0.1.1";
+const VERSION = "0.1.2";
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_CATALOG = path.join(ROOT, "catalog.json");
 const DEFAULT_PORT = 7788;

@@ -1,6 +1,6 @@
 {
   "name": "apifix",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "模型官方参数速查 + 配置片段生成器（零依赖 Node >= 18，含本地 Web UI）",
   "type": "module",
   "bin": {
