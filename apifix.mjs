@@ -31,6 +31,8 @@ import {
   renderAudit,
   planConfigFixes,
   applyConfigFixes,
+  planCodexFixes,
+  applyCodexFixes,
   renderFixPlan,
   searchModels,
   renderSearch,
@@ -50,7 +52,7 @@ import {
 
 const EMIT_TARGETS = ["opencode", "pi", "codex", "claude-env", "curl", "sdk"];
 
-const VERSION = "0.1.2";
+const VERSION = "0.2.0";
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_CATALOG = path.join(ROOT, "catalog.json");
 const DEFAULT_PORT = 7788;
@@ -272,11 +274,11 @@ function cmdMatch(file, models) {
 // audit / search / compare（子命令）
 // --------------------------------------------------------------------------
 
-const AUDIT_FORMATS = ["auto", "opencode", "pi", "generic"];
+const AUDIT_FORMATS = ["auto", "opencode", "pi", "codex", "claude", "generic"];
 const SEARCH_SORTS = ["price", "context", "output", "id"];
 const SEARCH_LIFECYCLES = ["current", "legacy", "retired", "unreleased"];
 
-const AUDIT_HELP = `usage: apifix audit <file|-> [--format {auto,opencode,pi,generic}] [--json]
+const AUDIT_HELP = `usage: apifix audit <file|-> [--format {auto,opencode,pi,codex,claude,generic}] [--json]
 
 读取配置文件（- 表示 stdin），提取模型条目并与 catalog 官网规格逐项比对。
 输出经凭证脱敏（key/token/secret 一律替换为 [REDACTED]，且永不回显文件原文）。
@@ -285,21 +287,25 @@ arguments:
   file                  配置文件路径；- 表示从 stdin 读取
 
 options:
-  --format {auto,opencode,pi,generic}
-                        配置格式（默认 auto 自动识别）
+  --format {auto,opencode,pi,codex,claude,generic}
+                        配置格式（默认 auto 自动识别；claude-env 为 claude 的别名）
+                        codex  = ~/.codex/config.toml（TOML）
+                        claude = ~/.claude/settings.json（env 白名单，AUTH_TOKEN 永不读取）
   --json                输出机器可读 JSON（无 ANSI/制表符）
   -h, --help            显示帮助并退出
 
 退出码：0 全部一致；1 存在差异或未收录；2 用法/解析错误`;
 
-const FIX_HELP = `usage: apifix fix {opencode|pi|<file>} [--format {auto,opencode,pi}] [--dry-run] [--yes] [--json] [--no-backup]
+const FIX_HELP = `usage: apifix fix {opencode|pi|codex|claude|<file>} [--format {auto,opencode,pi,codex,claude}] [--dry-run] [--yes] [--json] [--no-backup]
 
 对比配置文件与 catalog 官网规格，显示修复计划并按 y 应用 / n 取消。
-只修正已声明的规格字段，绝不触碰 apiKey/token 等凭证。
+只修正已声明的规格字段，绝不触碰 apiKey/token 等凭证（claude 的 AUTH_TOKEN 永不读写）。
 
 target:
   opencode              ~/.config/opencode/opencode.json
   pi                    ~/.pi/agent/models.json
+  codex                 ~/.codex/config.toml
+  claude                ~/.claude/settings.json
   <file>                其它文件路径（需 --format 或可自动识别）
 
 options:
@@ -307,7 +313,7 @@ options:
   -y, --yes             跳过询问直接应用（脚本用）
   --json                输出机器可读 JSON；不询问（无 --yes 时只输出计划）
   --no-backup           不写备份文件
-  --format {auto,opencode,pi}
+  --format {auto,opencode,pi,codex,claude}
                         自定义路径时的格式（默认 auto；auto 失败报错 exit 2）
   -h, --help            显示帮助并退出
 
@@ -508,6 +514,7 @@ function cmdAudit(args, models) {
   }
 
   if (file === null) throw new UsageError("需要一个配置文件路径（或 - 读取 stdin）");
+  if (format === "claude-env") format = "claude"; // 常用别名（与 --emit claude-env 对齐）
   if (!AUDIT_FORMATS.includes(format)) {
     throw new UsageError(`argument --format: invalid choice: ${JSON.stringify(format)} (choose from ${AUDIT_FORMATS.join(", ")})`);
   }
@@ -536,10 +543,17 @@ function cmdAudit(args, models) {
   const head = body.trimStart();
   const looksJson = head.startsWith("{") || head.startsWith("[");
 
-  // 内容是 JSON 形状（或以 opencode/pi 显式指定）但解析失败：报位置 + 通用原因，
+  // codex config.toml：显式 --format codex，或 auto 下 .toml 后缀 / TOML 内容特征命中。
+  // 必须在「JSON 形状解析失败」判定之前：TOML 的 [model_providers.x] 也以 [ 开头。
+  const tomlByExt = file !== "-" && /\.toml$/i.test(file);
+  const tomlByHint = !looksJson && (/(^|\n)\s*\[model_providers?\./.test(body)
+    || /(^|\n)\s*model_provider\s*=/.test(body) || /(^|\n)\s*model\s*=/.test(body));
+  const isCodex = format === "codex" || (format === "auto" && (tomlByExt || tomlByHint));
+
+  // 内容是 JSON 形状（或以 opencode/pi/claude 显式指定）但解析失败：报位置 + 通用原因，
   // 绝不回显原文/凭证。纯文本模式只接受"非 JSON 形状"的输入，避免把破损 JSON
   // 当模型 id 回显。
-  if (parseFailed && (looksJson || format === "opencode" || format === "pi")) {
+  if (!isCodex && parseFailed && (looksJson || format === "opencode" || format === "pi" || format === "claude")) {
     const where = parseInfo.line !== null && parseInfo.column !== null
       ? `（第 ${parseInfo.line} 行第 ${parseInfo.column} 列）`
       : "";
@@ -547,31 +561,40 @@ function cmdAudit(args, models) {
     return 2;
   }
 
+  // codex config.toml：显式 --format codex，或 auto 下 .toml 后缀 / TOML 内容特征命中
   let effective = format;
-  if (format === "auto") {
-    if (parseFailed) {
-      // 非 JSON 形状：按纯文本（每行一个模型 id）处理
-      effective = "generic";
-    } else {
-      effective = detectConfigFormat(parsed);
-      if (effective === null) {
-        stderr(scrub("[x] 无法识别配置格式（支持 opencode / pi / generic；可用 --format 显式指定）", allow));
-        return 2;
+  let content = parsed;
+  let report;
+  if (isCodex) {
+    effective = "codex";
+    report = auditConfig(models, parseCodexToml(body), "codex");
+  } else {
+    if (format === "auto") {
+      if (parseFailed) {
+        // 非 JSON 形状：按纯文本（每行一个模型 id）处理
+        effective = "generic";
+      } else {
+        effective = detectConfigFormat(parsed);
+        if (effective === null) {
+          stderr(scrub("[x] 无法识别配置格式（支持 opencode / pi / codex / claude / generic；可用 --format 显式指定）", allow));
+          return 2;
+        }
       }
     }
+
+    if (effective === "generic") {
+      // 成功解析出的对象/数组/字符串走结构化提取；只有"非 JSON 文本"才逐行解析。
+      // 避免把 JSON 原文当模型 id 回显（可能夹带凭证）。
+      const structured = !parseFailed && (Array.isArray(parsed) || isPlainObject(parsed) || typeof parsed === "string");
+      if (!structured) content = body;
+    }
+
+    report = auditConfig(models, content, effective);
   }
 
-  let content = parsed;
-  if (effective === "generic") {
-    // 成功解析出的对象/数组/字符串走结构化提取；只有"非 JSON 文本"才逐行解析。
-    // 避免把 JSON 原文当模型 id 回显（可能夹带凭证）。
-    const structured = !parseFailed && (Array.isArray(parsed) || isPlainObject(parsed) || typeof parsed === "string");
-    if (!structured) content = body;
-  }
-
-  const report = auditConfig(models, content, effective);
   if (!report.entries.length) {
-    stderr(scrub("[x] 未从配置中提取到任何模型条目", allow));
+    const hint = effective === "codex" ? "（TOML 需含顶层 model = \"...\"）" : "";
+    stderr(scrub(`[x] 未从配置中提取到任何模型条目${hint}`, allow));
     return 2;
   }
 
@@ -593,6 +616,8 @@ function cmdAudit(args, models) {
 function fixTargetPath(target) {
   if (target === "opencode") return path.join(os.homedir(), ".config", "opencode", "opencode.json");
   if (target === "pi") return path.join(os.homedir(), ".pi", "agent", "models.json");
+  if (target === "codex") return path.join(os.homedir(), ".codex", "config.toml");
+  if (target === "claude") return path.join(os.homedir(), ".claude", "settings.json");
   return target;
 }
 
@@ -686,7 +711,96 @@ function warnWindowsFileLock(err, file, backup) {
     + `请关闭编辑器/同步盘后重试；${backupNote}`);
 }
 
-const FIX_FORMATS = ["auto", "opencode", "pi"];
+// 修复计划应用后的摘要（JSON / TOML 两条路径共用）
+function reportFixApplied(plan, backup) {
+  const modelCount = plan.entries.filter((e) => e.changes.length).length;
+  stdout(`已修复 ${plan.summary.change_items} 项 / ${modelCount} 个模型`);
+  if (backup) stdout(`备份：${backup}`);
+  if (plan.summary.skipped_items) {
+    const manual = [];
+    for (const entry of plan.entries) {
+      for (const skip of entry.skipped) manual.push(`${entry.input}: ${skip.field}（${skip.reason}）`);
+    }
+    stdout(`剩余需人工确认 ${plan.summary.skipped_items} 项：${manual.join("；")}`);
+  }
+}
+
+// fix（codex TOML）：与 JSON 路径同构；写入走行级回写（applyCodexFixes），
+// 备份 / 原子写 / EPERM 提示复用同一管道。
+async function cmdFixCodex({ file, body, models, allow, json, yes, dryRun, noBackup, mode }) {
+  const plan = planCodexFixes(models, body);
+  const hasChanges = plan.summary.change_items > 0;
+
+  if (json) {
+    let applied = false;
+    let backup = null;
+    if (hasChanges && yes && !dryRun) {
+      const result = commitCodexFix(file, body, plan, mode, noBackup);
+      applied = true;
+      backup = result.backup;
+      stdout(scrub(JSON.stringify({
+        format: "codex", file, dry_run: false, applied, backup,
+        entries: plan.entries, summary: plan.summary,
+      }, null, 2), allow));
+      return planCodexFixes(models, result.text).summary.change_items > 0 ? 1 : 0;
+    }
+    stdout(scrub(JSON.stringify({
+      format: "codex", file, dry_run: dryRun, applied, backup,
+      entries: plan.entries, summary: plan.summary,
+    }, null, 2), allow));
+    return hasChanges ? 1 : 0;
+  }
+
+  if (!hasChanges) {
+    stdout(scrub(renderFixPlan(plan, file), allow));
+    return 0;
+  }
+  stdout(scrub(renderFixPlan(plan, file), allow));
+
+  if (dryRun) {
+    stderr("[i] --dry-run：仅显示修复计划，未写入");
+    return 1;
+  }
+
+  let answer = "y";
+  if (!yes) {
+    process.stdout.write(`应用以上 ${plan.summary.change_items} 处修正？[y/N] `);
+    const reply = await readStdinLine();
+    if (reply.eof) {
+      stderr("[i] 非交互环境：使用 --yes 应用，或 --dry-run 仅预览");
+      return 1;
+    }
+    answer = reply.text.trim().toLowerCase();
+  }
+  if (answer !== "y" && answer !== "yes") {
+    stderr("[i] 已取消，未写入任何更改");
+    return 1;
+  }
+
+  const result = commitCodexFix(file, body, plan, mode, noBackup);
+  const verify = planCodexFixes(models, result.text);
+  reportFixApplied(plan, result.backup);
+  return verify.summary.change_items > 0 ? 1 : 0;
+}
+
+// codex 写入：备份（可选）→ 行级回写 → 原子写（与 JSON 路径同一套错误提示语义）
+function commitCodexFix(file, body, plan, mode, noBackup) {
+  let backup = null;
+  if (!noBackup) {
+    backup = uniqueBackupPath(file, new Date());
+    copyFileSync(file, backup);
+  }
+  const text = applyCodexFixes(body, plan);
+  try {
+    writeAtomic(file, text, mode);
+  } catch (err) {
+    warnWindowsFileLock(err, file, backup);
+    throw err;
+  }
+  return { text, backup };
+}
+
+const FIX_FORMATS = ["auto", "opencode", "pi", "codex", "claude"];
 
 async function cmdFix(args, models) {
   let target = null;
@@ -718,15 +832,16 @@ async function cmdFix(args, models) {
     target = arg;
   }
 
-  if (target === null) throw new UsageError("需要一个目标：opencode / pi 或配置文件路径");
+  if (target === null) throw new UsageError("需要一个目标：opencode / pi / codex / claude 或配置文件路径");
   if (target === "-") throw new UsageError("fix 不支持 stdin（-）；请传入配置文件路径");
+  if (format === "claude-env") format = "claude"; // 常用别名（与 --emit claude-env 对齐）
   if (format !== null && !FIX_FORMATS.includes(format)) {
     throw new UsageError(`argument --format: invalid choice: ${JSON.stringify(format)} (choose from ${FIX_FORMATS.join(", ")})`);
   }
 
   // 命名目标自带格式（--format 仅用于自定义路径，避免误配导致错误修复）
   let effectiveFormat;
-  if (target === "opencode" || target === "pi") effectiveFormat = target;
+  if (target === "opencode" || target === "pi" || target === "codex" || target === "claude") effectiveFormat = target;
   else effectiveFormat = format || "auto";
   const file = fixTargetPath(target);
   const allow = publicTokens(models);
@@ -742,6 +857,17 @@ async function cmdFix(args, models) {
   const bom = raw.charCodeAt(0) === 0xfeff;
   const body = bom ? raw.slice(1) : raw;
 
+  let mode = null;
+  try { mode = statSync(file).mode & 0o777; } catch { mode = null; }
+
+  // codex：TOML 文本路径（在 JSON.parse 之前分流；写入走行级回写，其余字节不动）
+  const tomlByExt = /\.toml$/i.test(file);
+  const tomlByHint = /(^|\n)\s*\[model_providers?\./.test(body) || /(^|\n)\s*model_provider\s*=/.test(body);
+  const useToml = effectiveFormat === "codex" || (effectiveFormat === "auto" && (tomlByExt || tomlByHint));
+  if (useToml) {
+    return await cmdFixCodex({ file, body, models, allow, json, yes, dryRun, noBackup, mode });
+  }
+
   let parsed = null;
   try {
     parsed = JSON.parse(body);
@@ -755,12 +881,12 @@ async function cmdFix(args, models) {
   if (effectiveFormat === "auto") {
     const detected = detectConfigFormat(parsed);
     if (detected === null || detected === "generic") {
-      stderr(scrub("[x] 无法识别可自动修复的配置格式（支持 opencode / pi；可用 --format 显式指定）", allow));
+      stderr(scrub("[x] 无法识别可自动修复的配置格式（支持 opencode / pi / codex / claude；可用 --format 显式指定）", allow));
       return 2;
     }
     effectiveFormat = detected;
   }
-  if (effectiveFormat !== "opencode" && effectiveFormat !== "pi") {
+  if (effectiveFormat !== "opencode" && effectiveFormat !== "pi" && effectiveFormat !== "claude") {
     stderr(scrub("[x] 该格式不支持自动修复", allow));
     return 2;
   }
@@ -769,15 +895,13 @@ async function cmdFix(args, models) {
   const hasChanges = plan.summary.change_items > 0;
   const fileLabel = file === "-" ? "-" : file;
 
-  // 样式：缩进 / 末尾换行 / CRLF / BOM / mode
+  // 样式：缩进 / 末尾换行 / CRLF / BOM（mode 已在读取后取得）
   const style = {
     indent: detectIndent(body),
     trailingNewline: body.endsWith("\n"),
     crlf: body.includes("\r\n"),
     bom,
   };
-  let mode = null;
-  try { mode = statSync(file).mode & 0o777; } catch { mode = null; }
 
   // --json：不询问；无 --yes 时只输出计划
   if (json) {
@@ -851,16 +975,7 @@ async function cmdFix(args, models) {
   const verify = planConfigFixes(models, result.config, effectiveFormat);
 
   // 摘要
-  const modelCount = plan.entries.filter((e) => e.changes.length).length;
-  stdout(`已修复 ${plan.summary.change_items} 项 / ${modelCount} 个模型`);
-  if (result.backup) stdout(`备份：${result.backup}`);
-  if (plan.summary.skipped_items) {
-    const manual = [];
-    for (const entry of plan.entries) {
-      for (const skip of entry.skipped) manual.push(`${entry.input}: ${skip.field}（${skip.reason}）`);
-    }
-    stdout(`剩余需人工确认 ${plan.summary.skipped_items} 项：${manual.join("；")}`);
-  }
+  reportFixApplied(plan, result.backup);
 
   return verify.summary.change_items > 0 ? 1 : 0;
 }
@@ -1923,14 +2038,18 @@ async function main(argv) {
     if (emit === "pi" && entry.vision === null) {
       stderr("[i] vision 未文档化，pi input 仅含 text（需人工确认）");
     }
-    if (emit === "opencode" || emit === "pi") {
-      // 完整模式（-f）：字段由 core.mjs 决定，缺失数据说明经 onNote 走既有 stderr 通道。
-      const onNote = (line) => stderr(line);
-      if (emit === "opencode") stdout(emitOpencode(entry, { name, keyId: key, full: opts.full, onNote }));
-      else stdout(emitPi(entry, { name, id: key, full: opts.full, onNote }));
+    // 完整模式（-f）：字段由 core.mjs 决定，缺失数据说明经 onNote 走既有 stderr 通道。
+    const onNote = (line) => stderr(line);
+    if (emit === "opencode") {
+      stdout(emitOpencode(entry, { name, keyId: key, full: opts.full, onNote }));
+    } else if (emit === "pi") {
+      stdout(emitPi(entry, { name, id: key, full: opts.full, onNote }));
     } else {
-      if (opts.full) stderr("[i] --full 仅对 opencode/pi 生效，已忽略");
-      stdout(emitExtra(entry, emit, { name, keyId: key }));
+      // codex / claude-env 有配置文件级完整模式；curl / sdk 无 -f 语义。
+      if (opts.full && emit !== "codex" && emit !== "claude-env") {
+        stderr("[i] --full 仅对 opencode/pi/codex/claude-env 生效，已忽略");
+      }
+      stdout(emitExtra(entry, emit, { name, keyId: key, full: opts.full, onNote }));
     }
   }
   return 0;

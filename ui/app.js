@@ -205,6 +205,8 @@ const emitOpencodeFallback = (entry, keyId, name, full) =>
   (fallback ? fallback.emitOpencodeFallback(entry, keyId, name, full) : null);
 const emitPiFallback = (entry, keyId, name, full) =>
   (fallback ? fallback.emitPiFallback(entry, keyId, name, full) : null);
+const emitExtraFallback = (entry, target, keyId, name, full) =>
+  (fallback ? fallback.emitExtraFallback(entry, target, keyId, name, full) : null);
 
 /* ------------------------------------------------------------------ 数据 */
 
@@ -635,6 +637,11 @@ function renderSourcesSection(model) {
  * opencode 在能给出 cost 时去掉 'cost'；pi 无 cost 字段，故始终保留。
  * api 用与 core 语义一致的 mapPiApi（取首段 pipe 值）判断能否映射，映射不到时提示追加 'api'。 */
 function fullOmittedCaption(target, entry) {
+  // codex / claude-env 的完整模式是「配置文件级」片段：提示占位符与形态
+  if (target === 'codex') return '完整模式含占位符（base_url / env_key），替换后再使用。';
+  if (target === 'claude-env') {
+    return '完整模式输出 ~/.claude/settings.json 的 env 块（值均为字符串），BASE_URL / AUTH_TOKEN 为占位符。';
+  }
   const omitted = (FULL_OMITTED[target] || []).slice();
   if (target === 'opencode' && opencodeCost(entry)) {
     const idx = omitted.indexOf('cost');
@@ -657,7 +664,7 @@ function renderSnippetSection(model, canonical, keyId) {
   const showFullToggle = state.emitTab !== 'card';
   const bar = el('div', 'snippet-bar');
   const tabs = el('div', 'tabs-mini');
-  const defs = [['opencode', 'opencode'], ['pi', 'pi']];
+  const defs = [['opencode', 'opencode'], ['pi', 'pi'], ['codex', 'codex'], ['claude-env', 'claude']];
   if (showCard) defs.push(['card', '卡片']);
   for (const [value, label] of defs) {
     const tab = el('button', 'tab-mini' + (state.emitTab === value ? ' is-active' : ''), label);
@@ -694,10 +701,11 @@ function renderSnippetSection(model, canonical, keyId) {
   const name = keyId;
   let issue = null;
   let text;
-  const viaCore = (fn, fallbackEmit) => {
+  const viaCore = (fn, fallbackEmit, invoke) => {
     if (!hasCore || typeof core[fn] !== 'function') { issue = FALLBACK_NOTE; return fallbackEmit(); }
     try {
-      return String(core[fn](model, { name, keyId, id: keyId, full }) || '');
+      const out = invoke ? invoke(core[fn]) : core[fn](model, { name, keyId, id: keyId, full });
+      return String(out || '');
     } catch (err) {
       noteCoreError(err);
       issue = '调用 lib/core.mjs 生成片段失败，以下为内置降级输出：' + err.message;
@@ -716,6 +724,11 @@ function renderSnippetSection(model, canonical, keyId) {
     if (model.vision === null || model.vision === undefined) {
       issue = (issue ? issue + '\n' : '') + 'vision 未文档化，pi input 仅含 text（需人工确认）。';
     }
+  } else if (state.emitTab === 'codex' || state.emitTab === 'claude-env') {
+    const target = state.emitTab;
+    text = viaCore('emitExtra',
+      () => emitExtraFallback(model, target, keyId, name, full),
+      (fn) => fn(model, target, { name, keyId: keyId, full }));
   } else {
     text = viaCore('emitOpencode', () => emitOpencodeFallback(model, keyId, name, full));
   }

@@ -694,7 +694,7 @@ kbd {
 }
 .seg-btn:hover { color: var(--fg); background: var(--bg-hover); }
 .seg-btn.is-active { color: var(--accent); border-color: var(--accent-line); background: var(--accent-dim); }
-.tabs-mini { display: flex; gap: var(--sp-1); margin-bottom: var(--sp-2); }
+.tabs-mini { display: flex; flex-wrap: wrap; gap: var(--sp-1); margin-bottom: var(--sp-2); }
 .tab-mini {
   appearance: none; background: none;
   border: 1px solid transparent;

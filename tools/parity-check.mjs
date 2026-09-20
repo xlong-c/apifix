@@ -3,8 +3,8 @@
 //
 // AGENTS.md 不变量 2 的自动化保障：lib/core.mjs 是唯一正典，ui/fallback.mjs
 // （UI 降级实现）必须与它逐字节一致。本工具读取 catalog.json，对每条模型 ×
-// emitter(opencode|pi) × 模式(精简|-f) 共 4 种组合，断言两侧 emit 输出零差异；
-// 另做 match 弱断言：非 fuzzy 命中时两侧 kind 与命中 id 必须一致
+// emitter(opencode|pi|codex|claude-env) × 模式(精简|-f) 共 8 种组合，断言两侧 emit
+// 输出零差异；另做 match 弱断言：非 fuzzy 命中时两侧 kind 与命中 id 必须一致
 // （fuzzy 候选允许不同，只计数不报错）。
 //
 // 用法：
@@ -19,7 +19,7 @@ const CATALOG_PATH = new URL("../catalog.json", import.meta.url);
 const CORE_PATH = "../lib/core.mjs";
 const FALLBACK_PATH = "../ui/fallback.mjs";
 
-const EMITTERS = ["opencode", "pi"];
+const EMITTERS = ["opencode", "pi", "codex", "claude-env"];
 const MODES = ["精简", "-f"];
 
 function fail(message, code) {
@@ -94,10 +94,14 @@ async function main() {
         // key 沿用规范 id、name 与 key 一致（与 CLI 默认路径相同的形态）
         const coreOut = emitter === "opencode"
           ? core.emitOpencode(entry, { name: entry.id, keyId: entry.id, full, onNote })
-          : core.emitPi(entry, { name: entry.id, id: entry.id, full, onNote });
+          : emitter === "pi"
+            ? core.emitPi(entry, { name: entry.id, id: entry.id, full, onNote })
+            : core.emitExtra(entry, emitter, { name: entry.id, keyId: entry.id, full, onNote });
         const fallbackOut = emitter === "opencode"
           ? fallback.emitOpencodeFallback(entry, entry.id, entry.id, full)
-          : fallback.emitPiFallback(entry, entry.id, entry.id, full);
+          : emitter === "pi"
+            ? fallback.emitPiFallback(entry, entry.id, entry.id, full)
+            : fallback.emitExtraFallback(entry, emitter, entry.id, entry.id, full);
 
         if (coreOut !== fallbackOut) {
           const idx = firstByteIndex(coreOut, fallbackOut);
@@ -131,7 +135,7 @@ async function main() {
 
   // 汇总（stdout 打印，便于 CI 展示）
   console.log(
-    `对拍通过：${models.length} 条模型 × 2 emitter × 2 模式 = ${groups} 组 emit 输出零差异；` +
+    `对拍通过：${models.length} 条模型 × 4 emitter × 2 模式 = ${groups} 组 emit 输出零差异；` +
     `match 弱断言 ${match.checked} 组一致（fuzzy 跳过 ${match.fuzzySkipped} 组，仅计数）`,
   );
   return 0;

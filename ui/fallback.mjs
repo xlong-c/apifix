@@ -311,3 +311,121 @@ export function emitPiFallback(entry, keyId, name, full) {
   }
   return JSON.stringify(payload, null, 2);
 }
+
+/* ------------------------------------ emit：codex / claude-env（降级） */
+
+/* 与 lib/core.mjs 的 bestEffort 逐字对齐：官方 default_effort 缺失时按固定优先级回落。 */
+const EFFORT_PRIORITY = ['high', 'medium', 'low', 'xhigh', 'max', 'minimal', 'none'];
+
+function bestEffortFallback(entry) {
+  const reasoning = entry && entry.reasoning;
+  if (!isDict(reasoning)) return null;
+  const efforts = reasoning.effort_values;
+  if (!Array.isArray(efforts) || !efforts.length) return null;
+  const def = reasoning.default_effort;
+  if (efforts.includes(def)) return def;
+  for (const candidate of EFFORT_PRIORITY) {
+    if (efforts.includes(candidate)) return candidate;
+  }
+  return efforts[0];
+}
+
+/* 与 lib/core.mjs 相同的占位符常量和 TOML 转义（不能 import core，靠 parity-check 守护）。 */
+const CODEX_BASE_URL_PLACEHOLDER = 'https://YOUR_BASE_URL/v1';
+const CLAUDE_BASE_URL_PLACEHOLDER = 'https://YOUR_BASE_URL';
+const API_KEY_PLACEHOLDER = 'YOUR_API_KEY';
+
+function tomlString(value) {
+  return `"${String(value)
+    .replace(/\\/g, '\\\\')
+    .replace(/"/g, '\\"')
+    .replace(/\r/g, '\\r')
+    .replace(/\n/g, '\\n')
+    .replace(/\t/g, '\\t')}"`;
+}
+
+function tomlKeyText(key) {
+  return /^[A-Za-z0-9_-]+$/.test(String(key)) ? String(key) : tomlString(key);
+}
+
+function codexWireApiFallback(entry) {
+  const protocol = valOrNull(entry || {}, 'api_protocol');
+  if (typeof protocol !== 'string') return null;
+  const first = protocol.split('|')[0].trim();
+  if (first === 'chat_completions') return 'chat';
+  if (first === 'responses') return 'responses';
+  return null;
+}
+
+function buildCodexFallback(entry, key, name, full) {
+  const effort = bestEffortFallback(entry);
+  const lines = [`model = "${key}"`];
+  if (effort) {
+    lines.push(`model_reasoning_effort = "${effort}"`);
+  } else {
+    lines.push('# model_reasoning_effort = 未知，需确认（该模型未文档化 reasoning effort 档位）');
+  }
+  if (!full) return lines.join('\n');
+
+  const providerKey = key;
+  const providerName = name !== null && name !== undefined ? name : key;
+  const wire = codexWireApiFallback(entry);
+  lines.push(`model_provider = ${tomlString(providerKey)}`);
+  lines.push('');
+  lines.push(`[model_providers.${tomlKeyText(providerKey)}]`);
+  lines.push(`name = ${tomlString(providerName)}`);
+  lines.push(`base_url = "${CODEX_BASE_URL_PLACEHOLDER}"  # 占位符：替换为你的网关/中转地址`);
+  if (wire) {
+    lines.push(`wire_api = "${wire}"`);
+  } else {
+    const protocol = valOrNull(entry || {}, 'api_protocol');
+    const shown = protocol === null || protocol === undefined ? 'null' : String(protocol);
+    lines.push(`# wire_api 无法映射（api_protocol=${shown}；codex 仅支持 responses / chat）`);
+  }
+  lines.push('# env_key = "YOUR_API_KEY_ENV"  # 可选：API key 所处的环境变量名（占位，需自行设置）');
+  return lines.join('\n');
+}
+
+function buildClaudeEnvFallback(entry, key, full) {
+  const reasoning = isDict(entry && entry.reasoning) ? entry.reasoning : {};
+  const lines = [`ANTHROPIC_MODEL=${key}`];
+
+  const tb = 'thinking_budget' in reasoning ? reasoning.thinking_budget : undefined;
+  const budget = isDict(tb) && tb.min !== null && tb.min !== undefined ? tb.min : null;
+  if (budget !== null) {
+    lines.push(`MAX_THINKING_TOKENS=${budget}`);
+  } else {
+    lines.push('# MAX_THINKING_TOKENS=未知，需确认（该模型未文档化 thinking budget）');
+  }
+
+  let effort = null;
+  if (reasoning.supported === false) {
+    lines.push('# CLAUDE_CODE_EFFORT_LEVEL=不适用（该模型不支持推理）');
+  } else {
+    effort = bestEffortFallback(entry);
+    if (effort) {
+      lines.push(`CLAUDE_CODE_EFFORT_LEVEL=${effort}`);
+    } else {
+      lines.push('# CLAUDE_CODE_EFFORT_LEVEL=未知，需确认（该模型未文档化 effort 档位）');
+    }
+  }
+
+  if (!full) return lines.join('\n');
+
+  const env = {
+    ANTHROPIC_BASE_URL: CLAUDE_BASE_URL_PLACEHOLDER,
+    ANTHROPIC_AUTH_TOKEN: API_KEY_PLACEHOLDER,
+    ANTHROPIC_MODEL: key,
+  };
+  if (budget !== null) env.MAX_THINKING_TOKENS = String(budget);
+  if (effort) env.CLAUDE_CODE_EFFORT_LEVEL = effort;
+  return JSON.stringify({ env }, null, 2);
+}
+
+/* 次要目标分发（与 lib/core.mjs 的 emitExtra 对齐；note 通道在降级实现里省略）。 */
+export function emitExtraFallback(entry, target, keyId, name, full) {
+  const key = keyId !== null && keyId !== undefined ? keyId : entry.id;
+  if (target === 'codex') return buildCodexFallback(entry, key, name, full);
+  if (target === 'claude-env') return buildClaudeEnvFallback(entry, key, full);
+  throw new Error(`未知 emit 目标: ${target}`);
+}
