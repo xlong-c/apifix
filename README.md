@@ -5,7 +5,7 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
 ![dependencies](https://img.shields.io/badge/dependencies-0-success.svg)
-![models](https://img.shields.io/badge/models-325-informational.svg)
+![models](https://img.shields.io/badge/models-327-informational.svg)
 
 输入一个模型 id（通常是中转沿用的 legacy 名字），拿到它的**官网规格**，以及可直接粘贴的 opencode / pi 配置片段。
 
@@ -17,7 +17,7 @@
 - **中转沿用官方 id，却配上错数字。** 官方 id 是稳定的，但中转自己填的 context / max output 会随上游漂移，客户端里那一行没人会去核对。
 - **你配置里的数字往往是错的或过期的。** 中转自己填的 context / max output 会随上游漂移，客户端里那一行没人会去核对。
 - **"降智"是静默发生的。** thinking 模式下 `temperature` 被直接忽略、`top_p` 有下限、官方不支持的 effort 档位悄悄回落到别的档位。行为变了，但你从配置上看不出来。
-- **换模型等于读 22 家厂商的文档。** 每家对推理档位、采样约束、缓存、工具调用的口径都不一样。
+- **换模型等于读 23 家厂商的文档。** 每家对推理档位、采样约束、缓存、工具调用的口径都不一样。
 - **apifix 只做一件事**：把官方规格摊开，顺手生成配置片段。它对未文档化的值写 `null`，绝不猜。
 
 ## 一个真实例子
@@ -167,21 +167,21 @@ GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
 
 ## 支持范围
 
-当前收录 **325** 个条目、22 个 vendor：
+当前收录 **327** 个条目、23 个 vendor：
 
 | vendor | 数量 | vendor | 数量 | vendor | 数量 |
 | --- | ---: | --- | ---: | --- | ---: |
 | openai | 63 | anthropic | 24 | alibaba | 42 |
-| zhipu | 21 | moonshot | 20 | baidu | 17 |
+| zhipu | 22 | moonshot | 20 | baidu | 17 |
 | google | 17 | cohere | 15 | mistral | 12 |
 | tencent | 11 | volcengine | 11 | deepseek | 10 |
 | nvidia | 8 | amazon | 7 | iflytek | 7 |
 | microsoft | 7 | meta | 7 | xai | 16 |
-| minimax | 5 | 01ai | 3 | ai21 / writer | 各 1 |
+| minimax | 5 | 01ai | 3 | ai21 / writer / stepfun | 各 1 |
 
-生命周期：`current` 148、`legacy` 92、`retired` 82、`unreleased` 2（另有 1 条未标注）；305 条已核验官网。
+生命周期：`current` 150、`legacy` 92、`retired` 82、`unreleased` 2（另有 1 条未标注）；307 条已核验官网。
 
-**定价**：**229** 个模型带官方 USD 定价（每 1M tokens）。非美元定价在合并时按固定参考汇率
+**定价**：**231** 个模型带官方 USD 定价（每 1M tokens）。非美元定价在合并时按固定参考汇率
 1 USD = 7.2 CNY 换算，原始币种数值保留在 `cost.note` 里；该汇率是参考值，不是实时行情。
 
 ## 匹配规则
@@ -225,7 +225,7 @@ node apifix.mjs gpt-6-astra --emit pi -f       # pi 完整模式
 
 - **只采信厂商官方文档**（官方模型页 / API 文档 / 定价页）。聚合站、中转商后台、论坛不作为来源。
 - **`null` = 官方未文档化**，不是「等于 0」；渲染为 `未知/not documented`。宁可留空，绝不臆造数值。
-- **`verified`**：`true` 表示已与官方文档逐项核验（305/325）；`false` 表示来源间接或待核验，卡片会显式提示。
+- **`verified`**：`true` 表示已与官方文档逐项核验（307/327）；`false` 表示来源间接或待核验，卡片会显式提示。
 - **`confidence`**（`high`/`medium`/`low`）配合 `sources` 使用，来源可逐条追溯。
 - 生命周期与 `legacy_ids` 记录退役、中转沿用 id 的历史；**退役模型的规格为退役前规格**。
 

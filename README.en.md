@@ -5,7 +5,7 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
 ![dependencies](https://img.shields.io/badge/dependencies-0-success.svg)
-![models](https://img.shields.io/badge/models-325-informational.svg)
+![models](https://img.shields.io/badge/models-327-informational.svg)
 
 Give it a model ID — usually a legacy name a relay kept alive — and get back the **official spec** plus a
 paste-ready config snippet for opencode or pi.
@@ -23,7 +23,7 @@ everything else stays offline.
   those values drift as upstream changes, and nobody ever re-checks that one line in the client.
 - **"Dumbing down" happens silently.** In thinking mode, `temperature` is simply ignored, `top_p` has a floor,
   and unsupported effort levels quietly collapse into other levels. Behavior changed — your config won't tell you.
-- **Switching models means reading 22 vendors' docs.** Every vendor draws the lines differently for reasoning
+- **Switching models means reading 23 vendors' docs.** Every vendor draws the lines differently for reasoning
   levels, sampling constraints, caching, and tool calling.
 - **apifix does one thing**: lay out the official spec and generate a snippet. Undocumented values are `null`.
   It never guesses.
@@ -191,21 +191,21 @@ is enough to run it on GitHub Pages: the root `index.html` redirects to `/ui/`.
 
 ## Coverage
 
-325 entries across 22 vendors:
+327 entries across 23 vendors:
 
 | vendor | count | vendor | count | vendor | count |
 | --- | ---: | --- | ---: | --- | ---: |
 | openai | 63 | anthropic | 24 | alibaba | 42 |
-| zhipu | 21 | moonshot | 20 | baidu | 17 |
+| zhipu | 22 | moonshot | 20 | baidu | 17 |
 | google | 17 | cohere | 15 | mistral | 12 |
 | tencent | 11 | volcengine | 11 | deepseek | 10 |
 | nvidia | 8 | amazon | 7 | iflytek | 7 |
 | microsoft | 7 | meta | 7 | xai | 16 |
-| minimax | 5 | 01ai | 3 | ai21 / writer | 1 each |
+| minimax | 5 | 01ai | 3 | ai21 / writer / stepfun | 1 each |
 
-Lifecycle: `current` 148, `legacy` 92, `retired` 82, `unreleased` 2 (plus 1 unlabeled). 305 entries are verified against official docs.
+Lifecycle: `current` 150, `legacy` 92, `retired` 82, `unreleased` 2 (plus 1 unlabeled). 307 entries are verified against official docs.
 
-**Pricing**: 229 models carry official USD pricing (per 1M tokens). Non-USD prices are converted at merge time
+**Pricing**: 231 models carry official USD pricing (per 1M tokens). Non-USD prices are converted at merge time
 using a fixed reference rate of 1 USD = 7.2 CNY, with the original values kept in `cost.note`. That rate is a
 reference, not a live quote.
 
@@ -255,7 +255,7 @@ node apifix.mjs gpt-6-astra --emit pi -f       # full pi mode
 - **Only vendor-official docs** (model pages, API docs, pricing pages). Aggregators, relay dashboards, and
   forums are not sources.
 - **`null` means "not documented"**, not zero; it renders as `未知/not documented`. Better empty than invented.
-- **`verified`**: `true` means every field was checked against official docs (305/325); `false` means the source
+- **`verified`**: `true` means every field was checked against official docs (307/327); `false` means the source
   is indirect or pending, and the card says so explicitly.
 - **`confidence`** (`high`/`medium`/`low`) works together with `sources`, so every value is traceable.
 - Lifecycle and `legacy_ids` record retirements and relay-reused IDs; **retired models show their pre-retirement spec**.

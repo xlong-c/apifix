@@ -5,7 +5,7 @@
  *
  * 硬约束（AGENTS.md 不变量 2）：
  *   - 行为必须与 lib/core.mjs 逐字节一致，对拍基线为
- *     catalog 模型数 × 2 emitter（opencode/pi）× 2 模式（精简/-f）= 1300 组零差异；
+ *     catalog 模型数 × 2 emitter（opencode/pi）× 2 模式（精简/-f）= 1308 组零差异；
  *     自动化对拍见 tools/parity-check.mjs。
  *   - 本文件 **不使用任何 Node API**（无 fs/path/process/import 内置模块），
  *     浏览器可直接 import（apifix.mjs 的本地静态服务对 .mjs 返回 text/javascript）。
