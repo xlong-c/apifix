@@ -102,6 +102,10 @@ codex（`config.toml` 的 `wire_api`）；多路协议值（如 `chat_completion
 比对时按 OpenAI 家族（chat_completions / responses）处理，模型支持其中任一即判匹配；只有 baseURL
 路径含 `/responses` 时才细化为 responses（URL 启发式），与官方不一致只提示「协议不确定」。
 
+默认扫描 5 个文件（存在才读）：opencode / pi `models.json` / **pi `models-store.json`（模型库）** /
+claude / codex。模型库是工具自动生成的模型清单、不是你的手写配置：报告里**折叠成一行**，其中的
+「目录未收录」也不计入配置问题（`--json` 用 `store_models` / `store_unmapped` 单独计数）。
+
 ### 配置修复（fix）
 
 `audit` 报出的差异，一条命令改回官网规格：先显示差异计划，再询问 `[y/N]`——`y` 应用，`n` 取消。

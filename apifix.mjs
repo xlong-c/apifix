@@ -1591,7 +1591,7 @@ function cmdCompare(args, models) {
 const PROTOCOL_DEFAULT_FILES = [
   { path: path.join(os.homedir(), ".config", "opencode", "opencode.json"), tool: "opencode", shape: "opencode", type: "json" },
   { path: path.join(os.homedir(), ".pi", "agent", "models.json"), tool: "pi", shape: "pi", type: "json" },
-  { path: path.join(os.homedir(), ".pi", "agent", "models-store.json"), tool: "pi", shape: "pi-store", type: "json" },
+  { path: path.join(os.homedir(), ".pi", "agent", "models-store.json"), tool: "pi", shape: "pi-store", type: "json", store: true },
   { path: path.join(os.homedir(), ".claude", "settings.json"), tool: "claude-code", shape: "claude-code", type: "json" },
   { path: path.join(os.homedir(), ".codex", "config.toml"), tool: "codex", shape: "codex", type: "toml" },
 ];
@@ -1601,7 +1601,7 @@ function detectSourceShape(file, text) {
   const base = path.basename(String(file)).toLowerCase();
   if (base.endsWith(".toml")) return { tool: "codex", shape: "codex", type: "toml" };
   const lower = base;
-  if (lower === "models-store.json") return { tool: "pi", shape: "pi-store", type: "json" };
+  if (lower === "models-store.json") return { tool: "pi", shape: "pi-store", type: "json", store: true };
   if (lower === "settings.json") return { tool: "claude-code", shape: "claude-code", type: "json" };
   let parsed = null;
   try {
@@ -1618,7 +1618,7 @@ function detectSourceShape(file, text) {
     // models-store.json：顶层全是 provider 名，每个值带 models 数组
     const values = Object.values(parsed);
     if (values.length && values.every((v) => isPlainObject(v) && Array.isArray(v.models))) {
-      return { tool: "pi", shape: "pi-store", type: "json" };
+      return { tool: "pi", shape: "pi-store", type: "json", store: true };
     }
   }
   return null;
@@ -1638,7 +1638,7 @@ options:
 默认扫描（存在才读，缺失静默跳过）：
   ~/.config/opencode/opencode.json
   ~/.pi/agent/models.json
-  ~/.pi/agent/models-store.json
+  ~/.pi/agent/models-store.json（模型库：自动生成的模型清单，折叠成一行、未收录不计入配置）
   ~/.claude/settings.json
   ~/.codex/config.toml
 
@@ -1695,6 +1695,7 @@ function cmdProtocols(args, models) {
     let shape = item.shape;
     let tool = item.tool;
     let type = item.type;
+    let store = item.store === true;
     if (!shape) {
       const detected = detectSourceShape(item.path, text);
       if (!detected) {
@@ -1704,6 +1705,7 @@ function cmdProtocols(args, models) {
       shape = detected.shape;
       tool = detected.tool;
       type = detected.type;
+      store = detected.store === true;
     }
 
     let config = null;
@@ -1724,10 +1726,10 @@ function cmdProtocols(args, models) {
     // 再对整体做 stripCredentials 兜底，确保进入 core 的对象无凭证。
     if (shape === "claude-code") {
       const env = claudeProtocolEnv(config);
-      sources.push({ tool, shape, file: item.path, config: env ? { env } : {} });
+      sources.push({ tool, shape, file: item.path, config: env ? { env } : {}, store });
       continue;
     }
-    sources.push({ tool, shape, file: item.path, config: stripCredentials(config) });
+    sources.push({ tool, shape, file: item.path, config: stripCredentials(config), store });
   }
 
   if (!sources.length) {

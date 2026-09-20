@@ -117,6 +117,12 @@ Supports opencode (`npm` + `baseURL` inference), pi (`api` field), claude-code
 model supports either). Only a baseURL path containing `/responses` refines it to responses (a URL
 heuristic); a contradiction there is merely reported as "protocol uncertain".
 
+Five files are scanned by default (only if present): opencode / pi `models.json` / **pi
+`models-store.json` (the model store)** / claude / codex. The model store is a tool-generated model list,
+not your hand-written config: the report **collapses it into a single row**, and its "not in the catalog"
+entries do not count as config problems (`--json` reports them separately as `store_models` /
+`store_unmapped`).
+
 ### Config repair (`fix`)
 
 Turn the discrepancies `audit` reports back into the official spec with one command: it shows a diff plan,

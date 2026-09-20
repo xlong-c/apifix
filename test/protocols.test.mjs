@@ -107,3 +107,38 @@ test("protocols：未收录的模型 id → unmapped（不抛错）", () => {
     assert.equal(model.status, "unmapped");
   });
 });
+
+test("protocols：模型库（models-store.json）折叠成一行，未收录不计入配置统计", () => {
+  withDir((dir) => {
+    const file = path.join(dir, "models-store.json");
+    writeFileSync(file, JSON.stringify({
+      huggingface: {
+        api: "openai-completions",
+        models: [
+          { id: "MiniMaxAI/MiniMax-M2", name: "M2" },
+          { id: "kimi-k3", name: "K3" },
+          { id: "Qwen/Qwen3-235B-A22B", name: "Q" },
+        ],
+      },
+    }, null, 2), "utf8");
+
+    // --json：store 标记 + 分开计数
+    const r = runProtocols(file);
+    assert.equal(r.status, 0, r.stdout + r.stderr);
+    const payload = JSON.parse(r.stdout);
+    assert.equal(payload.providers[0].store, true, "模型库来源应带 store 标记");
+    assert.equal(payload.summary.unmapped, 0, "模型库的未收录不得计入配置统计");
+    assert.equal(payload.summary.store_models, 3);
+    assert.equal(payload.summary.store_unmapped, 1);
+
+    // 文本渲染：折叠成一行 + 摘要行
+    const text = spawnSync(process.execPath, [CLI, "protocols", "--file", file, "--no-defaults"], {
+      encoding: "utf8", cwd: ROOT,
+    });
+    assert.equal(text.status, 0, text.stdout + text.stderr);
+    assert.match(text.stdout, /模型库 3 条/);
+    assert.match(text.stdout, /2 已锚定 · 1 未收录（不计入配置）/);
+    assert.match(text.stdout, /模型库（自动生成，非手写配置）：3 条，其中 1 条目录未收录/);
+    assert.ok(!text.stdout.includes("Qwen/Qwen3-235B-A22B"), "模型库条目不应逐条列出");
+  });
+});

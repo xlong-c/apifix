@@ -186,6 +186,9 @@ catalog 条目关键字段：
 - 三种阶梯价格式都必须被 merge/validate 接受，改 schema 时三者一起改。
 - `audit` 输出已强制凭证脱敏（key/token/secret → `[REDACTED]`），但其他脚本/命令不保证——读写配置一律走结构化路径。
 - pi 的 `input` 比较**不含 `pdf`**（pi 只支持 text/image，见 pi-ai 类型定义）；`audit` 不再对 pi 报「缺 pdf」。
+- `protocols` 把**模型库**（`~/.pi/agent/models-store.json`，工具自动生成的模型清单）与手写配置分流：
+  source / `provider` 带 `store: true`（默认扫描清单里 `{ shape: "pi-store", store: true }`），
+  渲染折叠成一行；`summary.unmapped` 只统计手写配置，模型库单列 `store_models` / `store_unmapped`。
 - windows CI 矩阵依赖 `.gitattributes`（`* text=auto eol=lf`）统一行尾：`build-catalog.mjs --check`
   是逐字节比较，runner 默认 `core.autocrlf=true` 会把检出转成 CRLF、在 Windows 上假红——不要删该文件。
 - codex / claude-env 的**精简输出同样是不变量 3 的一部分**：新内容（codex 的 provider 段、claude 的
