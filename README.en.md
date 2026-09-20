@@ -81,6 +81,7 @@ Common commands:
 ```bash
 node apifix.mjs <id>                   # opencode snippet; stdout is pure JSON, notes go to stderr
 node apifix.mjs <id> --emit pi         # pi snippet; also codex|claude-env|curl|sdk
+node apifix.mjs <id> --emit codex -f   # full codex config.toml (provider block + placeholders)
 node apifix.mjs <id> -f                # full mode: adds family/status/modalities/cost, etc.
 node apifix.mjs <id> --card            # box card: full spec table + gotchas + sources
 node apifix.mjs <id> --json            # raw catalog entry (every field)
@@ -115,23 +116,33 @@ Supports opencode (`npm` + `baseURL` inference), pi (`api` field), claude-code
 ### Config repair (`fix`)
 
 Turn the discrepancies `audit` reports back into the official spec with one command: it shows a diff plan,
-then asks `[y/N]` — `y` applies, `n` cancels.
+then asks `[y/N]` — `y` applies, `n` cancels. Both `audit` and `fix` accept
+`--format {auto,opencode,pi,codex,claude,generic}`; auto detection uses the extension and content
+(`.toml` → codex, an `env` block → claude).
 
 ```bash
 node apifix.mjs fix opencode                 # ~/.config/opencode/opencode.json
 node apifix.mjs fix pi                       # ~/.pi/agent/models.json
-node apifix.mjs fix ./my-config.json         # any file: opencode / pi format auto-detected
+node apifix.mjs fix codex                    # ~/.codex/config.toml (line-level TOML rewrite)
+node apifix.mjs fix claude                   # ~/.claude/settings.json (AUTH_TOKEN never read/written)
+node apifix.mjs fix ./my-config.json         # any file: opencode / pi / codex / claude auto-detected
 node apifix.mjs fix opencode --dry-run       # show the diff plan only, write nothing
 node apifix.mjs fix opencode --yes           # skip the [y/N] prompt (for scripts)
 ```
 
 Only fields documented on the official spec are changed (opencode's `limit.context`/`limit.output`/
 `reasoning`/`temperature`/`tool_call`/`attachment`/`variants` (effort levels); pi's `contextWindow`/
-`maxTokens`/`reasoning`/`thinkingLevelMap`/`input`). Fields your config doesn't declare are left alone;
-undocumented values are never guessed — they are skipped with a note. **Credentials (`apiKey`/`token`) are
-never touched and never echoed.** Before writing, a backup is saved as `<file>.bak-<timestamp>`; the write
-is an atomic replace (tmp + rename) followed by automatic re-verification. `--json` gives machine-readable
-output, and `--no-backup` turns the automatic backup off.
+`maxTokens`/`reasoning`/`thinkingLevelMap`/`input`; codex's `model_reasoning_effort` when the value is
+not an official level (changed to the documented `default_effort`) and the active provider's `wire_api`
+when it contradicts the official protocol; claude's `CLAUDE_CODE_EFFORT_LEVEL` (same level rule) and
+`MAX_THINKING_TOKENS` (clamped into the official range)). Fields your config doesn't declare are left
+alone; undocumented values are never guessed — they are skipped with a note. **Credentials
+(`apiKey`/`token`) are never touched and never echoed** — claude's `ANTHROPIC_AUTH_TOKEN` only ever
+appears as a placeholder. Before writing, a backup is saved as `<file>.bak-<timestamp>`; the write is an
+atomic replace (tmp + rename) followed by automatic re-verification. codex TOML is rewritten at the
+**line level** — only the target value's character span changes; comments, indentation, CRLF and every
+other byte stay untouched. `--json` gives machine-readable output, and `--no-backup` turns the automatic
+backup off.
 
 Exit codes: `0` fixed or nothing to fix, `1` differences exist but were not applied (cancelled / `--dry-run`),
 `2` usage or read error.
@@ -242,12 +253,18 @@ no official data for (opencode's release_date/interleaved/experimental/options/h
 provider/baseUrl/compat/cost) are **omitted**, with a single `[i]` note on stderr — that note is dynamic, so
 `cost` drops out of the list once it is emitted.
 
-`-f` applies only to `--emit opencode|pi` (other targets print a notice and ignore it);
-`--card`/`--json`/`--list`/`--match` already show complete data.
+`-f` applies to `--emit opencode|pi|codex|claude-env` (curl/sdk print a notice and ignore it):
+opencode/pi add the full field set; codex prints a complete `config.toml`
+(`model_provider` + a `[model_providers.x]` block); claude-env prints the `env` block of
+`~/.claude/settings.json` (all values are strings). `base_url` / `env_key` /
+`ANTHROPIC_AUTH_TOKEN` are always **placeholders** (no network, nothing invented) — replace them before
+use. `--card`/`--json`/`--list`/`--match` already show complete data.
 
 ```bash
-node apifix.mjs gpt-6-astra -f                 # full opencode mode (with cost)
-node apifix.mjs gpt-6-astra --emit pi -f       # full pi mode
+node apifix.mjs gpt-6-astra -f                    # full opencode mode (with cost)
+node apifix.mjs gpt-6-astra --emit pi -f          # full pi mode
+node apifix.mjs gpt-6-astra --emit codex -f       # full codex config.toml (with provider block)
+node apifix.mjs gpt-6-astra --emit claude-env -f  # env block for ~/.claude/settings.json
 ```
 
 ## Data provenance and trust

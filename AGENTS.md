@@ -22,7 +22,7 @@ catalog.json               **生成物**：由 catalog/ 打包的 bundle，CLI/U
 tools/build-catalog.mjs    catalog/*.json → catalog.json（导出 buildCatalog()，供 merge 复用）
 tools/merge-catalog.mjs    incoming/*.json + catalog/ → catalog/ + catalog.json（含 pricing 处理）
 tools/validate-catalog.mjs catalog/ 逐条校验 + 来源白名单 + catalog.json 与 catalog/ 一致性（CI 用）
-tools/parity-check.mjs     core 与 ui/fallback 的 1308 组逐字节对拍（不变量 2 的自动化守护，CI 用）
+tools/parity-check.mjs     core 与 ui/fallback 的 2616 组逐字节对拍（不变量 2 的自动化守护，CI 用）
 tools/source-whitelist.mjs 官方来源白名单（validate / merge 共用）
 test/                      node:test 单测（match/emit/scrub/fix/tiers/format，零依赖；node --test 运行）
 skills/                    AI 技能包（catalog-maintain / model-spec-lookup，配套助手工作流）
@@ -43,8 +43,8 @@ package.json               scripts: start / build / merge / validate；bin: apif
    改动后必须 `node --check lib/core.mjs` 并确认可在浏览器运行。
 2. **`ui/fallback.mjs` 必须与 `lib/core.mjs` 逐字节一致**：UI 在 core 加载失败时降级
    动态 import 它（`ui/app.js` 接线，fallback 本体是独立纯函数模块，零 Node API）。
-   对拍口径为 模型数 × 2 emitter（opencode/pi）× 2 模式（精简/`-f`），当前 327 × 4
-   = **1308 组零差异**，由 `node tools/parity-check.mjs` 自动守护（CI 必跑）；
+   对拍口径为 模型数 × 4 emitter（opencode/pi/codex/claude-env）× 2 模式（精简/`-f`），当前
+   327 × 8 = **2616 组零差异**，由 `node tools/parity-check.mjs` 自动守护（CI 必跑）；
    改 core 的 emit 逻辑必须同步改 fallback，跑对拍确认 0 差异。
 3. **不带 `-f` 的输出是稳定契约**：现有用户依赖它，任何改动不得改变最小输出的字节。
    改动前后用 `diff` 对拍。
@@ -172,6 +172,15 @@ catalog 条目关键字段：
 - pi 的 `input` 比较**不含 `pdf`**（pi 只支持 text/image，见 pi-ai 类型定义）；`audit` 不再对 pi 报「缺 pdf」。
 - windows CI 矩阵依赖 `.gitattributes`（`* text=auto eol=lf`）统一行尾：`build-catalog.mjs --check`
   是逐字节比较，runner 默认 `core.autocrlf=true` 会把检出转成 CRLF、在 Windows 上假红——不要删该文件。
+- codex / claude-env 的**精简输出同样是不变量 3 的一部分**：新内容（codex 的 provider 段、claude 的
+  settings.json env 块）只进 `-f`；两者用固定占位符（`YOUR_BASE_URL` / `YOUR_API_KEY`），不联网不臆造。
+- codex 的 audit/exchange 判定顺序：`[model_providers.x]` 以 `[` 开头，**TOML 判定必须在「JSON 形状
+  解析失败」检查之前**（`cmdAudit` 的 `isCodex`），否则 .toml 会被当破损 JSON 报错。
+- codex fix 走 **行级回写**（`scanCodexToml` / `applyCodexFixes`）：只替换目标值的字符区间，
+  注释 / 缩进 / 引号风格 / CRLF 等其余字节一律不动；未声明字段绝不新增。
+- claude 的 `env` 是凭证容器：必须走 `projectClaudeEnv` **白名单投影**（AUTH_TOKEN 直接丢弃），
+  不能走 `stripCredentials`（它整段删 `env`，会导致 0 条目）；fix 只允许改
+  `CLAUDE_CODE_EFFORT_LEVEL` 与 `MAX_THINKING_TOKENS`（值保持字符串）。
 
 ## 风格约定
 

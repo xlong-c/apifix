@@ -106,5 +106,5 @@ git diff catalog.json                    # 只应出现预期条目
 
 ## 其他
 
-- 改了 `lib/core.mjs` 的 emit 逻辑，必须同步改 `ui/app.js` 内置 fallback（两者逐字节一致）。
+- 改了 `lib/core.mjs` 的 emit 逻辑，必须同步改 `ui/fallback.mjs`（两者逐字节一致，跑 `node tools/parity-check.mjs`）。
 - 详细规则见 `CONTRIBUTING.md`；架构与不变量见 `AGENTS.md`。

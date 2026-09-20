@@ -70,6 +70,7 @@ npm start                              # = node apifix.mjs --ui，打开本地 W
 ```bash
 node apifix.mjs <id>                   # opencode 片段；stdout 是纯 JSON，提示走 stderr
 node apifix.mjs <id> --emit pi         # pi 片段；也可 codex|claude-env|curl|sdk
+node apifix.mjs <id> --emit codex -f   # 完整 codex config.toml（provider 段 + 占位符）
 node apifix.mjs <id> -f                # 完整模式：追加 family/status/modalities/cost 等
 node apifix.mjs <id> --card            # box 卡片：完整规格表 + 注意事项 + 来源
 node apifix.mjs <id> --json            # catalog 原始条目（全部字段）
@@ -102,20 +103,29 @@ codex（`config.toml` 的 `wire_api`）；多路协议值（如 `chat_completion
 ### 配置修复（fix）
 
 `audit` 报出的差异，一条命令改回官网规格：先显示差异计划，再询问 `[y/N]`——`y` 应用，`n` 取消。
+`audit` 与 `fix` 都支持 `--format {auto,opencode,pi,codex,claude,generic}`；auto 按后缀与内容识别
+（`.toml` → codex、含 `env` 块 → claude）。
 
 ```bash
 node apifix.mjs fix opencode                 # ~/.config/opencode/opencode.json
 node apifix.mjs fix pi                       # ~/.pi/agent/models.json
-node apifix.mjs fix ./my-config.json         # 任意文件：自动识别 opencode / pi 格式
+node apifix.mjs fix codex                    # ~/.codex/config.toml（TOML 行级回写）
+node apifix.mjs fix claude                   # ~/.claude/settings.json（AUTH_TOKEN 永不读写）
+node apifix.mjs fix ./my-config.json         # 任意文件：自动识别 opencode / pi / codex / claude
 node apifix.mjs fix opencode --dry-run       # 只看差异计划，不写入
 node apifix.mjs fix opencode --yes           # 跳过 [y/N] 询问（脚本用）
 ```
 
 只改官网已文档化的规格字段（opencode 的 `limit.context`/`limit.output`/`reasoning`/`temperature`/
 `tool_call`/`attachment`/`variants`（effort 档位）；pi 的 `contextWindow`/`maxTokens`/`reasoning`/
-`thinkingLevelMap`/`input`）。配置里未声明的字段不动；官网未文档化的值不猜，跳过并注明。
-**凭证（`apiKey`/`token`）永不触碰、永不回显。** 写入前自动备份为 `<file>.bak-<时间戳>`，
-经临时文件原子替换，写后自动复验。`--json` 输出机器可读结果，`--no-backup` 关闭自动备份。
+`thinkingLevelMap`/`input`；codex 的 `model_reasoning_effort` 不属于官方档位时改为 `default_effort`、
+当前 provider 的 `wire_api` 与官方协议不符时改写；claude 的 `CLAUDE_CODE_EFFORT_LEVEL` 非官方档位时
+改为 `default_effort`、`MAX_THINKING_TOKENS` 越界时收窄到官方区间）。配置里未声明的字段不动；
+官网未文档化的值不猜，跳过并注明。**凭证（`apiKey`/`token`）永不触碰、永不回显**——claude 的
+`ANTHROPIC_AUTH_TOKEN` 在任何输出里都只以占位符形态出现。写入前自动备份为
+`<file>.bak-<时间戳>`，经临时文件原子替换，写后自动复验；codex 的 TOML 走**行级回写**——只重写
+目标值的字符区间，注释 / 缩进 / CRLF 等其余字节一律不动。`--json` 输出机器可读结果，
+`--no-backup` 关闭自动备份。
 
 退出码：`0` 已修复或无需修复、`1` 存在差异但未应用（取消 / `--dry-run`）、`2` 用法或读取错误。
 
@@ -214,11 +224,17 @@ GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
 release_date/interleaved/experimental/options/headers，pi 的 provider/baseUrl/compat/cost）**一律省略**，
 并在 stderr 用一条 `[i]` 说明——该说明是动态的，`cost` 成功输出后会从缺失列表里去掉。
 
-`-f` 仅对 `--emit opencode|pi` 生效（其他目标提示忽略）；`--card`/`--json`/`--list`/`--match` 本就展示完整数据。
+`-f` 对 `--emit opencode|pi|codex|claude-env` 生效（curl/sdk 会提示忽略）：opencode/pi 追加完整字段；
+codex 输出完整 `config.toml`（`model_provider` + `[model_providers.x]` 段）；claude-env 输出
+`~/.claude/settings.json` 的 `env` 块（值均为字符串）。其中 `base_url` / `env_key` /
+`ANTHROPIC_AUTH_TOKEN` 一律是**占位符**（不联网、不臆造），替换后再用；
+`--card`/`--json`/`--list`/`--match` 本就展示完整数据。
 
 ```bash
-node apifix.mjs gpt-6-astra -f                 # opencode 完整模式（含 cost）
-node apifix.mjs gpt-6-astra --emit pi -f       # pi 完整模式
+node apifix.mjs gpt-6-astra -f                    # opencode 完整模式（含 cost）
+node apifix.mjs gpt-6-astra --emit pi -f          # pi 完整模式
+node apifix.mjs gpt-6-astra --emit codex -f       # 完整 codex config.toml（含 provider 段）
+node apifix.mjs gpt-6-astra --emit claude-env -f  # ~/.claude/settings.json 的 env 块
 ```
 
 ## 数据来源与可信度

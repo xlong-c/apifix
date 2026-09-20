@@ -57,6 +57,8 @@ jobs:
           node apifix.mjs --list > /dev/null
           node apifix.mjs "$FIRST" > /dev/null
           node apifix.mjs "$SECOND" --emit pi -f > /dev/null
+          node apifix.mjs "$SECOND" --emit codex -f > /dev/null
+          node apifix.mjs "$SECOND" --emit claude-env -f > /dev/null
           printf '%s\n%s\n' "$FIRST" "$SECOND" > "$RUNNER_TEMP/ids.txt"
           node apifix.mjs --match "$RUNNER_TEMP/ids.txt" > /dev/null
 
@@ -64,14 +66,22 @@ jobs:
         run: |
           cp tools/fixtures/opencode-broken.json "$RUNNER_TEMP/fix-oc.json"
           cp tools/fixtures/pi-broken.json "$RUNNER_TEMP/fix-pi.json"
+          cp tools/fixtures/codex-broken.toml "$RUNNER_TEMP/fix-codex.toml"
+          cp tools/fixtures/claude-broken.json "$RUNNER_TEMP/fix-claude.json"
           # dry-run 期望有差异（exit 1）且不写入
           node apifix.mjs fix "$RUNNER_TEMP/fix-oc.json" --dry-run && exit 1 || test $? -eq 1
           node apifix.mjs fix "$RUNNER_TEMP/fix-pi.json" --dry-run && exit 1 || test $? -eq 1
-          # --yes 应用后 audit 复验应完全一致
+          node apifix.mjs fix "$RUNNER_TEMP/fix-codex.toml" --dry-run && exit 1 || test $? -eq 1
+          node apifix.mjs fix "$RUNNER_TEMP/fix-claude.json" --dry-run && exit 1 || test $? -eq 1
+          # --yes 应用后 audit 复验应完全一致（codex/claude 由后缀与内容自动识别）
           node apifix.mjs fix "$RUNNER_TEMP/fix-oc.json" --yes --no-backup
           node apifix.mjs fix "$RUNNER_TEMP/fix-pi.json" --yes --no-backup
+          node apifix.mjs fix "$RUNNER_TEMP/fix-codex.toml" --yes --no-backup
+          node apifix.mjs fix "$RUNNER_TEMP/fix-claude.json" --yes --no-backup
           node apifix.mjs audit "$RUNNER_TEMP/fix-oc.json"
           node apifix.mjs audit "$RUNNER_TEMP/fix-pi.json"
+          node apifix.mjs audit "$RUNNER_TEMP/fix-codex.toml"
+          node apifix.mjs audit "$RUNNER_TEMP/fix-claude.json"
 
       # login 非交互冒烟：写 $RUNNER_TEMP 下的临时文件（绝不碰真实用户配置），假 key（sk-TEST）
       - name: Smoke test (login non-interactive)

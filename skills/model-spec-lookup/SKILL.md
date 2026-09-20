@@ -19,7 +19,9 @@ relay 上配置模型需要粘贴片段；怀疑模型被「降智」或参数�
 
 ```bash
 node apifix.mjs <id>                 # 默认输出 opencode 片段（最小字段集）
-node apifix.mjs <id> --emit pi       # pi 片段
+node apifix.mjs <id> --emit pi       # pi 片段（也支持 codex / claude-env / curl / sdk）
+node apifix.mjs <id> --emit codex -f        # 完整 codex config.toml（provider 段 + 占位符）
+node apifix.mjs <id> --emit claude-env -f   # ~/.claude/settings.json 的 env 块（占位符）
 node apifix.mjs <id> --canonical-id  # key 用官网规范 id（修正中转旧名）
 node apifix.mjs <id> --card          # 完整规格卡片（含 gotchas / sources）
 node apifix.mjs <id> --json          # catalog 原始条目（含 pricing 元数据）
