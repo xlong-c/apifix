@@ -167,6 +167,13 @@ catalog 条目关键字段：
 - `lifecycle` → opencode `status` 映射：current→active / legacy·retired→deprecated /
   unreleased→beta。
 - 模糊匹配只建议（相似度 ≥ 0.75），命中失败返回 exit 1；用法错误 exit 2。
+- **配置识别走严格模式**：`audit` / `fix` / `protocols` 读配置里的模型 id 时一律用
+  `matchModel(models, id, { strict: true })`——链路是 `id → 模型 → 识别接口 → 修复参数`，只认
+  id / alias / legacy；归一化（去厂商前缀、去 relay 后缀、分隔符等价）与模糊只回落到 `suggestion`
+  （`suggestionKind: "normalized" | "prefix" | null`），**绝不自动命中**（避免把中转变体误套官网规格）。
+  CLI 直接查询（`<id>`、`--match`、`login`、UI）保持宽松语义，两处不要混用。
+  **中转自造的名字**（如 `MiniMaxAI/MiniMax-M2`、`muse-spark-1.3-contributor`）应在 catalog 里
+  显式登记为 `aliases` 做锚定，而不是依赖算法猜测。
 - 厂商前缀（`vendor/id`）识别 = 静态别名表 + **目录内 vendor 自动并入**（core 的 `vendorPrefixSet`，
   fallback 的 `vendorPrefixSetFallback` 必须同步）——新增厂商后 `stepfun/step-5-preview` 这类中转写法
   直接命中；parity-check 的 match 弱断言已覆盖 `vendor/<id>` 形态（约 985 组）。

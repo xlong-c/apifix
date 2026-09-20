@@ -226,13 +226,21 @@ reference, not a live quote.
 
 ## Matching rules
 
-Tried in order: **canonical ID → aliases → legacy_ids** → strip vendor prefix (`openai/`, `anthropic/`, `meta/`,
-`google/`, `z-ai/`, `stepfun/`, and more — a static alias list plus **every vendor from the catalog is added
-automatically**, so new vendors work without code changes) → strip relay suffix
-(`-free`, `-preview`, `-exp`, `-latest`, `-build`, `-contributor`, `-vision-exp`, `-expires-on-*`, `-ga-*`,
-`-YYYYMMDD`, `-vN`) → separator-insensitive (`-`, `.`, `_` are equivalent, so `gpt_6_astra` hits
-`gpt-6-astra`) → fuzzy fallback (similarity ≥ 0.75, suggestion only) → short-shorthand prefix suggestion
-(e.g. `step5` → `step-5-preview (prefix match)`, also suggestion-only, never auto-corrected).
+**Two contexts, with different strictness:**
+
+- **Config recognition** (`audit` / `fix` / `protocols` reading a model id from a config file):
+  **only id / aliases / legacy ids count** — the chain is `id → model → interface → params`. Normalized
+  forms (`glm-5.3-flash-free`, `stepfun/step-5-preview`) get a "closest match" suggestion only and never
+  inherit the official spec automatically (a relay variant may be a different model). Relay-invented
+  names (e.g. `MiniMaxAI/MiniMax-M2`) are **registered explicitly as `aliases`** — the anchor is a
+  curated fact, not a guess.
+- **Direct lookups** (`apifix <id>` / `--match` / the UI / `login`): after id / alias / legacy it tries
+  stripping the vendor prefix (`openai/`, `anthropic/`, `meta/`, `google/`, `z-ai/`, `stepfun/`, and more —
+  a static alias list plus **every vendor from the catalog is added automatically**), stripping relay
+  suffixes (`-free`, `-preview`, `-exp`, `-latest`, `-build`, `-contributor`, `-vision-exp`,
+  `-expires-on-*`, `-ga-*`, `-YYYYMMDD`, `-vN`), separator-insensitivity (`-`, `.`, `_` are equivalent),
+  a fuzzy fallback (≥ 0.75, suggestion only), and a short-shorthand prefix suggestion (`step5` →
+  `step-5-preview (prefix match)`, also suggestion-only).
 
 `--match` labels: `[OK]` exact, `[A]` alias, `[L]` legacy, `[~]` normalized, `[?]` unmatched.
 Notes go to **stderr** only, so stdout stays paste-ready:
