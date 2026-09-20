@@ -41,7 +41,7 @@ import { CONF_RANK, LIFECYCLES, REQUIRED_TOP, tierBoundaries } from "./schema.mj
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const INCOMING_DIR = path.join(ROOT, "incoming");
-const UPDATED_AT = "2026-09-15";
+const UPDATED_AT = "2026-09-20";
 const CATALOG_VERSION = 2;
 
 // 定价一律以 USD 记录（opencode 等客户端只认美元）。研究批次本应直接给出 USD；

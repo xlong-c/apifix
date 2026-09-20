@@ -17,6 +17,7 @@
     "moonshot.json",
     "nvidia.json",
     "openai.json",
+    "stepfun.json",
     "tencent.json",
     "volcengine.json",
     "writer.json",

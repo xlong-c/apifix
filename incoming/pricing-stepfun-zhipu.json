@@ -1,0 +1,37 @@
+{
+  "batch": "pricing-stepfun-zhipu",
+  "researched_at": "2026-09-20",
+  "unit": "per_1m_tokens",
+  "models": [
+    {
+      "id": "step-5-preview",
+      "currency": "CNY",
+      "input": 7,
+      "output": 20,
+      "cache_read": 0.35,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-20",
+      "sources": [
+        "https://platform.stepfun.com/docs/zh/guides/pricing/details"
+      ],
+      "confidence": "high",
+      "note": "官方定价页为人民币（元 / 1M tokens）"
+    },
+    {
+      "id": "glm-5.3-flashx",
+      "currency": "USD",
+      "input": 0.37,
+      "output": 1.25,
+      "cache_read": 0.075,
+      "cache_write": null,
+      "context_over_200k": null,
+      "as_of": "2026-09-20",
+      "sources": [
+        "https://docs.z.ai/guides/overview/pricing"
+      ],
+      "confidence": "high",
+      "note": null
+    }
+  ]
+}

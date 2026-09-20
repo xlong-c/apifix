@@ -1,0 +1,98 @@
+{
+  "vendor": "stepfun",
+  "updated_at": "2026-09-20",
+  "models": [
+    {
+      "id": "step-5-preview",
+      "vendor": "stepfun",
+      "family": "Step 5",
+      "api_protocol": "chat_completions|anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-09-20 发布（Preview）；模型权重计划 2026-10-15 开源",
+      "context_window": 1048576,
+      "max_output_tokens": 1048576,
+      "reasoning": {
+        "supported": true,
+        "effort_values": [
+          "low",
+          "medium",
+          "high"
+        ],
+        "default_effort": "medium",
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": "默认 0.5"
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": "默认 0.9"
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未文档化"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format: text / json_object / json_schema"
+      },
+      "vision": true,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": 256,
+        "ttl_options": null
+      },
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方「规格速览」最大输出与上下文同为 1M tokens；max_tokens 默认 INF（不限制，由模型自动决定）",
+        "tools 不支持 type: \"web_search\"（该模型会拒绝该工具），需改用网页搜索 API",
+        "图片单次最多 60 张（jpg/jpeg/png/webp/静态 gif）；视频仅支持 http/https 链接（mp4，<128MB，建议 <5 分钟）",
+        "提示缓存自动启用（输入 ≥256 tokens 起，LRU 淘汰，无手动清理接口）",
+        "reasoning 默认返回 reasoning 字段；传 reasoning_format=\"deepseek-style\" 可改用 reasoning_content（DeepSeek 兼容）",
+        "anthropic_messages 协议需走 Step Plan 通道（baseURL https://api.stepfun.com/step_plan）；Claude Code 不识别该模型 id、默认按 200k 上下文处理，需在 settings.json env 显式设置 CLAUDE_CODE_MAX_CONTEXT_TOKENS=1000000 才能用满 1M"
+      ],
+      "sources": [
+        "https://platform.stepfun.com/docs/zh/guides/models/step-5-preview",
+        "https://platform.stepfun.com/docs/zh/api-reference/chat/chat-completion-create",
+        "https://www.stepfun.com/step-5-preview"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.972222,
+        "output": 2.777778,
+        "cache_read": 0.048611,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页为人民币（元 / 1M tokens） （合并时按 1 USD = 7.2 CNY 换算；原始 CNY 值：input=7、output=20、cache_read=0.35）",
+        "as_of": "2026-09-20",
+        "sources": [
+          "https://platform.stepfun.com/docs/zh/guides/pricing/details"
+        ],
+        "confidence": "high"
+      }
+    }
+  ]
+}

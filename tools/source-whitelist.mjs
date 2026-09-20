@@ -26,6 +26,7 @@ export const OFFICIAL_DOMAINS = {
   iflytek: ["xfyun.cn", "xf-yun.com"],
   "01ai": ["lingyiwanwu.com"],
   ai21: ["ai21.com"],
+  stepfun: ["stepfun.com"],
   writer: ["writer.com"],
 };
 
