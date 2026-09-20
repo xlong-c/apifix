@@ -26,23 +26,24 @@ import path from "node:path";
 
 import { isOfficialSource } from "./source-whitelist.mjs";
 import { buildCatalog, CATALOG_DIR } from "./build-catalog.mjs";
+import {
+  REQUIRED_TOP,
+  REQUIRED_REASONING,
+  REQUIRED_SAMPLING,
+  REQUIRED_TOOLS,
+  REQUIRED_CACHING,
+  LIFECYCLES,
+  CONFIDENCES,
+  tierBoundaries,
+} from "./schema.mjs";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const DEFAULT_PATH = path.join(ROOT, "catalog.json");
 
-const REQUIRED_TOP = [
-  "id", "vendor", "family", "api_protocol", "verified", "lifecycle", "lifecycle_note",
-  "context_window", "max_output_tokens", "reasoning", "sampling", "tools",
-  "structured_output", "vision", "pdf", "caching", "aliases", "legacy_ids",
-  "gotchas", "sources", "confidence",
-];
-const REQUIRED_REASONING = ["supported", "effort_values", "default_effort", "summary_values",
-  "can_disable", "thinking_budget"];
-const REQUIRED_SAMPLING = ["temperature", "top_p", "top_k"];
-const REQUIRED_TOOLS = ["function_calling", "parallel", "strict", "choice_modes"];
-const REQUIRED_CACHING = ["mode", "min_tokens", "ttl_options"];
-const LIFECYCLES = new Set(["current", "legacy", "retired", "unreleased"]);
-const CONFIDENCES = new Set(["high", "medium", "low"]);
+// schema 词表（REQUIRED_TOP / 子对象必需键 / LIFECYCLE / confidence 枚举）统一从
+// tools/schema.mjs 导入——validate 与 merge 共用单一事实源，字段新增只改一处。
+
+// 模型 id 允许的字符形态（字母/数字开头，后接 .:/-_ 与字母数字）
 const ID_RE = /^[A-Za-z0-9][A-Za-z0-9._:/\-]*$/;
 
 // 来源白名单在 tools/source-whitelist.mjs（validate 与 merge 共用同一份规则）。
@@ -177,13 +178,11 @@ function checkCost(where, cost) {
           err(`${where}.cost.tiers[${i}] 必须是对象，实际 ${pyRepr(tier)}`);
           return;
         }
-        // 档位边界三种等价写法（恰好一个）：
+        // 档位边界三种等价写法（恰好一个）—— 字段名与判别统一走 tools/schema.mjs：
         //   max_input        —— 不超过这么多 input tokens（数值，上限口径）
         //   min_input_tokens —— 从这么多 input tokens 起（数值，下限口径）
         //   condition        —— 人类可读的区间描述（非空字符串）
-        const hasMax = tier.max_input !== null && tier.max_input !== undefined;
-        const hasMin = tier.min_input_tokens !== null && tier.min_input_tokens !== undefined;
-        const hasCond = tier.condition !== null && tier.condition !== undefined;
+        const { hasMax, hasMin, hasCond } = tierBoundaries(tier);
         const count = (hasMax ? 1 : 0) + (hasMin ? 1 : 0) + (hasCond ? 1 : 0);
         if (count === 0) {
           err(`${where}.cost.tiers[${i}] 缺少档位边界（max_input / min_input_tokens / condition 三选一）`);

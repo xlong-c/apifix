@@ -37,6 +37,7 @@ import path from "node:path";
 
 import { buildCatalog, writeBundle, writeVendorFiles, CATALOG_DIR, CATALOG_PATH } from "./build-catalog.mjs";
 import { filterOfficialSources } from "./source-whitelist.mjs";
+import { CONF_RANK, LIFECYCLES, REQUIRED_TOP, tierBoundaries } from "./schema.mjs";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const INCOMING_DIR = path.join(ROOT, "incoming");
@@ -52,8 +53,8 @@ const PRICING_FILE_PREFIX = "pricing-";
 // 换算结果保留 6 位小数（远细于任何真实单价），避免浮点长尾
 const COST_ROUND_DIGITS = 6;
 
-const CONF_RANK = { high: 3, medium: 2, low: 1 };
-const LIFECYCLES = new Set(["current", "legacy", "retired", "unreleased"]);
+// CONF_RANK 与 LIFECYCLES 从 tools/schema.mjs 导入（validate 与 merge 共用的
+// 单一事实源）；normalizeEntry 对 confidence/lifecycle 的枚举收窄语义不变。
 
 // 这些 vendor 在 western 批次里存在“云镜像”条目（Azure/Bedrock 口径），
 // 若同一 id 在原生批次里也有，则优先原生批次（任务约定的 canonical vendor）。
@@ -363,9 +364,8 @@ function normalizeCost(raw, src, report) {
       //   min_input_tokens —— 该档适用于「从」这么多 input tokens 起（数值，下限口径）
       //   condition        —— 人类可读的区间描述（字符串，如 "输入长度(32,128]"）
       // 恰好一个必须存在（merge 侧宽容，缺失则记 null 占位由 validate 兜底）。
-      const hasMax = t.max_input !== undefined && t.max_input !== null;
-      const hasMin = t.min_input_tokens !== undefined && t.min_input_tokens !== null;
-      const hasCond = t.condition !== undefined && t.condition !== null;
+      // 边界字段名与「恰有其一」判别统一走 tools/schema.mjs（tierBoundaries）。
+      const { hasMax, hasMin, hasCond } = tierBoundaries(t);
       const out = {};
       if (hasMax) out.max_input = isNum(t.max_input) ? t.max_input : null;
       if (hasMin) out.min_input_tokens = isNum(t.min_input_tokens) ? t.min_input_tokens : null;
@@ -482,12 +482,8 @@ function applyCosts(merged, pricing, report) {
   return { withCost, nullCost, byCurrency };
 }
 
-const REQUIRED_TOP = [
-  "id", "vendor", "family", "api_protocol", "verified", "lifecycle", "lifecycle_note",
-  "context_window", "max_output_tokens", "reasoning", "sampling", "tools",
-  "structured_output", "vision", "pdf", "caching", "aliases", "legacy_ids",
-  "gotchas", "sources", "confidence",
-];
+// REQUIRED_TOP 从 tools/schema.mjs 导入（与 validate 共用同一份词表；
+// normalizeEntry 末尾用它做「schema 漏字段」守卫）。
 
 // catalog 条目缺失这些键时，允许用批次条目补齐（不覆盖 catalog 已有的值）
 const BACKFILL_KEYS = ["lifecycle", "lifecycle_note", "legacy_ids", "aliases", "sources", "gotchas"];
