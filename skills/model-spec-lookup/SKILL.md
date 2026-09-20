@@ -10,7 +10,7 @@ description: 查询 LLM 模型的官方参数规格（上下文窗口、最大�
 
 **何时使用**：问某模型支持什么参数（上下文 / 最大输出 / 推理档位 / 采样限制）；在中转、
 relay 上配置模型需要粘贴片段；怀疑模型被「降智」或参数不生效；把中转 ID
-（`deepseek-v4.1-flash`、`openai/gpt-5.6-sol-preview-free`）对照官网规范 ID。
+（`gpt-6-astra-free`、`openai/gpt-6-astra`）对照官网规范 ID。
 
 **前置条件**：`git clone` 本仓库 + Node.js >= 18，在仓库根目录跑 `node apifix.mjs`；
 全局安装过则用 `apifix <id>`。**离线可用**，不联网、不读本地客户端配置。
@@ -41,30 +41,31 @@ node apifix.mjs --match ids.txt      # 批量逐行匹配
 
 ## 示例
 
-**1）中转旧名 → 官网规格**（stderr 提示不影响 stdout 可粘贴性）：
+**1）中转写法 → 官网规格**（stderr 提示不影响 stdout 可粘贴性）：
 
 ```bash
-$ node apifix.mjs deepseek-v4.1-flash
-[i] deepseek-v4.1-flash 是旧版/退役 id，对应 deepseek-flash；中转仍在沿用，值按官网当前规格输出
-{ "deepseek-v4.1-flash": { "attachment": true,
-    "limit": { "context": 1048576, "output": 393216 }, "name": "deepseek-v4.1-flash",
-    "reasoning": true, "temperature": true, "tool_call": true,
-    "variants": { "high": {"reasoningEffort": "high"}, "low": {...}, "max": {...}, "none": {...} } } }
+$ node apifix.mjs gpt-6-astra-free
+[i] gpt-6-astra-free -> 官网规范 id gpt-6-astra（值采用官方规格，去除 relay 后缀 -free）
+{ "gpt-6-astra-free": { "attachment": true,
+    "limit": { "context": 1050000, "output": 128000 }, "name": "gpt-6-astra-free",
+    "reasoning": true, "temperature": false, "tool_call": true,
+    "variants": { "high": {"reasoningEffort": "high"}, "low": {...}, "max": {...},
+                  "medium": {...}, "xhigh": {...} } } }
 ```
 
-key 仍是输入 id（可直接替换中转配置），数值来自官网条目 `deepseek-flash`；
-加 `--canonical-id` 则 key 变为 `deepseek-flash`。
+key 仍是输入 id（可直接替换中转配置），数值来自官网条目 `gpt-6-astra`；
+加 `--canonical-id` 则 key 变为 `gpt-6-astra`。
 
 **2）批量核对**（`--match` 列已对齐，此处省略多余空格）：
 
 ```bash
-$ printf 'deepseek-v4.1-flash\nglm-5-3-flash\nkimi-k2.5\nopenai/gpt-5.6-sol-preview-free\n' > ids.txt
+$ printf 'gpt-6-astra\ngpt_6_astra\nopenai/gpt-6-astra\ngpt-6-astra-free\ngpt-6-astra-preview\n' > ids.txt
 $ node apifix.mjs --match ids.txt
-[L] deepseek-v4.1-flash    -> deepseek-flash（旧版/退役 id）
-[~] glm-5-3-flash          -> glm-5.3-flash（分隔符等价匹配 (-/./_ 视为相同)）
-[OK] kimi-k2.5             -> kimi-k2.5
-     [!] kimi-k2.5 官方已退役；第三方可能仍提供
-[~] openai/gpt-5.6-sol-preview-free -> gpt-5.6-sol（去除厂商前缀 openai/；去除 relay 后缀 -free；去除 relay 后缀 -preview）
+[OK] gpt-6-astra            -> gpt-6-astra
+[~] gpt_6_astra             -> gpt-6-astra（分隔符等价匹配 (-/./_ 视为相同)）
+[~] openai/gpt-6-astra      -> gpt-6-astra（去除厂商前缀 openai/）
+[~] gpt-6-astra-free        -> gpt-6-astra（去除 relay 后缀 -free）
+[~] gpt-6-astra-preview     -> gpt-6-astra（去除 relay 后缀 -preview）
 ```
 
 只要有 1 行 `[?]`，退出码即为 `1`（便于脚本判断）。
@@ -72,13 +73,13 @@ $ node apifix.mjs --match ids.txt
 **3）看踩坑点与定价**（配置前必查）：
 
 ```bash
-$ node apifix.mjs kimi-k2.5 --card     # 卡片尾部给出 gotchas 与 sources
-[!] 已退役：2026-08-31 起官方 API 返回 404，官方迁移到 kimi-k3
-[!] thinking 是 K2.x 专属 extra_body 参数 {type:enabled|disabled}，无 reasoning_effort
+$ node apifix.mjs gpt-6-astra --card   # 卡片尾部给出 gotchas 与 sources
+[!] reasoning.effort 'none' 返回 400（不支持 none/minimal）
+[!] 工具调用必须用 Responses API；Chat Completions 不支持 tools
 
-$ node apifix.mjs gpt-5.6-sol -f       # cost 只在 -f 输出，USD / 每 1M tokens
-"cost": { "input": 4, "output": 20, "cache_read": 0.4, "cache_write": 5,
-          "context_over_200k": { "input": 8, "output": 30 } }
+$ node apifix.mjs gpt-6-astra -f       # cost 只在 -f 输出，USD / 每 1M tokens
+"cost": { "input": 10, "output": 50, "cache_read": 1, "cache_write": 12.5,
+          "context_over_200k": { "input": 20, "output": 75 } }
 ```
 
 ## 注意

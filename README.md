@@ -9,11 +9,12 @@
 
 输入一个模型 id（通常是中转沿用的 legacy 名字），拿到它的**官网规格**，以及可直接粘贴的 opencode / pi 配置片段。
 
-零依赖、零网络请求；配置只在本地按需读取（`audit` / `fix` / `protocols`）。
+零依赖；配置只在本地按需读取（`audit` / `fix` / `protocols`）。除 `login` 的模型自动检测
+（只请求你自己填写的 baseURL）外，全程零网络请求。
 
 ## 为什么需要它
 
-- **中转不造新 id，只沿用官网旧 id。** 厂商改名或退役后，中转仍按旧名对外服务，于是 `deepseek-v4.1-flash` 这类名字流传开来——它从来不是官方稳定 id。
+- **中转沿用官方 id，却配上错数字。** 官方 id 是稳定的，但中转自己填的 context / max output 会随上游漂移，客户端里那一行没人会去核对。
 - **你配置里的数字往往是错的或过期的。** 中转自己填的 context / max output 会随上游漂移，客户端里那一行没人会去核对。
 - **"降智"是静默发生的。** thinking 模式下 `temperature` 被直接忽略、`top_p` 有下限、官方不支持的 effort 档位悄悄回落到别的档位。行为变了，但你从配置上看不出来。
 - **换模型等于读 22 家厂商的文档。** 每家对推理档位、采样约束、缓存、工具调用的口径都不一样。
@@ -21,29 +22,41 @@
 
 ## 一个真实例子
 
-中转配置里的 `deepseek-v4.1-flash`，对比官网 `deepseek-flash` 的规格：
+中转配置里的 `gpt-6-astra`，对比官网规格：
 
 | 字段 | 你的配置 | 官网规格 |
 | --- | --- | --- |
-| context | 1,000,000 | 1,048,576 |
-| max output | 384,000 | 393,216 |
-| effort 档位 | low/high/max | none/low/high/max |
+| context | 1,000,000 | 1,050,000 |
+| max output | 200,000 | 128,000 |
+| effort 档位 | low/high/max | low/medium/high/xhigh/max |
+| temperature | true | 不支持自定义 |
 
-三个字段，三处偏差。`deepseek-v4.1-flash` 从来不是官方稳定 id：官方 V4.1 的测试 id 是
-`deepseek-v4.1-flash-expires-on-0910`（按设计过期），正式 id 是 `deepseek-flash`，中转把后缀去掉继续沿用。
+四个字段，四处偏差。中转自己填的数字随上游漂移：max output 夸大一倍半，
+**effort 档位少了 `medium` 和 `xhigh`**——这份配置下你永远用不到官方的两档中间推理强度。
 
-context 和 max output 的差额来自上游改版，而 **effort 档位少了 `none`**——意味着这份配置下你关不掉 thinking。
-
-再看"降智"那一面：DeepSeek 在 thinking 模式下**静默忽略** `temperature`，`top_p` 实际下限 0.95，
-`medium` / `xhigh` 这类档位会被悄悄折叠成 `high`。这些都是 apifix 卡片和片段里的「注意事项」。
+再看"降智"那一面：OpenAI 对 `gpt-6-astra` **完全不支持自定义** `temperature`/`top_p`
+（传了也不生效），工具调用必须走 Responses API（Chat Completions 不支持 tools），
+**>272K 输入 token 全量按 2x 输入 / 1.5x 输出计费**——长上下文账单一夜翻倍。
+这些都是 apifix 卡片和片段里的「注意事项」。
 
 ## 快速开始
 
+从 GitHub 直接安装（推荐，装完即是全局 `apifix` 命令）：
+
 ```bash
-git clone <repo> && cd apifix          # 无需 npm install：零依赖
-node apifix.mjs deepseek-v4.1-flash    # 默认输出 opencode 片段（key 沿用你输入的 id）
+npm install -g github:xlong-c/apifix
+apifix gpt-6-astra                     # 直接可用，无需 npm install 依赖（零依赖）
+```
+
+或克隆源码运行：
+
+```bash
+git clone https://github.com/xlong-c/apifix && cd apifix    # 无需 npm install：零依赖
+node apifix.mjs gpt-6-astra            # 默认输出 opencode 片段（key 沿用你输入的 id）
 npm start                              # = node apifix.mjs --ui，打开本地 Web UI
 ```
+
+开发/自用推荐 `npm link`（全局命令指向本目录，改代码即时生效）。
 
 常用命令：
 
@@ -53,11 +66,12 @@ node apifix.mjs <id> --emit pi         # pi 片段；也可 codex|claude-env|cur
 node apifix.mjs <id> -f                # 完整模式：追加 family/status/modalities/cost 等
 node apifix.mjs <id> --card            # box 卡片：完整规格表 + 注意事项 + 来源
 node apifix.mjs <id> --json            # catalog 原始条目（全部字段）
-node apifix.mjs <id> --name MCGDS      # 覆盖片段里的展示名
-node apifix.mjs <id> --canonical-id    # key 用官网规范 id（如 deepseek-flash）
+node apifix.mjs <id> --name "GPT-6 Astra" # 覆盖片段里的展示名
+node apifix.mjs <id> --canonical-id    # key 用官网规范 id（如 gpt-6-astra-free → gpt-6-astra）
 node apifix.mjs --list                 # 全部 id（按 vendor 分组）；--list --json 供脚本用
 node apifix.mjs --match ids.txt        # 逐行批量匹配，逐行给结论
 node apifix.mjs fix <file> --dry-run   # 配置差异修复预览（y 应用 / --yes 脚本用）
+node apifix.mjs login opencode         # 交互式添加供应商（baseURL/协议/key/模型）
 node apifix.mjs --version | --help
 ```
 
@@ -97,6 +111,33 @@ node apifix.mjs fix opencode --yes           # 跳过 [y/N] 询问（脚本用�
 经临时文件原子替换，写后自动复验。`--json` 输出机器可读结果，`--no-backup` 关闭自动备份。
 
 退出码：`0` 已修复或无需修复、`1` 存在差异但未应用（取消 / `--dry-run`）、`2` 用法或读取错误。
+
+### 添加供应商（login）
+
+一条向导把新供应商写进 opencode 配置：provider 名称 → baseURL → API 格式 → API key（静默输入，
+不回显）→ 模型选择 → 设为默认（可选）→ 确认写入。
+
+```bash
+node apifix.mjs login opencode            # 交互式向导，写入 ~/.config/opencode/opencode.json
+node apifix.mjs login opencode myrelay    # 指定 provider 名称
+```
+
+模型选择默认**自动检测**：请求 `{baseURL}/models`（5s 超时），列出可用 id 供编号选择；
+检测失败或加 `--no-fetch` 转手动输入。命中的模型自动带出 catalog 官网规格（未收录的写
+`{name: id}` 最小条目，可后续 `apifix fix` 修正）。已有同名 provider 会询问覆盖；非交互
+模式给全 `--base-url`/`--api-key`/`--model` 可跳过一切提示（脚本用，写入仍需 `--yes`）。
+
+```bash
+# 非交互一步到位（脚本/CI 用）
+node apifix.mjs login oc myrelay --base-url https://api.example.com/v1 \
+  --api-key sk-xxx --model gpt-6-astra,deepseek-flash --yes
+```
+
+写入复用 fix 的安全管道：自动备份、原子替换、写后复验；API key 只写 `options.apiKey`，
+任何输出（含 `--json`）只显示掩码。这是全项目**唯一**会发起网络请求的命令（只请求你自己
+填写的 baseURL）；其余命令依旧零网络。
+
+退出码：`0` 已写入、`1` 取消 / 复验有差异、`2` 用法或读取错误。
 
 ## Web UI
 
@@ -141,18 +182,18 @@ GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
 依次尝试：**canonical id → aliases → legacy_ids** → 去厂商前缀（`openai/`、`anthropic/`、`meta/`、
 `google/`、`x-ai/`、`deepseek/`、`moonshotai/`、`z-ai/`、`qwen/`、`minimax/` 等）→ 去 relay 后缀
 （`-free`、`-preview`、`-exp`、`-latest`、`-build`、`-contributor`、`-vision-exp`、`-expires-on-*`、
-`-ga-*`、`-YYYYMMDD`、`-vN`）→ 分隔符等价（`-` `.` `_` 视为相同，故 `glm-5-3-flash` 命中
-`glm-5.3-flash`）→ 模糊兜底（相似度 ≥ 0.75，只给建议）。
+`-ga-*`、`-YYYYMMDD`、`-vN`）→ 分隔符等价（`-` `.` `_` 视为相同，故 `gpt_6_astra` 命中
+`gpt-6-astra`）→ 模糊兜底（相似度 ≥ 0.75，只给建议）。
 
 `--match` 标签：`[OK]` 精确、`[A]` 别名、`[L]` legacy、`[~]` 归一化、`[?]` 未收录。
 提示只写到 **stderr**，不污染 stdout 的可粘贴输出：
 
 ```
-[i] deepseek-v4.1-flash 是旧版/退役 id，对应 deepseek-flash；中转仍在沿用，值按官网当前规格输出
+[i] gpt-6-astra-free -> 官网规范 id gpt-6-astra（值采用官方规格，去除 relay 后缀 -free）
 ```
 
 注意：`-free` 是**第三方/中转约定**（OpenCode Zen、AIHubMix 等；OpenRouter 用冒号形式 `:free`），
-**不是厂商官方命名**——官方免费档会用独立模型名（如 `GLM-4.7-Flash`）。
+**不是厂商官方命名**——官方低价档会用独立模型名（如 `gpt-5.4-mini`、`gpt-5.4-nano`）。
 
 ## 完整模式（`-f`）
 
@@ -169,8 +210,8 @@ release_date/interleaved/experimental/options/headers，pi 的 provider/baseUrl/
 `-f` 仅对 `--emit opencode|pi` 生效（其他目标提示忽略）；`--card`/`--json`/`--list`/`--match` 本就展示完整数据。
 
 ```bash
-node apifix.mjs deepseek-flash -f              # opencode 完整模式（含 cost）
-node apifix.mjs gpt-5.6-sol --emit pi -f       # pi 完整模式
+node apifix.mjs gpt-6-astra -f                 # opencode 完整模式（含 cost）
+node apifix.mjs gpt-6-astra --emit pi -f       # pi 完整模式
 ```
 
 ## 数据来源与可信度
@@ -216,8 +257,9 @@ apifix/
 调价频繁的模型请以厂商账单为准。非美元定价按 1 USD = 7.2 CNY 参考汇率换算，原值保留在 `cost.note`。
 
 **会读取或上传我的配置吗？**
-只在本地读取，全程零网络：`audit` / `fix` 读取你指定的配置文件，`protocols` 默认扫描已知路径
+只在本地读取：`audit` / `fix` 读取你指定的配置文件，`protocols` 默认扫描已知路径
 （`--file` 可指定）。凭证字段在提取阶段即被剥离，任何输出都不回显；`fix` 写入前自动备份。
+唯一发起网络请求的是 `login` 的模型自动检测，且只请求你自己填写的 baseURL。
 
 **和 cc-switch 什么关系？**
 无关，也不依赖它。生成的片段可以直接贴进你的中转配置，两者可以配合使用。

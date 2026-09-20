@@ -10,13 +10,15 @@
 Give it a model ID — usually a legacy name a relay kept alive — and get back the **official spec** plus a
 paste-ready config snippet for opencode or pi.
 
-Zero dependencies, zero network requests; configs are read locally only, on demand (`audit` / `fix` / `protocols`).
+Zero dependencies; configs are read locally only, on demand (`audit` / `fix` / `protocols`). The only network
+request in the whole project is `login`'s model auto-detection (which only hits the base URL you type in);
+everything else stays offline.
 
 ## Why you need this
 
-- **Relays don't invent new IDs — they keep old ones.** When a vendor renames or retires a model, relays keep
-  serving it under the old name. That's how names like `deepseek-v4.1-flash` spread, even though it was never
-  a stable official ID.
+- **Relays keep official IDs but pair them with wrong numbers.** The official ID itself is stable, yet relays
+  fill in context / max output themselves, those values drift as upstream changes, and nobody ever re-checks
+  that one line in the client.
 - **The numbers in your config are usually wrong or stale.** Relays fill in context / max output themselves,
   those values drift as upstream changes, and nobody ever re-checks that one line in the client.
 - **"Dumbing down" happens silently.** In thinking mode, `temperature` is simply ignored, `top_p` has a floor,
@@ -28,32 +30,43 @@ Zero dependencies, zero network requests; configs are read locally only, on dema
 
 ## A real example
 
-A relay config for `deepseek-v4.1-flash`, against the official `deepseek-flash` spec:
+A relay config for `gpt-6-astra`, against the official spec:
 
 | Field | Your config | Official spec |
 | --- | --- | --- |
-| context | 1,000,000 | 1,048,576 |
-| max output | 384,000 | 393,216 |
-| effort levels | low/high/max | none/low/high/max |
+| context | 1,000,000 | 1,050,000 |
+| max output | 200,000 | 128,000 |
+| effort levels | low/high/max | low/medium/high/xhigh/max |
+| temperature | true | not customizable |
 
-Three fields, three discrepancies. `deepseek-v4.1-flash` was never a stable official ID: the official V4.1
-test ID was `deepseek-v4.1-flash-expires-on-0910` (expired by design), the production ID is `deepseek-flash`,
-and the relay simply dropped the suffix and kept going.
+Four fields, four discrepancies. Relay-filled numbers drift with upstream: max output is inflated one and a
+half times, and the **effort list is missing `medium` and `xhigh`** — under this config you can never reach
+the official middle reasoning tiers.
 
-The context and max-output gaps come from upstream revisions. The **missing `none`** effort level means that
-under this config you cannot turn thinking off.
-
-Now the "dumbing down" angle: DeepSeek **silently ignores** `temperature` in thinking mode, `top_p` effectively
-floors at 0.95, and levels like `medium` / `xhigh` get quietly folded into `high`. All of this surfaces in
-apifix's 注意事项 (gotchas) and in the generated snippets.
+Now the "dumbing down" angle: OpenAI **does not support custom** `temperature`/`top_p` for `gpt-6-astra` at
+all (values are ignored), tool calling requires the Responses API (Chat Completions doesn't support tools),
+and **input above 272K tokens is billed entirely at 2x input / 1.5x output** — a long-context bill doubles
+overnight. All of this surfaces in apifix's gotchas and in the generated snippets.
 
 ## Quick start
 
+Install straight from GitHub (recommended — you get a global `apifix` command):
+
 ```bash
-git clone <repo> && cd apifix          # no npm install needed: zero dependencies
-node apifix.mjs deepseek-v4.1-flash    # opencode snippet by default (key stays the ID you typed)
+npm install -g github:xlong-c/apifix
+apifix gpt-6-astra                     # works immediately; no dependency install needed (zero deps)
+```
+
+Or clone and run from source:
+
+```bash
+git clone https://github.com/xlong-c/apifix && cd apifix    # no npm install needed: zero dependencies
+node apifix.mjs gpt-6-astra            # opencode snippet by default (key stays the ID you typed)
 npm start                              # = node apifix.mjs --ui, opens the local Web UI
 ```
+
+For development, `npm link` gives you a global command pointing at your working copy (edits take effect
+immediately).
 
 Common commands:
 
@@ -63,11 +76,12 @@ node apifix.mjs <id> --emit pi         # pi snippet; also codex|claude-env|curl|
 node apifix.mjs <id> -f                # full mode: adds family/status/modalities/cost, etc.
 node apifix.mjs <id> --card            # box card: full spec table + gotchas + sources
 node apifix.mjs <id> --json            # raw catalog entry (every field)
-node apifix.mjs <id> --name MCGDS      # override the display name in the snippet
-node apifix.mjs <id> --canonical-id    # key uses the canonical ID (e.g. deepseek-flash)
+node apifix.mjs <id> --name "GPT-6 Astra" # override the display name in the snippet
+node apifix.mjs <id> --canonical-id    # key uses the canonical ID (e.g. gpt-6-astra-free → gpt-6-astra)
 node apifix.mjs --list                 # all IDs grouped by vendor; --list --json for scripts
 node apifix.mjs --match ids.txt        # batch-match a file, one verdict per line
 node apifix.mjs fix <file> --dry-run   # preview config fixes (y applies / --yes for scripts)
+node apifix.mjs login opencode         # interactive provider setup (baseURL / protocol / key / models)
 node apifix.mjs --version | --help
 ```
 
@@ -113,6 +127,37 @@ output, and `--no-backup` turns the automatic backup off.
 
 Exit codes: `0` fixed or nothing to fix, `1` differences exist but were not applied (cancelled / `--dry-run`),
 `2` usage or read error.
+
+### Add a provider (`login`)
+
+A guided wizard that writes a new provider into your opencode config: provider name → base URL → API
+protocol → API key (entered silently, never echoed) → model selection → set as default (optional) →
+confirm and write.
+
+```bash
+node apifix.mjs login opencode            # interactive wizard, writes ~/.config/opencode/opencode.json
+node apifix.mjs login opencode myrelay    # pick the provider name up front
+```
+
+Model selection **auto-detects** by default: it requests `{baseURL}/models` (5s timeout) and lists the
+available IDs for numbered selection; on failure or with `--no-fetch` it falls back to manual input. Matched
+models automatically carry the official catalog spec (unmatched ones get a minimal `{name: id}` entry you can
+repair later with `apifix fix`). An existing provider with the same name asks before overwriting; in
+non-interactive mode, supply `--base-url`/`--api-key`/`--model` to skip all prompts (for scripts; writing
+still requires `--yes`).
+
+```bash
+# one-shot non-interactive (scripts / CI)
+node apifix.mjs login oc myrelay --base-url https://api.example.com/v1 \
+  --api-key sk-xxx --model gpt-6-astra,deepseek-flash --yes
+```
+
+Writing reuses fix's safety pipeline: automatic backup, atomic replace, post-write re-verification; the API
+key lands only in `options.apiKey` and every output (including `--json`) shows a mask. This is the **only**
+command in the project that makes a network request (and only to the base URL you entered); everything else
+stays offline.
+
+Exit codes: `0` written, `1` cancelled / re-verification mismatch, `2` usage or read error.
 
 ## Web UI
 
@@ -161,19 +206,19 @@ reference, not a live quote.
 Tried in order: **canonical ID → aliases → legacy_ids** → strip vendor prefix (`openai/`, `anthropic/`, `meta/`,
 `google/`, `x-ai/`, `deepseek/`, `moonshotai/`, `z-ai/`, `qwen/`, `minimax/`, and more) → strip relay suffix
 (`-free`, `-preview`, `-exp`, `-latest`, `-build`, `-contributor`, `-vision-exp`, `-expires-on-*`, `-ga-*`,
-`-YYYYMMDD`, `-vN`) → separator-insensitive (`-`, `.`, `_` are equivalent, so `glm-5-3-flash` hits
-`glm-5.3-flash`) → fuzzy fallback (similarity ≥ 0.75, suggestion only).
+`-YYYYMMDD`, `-vN`) → separator-insensitive (`-`, `.`, `_` are equivalent, so `gpt_6_astra` hits
+`gpt-6-astra`) → fuzzy fallback (similarity ≥ 0.75, suggestion only).
 
 `--match` labels: `[OK]` exact, `[A]` alias, `[L]` legacy, `[~]` normalized, `[?]` unmatched.
 Notes go to **stderr** only, so stdout stays paste-ready:
 
 ```
-[i] deepseek-v4.1-flash 是旧版/退役 id，对应 deepseek-flash；中转仍在沿用，值按官网当前规格输出
+[i] gpt-6-astra-free -> 官网规范 id gpt-6-astra（值采用官方规格，去除 relay 后缀 -free）
 ```
 
 Note: `-free` is a **third-party / relay convention** (OpenCode Zen, AIHubMix, and others; OpenRouter uses the
-colon form `:free`). It is **not** a vendor naming convention — official free tiers get their own model names
-(such as `GLM-4.7-Flash`).
+colon form `:free`). It is **not** a vendor naming convention — official low-cost tiers get their own model names
+(such as `gpt-5.4-mini`, `gpt-5.4-nano`).
 
 ## Full mode (`-f`)
 
@@ -193,8 +238,8 @@ provider/baseUrl/compat/cost) are **omitted**, with a single `[i]` note on stder
 `--card`/`--json`/`--list`/`--match` already show complete data.
 
 ```bash
-node apifix.mjs deepseek-flash -f              # full opencode mode (with cost)
-node apifix.mjs gpt-5.6-sol --emit pi -f       # full pi mode
+node apifix.mjs gpt-6-astra -f                 # full opencode mode (with cost)
+node apifix.mjs gpt-6-astra --emit pi -f       # full pi mode
 ```
 
 ## Data provenance and trust

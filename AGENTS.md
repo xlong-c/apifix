@@ -5,12 +5,13 @@
 ## 项目一句话
 
 apifix：输入一个模型 id（支持中转/别名写法）→ 输出**官网参数规格** + 可直接粘贴的
-opencode / pi 配置片段；零依赖 Node（>= 18，ESM），内置纯静态 Web UI，全程零网络请求。
+opencode / pi 配置片段；零依赖 Node（>= 18，ESM），内置纯静态 Web UI，零网络请求
+（唯一例外：`login` 的模型自动检测，只请求用户填写的 baseURL）。
 
 ## 架构树
 
 ```
-apifix.mjs                 CLI 入口：参数解析、--list/--match、emit 调度、audit/fix 子命令、本地 UI 静态服务器
+apifix.mjs                 CLI 入口：参数解析、--list/--match、emit 调度、audit/fix/login 子命令、本地 UI 静态服务器
 lib/core.mjs               唯一共享核心：匹配 / 卡片 / emit（浏览器与 Node 通用，零 Node API）
 ui/index.html, ui/app.js, ui/style.css
                            纯静态 UI（SPA）
@@ -91,7 +92,7 @@ node apifix.mjs audit ~/.config/opencode/opencode.json
 修改（结构化写入，不碰凭证）：
 ```bash
 # 用 jq 做结构化更新并原子替换（示例：改一个非敏感字段）
-jq '.provider.ark.models["glm-5.3-flash"].limit.context = 1048576' \
+jq '.provider.ark.models["gpt-6-astra"].limit.context = 1050000' \
   ~/.config/opencode/opencode.json > /tmp/oc.json && mv /tmp/oc.json ~/.config/opencode/opencode.json
 ```
 或使用编辑工具的精确字符串替换（只替换目标字段，不整文件输出）。
@@ -113,6 +114,7 @@ node apifix.mjs <id>                    # 冒烟（默认输出 opencode 片段�
 node apifix.mjs <id> --card             # 规格卡片（含 gotchas / sources）
 node apifix.mjs <id> -f                 # 完整模式（含 cost / status / modalities）
 node apifix.mjs fix <file> --dry-run    # 配置差异修复预览（y 应用 / --yes 脚本用）
+node apifix.mjs login opencode [名称]   # 交互式添加 opencode 供应商（baseURL/协议/key/模型）
 npm start                               # UI (127.0.0.1:7788)
 npm run build                           # catalog/ → catalog.json（生成物）
 node tools/build-catalog.mjs --check    # 确认 catalog.json 与 catalog/ 一致（CI 第一步）

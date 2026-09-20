@@ -20,8 +20,8 @@ apifix 用厂商官方文档建立一份可查、可校验的规格目录，把�
 
 ```bash
 git clone <repo> && cd apifix
-node apifix.mjs deepseek-v4.1-flash        # 默认输出 opencode 片段
-node apifix.mjs deepseek-v4.1-flash --emit pi
+node apifix.mjs gpt-6-astra                 # 默认输出 opencode 片段
+node apifix.mjs gpt-6-astra --emit pi
 node apifix.mjs --ui                        # 启动本地 Web UI
 ```
 
@@ -83,20 +83,21 @@ UI 是**纯静态**的（`ui/` + `lib/core.mjs` + `catalog.json`），
 
 ## 一个真实例子
 
-你的中转配置 vs 官网规格（`deepseek-v4.1-flash`）：
+你的中转配置 vs 官网规格（`gpt-6-astra`）：
 
 | 字段 | 你的配置 | 官网规格 | 差异 |
 | --- | ---: | ---: | --- |
-| 上下文 | 1,000,000 | 1,048,576 | 偏小 4.6% |
-| 最大输出 | 384,000 | 393,216 | 偏小 2.3% |
-| 推理档位 | `low,high,max` | `none,low,high,max` | 缺 `none`（关闭思考） |
+| 上下文 | 1,000,000 | 1,050,000 | 偏小 4.8% |
+| 最大输出 | 200,000 | 128,000 | 夸大 56% |
+| 推理档位 | `low,high,max` | `low,medium,high,xhigh,max` | 缺两档中间推理 |
+| temperature | `true` | 不支持自定义 | 传了也不生效 |
 
-三处都是静默错误——中转不会告诉你，模型也不会报错。
+四处都是静默错误——中转不会告诉你，模型也不会报错。
 
 ## 数据可信度
 
 - `null` = **官方未文档化**（不是"等于 0"），渲染为 `未知/not documented`
-- `verified` 标记是否已与官方文档逐项核验（当前 315/325）
+- `verified` 标记是否已与官方文档逐项核验（当前 305/325）
 - `confidence`（high/medium/low）+ `sources`（官方 URL）随每条记录提供
 - 三种阶梯价格式、N 路协议值（如 `chat_completions|responses|anthropic_messages`）
   均有 schema 校验（CI 每次 push/PR 运行）
