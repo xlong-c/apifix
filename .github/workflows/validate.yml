@@ -10,7 +10,16 @@ permissions:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
+    # ubuntu 为主力；windows 与开发环境一致（路径/编码/原子写入行为需要守护）
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        # windows 上也用 bash（runner 自带 Git Bash），保证步骤语法两端一致
+        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,9 +29,9 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Syntax check (node --check, all .mjs)
+      - name: Syntax check (node --check, all .mjs + ui/*.js + test)
         run: |
-          for f in apifix.mjs lib/*.mjs tools/*.mjs; do
+          for f in apifix.mjs lib/*.mjs tools/*.mjs ui/*.js ui/*.mjs test/*.mjs; do
             echo "checking $f"
             node --check "$f"
           done
@@ -33,23 +42,33 @@ jobs:
       - name: Validate catalog (catalog/ + catalog.json)
         run: node tools/validate-catalog.mjs
 
+      # 不变量 2 的自动化守护：core 与 ui fallback 逐字节对拍（组数 = 模型数 × 2 emitter × 2 模式）
+      - name: Parity check (core vs ui fallback)
+        run: node tools/parity-check.mjs
+
+      - name: Unit tests (node:test)
+        run: node --test
+
+      # 冒烟 id 从 catalog 动态派生，避免数据演进（模型退役/改名）导致假红
       - name: Smoke test (list / match / emit)
         run: |
+          FIRST=$(node -e "console.log(require('./catalog.json').models[0].id)")
+          SECOND=$(node -e "console.log(require('./catalog.json').models[1].id)")
           node apifix.mjs --list > /dev/null
-          node apifix.mjs deepseek-v4.1-flash > /dev/null
-          node apifix.mjs claude-opus-5 --emit pi > /dev/null
-          printf 'deepseek-v4.1-flash\ngpt-6-astra\nclaude-opus-5\n' > /tmp/ids.txt
-          node apifix.mjs --match /tmp/ids.txt > /dev/null
+          node apifix.mjs "$FIRST" > /dev/null
+          node apifix.mjs "$SECOND" --emit pi -f > /dev/null
+          printf '%s\n%s\n' "$FIRST" "$SECOND" > "$RUNNER_TEMP/ids.txt"
+          node apifix.mjs --match "$RUNNER_TEMP/ids.txt" > /dev/null
 
       - name: Smoke test (fix)
         run: |
-          cp tools/fixtures/opencode-broken.json /tmp/fix-oc.json
-          cp tools/fixtures/pi-broken.json /tmp/fix-pi.json
+          cp tools/fixtures/opencode-broken.json "$RUNNER_TEMP/fix-oc.json"
+          cp tools/fixtures/pi-broken.json "$RUNNER_TEMP/fix-pi.json"
           # dry-run 期望有差异（exit 1）且不写入
-          node apifix.mjs fix /tmp/fix-oc.json --dry-run && exit 1 || test $? -eq 1
-          node apifix.mjs fix /tmp/fix-pi.json --dry-run && exit 1 || test $? -eq 1
+          node apifix.mjs fix "$RUNNER_TEMP/fix-oc.json" --dry-run && exit 1 || test $? -eq 1
+          node apifix.mjs fix "$RUNNER_TEMP/fix-pi.json" --dry-run && exit 1 || test $? -eq 1
           # --yes 应用后 audit 复验应完全一致
-          node apifix.mjs fix /tmp/fix-oc.json --yes --no-backup
-          node apifix.mjs fix /tmp/fix-pi.json --yes --no-backup
-          node apifix.mjs audit /tmp/fix-oc.json
-          node apifix.mjs audit /tmp/fix-pi.json
+          node apifix.mjs fix "$RUNNER_TEMP/fix-oc.json" --yes --no-backup
+          node apifix.mjs fix "$RUNNER_TEMP/fix-pi.json" --yes --no-backup
+          node apifix.mjs audit "$RUNNER_TEMP/fix-oc.json"
+          node apifix.mjs audit "$RUNNER_TEMP/fix-pi.json"
