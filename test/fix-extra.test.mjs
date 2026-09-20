@@ -126,3 +126,36 @@ test("fix：未收录模型只提示、不误改（codex）", () => {
     rmSync(dir, { recursive: true, force: true });
   }
 });
+
+test("fix：计划/摘要点名——未收录者被列出、被修正者逐条列出", () => {
+  const dir = mkdtempSync(path.join(tmpdir(), "apifix-fix-"));
+  try {
+    const file = path.join(dir, "oc.json");
+    writeFileSync(file, JSON.stringify({
+      provider: {
+        relay: {
+          npm: "@ai-sdk/openai",
+          options: { baseURL: "https://relay.example/v1", apiKey: "sk-TEST-x" },
+          models: {
+            "glm-5.3-flash": { name: "GLM", limit: { context: 999999, output: 131072 } },
+            "my-relay-invented-model": { name: "relay 自造" },
+          },
+        },
+      },
+    }, null, 2), "utf8");
+
+    const dry = runFix(file, ["--dry-run"]);
+    assert.equal(dry.status, 1, dry.stdout + dry.stderr);
+    assert.match(dry.stdout, /\[OK\] glm-5\.3-flash（待修 1 项）/);
+    assert.match(dry.stdout, /\[\?\] my-relay-invented-model → 未收录/);
+    assert.match(dry.stdout, /提示：未收录条目不参与修正/);
+
+    const applied = runFix(file, ["--yes", "--no-backup"]);
+    assert.equal(applied.status, 0, applied.stdout + applied.stderr);
+    assert.match(applied.stdout, /已修复 1 项 \/ 1 个模型：/);
+    assert.match(applied.stdout, /- glm-5\.3-flash（上下文）/);
+    assert.ok(!applied.stdout.includes("sk-TEST"), "输出不得包含假 key");
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+});

@@ -34,6 +34,7 @@ import {
   planCodexFixes,
   applyCodexFixes,
   renderFixPlan,
+  AUDIT_FIELD_LABELS,
   searchModels,
   renderSearch,
   compareModels,
@@ -711,10 +712,14 @@ function warnWindowsFileLock(err, file, backup) {
     + `请关闭编辑器/同步盘后重试；${backupNote}`);
 }
 
-// 修复计划应用后的摘要（JSON / TOML 两条路径共用）
+// 修复计划应用后的摘要（JSON / TOML 两条路径共用）：逐条列出被改动的模型
 function reportFixApplied(plan, backup) {
-  const modelCount = plan.entries.filter((e) => e.changes.length).length;
-  stdout(`已修复 ${plan.summary.change_items} 项 / ${modelCount} 个模型`);
+  const touched = plan.entries.filter((e) => e.changes.length);
+  stdout(`已修复 ${plan.summary.change_items} 项 / ${touched.length} 个模型：`);
+  for (const entry of touched) {
+    const fields = entry.changes.map((c) => AUDIT_FIELD_LABELS[c.field] || c.field).join("、");
+    stdout(`  - ${entry.input}（${fields}）`);
+  }
   if (backup) stdout(`备份：${backup}`);
   if (plan.summary.skipped_items) {
     const manual = [];
