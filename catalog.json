@@ -14793,7 +14793,9 @@
         "min_tokens": null,
         "ttl_options": null
       },
-      "aliases": [],
+      "aliases": [
+        "MiniMaxAI/MiniMax-M2"
+      ],
       "legacy_ids": [],
       "gotchas": [
         "最大输出128k含CoT",
@@ -14880,6 +14882,7 @@
         "ttl_options": null
       },
       "aliases": [
+        "MiniMaxAI/MiniMax-M2.1",
         "MiniMax-M2.1-highspeed"
       ],
       "legacy_ids": [],
