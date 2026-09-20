@@ -14,11 +14,15 @@ import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import os from "node:os";
 import path from "node:path";
+import { createInterface } from "node:readline";
 
 import {
   matchModel,
   emitOpencode,
   emitPi,
+  deriveProviderName,
+  OPENCODE_NPM_DEFAULTS,
+  buildOpencodeProvider,
   emitExtra,
   renderCard,
   listRows,
@@ -46,7 +50,7 @@ import {
 
 const EMIT_TARGETS = ["opencode", "pi", "codex", "claude-env", "curl", "sdk"];
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.1";
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_CATALOG = path.join(ROOT, "catalog.json");
 const DEFAULT_PORT = 7788;
@@ -89,6 +93,8 @@ subcommands:
   audit <file|->        审计配置文件（或 stdin）中的模型条目与官网规格差异
   fix {opencode|pi|<file>}
                         交互式修复配置文件（显示差异，按 y 应用 / n 取消）
+  login opencode [名称]
+                        交互式添加 opencode 供应商（baseURL / API 格式 / key / 模型）
   search [filters]      按能力/价格/厂商/生命周期检索模型
   compare <id1> <id2>   2-4 个模型并排对比（--usage IN/OUT 附用量成本）
   protocols             跨工具协议总览（各 provider 协议 vs 模型原生协议）
@@ -306,6 +312,33 @@ options:
   -h, --help            显示帮助并退出
 
 退出码：0 已应用或无差异；1 取消 / 复验仍有差异；2 用法/解析错误`;
+
+const LOGIN_HELP = `usage: apifix login opencode [名称]
+       [--base-url URL] [--protocol {openai,anthropic,gemini}] [--api-key KEY]
+       [--model ID]... [--file 路径] [--no-fetch] [--yes] [--json] [--force] [--no-backup]
+
+交互式添加 opencode 供应商：写入 {provider: {<名称>: {npm, options.baseURL, models}}}。
+模型规格取自 catalog 官网数据（精确/别名/旧版/归一化命中时）；未收录的模型写最小条目。
+API key 仅写入 options.apiKey，任何输出（含 --json）都不回显明文，错误信息一律脱敏。
+
+arguments:
+  名称                  provider 名称（缺省时从 baseURL 主机名派生，可交互输入）
+
+options:
+  --base-url URL        API 地址（OpenAI 兼容中转通常以 /v1 结尾）
+  --protocol {openai,anthropic,gemini}
+                        API 格式（默认 openai；决定 provider.npm 包）
+  --api-key KEY         非交互模式直接给 key（交互模式忽略此 flag，走静默输入）
+  --model ID            预置模型 id（可重复或逗号分隔；未给时交互模式自动检测）
+  --file 路径           目标配置文件（默认 ~/.config/opencode/opencode.json）
+  --no-fetch            跳过 GET {baseURL}/models 自动检测（直接手动输入模型）
+  -y, --yes             跳过确认直接写入（脚本用）
+  --json                输出机器可读 JSON（key 以掩码呈现，绝不输出明文）
+  --force               非交互模式下覆盖同名 provider（交互模式会询问）
+  --no-backup           覆盖已有文件时不写备份
+  -h, --help            显示帮助并退出
+
+退出码：0 已写入；1 取消 / 复验有差异；2 用法/解析错误（非交互缺 flag 时提示缺什么）`;
 
 const SEARCH_HELP = `usage: apifix search [filters] [--json]
 
@@ -851,6 +884,460 @@ function commitFix(file, parsed, plan, style, mode, noBackup) {
   return { config: nextConfig, backup };
 }
 
+// --------------------------------------------------------------------------
+// login 子命令：交互式添加 opencode 供应商
+// --------------------------------------------------------------------------
+
+const LOGIN_PROTOCOLS = ["openai", "anthropic", "gemini"];
+
+// 解析 --model：可重复、可逗号分隔、去空格去重（保持输入顺序）
+function parseLoginModels(values) {
+  const out = [];
+  for (const value of values) {
+    for (const part of String(value).split(",")) {
+      const id = part.trim();
+      if (id && !out.includes(id)) out.push(id);
+    }
+  }
+  return out;
+}
+
+// key 掩码：只露出末尾 4 位（更短时全部打码），绝不输出明文。
+function maskKey(key) {
+  if (typeof key !== "string" || !key) return "(空)";
+  if (key.length <= 8) return "***";
+  return `${key.slice(0, 5)}***${key.slice(-4)}`;
+}
+
+// readline 单行输入（stderr 提示）；prompt 由调用方负责打印时用 hiddenInput。
+function askLine(rl, prompt) {
+  return new Promise((resolve) => {
+    rl.question(prompt, (answer) => resolve(String(answer ?? "")));
+  });
+}
+
+// 静默输入一行：关闭本地回显、逐字符读入并打 *（凭证纪律：任何输出不回显 key 明文）。
+// 返回 { text, eof }；EOF（Ctrl+D / Ctrl+C 管道关闭）时 eof 为 true。
+function askHidden(prompt) {
+  return new Promise((resolve) => {
+    stderr(prompt);
+    const chars = [];
+    let settled = false;
+    const finish = (eof) => {
+      if (settled) return;
+      settled = true;
+      if (process.stdin.isTTY) process.stdin.setRawMode(false);
+      process.stdin.pause();
+      resolve({ text: chars.join(""), eof });
+    };
+    process.stdin.setEncoding("utf8");
+    if (process.stdin.isTTY) process.stdin.setRawMode(true);
+    const onData = (chunk) => {
+      // raw 模式下逐字符处理
+      for (const ch of String(chunk)) {
+        const code = ch.charCodeAt(0);
+        if (ch === "\r" || ch === "\n" || code === 4) { // 回车 / Ctrl+D 结束
+          if (process.stdin.isTTY) process.stdout.write("\n");
+          finish(code !== 4 || chars.length > 0 ? false : true);
+          return;
+        }
+        if (code === 3) { // Ctrl+C：中止输入
+          if (process.stdin.isTTY) process.stdout.write("\n");
+          finish(true);
+          return;
+        }
+        if (code === 127 || code === 8) { // 退格
+          chars.pop();
+          continue;
+        }
+        if (ch === "\u0003") continue;
+        chars.push(ch);
+        if (process.stdin.isTTY) process.stdout.write("*");
+      }
+    };
+    const onEnd = () => finish(true);
+    const onErr = () => finish(true);
+    process.stdin.once("end", onEnd);
+    process.stdin.once("error", onErr);
+    process.stdin.on("data", onData);
+  });
+}
+
+// GET {baseURL}/models 自动检测（OpenAI 形状）；任何失败返回 null（由调用方降级）。
+async function fetchModelIds(baseURL, apiKey) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 5000);
+  try {
+    const url = `${baseURL.replace(/\/+$/, "")}/models`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+      signal: controller.signal,
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    const list = data && Array.isArray(data.data) ? data.data : null;
+    if (!list) return null;
+    const ids = list
+      .map((item) => (item && typeof item.id === "string" ? item.id : null))
+      .filter((id) => id);
+    return ids.length ? ids : null;
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// 用 catalog 匹配模型 id，产出 opencode models[id] 条目：
+// 命中 → emitOpencode 最小集（与 `node apifix.mjs <id>` 同形状，不含 cost）；未命中 → {name: id}。
+function buildModelEntry(models, rawId) {
+  const res = matchModel(models, rawId);
+  if (!res.entry) {
+    return { id: rawId, entry: { name: rawId }, matched: false, matchedId: null };
+  }
+  const keyId = res.matchedId || rawId;
+  // 沿用用户输入的 id 作 key（与 emit 的默认行为一致），规格对象为 emit payload
+  const spec = JSON.parse(emitOpencode(res.entry, { name: keyId, keyId: rawId }))[rawId];
+  return { id: rawId, entry: spec, matched: true, matchedId: res.matchedId };
+}
+
+// keys-only 检查真实 opencode 配置里 OpenAI 兼容 provider 的实际 npm 值（不打印值本身）。
+function probeRealNpm(file) {
+  try {
+    const parsed = JSON.parse(readFileSync(file, "utf8"));
+    const providers = parsed && typeof parsed === "object" ? parsed.provider : null;
+    if (!providers || typeof providers !== "object") return null;
+    for (const key of Object.keys(providers)) {
+      const block = providers[key];
+      if (!block || typeof block !== "object") continue;
+      const npm = typeof block.npm === "string" ? block.npm : null;
+      // OpenAI 兼容包判定（与 @ai-sdk/anthropic、@ai-sdk/google 相区别）
+      if (npm && (npm.includes("openai-compatible") || npm === "@ai-sdk/openai")) return npm;
+    }
+  } catch {
+    /* 文件不存在/非法：静默，走默认值 */
+  }
+  return null;
+}
+
+async function cmdLogin(args, models) {
+  // -------- 参数解析 --------
+  let toolAlias = null; // 第一个位置参数：工具别名（opencode/oc）
+  let providerName = null;
+  let baseURL = null;
+  let protocol = null;
+  let apiKeyFlag = null;
+  let fileFlag = null;
+  let noFetch = false;
+  let yes = false;
+  let json = false;
+  let force = false;
+  let noBackup = false;
+  const modelFlags = [];
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+    if (arg === "-h" || arg === "--help") {
+      stdout(LOGIN_HELP);
+      return 0;
+    }
+    if (arg === "--no-fetch") { noFetch = true; continue; }
+    if (arg === "-y" || arg === "--yes") { yes = true; continue; }
+    if (arg === "--json") { json = true; continue; }
+    if (arg === "--force") { force = true; continue; }
+    if (arg === "--no-backup") { noBackup = true; continue; }
+    const [key, inline] = splitFlag(arg);
+    if (["--base-url", "--protocol", "--api-key", "--file"].includes(key)) {
+      const taken = takeValue(args, i, key, inline);
+      if (key === "--base-url") baseURL = taken.value;
+      else if (key === "--protocol") protocol = taken.value;
+      else if (key === "--api-key") apiKeyFlag = taken.value;
+      else fileFlag = taken.value;
+      i = taken.next;
+      continue;
+    }
+    if (key === "--model") {
+      const taken = takeValue(args, i, key, inline);
+      modelFlags.push(taken.value);
+      i = taken.next;
+      continue;
+    }
+    if (arg.startsWith("-") && arg !== "-") throw new UsageError(`unrecognized arguments: ${arg}`);
+    // 第一个位置参数：工具别名（opencode）；第二个才是 provider 名称
+    if (toolAlias === null && (arg === "opencode" || arg === "oc")) { toolAlias = arg; continue; }
+    if (toolAlias === null) { toolAlias = arg; continue; }
+    if (providerName !== null) throw new UsageError(`unrecognized arguments: ${arg}`);
+    providerName = arg;
+  }
+
+  if (toolAlias !== null && toolAlias !== "opencode" && toolAlias !== "oc") {
+    throw new UsageError(`unrecognized arguments: ${toolAlias}（login 目前仅支持 opencode，用法见 --help）`);
+  }
+
+  if (protocol !== null && !LOGIN_PROTOCOLS.includes(protocol)) {
+    throw new UsageError(`argument --protocol: invalid choice: ${JSON.stringify(protocol)} (choose from ${LOGIN_PROTOCOLS.join(", ")})`);
+  }
+  const file = fileFlag !== null ? fileFlag : fixTargetPath("opencode");
+  const interactive = Boolean(process.stdin.isTTY && process.stdout.isTTY);
+
+  // 非交互模式：必要 flag 全给齐才能跳过提示；缺哪个且非 TTY → exit 2
+  const missing = [];
+  if (baseURL === null) missing.push("--base-url");
+  if (apiKeyFlag === null) missing.push("--api-key");
+  if (!modelFlags.length) missing.push("--model");
+  if (!interactive && missing.length) {
+    stderr(`apifix login: error: 非交互模式缺少必要参数: ${missing.join(", ")}`);
+    stderr("提示：补齐 flag，或在 TTY 下运行进入交互式向导");
+    return 2;
+  }
+
+  const rl = interactive ? createInterface({ input: process.stdin, output: process.stderr }) : null;
+  const closeRl = () => { if (rl) rl.close(); };
+  const allow = publicTokens(models);
+
+  try {
+    // -------- 交互式：baseURL --------
+    if (baseURL === null) {
+      for (;;) {
+        const answer = await askLine(rl, "[?] API 地址 baseURL（OpenAI 兼容中转通常以 /v1 结尾）: ");
+        const value = answer.trim();
+        if (value) { baseURL = value; break; }
+        stderr("[!] baseURL 必填，请重新输入");
+      }
+    }
+
+    // -------- provider 名称：参数 > 交互（默认从主机名派生） --------
+    if (providerName === null) {
+      let derived = null;
+      try {
+        derived = deriveProviderName(new URL(baseURL).host);
+      } catch { /* URL 解析失败：无默认名 */ }
+      if (interactive) {
+        const hint = derived ? `（回车 = ${derived}）` : "";
+        const answer = await askLine(rl, `[?] provider 名称${hint}: `);
+        providerName = answer.trim() || derived;
+      } else {
+        providerName = derived;
+      }
+      if (!providerName) {
+        stderr("[x] 无法从 baseURL 派生 provider 名称，请手动指定名称或用 --base-url 给出合法 URL");
+        return 2;
+      }
+    }
+
+    // -------- 交互式：API 格式 --------
+    if (protocol === null) {
+      if (interactive) {
+        stderr("[?] API 格式：");
+        stderr("  1) OpenAI 兼容（chat_completions/responses）");
+        stderr("  2) Anthropic");
+        stderr("  3) Gemini");
+        const answer = await askLine(rl, "[?] 选择 [1]: ");
+        const pick = answer.trim() || "1";
+        protocol = { 1: "openai", 2: "anthropic", 3: "gemini" }[pick] || null;
+        if (!protocol) { stderr("[x] 无效选择"); return 2; }
+      } else {
+        protocol = "openai"; // 非交互缺省：OpenAI 兼容（最常见的 OpenAI 兼容中转场景）
+      }
+    }
+
+    // -------- API key：非交互用 flag；交互走静默输入（任何输出不回显） --------
+    let apiKey = apiKeyFlag;
+    if (apiKey === null) {
+      for (;;) {
+        const { text, eof } = await askHidden("[?] API key（输入不回显，回车确认）: ");
+        if (eof) { stderr("[!] 输入流已关闭，未获取到 API key"); return 2; }
+        if (text.trim()) { apiKey = text.trim(); break; }
+        stderr("[!] API key 必填，请重新输入");
+      }
+    }
+
+    // -------- 模型：flag > 自动检测 > 手动输入 --------
+    let selectedIds = [];
+    if (modelFlags.length) {
+      selectedIds = parseLoginModels(modelFlags);
+    } else if (noFetch) {
+      // --no-fetch：跳过检测
+    } else if (interactive) {
+      stderr(`[i] 正在从 ${baseURL}/models 检测模型列表...`);
+      const detected = await fetchModelIds(baseURL, apiKey);
+      if (detected) {
+        stderr(`[i] 检测到 ${detected.length} 个模型：`);
+        detected.slice(0, 30).forEach((id, idx) => stderr(`  ${idx + 1}) ${id}`));
+        if (detected.length > 30) stderr(`  ...（其余 ${detected.length - 30} 个未列出，可直接输入完整 id）`);
+        const answer = await askLine(rl, "[?] 选择模型（序号，逗号分隔多个；或直接输入完整 id；留空跳过）: ");
+        const parts = answer.split(",").map((p) => p.trim()).filter(Boolean);
+        for (const part of parts) {
+          const num = Number.parseInt(part, 10);
+          if (String(num) === part && num >= 1 && num <= Math.min(detected.length, 30)) {
+            selectedIds.push(detected[num - 1]);
+          } else {
+            selectedIds.push(part);
+          }
+        }
+      } else {
+        stderr("[i] 自动检测失败（非 OpenAI 形状 / 网络不通 / 超时），改为手动输入");
+      }
+      if (!selectedIds.length) {
+        const answer = await askLine(rl, "[?] 模型 id（逗号分隔多个，留空跳过）: ");
+        selectedIds = answer.split(",").map((p) => p.trim()).filter(Boolean);
+      }
+    }
+
+    // -------- 构造 provider 块（不含 apiKey；规格来自 catalog 命中） --------
+    const modelEntries = {};
+    const unmatched = [];
+    for (const id of selectedIds) {
+      const built = buildModelEntry(models, id);
+      modelEntries[id] = built.entry;
+      if (!built.matched) unmatched.push(id);
+    }
+    for (const id of unmatched) {
+      stderr(`[i] ${id}: catalog 未收录，规格留空，可后续 apifix fix 修正`);
+    }
+    const realNpm = protocol === "openai" ? probeRealNpm(file) : null;
+    const providerBlock = buildOpencodeProvider({ name: providerName, baseURL, npm: realNpm, protocol, modelEntries });
+    // 凭证注入：key 只写 options.apiKey（纯函数层不碰凭证，写入前在 CLI 层注入）
+    providerBlock.options.apiKey = apiKey;
+
+    // -------- 读取目标文件，检查同名 provider --------
+    let parsed = null;
+    let fileExists = false;
+    let raw = "";
+    try {
+      raw = readFileSync(file, "utf8");
+      fileExists = true;
+      const bom = raw.charCodeAt(0) === 0xfeff;
+      parsed = JSON.parse(bom ? raw.slice(1) : raw);
+    } catch (err) {
+      if (fileExists) {
+        stderr(scrub(`[x] 目标文件存在但解析失败 ${file}: ${err && err.code ? err.code : "解析失败"}`, allow));
+        return 2;
+      }
+      parsed = null; // 目标不存在：从零建 {$schema, provider:{}}
+    }
+    if (parsed !== null && (typeof parsed !== "object" || Array.isArray(parsed))) {
+      stderr(`[x] 目标文件不是 JSON 对象: ${file}`);
+      return 2;
+    }
+
+    const existedProvider = parsed && parsed.provider && typeof parsed.provider === "object" && parsed.provider[providerName];
+    if (existedProvider) {
+      if (interactive) {
+        const answer = await askLine(rl, `[!] 已存在同名 provider「${providerName}」，覆盖？[y/N]: `);
+        if (!/^(y|yes)$/i.test(answer.trim())) {
+          stderr("[i] 已取消，未写入任何更改");
+          return 1;
+        }
+      } else if (!force) {
+        stderr(`[x] 已存在同名 provider「${providerName}」；非交互模式需显式 --force 才能覆盖`);
+        return 2;
+      }
+    }
+
+    // -------- 设为默认模型 --------
+    let defaultModel = null;
+    if (interactive && selectedIds.length) {
+      const answer = await askLine(rl, "[?] 设为 opencode 默认模型（顶层 model 字段）？[y/N]: ");
+      if (/^(y|yes)$/i.test(answer.trim())) defaultModel = `${providerName}/${selectedIds[0]}`;
+    }
+
+    // -------- 汇总计划（key 只显示掩码） --------
+    const summaryLines = [
+      `provider 名称 : ${providerName}`,
+      `baseURL       : ${baseURL}`,
+      `API 格式      : ${protocol} → npm ${providerBlock.npm}`,
+      `模型          : ${selectedIds.length ? selectedIds.join(", ") : "（无，仅写空 provider 骨架）"}`,
+      `API key       : ${maskKey(apiKey)}`,
+      `目标文件      : ${file}${fileExists ? "" : "（新建）"}`,
+    ];
+    if (json) {
+      stdout(scrub(JSON.stringify({
+        provider: providerName,
+        base_url: baseURL,
+        protocol,
+        npm: providerBlock.npm,
+        models: selectedIds,
+        api_key_masked: maskKey(apiKey),
+        file,
+        default_model: defaultModel,
+      }, null, 2), allow));
+    } else {
+      stderr("── 将写入以下配置 ──");
+      for (const line of summaryLines) stderr(`  ${line}`);
+    }
+
+    // -------- 确认 --------
+    if (!yes) {
+      if (interactive) {
+        const answer = await askLine(rl, "[?] 确认写入？[y/N]: ");
+        if (!/^(y|yes)$/i.test(answer.trim())) {
+          stderr("[i] 已取消，未写入任何更改");
+          return 1;
+        }
+      } else {
+        stderr("apifix login: error: 写入需要 --yes（非交互模式）");
+        return 2;
+      }
+    }
+
+    // -------- 组装完整配置 --------
+    const nextConfig = parsed && typeof parsed === "object" ? parsed : { $schema: "https://opencode.ai/config.json" };
+    if (!nextConfig.provider || typeof nextConfig.provider !== "object") nextConfig.provider = {};
+    nextConfig.provider[providerName] = providerBlock;
+    if (defaultModel) nextConfig.model = defaultModel;
+
+    // -------- 写入：与 fix 同一套管道（备份 → 原子替换） --------
+    const style = {
+      indent: fileExists ? detectIndent(raw) : 2,
+      trailingNewline: fileExists ? raw.endsWith("\n") : true,
+      crlf: fileExists ? raw.includes("\r\n") : process.platform === "win32",
+      bom: fileExists ? raw.charCodeAt(0) === 0xfeff : false,
+    };
+    let mode = null;
+    try { mode = statSync(file).mode & 0o777; } catch { mode = null; }
+    let backup = null;
+    if (fileExists && !noBackup) {
+      backup = uniqueBackupPath(file, new Date());
+      copyFileSync(file, backup);
+      stderr(`[i] 备份：${backup}`);
+    }
+    const text = serializeConfig(nextConfig, style);
+    try {
+      writeAtomic(file, text, mode);
+    } catch (err) {
+      warnWindowsFileLock(err, file, backup);
+      throw err;
+    }
+
+    // -------- 写后复验：对该 provider 跑内部 audit 并打到 stderr --------
+    try {
+      const verifyConfig = JSON.parse(readFileSync(file, "utf8"));
+      const report = auditConfig(models, verifyConfig, "opencode");
+      const entry = (report.entries || []).find((e) => e.provider === providerName);
+      if (entry && entry.diffs && entry.diffs.length) {
+        const diffCount = entry.diffs.filter((d) => d.status === "diff").length;
+        if (diffCount > 0) {
+          stderr(`[!] 复验：provider「${providerName}」与官网规格仍有 ${diffCount} 处差异（可跑 apifix fix 修正）`);
+        } else {
+          stderr(`[i] 复验：provider「${providerName}」规格与官网一致`);
+        }
+      } else if (entry && entry.matchedId) {
+        stderr(`[i] 复验：provider「${providerName}」规格与官网一致`);
+      } else {
+        stderr("[i] 复验：该 provider 无可比对条目（自定义模型或骨架）");
+      }
+    } catch {
+      stderr("[i] 复验失败（配置已写入，可手动跑 apifix audit）");
+    }
+
+    if (!json) stderr(`[i] 已写入 ${file}`);
+    return 0;
+  } finally {
+    closeRl();
+  }
+}
+
 function cmdSearch(args, models) {
   const filters = { vendors: [], lifecycles: [] };
   let json = false;
@@ -1313,8 +1800,8 @@ function startUi(port, autoOpen) {
 // --------------------------------------------------------------------------
 
 async function main(argv) {
-  // 子命令优先：apifix audit|fix|search|compare|protocols ...（其余走原有位置参数解析，行为不变）
-  const SUBCOMMANDS = { audit: cmdAudit, fix: cmdFix, search: cmdSearch, compare: cmdCompare, protocols: cmdProtocols };
+  // 子命令优先：apifix audit|fix|login|search|compare|protocols ...（其余走原有位置参数解析，行为不变）
+  const SUBCOMMANDS = { audit: cmdAudit, fix: cmdFix, login: cmdLogin, search: cmdSearch, compare: cmdCompare, protocols: cmdProtocols };
   if (argv.length && Object.prototype.hasOwnProperty.call(SUBCOMMANDS, argv[0])) {
     const name = argv[0];
     const subArgs = argv.slice(1);

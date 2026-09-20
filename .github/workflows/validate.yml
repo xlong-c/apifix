@@ -72,3 +72,15 @@ jobs:
           node apifix.mjs fix "$RUNNER_TEMP/fix-pi.json" --yes --no-backup
           node apifix.mjs audit "$RUNNER_TEMP/fix-oc.json"
           node apifix.mjs audit "$RUNNER_TEMP/fix-pi.json"
+
+      # login 非交互冒烟：写 $RUNNER_TEMP 下的临时文件（绝不碰真实用户配置），假 key（sk-TEST）
+      - name: Smoke test (login non-interactive)
+        run: |
+          SMOKE_ID=$(node -e "console.log(require('./catalog.json').models[0].id)")
+          node apifix.mjs login opencode smoketest \
+            --file "$RUNNER_TEMP/login-oc.json" \
+            --base-url "https://example.invalid/v1" \
+            --api-key "sk-TEST-SMOKE" \
+            --model "$SMOKE_ID" \
+            --no-fetch --yes --no-backup
+          node -e "const j=require(process.env.RUNNER_TEMP + '/login-oc.json'); const b=j.provider.smoketest; if (b.npm !== '@ai-sdk/openai-compatible' || !b.options.baseURL || b.options.apiKey !== 'sk-TEST-SMOKE' || !b.models[process.argv[1]]) process.exit(1)" "$SMOKE_ID"
