@@ -28,6 +28,7 @@
     <nav class="tabs" id="tabs" aria-label="视图切换">
       <button class="tab is-active" type="button" data-view="lookup" aria-selected="true">单条查询</button>
       <button class="tab" type="button" data-view="batch" aria-selected="false">批量解析</button>
+      <button class="tab" type="button" data-view="config" aria-selected="false">API 配置</button>
     </nav>
 
     <p class="topbar-meta" id="catalog-meta">加载中…</p>
@@ -155,7 +156,231 @@
   </div>
 </main>
 
+<main class="config-view" id="view-config" hidden>
+  <div class="config-inner">
+    <header class="config-head">
+      <h2 class="config-title">客户端 API 配置生成器</h2>
+      <p class="config-desc">
+        为 OpenCode、Pi、Codex、Claude Code 快速配置第三方或官方供应商；可查阅本机当前配置，并把所选模型一键写入对应文件（自动注入官网参数规格，写入前备份）。
+      </p>
+    </header>
+
+    <div class="platform-bar" id="platform-bar" role="tablist" aria-label="选择目标客户端">
+      <button class="platform-tab is-active" type="button" data-platform="opencode" role="tab" aria-selected="true">
+        <span class="platform-name">OpenCode</span>
+        <span class="platform-sub">opencode.json</span>
+      </button>
+      <button class="platform-tab" type="button" data-platform="pi" role="tab" aria-selected="false">
+        <span class="platform-name">Pi</span>
+        <span class="platform-sub">models.json</span>
+      </button>
+      <button class="platform-tab" type="button" data-platform="codex" role="tab" aria-selected="false">
+        <span class="platform-name">Codex</span>
+        <span class="platform-sub">config.toml</span>
+      </button>
+      <button class="platform-tab" type="button" data-platform="claude" role="tab" aria-selected="false">
+        <span class="platform-name">Claude Code</span>
+        <span class="platform-sub">settings.json</span>
+      </button>
+    </div>
+
+    <section class="cfg-card local-card" id="cfg-local-card">
+      <div class="cfg-card-head">
+        <h3 class="cfg-card-title">本机当前配置</h3>
+        <div class="local-head-actions">
+          <span class="cfg-badge-file" id="cfg-local-path">~/.config/opencode/opencode.json</span>
+          <button class="btn btn-xs" id="cfg-local-refresh" type="button">刷新</button>
+        </div>
+      </div>
+      <div class="local-status" id="cfg-local-status">正在读取本机配置…</div>
+      <div class="local-summary" id="cfg-local-summary" hidden></div>
+      <div class="platform-bar local-provider-bar" id="cfg-local-provider-bar" role="tablist" aria-label="选择供应商" hidden></div>
+      <div class="local-providers" id="cfg-local-providers" hidden></div>
+      <div class="local-preview-wrap" id="cfg-local-preview-wrap" hidden>
+        <div class="local-preview-head">
+          <button class="local-preview-toggle" id="cfg-local-preview-toggle" type="button" aria-expanded="false">
+            <span class="local-provider-caret" id="cfg-local-preview-caret">▸</span>
+            <span class="cfg-sublabel">整文件脱敏预览</span>
+          </button>
+          <button class="copy-btn" id="cfg-local-copy" type="button">
+            <span class="btn-label">复制预览</span>
+          </button>
+        </div>
+        <pre class="code cfg-code local-preview" id="cfg-local-preview"></pre>
+      </div>
+    </section>
+
+    <div class="config-grid">
+      <div class="config-form-col">
+        <section class="cfg-card">
+          <h3 class="cfg-card-title">1. 服务端点与凭证</h3>
+          <div class="cfg-fields">
+            <div class="field-row">
+              <label class="cfg-label" for="cfg-base-url">API 地址 (Base URL) <span class="req">*</span></label>
+              <div class="input-with-hint">
+                <input id="cfg-base-url" type="url" class="cfg-input" placeholder="https://api.openai.com/v1" autocomplete="off" spellcheck="false" />
+                <p class="cfg-hint">OpenAI 兼容中转通常以 /v1 结尾</p>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <label class="cfg-label" for="cfg-api-key">API Key <span class="req">*</span></label>
+              <div class="cfg-key-wrap">
+                <input id="cfg-api-key" type="password" class="cfg-input" placeholder="sk-..." autocomplete="off" spellcheck="false" />
+                <button class="icon-btn cfg-key-toggle" id="cfg-key-toggle" type="button" aria-label="显示/隐藏 API Key" title="显示/隐藏明文">
+                  <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1.5 8s2.5-5 6.5-5 6.5 5 6.5 5-2.5 5-6.5 5-6.5-5-6.5-5z" /><circle cx="8" cy="8" r="2.2" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <label class="cfg-label" for="cfg-provider-name">Provider 名称</label>
+              <div class="input-with-hint">
+                <input id="cfg-provider-name" type="text" class="cfg-input" placeholder="例如：relay、deepseek" autocomplete="off" spellcheck="false" />
+                <p class="cfg-hint" id="cfg-provider-hint">填入 Base URL 后自动填充建议名称</p>
+              </div>
+            </div>
+
+            <div class="field-row" id="cfg-protocol-row">
+              <label class="cfg-label" for="cfg-protocol">API 协议 / 格式</label>
+              <select id="cfg-protocol" class="cfg-select"></select>
+              <p class="cfg-hint" id="cfg-protocol-hint"></p>
+            </div>
+          </div>
+        </section>
+
+        <section class="cfg-card">
+          <div class="cfg-card-head">
+            <h3 class="cfg-card-title">2. 模型嗅探与添加</h3>
+            <button class="btn btn-primary btn-sniff" id="cfg-btn-sniff" type="button">
+              <span class="btn-icon" id="cfg-sniff-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                  <circle cx="6.8" cy="6.8" r="4.3" /><path d="M10.2 10.2 14 14" />
+                </svg>
+              </span>
+              <span class="btn-label" id="cfg-sniff-label">嗅探可用模型</span>
+            </button>
+          </div>
+
+          <div class="sniff-status" id="cfg-sniff-status" hidden></div>
+
+          <div class="sniff-box" id="cfg-sniff-box" hidden>
+            <div class="sniff-head">
+              <span class="sniff-summary" id="cfg-sniff-count">检测到 0 个模型</span>
+              <div class="sniff-actions">
+                <input id="cfg-sniff-filter" type="search" class="cfg-filter-input" placeholder="过滤嗅探结果…" />
+                <button class="btn btn-xs" id="cfg-sniff-select-all" type="button">全选</button>
+                <button class="btn btn-xs btn-ghost" id="cfg-sniff-deselect-all" type="button">清空</button>
+                <button class="btn btn-xs btn-accent" id="cfg-sniff-add-selected" type="button">添加所选</button>
+              </div>
+            </div>
+            <div class="sniff-list" id="cfg-sniff-list"></div>
+          </div>
+
+          <div class="cfg-manual-add">
+            <label class="cfg-sublabel" for="cfg-manual-input">手动输入模型 ID（支持逗号或空格批量添加）</label>
+            <div class="cfg-manual-row">
+              <input id="cfg-manual-input" type="text" class="cfg-input" placeholder="例如：deepseek-v4-pro, gpt-4o, claude-sonnet-5" autocomplete="off" spellcheck="false" />
+              <button class="btn" id="cfg-manual-add-btn" type="button">添加</button>
+            </div>
+          </div>
+
+          <div class="cfg-selected-section">
+            <div class="cfg-selected-head">
+              <span class="cfg-sublabel">已选模型列表 (<span id="cfg-selected-count">0</span>)</span>
+              <button class="btn-link" id="cfg-selected-clear" type="button">清空全部</button>
+            </div>
+            <div class="cfg-selected-chips" id="cfg-selected-chips">
+              <span class="cfg-empty-chips">尚未添加模型，请先使用上方嗅探或手动添加</span>
+            </div>
+            <div class="cfg-inject-row">
+              <button class="btn btn-primary" id="cfg-inject-btn" type="button">写入本机配置</button>
+              <p class="cfg-hint" id="cfg-inject-hint">将已选模型合并进上方路径的本机文件，官网已收录的规格会一并写入。</p>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="config-preview-col">
+        <section class="cfg-card preview-card">
+          <div class="preview-head">
+            <div class="preview-title-wrap">
+              <h3 class="cfg-card-title">配置输出预览</h3>
+              <span class="cfg-badge-file" id="cfg-output-target">opencode.json</span>
+            </div>
+            <div class="preview-controls">
+              <div class="seg" id="cfg-view-mode-seg" role="group" aria-label="输出类型">
+                <button class="seg-btn is-active" type="button" data-mode="snippet">片段</button>
+                <button class="seg-btn" type="button" data-mode="full">完整配置</button>
+              </div>
+              <label class="cfg-mask-key-label" title="开启后生成的内容中保留真实 Key，关闭则替换为占位符">
+                <input type="checkbox" id="cfg-mask-key" checked />
+                <span>保留真实 Key</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="code-wrap cfg-code-wrap">
+            <pre class="code cfg-code" id="cfg-code-output">// 请先在左侧输入 Base URL 并添加模型</pre>
+            <div class="cfg-code-actions">
+              <button class="copy-btn" id="cfg-copy-btn" type="button">
+                <span class="btn-label">复制配置</span>
+              </button>
+              <button class="copy-btn" id="cfg-download-btn" type="button">
+                <span class="btn-label">下载文件</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="cfg-report" id="cfg-report"></div>
+          <div class="cfg-tips" id="cfg-tips"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+</main>
+
 <div class="scrim" id="scrim" hidden></div>
+<div class="inject-overlay" id="cfg-delete-overlay" hidden>
+  <div class="inject-dialog" role="dialog" aria-modal="true" aria-labelledby="cfg-delete-title">
+    <h3 class="cfg-card-title" id="cfg-delete-title">从本机配置删除</h3>
+    <div class="inject-plan" id="cfg-delete-plan"></div>
+    <p class="cfg-hint" id="cfg-delete-hint">写入前会备份为 <code>.bak-时间戳</code>。</p>
+    <div class="inject-actions">
+      <button class="btn" id="cfg-delete-cancel" type="button">取消</button>
+      <button class="btn btn-danger" id="cfg-delete-confirm" type="button">确认删除</button>
+    </div>
+  </div>
+</div>
+<div class="inject-overlay" id="cfg-edit-overlay" hidden>
+  <div class="inject-dialog inject-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="cfg-edit-title">
+    <h3 class="cfg-card-title" id="cfg-edit-title">编辑供应商片段</h3>
+    <p class="cfg-hint" id="cfg-edit-hint">只改这一家供应商的 JSON。凭证显示为 [REDACTED]，留空或保持该占位符则沿用原值；也可在 models 里直接增删改模型。</p>
+    <textarea id="cfg-edit-fragment" class="cfg-edit-textarea" spellcheck="false" autocapitalize="off"></textarea>
+    <p class="cfg-hint">写入前会备份为 <code>.bak-时间戳</code>；其它供应商不受影响。</p>
+    <div class="inject-actions">
+      <button class="btn" id="cfg-edit-cancel" type="button">取消</button>
+      <button class="btn btn-primary" id="cfg-edit-confirm" type="button">保存片段</button>
+    </div>
+  </div>
+</div>
+<div class="inject-overlay" id="cfg-inject-overlay" hidden>
+  <div class="inject-dialog" role="dialog" aria-modal="true" aria-labelledby="cfg-inject-title">
+    <h3 class="cfg-card-title" id="cfg-inject-title">写入本机配置</h3>
+    <div class="inject-plan" id="cfg-inject-plan"></div>
+    <label class="cfg-mask-key-label" id="cfg-inject-default-wrap" hidden>
+      <input type="checkbox" id="cfg-inject-default" />
+      <span>同时设为 OpenCode 默认模型</span>
+    </label>
+    <p class="cfg-hint">写入前会备份为 <code>.bak-时间戳</code>；凭证字段原样保留，页面预览始终脱敏。</p>
+    <div class="inject-actions">
+      <button class="btn" id="cfg-inject-cancel" type="button">取消</button>
+      <button class="btn btn-primary" id="cfg-inject-confirm" type="button">确认写入</button>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <noscript>

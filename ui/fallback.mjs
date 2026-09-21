@@ -28,7 +28,7 @@ const VENDOR_PREFIXES = new Set(['openai', 'anthropic', 'meta', 'google', 'x-ai'
   /* 目录内其余厂商 + 常见中转前缀（与 lib/core.mjs 的 VENDOR_PREFIXES 保持一致） */
   'stepfun', 'mistral', 'mistralai', 'cohere', 'nvidia', 'microsoft', 'azure',
   'amazon', 'bedrock', 'baidu', 'qianfan', 'iflytek', 'xfyun', '01ai',
-  'lingyiwanwu', 'ai21', 'writer', 'aliyun', 'bigmodel']);
+  'lingyiwanwu', 'ai21', 'writer', 'aliyun', 'bigmodel', 'unisound']);
 
 /* 厂商前缀集合 = 静态表 + 目录内实际 vendor（与 lib/core.mjs 的 vendorPrefixSet 对齐） */
 function vendorPrefixSetFallback(models) {
@@ -218,7 +218,7 @@ export function matchFallback(models, input) {
   } else {
     /* 短缩写兜底建议（如 step5 → step-5-preview）：压缩分隔符后做前缀扫描；
      * 仅为建议：kind 保持 none，仅在展示层标注"前缀匹配"（与 lib/core.mjs 对齐）。 */
-    const compact = (text) => sepKey(text).replace(/[-._/]/g, '');
+    const compact = (text) => sepKey(text).replace(/[-._/\s]/g, '');
     const compactProbe = compact(raw);
     if (compactProbe.length >= 3) {
       const pool = Array.from(new Set(keys.map((k) => String(k.text || '')).filter((t) => t))).sort();

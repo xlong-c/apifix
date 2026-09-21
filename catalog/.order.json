@@ -19,6 +19,7 @@
     "openai.json",
     "stepfun.json",
     "tencent.json",
+    "unisound.json",
     "volcengine.json",
     "writer.json",
     "xai.json",

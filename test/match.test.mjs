@@ -153,12 +153,21 @@ test("厂商前缀：stepfun/step-5-preview（回归用例）", () => {
   assertHit(r, "normalized", "step-5-preview");
 });
 
-test("短缩写：step5 → 前缀匹配建议（仅建议，不自动纠错）", () => {
-  const r = matchModel(catalog, "step5");
-  assert.equal(r.entry, null);
-  assert.equal(r.kind, "none");
-  assert.equal(r.suggestion, "step-5-preview");
-  assert.equal(r.suggestionKind, "prefix");
+test("短缩写：step5 / step 5 → 前缀匹配建议（仅建议，不自动纠错）", () => {
+  for (const input of ["step5", "step 5", "step-5"]) {
+    const r = matchModel(catalog, input);
+    assert.equal(r.entry, null);
+    assert.equal(r.kind, "none");
+    assert.equal(r.suggestion, "step-5-preview");
+    assert.equal(r.suggestionKind, "prefix");
+  }
+});
+
+test("云知声 u2-flash：精确 / 别名 / 中转前缀命中", () => {
+  assertHit(matchModel(catalog, "u2-flash"), "exact", "u2-flash");
+  assertHit(matchModel(catalog, "u2 flash"), "alias", "u2-flash");
+  assertHit(matchModel(catalog, "u2"), "alias", "u2-flash");
+  assertHit(matchModel(catalog, "unisound/u2-flash"), "alias", "u2-flash");
 });
 
 test("前缀建议的边界：过短输入 / 无候选都不给建议", () => {

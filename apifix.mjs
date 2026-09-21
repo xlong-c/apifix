@@ -8,7 +8,7 @@
 //
 // 与 legacy-python/apifix.py 行为对齐；核心逻辑在 ./lib/core.mjs（浏览器通用）。
 
-import { readFileSync, writeFileSync, renameSync, statSync, existsSync, copyFileSync, unlinkSync, chmodSync } from "node:fs";
+import { readFileSync, writeFileSync, renameSync, statSync, existsSync, copyFileSync, unlinkSync, chmodSync, mkdirSync } from "node:fs";
 import { createServer } from "node:http";
 import { spawn } from "node:child_process";
 import { fileURLToPath } from "node:url";
@@ -45,6 +45,7 @@ import {
   claudeProtocolEnv,
   stripCredentials,
   scrub,
+  isCredentialKey,
   // 共享的列对齐 / 宽度小工具（--list/--match 的表格渲染依赖，单一实现）
   displayWidth,
   pad,
@@ -53,7 +54,7 @@ import {
 
 const EMIT_TARGETS = ["opencode", "pi", "codex", "claude-env", "curl", "sdk"];
 
-const VERSION = "0.2.2";
+const VERSION = "0.2.3";
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DEFAULT_CATALOG = path.join(ROOT, "catalog.json");
 const DEFAULT_PORT = 7788;
@@ -297,7 +298,7 @@ options:
 
 退出码：0 全部一致；1 存在差异或未收录；2 用法/解析错误`;
 
-const FIX_HELP = `usage: apifix fix {opencode|pi|codex|claude|<file>} [--format {auto,opencode,pi,codex,claude}] [--dry-run] [--yes] [--json] [--no-backup]
+const FIX_HELP = `usage: apifix fix {opencode|pi|codex|claude|<file>} [--format {auto,opencode,pi,codex,claude}] [--fill] [--dry-run] [--yes] [--json] [--no-backup]
 
 对比配置文件与 catalog 官网规格，显示修复计划并按 y 应用 / n 取消。
 只修正已声明的规格字段，绝不触碰 apiKey/token 等凭证（claude 的 AUTH_TOKEN 永不读写）。
@@ -311,6 +312,8 @@ target:
 
 options:
   --dry-run             只显示修复计划，不询问、不写入
+  --fill                补齐模式：未声明的规格字段也纳入计划（从「缺失」→ 官网值）；
+                        仅 opencode / pi 支持，codex / claude 不支持（exit 2）
   -y, --yes             跳过询问直接应用（脚本用）
   --json                输出机器可读 JSON；不询问（无 --yes 时只输出计划）
   --no-backup           不写备份文件
@@ -613,12 +616,28 @@ function cmdAudit(args, models) {
   return report.summary.with_diffs === 0 ? 0 : 1;
 }
 
+// 配置文件根目录。UI 本机读写可设 APIFIX_HOME 指向临时目录（测试用）；CLI 始终走 os.homedir()。
+function uiHomeDir() {
+  const override = process.env.APIFIX_HOME;
+  if (typeof override === "string" && override.trim()) return override.trim();
+  return os.homedir();
+}
+
 // fix 的目标别名 → 默认文件路径
 function fixTargetPath(target) {
   if (target === "opencode") return path.join(os.homedir(), ".config", "opencode", "opencode.json");
   if (target === "pi") return path.join(os.homedir(), ".pi", "agent", "models.json");
   if (target === "codex") return path.join(os.homedir(), ".codex", "config.toml");
   if (target === "claude") return path.join(os.homedir(), ".claude", "settings.json");
+  return target;
+}
+
+function uiConfigPath(target) {
+  const home = uiHomeDir();
+  if (target === "opencode") return path.join(home, ".config", "opencode", "opencode.json");
+  if (target === "pi") return path.join(home, ".pi", "agent", "models.json");
+  if (target === "codex") return path.join(home, ".codex", "config.toml");
+  if (target === "claude") return path.join(home, ".claude", "settings.json");
   return target;
 }
 
@@ -814,6 +833,7 @@ async function cmdFix(args, models) {
   let yes = false;
   let json = false;
   let noBackup = false;
+  let fill = false;
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
@@ -822,6 +842,7 @@ async function cmdFix(args, models) {
       return 0;
     }
     if (arg === "--dry-run") { dryRun = true; continue; }
+    if (arg === "--fill") { fill = true; continue; }
     if (arg === "-y" || arg === "--yes") { yes = true; continue; }
     if (arg === "--json") { json = true; continue; }
     if (arg === "--no-backup") { noBackup = true; continue; }
@@ -870,6 +891,10 @@ async function cmdFix(args, models) {
   const tomlByHint = /(^|\n)\s*\[model_providers?\./.test(body) || /(^|\n)\s*model_provider\s*=/.test(body);
   const useToml = effectiveFormat === "codex" || (effectiveFormat === "auto" && (tomlByExt || tomlByHint));
   if (useToml) {
+    if (fill) {
+      stderr(scrub("[x] --fill 不支持 codex 格式（TOML 行级回写只修已声明字段）", allow));
+      return 2;
+    }
     return await cmdFixCodex({ file, body, models, allow, json, yes, dryRun, noBackup, mode });
   }
 
@@ -895,8 +920,12 @@ async function cmdFix(args, models) {
     stderr(scrub("[x] 该格式不支持自动修复", allow));
     return 2;
   }
+  if (fill && effectiveFormat === "claude") {
+    stderr(scrub("[x] --fill 不支持 claude 格式（env 白名单只修已声明字段）", allow));
+    return 2;
+  }
 
-  const plan = planConfigFixes(models, parsed, effectiveFormat);
+  const plan = planConfigFixes(models, parsed, effectiveFormat, { fill });
   const hasChanges = plan.summary.change_items > 0;
   const fileLabel = file === "-" ? "-" : file;
 
@@ -916,10 +945,11 @@ async function cmdFix(args, models) {
       const appliedResult = commitFix(file, parsed, plan, style, mode, noBackup);
       applied = true;
       backup = appliedResult.backup;
-      const verify = planConfigFixes(models, appliedResult.config, effectiveFormat);
+      const verify = planConfigFixes(models, appliedResult.config, effectiveFormat, { fill });
       const payload = {
         format: effectiveFormat,
         file: fileLabel,
+        fill,
         dry_run: false,
         applied,
         backup,
@@ -932,6 +962,7 @@ async function cmdFix(args, models) {
     const payload = {
       format: effectiveFormat,
       file: fileLabel,
+      fill,
       dry_run: dryRun,
       applied,
       backup,
@@ -977,7 +1008,7 @@ async function cmdFix(args, models) {
   const result = commitFix(file, parsed, plan, style, mode, noBackup);
 
   // 写后复验：重新计算计划
-  const verify = planConfigFixes(models, result.config, effectiveFormat);
+  const verify = planConfigFixes(models, result.config, effectiveFormat, { fill });
 
   // 摘要
   reportFixApplied(plan, result.backup);
@@ -1083,29 +1114,77 @@ function askHidden(prompt) {
   });
 }
 
+// GET {baseURL}/models 嗅探模型列表（OpenAI 形状）；返回详细状态与模型列表
+async function probeModelIdsDetailed(baseURL, apiKey) {
+  if (typeof baseURL !== "string" || !baseURL.trim()) {
+    return { ok: false, error: "baseURL 不能为空" };
+  }
+  const cleanBase = baseURL.trim().replace(/\/+$/, "");
+  const headers = {};
+  if (typeof apiKey === "string" && apiKey.trim()) {
+    headers.Authorization = `Bearer ${apiKey.trim()}`;
+  }
+
+  // 构造候选 URL 列表：优先原始路径，再加 /v1 回退（或去掉 /v1 回退）
+  const candidates = [`${cleanBase}/models`];
+  if (/\/v\d+$/i.test(cleanBase)) {
+    // baseURL 已含版本号如 /v1：额外尝试去掉版本号
+    candidates.push(cleanBase.replace(/\/v\d+$/i, "") + "/models");
+  } else {
+    // baseURL 不含版本号：额外尝试加 /v1
+    candidates.push(`${cleanBase}/v1/models`);
+  }
+
+  let lastError = null;
+  for (const url of candidates) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 8000);
+    try {
+      const res = await fetch(url, { headers, signal: controller.signal });
+      if (!res.ok) {
+        // 404/403/405 可能只是路径不对，继续尝试下一个候选
+        if ([404, 403, 405].includes(res.status) && candidates.indexOf(url) < candidates.length - 1) {
+          lastError = `供应商返回 HTTP ${res.status} (${res.statusText || "请求失败"})`;
+          continue;
+        }
+        return {
+          ok: false,
+          status: res.status,
+          error: `供应商返回 HTTP ${res.status} (${res.statusText || "请求失败"})`,
+        };
+      }
+      const data = await res.json();
+      const list = data && Array.isArray(data.data) ? data.data : (Array.isArray(data) ? data : null);
+      if (!list) {
+        return { ok: false, error: "供应商返回的数据非 OpenAI 兼容格式（缺少 data 列表）" };
+      }
+      const ids = list
+        .map((item) => (item && typeof item === "object" && typeof item.id === "string" ? item.id : (typeof item === "string" ? item : null)))
+        .filter((id) => id);
+      if (!ids.length) {
+        return { ok: false, error: "供应商模型列表为空" };
+      }
+      return { ok: true, baseURL: cleanBase, models: ids, count: ids.length };
+    } catch (err) {
+      if (err && err.name === "AbortError") {
+        lastError = "嗅探请求超时（8 秒无响应），请检查网络或 baseURL 是否可达";
+        // 超时不再重试
+        break;
+      }
+      lastError = `连接失败: ${err && err.message ? err.message : String(err)}`;
+      // 网络错误也不再重试（两个 URL 是同一个域名）
+      break;
+    } finally {
+      clearTimeout(timer);
+    }
+  }
+  return { ok: false, error: lastError || "嗅探失败" };
+}
+
 // GET {baseURL}/models 自动检测（OpenAI 形状）；任何失败返回 null（由调用方降级）。
 async function fetchModelIds(baseURL, apiKey) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 5000);
-  try {
-    const url = `${baseURL.replace(/\/+$/, "")}/models`;
-    const res = await fetch(url, {
-      headers: { Authorization: `Bearer ${apiKey}` },
-      signal: controller.signal,
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const list = data && Array.isArray(data.data) ? data.data : null;
-    if (!list) return null;
-    const ids = list
-      .map((item) => (item && typeof item.id === "string" ? item.id : null))
-      .filter((id) => id);
-    return ids.length ? ids : null;
-  } catch {
-    return null;
-  } finally {
-    clearTimeout(timer);
-  }
+  const res = await probeModelIdsDetailed(baseURL, apiKey);
+  return res.ok && Array.isArray(res.models) && res.models.length ? res.models : null;
 }
 
 // 用 catalog 匹配模型 id，产出 opencode models[id] 条目：
@@ -1820,15 +1899,1121 @@ function sendNotFound(res) {
   res.end(body);
 }
 
+function sendJson(res, status, data) {
+  const body = JSON.stringify(data);
+  res.writeHead(status, {
+    "Content-Type": "application/json; charset=utf-8",
+    "Content-Length": Buffer.byteLength(body),
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Cache-Control": "no-cache",
+  });
+  res.end(body);
+}
+
+const LOCAL_CONFIG_PLATFORMS = ["opencode", "pi", "codex", "claude"];
+
+function displayHomePath(file) {
+  const home = uiHomeDir();
+  const prefix = home.endsWith(path.sep) ? home : home + path.sep;
+  if (file === home) return "~";
+  if (file.startsWith(prefix)) return "~/" + file.slice(prefix.length).split(path.sep).join("/");
+  return file;
+}
+
+function loadCatalogModels() {
+  const catalog = JSON.parse(readFileSync(DEFAULT_CATALOG, "utf8"));
+  if (catalog === null || typeof catalog !== "object" || !Array.isArray(catalog.models)) {
+    throw new Error("catalog.json 结构非法");
+  }
+  return catalog.models;
+}
+
+function redactCredentialValues(value) {
+  if (Array.isArray(value)) return value.map(redactCredentialValues);
+  if (!isPlainObject(value)) return value;
+  const out = {};
+  for (const key of Object.keys(value)) {
+    const item = value[key];
+    if (key === "env" || key === "environment" || key === "headers") {
+      out[key] = redactCredentialValues(item);
+      continue;
+    }
+    if (isCredentialKey(key) && !(typeof item === "number" && Number.isFinite(item))) {
+      out[key] = "[REDACTED]";
+      continue;
+    }
+    out[key] = redactCredentialValues(item);
+  }
+  return out;
+}
+
+function redactLocalPreview(text, format, models) {
+  const allow = publicTokens(models);
+  const raw = String(text == null ? "" : text);
+  if (format === "codex") {
+    const out = raw.replace(
+      /^(\s*(?:experimental_bearer_token|env_key)\s*=\s*)(["']).*?\2/gm,
+      "$1$2[REDACTED]$2",
+    );
+    return scrub(out, allow);
+  }
+  try {
+    const body = raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw;
+    const redacted = redactCredentialValues(JSON.parse(body));
+    let out = JSON.stringify(redacted, null, 2);
+    if (body.endsWith("\n")) out += "\n";
+    return scrub(out, allow);
+  } catch {
+    return scrub(raw, allow);
+  }
+}
+
+function listProviders(format, parsed) {
+  if (format === "opencode" && isPlainObject(parsed) && isPlainObject(parsed.provider)) {
+    return Object.keys(parsed.provider);
+  }
+  if (format === "pi" && isPlainObject(parsed) && isPlainObject(parsed.providers)) {
+    return Object.keys(parsed.providers);
+  }
+  if (format === "codex" && isPlainObject(parsed) && isPlainObject(parsed.providers)) {
+    return Object.keys(parsed.providers);
+  }
+  if (format === "claude") return ["env"];
+  return [];
+}
+
+function prettyJson(value) {
+  return JSON.stringify(value, null, 2);
+}
+
+function providerMetaFromBlock(platform, name, block) {
+  if (!isPlainObject(block)) return { name, baseURL: null, protocol: null };
+  if (platform === "opencode") {
+    const options = isPlainObject(block.options) ? block.options : {};
+    return {
+      name,
+      baseURL: typeof options.baseURL === "string" ? options.baseURL : null,
+      protocol: typeof block.npm === "string" ? block.npm : null,
+    };
+  }
+  if (platform === "pi") {
+    return {
+      name,
+      baseURL: typeof block.baseURL === "string" ? block.baseURL : null,
+      protocol: typeof block.api === "string" ? block.api : null,
+    };
+  }
+  if (platform === "codex") {
+    return {
+      name,
+      baseURL: typeof block.base_url === "string" ? block.base_url : null,
+      protocol: typeof block.wire_api === "string" ? block.wire_api : null,
+    };
+  }
+  if (platform === "claude") {
+    const env = isPlainObject(block.env) ? block.env : block;
+    return {
+      name,
+      baseURL: typeof env.ANTHROPIC_BASE_URL === "string" ? env.ANTHROPIC_BASE_URL : null,
+      protocol: "anthropic_messages",
+    };
+  }
+  return { name, baseURL: null, protocol: null };
+}
+
+function buildProviderBlocks(platform, parsed, entries) {
+  const grouped = new Map();
+  for (const entry of Array.isArray(entries) ? entries : []) {
+    const name = platform === "claude"
+      ? "env"
+      : (entry && entry.provider ? String(entry.provider) : "(unknown)");
+    if (!grouped.has(name)) grouped.set(name, []);
+    grouped.get(name).push(entry);
+  }
+  const names = listProviders(platform, parsed);
+  if (platform !== "claude") {
+    for (const name of grouped.keys()) {
+      if (!names.includes(name)) names.push(name);
+    }
+  }
+  const blocks = [];
+  for (const name of names) {
+    let rawBlock = null;
+    if (platform === "opencode") rawBlock = isPlainObject(parsed.provider) ? parsed.provider[name] : null;
+    else if (platform === "pi") rawBlock = isPlainObject(parsed.providers) ? parsed.providers[name] : null;
+    else if (platform === "codex") rawBlock = isPlainObject(parsed.providers) ? parsed.providers[name] : null;
+    else if (platform === "claude") rawBlock = isPlainObject(parsed.env) ? { env: parsed.env } : null;
+    const models = grouped.get(name) || [];
+    const modelIds = models.map((item) => item.input).filter(Boolean);
+    if (!modelIds.length) {
+      if (platform === "opencode" && isPlainObject(rawBlock) && isPlainObject(rawBlock.models)) {
+        modelIds.push(...Object.keys(rawBlock.models));
+      } else if (platform === "pi" && isPlainObject(rawBlock) && Array.isArray(rawBlock.models)) {
+        for (const item of rawBlock.models) {
+          if (item && typeof item.id === "string" && item.id) modelIds.push(item.id);
+        }
+      }
+    }
+    const meta = providerMetaFromBlock(platform, name, rawBlock);
+    const previewSource = platform === "claude" && isPlainObject(rawBlock) ? rawBlock.env : rawBlock;
+    blocks.push({
+      name,
+      ...meta,
+      modelCount: modelIds.length,
+      empty: modelIds.length === 0,
+      models,
+      preview: previewSource == null ? "{}" : prettyJson(redactCredentialValues(previewSource)),
+    });
+  }
+  return blocks;
+}
+
+function restoreCredentials(next, original) {
+  if (Array.isArray(next)) {
+    const origList = Array.isArray(original) ? original : [];
+    return next.map((item, i) => restoreCredentials(item, origList[i]));
+  }
+  if (!isPlainObject(next)) return next;
+  const orig = isPlainObject(original) ? original : {};
+  const out = {};
+  for (const key of Object.keys(next)) {
+    const val = next[key];
+    if (key === "env" || key === "environment" || key === "headers") {
+      out[key] = restoreCredentials(val, orig[key]);
+      continue;
+    }
+    if (isCredentialKey(key) && !(typeof val === "number" && Number.isFinite(val))) {
+      if (val === "[REDACTED]" || val === "" || val == null) {
+        if (Object.prototype.hasOwnProperty.call(orig, key)) out[key] = orig[key];
+      } else {
+        out[key] = val;
+      }
+      continue;
+    }
+    if (isPlainObject(val) || Array.isArray(val)) out[key] = restoreCredentials(val, orig[key]);
+    else out[key] = val;
+  }
+  for (const key of Object.keys(orig)) {
+    if (Object.prototype.hasOwnProperty.call(out, key)) continue;
+    if (key === "env" || key === "environment" || key === "headers") continue;
+    if (isCredentialKey(key) && !(typeof orig[key] === "number" && Number.isFinite(orig[key]))) {
+      out[key] = orig[key];
+    }
+  }
+  return out;
+}
+
+function parseProviderFragment(raw) {
+  if (isPlainObject(raw)) return { ok: true, value: raw };
+  if (typeof raw !== "string") return { ok: false, error: "供应商片段必须是 JSON 对象" };
+  const text = raw.trim();
+  if (!text) return { ok: false, error: "供应商片段不能为空" };
+  try {
+    const parsed = JSON.parse(text);
+    if (!isPlainObject(parsed)) return { ok: false, error: "供应商片段必须是 JSON 对象" };
+    return { ok: true, value: parsed };
+  } catch {
+    return { ok: false, error: "供应商片段不是合法 JSON" };
+  }
+}
+
+function emptyLocalSummary() {
+  return { total: 0, unmatched: 0, with_diffs: 0, clean: 0, diff_items: 0, exact: 0, alias: 0, legacy: 0, normalized: 0 };
+}
+
+function readLocalConfig(platform) {
+  if (!LOCAL_CONFIG_PLATFORMS.includes(platform)) {
+    return { ok: false, status: 400, error: "未知平台（支持 opencode / pi / codex / claude）" };
+  }
+  const file = uiConfigPath(platform);
+  const displayPath = displayHomePath(file);
+  let models;
+  try {
+    models = loadCatalogModels();
+  } catch {
+    return { ok: false, status: 500, error: "读取 catalog 失败" };
+  }
+  if (!existsSync(file)) {
+    return {
+      ok: true,
+      exists: false,
+      platform,
+      file: displayPath,
+      preview: "",
+      summary: emptyLocalSummary(),
+      entries: [],
+      providers: [],
+      providerBlocks: [],
+      activeModel: null,
+      activeProvider: null,
+    };
+  }
+  let raw;
+  try {
+    raw = readFileSync(file, "utf8");
+  } catch (err) {
+    return { ok: false, status: 500, error: `无法读取文件: ${err && err.code ? err.code : "读取失败"}` };
+  }
+  const body = raw.charCodeAt(0) === 0xfeff ? raw.slice(1) : raw;
+  try {
+    if (platform === "codex") {
+      const parsed = parseCodexToml(body);
+      const report = auditConfig(models, parsed, "codex");
+      return {
+        ok: true,
+        exists: true,
+        platform,
+        file: displayPath,
+        preview: redactLocalPreview(body, "codex", models),
+        summary: report.summary,
+        entries: report.entries,
+        providers: listProviders("codex", parsed),
+        providerBlocks: buildProviderBlocks("codex", parsed, report.entries),
+        activeModel: parsed.model || null,
+        activeProvider: parsed.model_provider || null,
+      };
+    }
+    const parsed = JSON.parse(body);
+    const report = auditConfig(models, parsed, platform);
+    return {
+      ok: true,
+      exists: true,
+      platform,
+      file: displayPath,
+      preview: redactLocalPreview(body, platform, models),
+      summary: report.summary,
+      entries: report.entries,
+      providers: listProviders(platform, parsed),
+      providerBlocks: buildProviderBlocks(platform, parsed, report.entries),
+      activeModel: platform === "claude" && isPlainObject(parsed.env) ? (parsed.env.ANTHROPIC_MODEL || null) : (parsed.model || null),
+      activeProvider: null,
+    };
+  } catch {
+    return { ok: false, status: 400, error: "配置文件解析失败（内容未回显）" };
+  }
+}
+
+function parseInjectModels(value) {
+  if (Array.isArray(value)) {
+    return value.map((id) => String(id).trim()).filter(Boolean).filter((id, i, arr) => arr.indexOf(id) === i);
+  }
+  if (typeof value === "string") {
+    return value.split(/[\s,，]+/).map((s) => s.trim()).filter(Boolean).filter((id, i, arr) => arr.indexOf(id) === i);
+  }
+  return [];
+}
+
+function opencodeBuildArgs(protocol) {
+  if (protocol === "openai-native") return { protocol: "openai", npm: "@ai-sdk/openai" };
+  if (protocol === "anthropic" || protocol === "gemini" || protocol === "openai") {
+    return { protocol, npm: null };
+  }
+  return { protocol: "openai", npm: null };
+}
+
+function buildPiModelEntry(models, rawId) {
+  const res = matchModel(models, rawId);
+  if (!res.entry) {
+    return {
+      id: rawId,
+      entry: { id: rawId, name: rawId, reasoning: false, input: ["text"], contextWindow: null, maxTokens: null },
+      matched: false,
+    };
+  }
+  const spec = JSON.parse(emitPi(res.entry, { name: rawId, id: rawId }));
+  return { id: rawId, entry: spec, matched: true };
+}
+
+function claudeInjectSpecs(models, rawId) {
+  const res = matchModel(models, rawId);
+  if (!res.entry) return { effort: null, budget: null, matched: false };
+  const reasoning = res.entry.reasoning && typeof res.entry.reasoning === "object" ? res.entry.reasoning : {};
+  let effort = reasoning.default_effort || null;
+  if (!effort && Array.isArray(reasoning.effort_values) && reasoning.effort_values.length) {
+    effort = reasoning.effort_values[0];
+  }
+  let budget = null;
+  if (reasoning.thinking_budget && typeof reasoning.thinking_budget === "object") {
+    budget = reasoning.thinking_budget.min || null;
+  }
+  return { effort, budget, matched: true };
+}
+
+function tomlQuoted(value) {
+  return JSON.stringify(String(value == null ? "" : value));
+}
+
+function upsertTomlTopLevel(text, key, value) {
+  const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const line = `${key} = ${tomlQuoted(value)}`;
+  const parts = String(text).split(/(?=^\s*\[)/m);
+  let head = parts[0] || "";
+  const rest = parts.slice(1).join("");
+  const re = new RegExp(`^(\\s*${escaped}\\s*=\\s*).*$`, "m");
+  if (re.test(head)) head = head.replace(re, `$1${tomlQuoted(value)}`);
+  else head = (head.replace(/\s*$/, "") + (head.trim() ? "\n" : "") + line + "\n");
+  if (head && !head.endsWith("\n") && rest) head += "\n";
+  return head + rest;
+}
+
+function findTomlSectionRange(text, sectionName) {
+  const lines = String(text).split(/\r?\n/);
+  const nl = String(text).includes("\r\n") ? "\r\n" : "\n";
+  const headerRe = new RegExp(`^\\s*\\[model_providers\\.(?:${sectionName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}|\"${sectionName.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\")\\]\\s*$`);
+  let start = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (headerRe.test(lines[i])) { start = i; break; }
+  }
+  if (start < 0) return null;
+  let end = lines.length;
+  for (let i = start + 1; i < lines.length; i++) {
+    if (/^\s*\[[^\]]+\]\s*$/.test(lines[i])) { end = i; break; }
+  }
+  return { lines, start, end, nl };
+}
+
+function upsertTomlSectionKey(text, sectionName, key, value) {
+  const found = findTomlSectionRange(text, sectionName);
+  if (!found) return text;
+  const { lines, start, end, nl } = found;
+  const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`^(\\s*${escaped}\\s*=\\s*).*$`);
+  let replaced = false;
+  for (let i = start + 1; i < end; i++) {
+    if (re.test(lines[i])) {
+      lines[i] = lines[i].replace(re, `$1${tomlQuoted(value)}`);
+      replaced = true;
+      break;
+    }
+  }
+  if (!replaced) {
+    let insertAt = end;
+    while (insertAt > start + 1 && lines[insertAt - 1].trim() === "") insertAt -= 1;
+    lines.splice(insertAt, 0, `${key} = ${tomlQuoted(value)}`);
+  }
+  return lines.join(nl);
+}
+
+function appendCodexProviderSection(text, { providerName, baseURL, protocol, apiKey }) {
+  const nl = String(text).includes("\r\n") ? "\r\n" : "\n";
+  const key = /^[A-Za-z0-9_-]+$/.test(providerName) ? providerName : tomlQuoted(providerName);
+  const lines = [
+    "",
+    `[model_providers.${key}]`,
+    `name = ${tomlQuoted(providerName)}`,
+    `base_url = ${tomlQuoted(baseURL)}`,
+    `wire_api = ${tomlQuoted(protocol || "chat")}`,
+  ];
+  if (apiKey) lines.push(`experimental_bearer_token = ${tomlQuoted(apiKey)}`);
+  const body = String(text).replace(/\s*$/, "");
+  return (body ? body + nl : "") + lines.join(nl) + nl;
+}
+
+function fileWriteStyle(raw, exists) {
+  if (!exists) {
+    return {
+      indent: 2,
+      trailingNewline: true,
+      crlf: process.platform === "win32",
+      bom: false,
+    };
+  }
+  const bom = raw.charCodeAt(0) === 0xfeff;
+  const body = bom ? raw.slice(1) : raw;
+  return {
+    indent: detectIndent(body),
+    trailingNewline: body.endsWith("\n"),
+    crlf: body.includes("\r\n"),
+    bom,
+  };
+}
+
+const CLAUDE_ENV_MODEL_KEYS = [
+  "ANTHROPIC_MODEL",
+  "ANTHROPIC_DEFAULT_OPUS_MODEL",
+  "ANTHROPIC_DEFAULT_SONNET_MODEL",
+  "ANTHROPIC_DEFAULT_HAIKU_MODEL",
+  "ANTHROPIC_DEFAULT_FABLE_MODEL",
+  "CLAUDE_CODE_SUBAGENT_MODEL",
+];
+
+function deleteLocalConfigModel(body) {
+  const platform = typeof body.platform === "string" ? body.platform.trim() : "";
+  if (!LOCAL_CONFIG_PLATFORMS.includes(platform)) {
+    return { ok: false, status: 400, error: "未知平台（支持 opencode / pi / codex / claude）" };
+  }
+  const modelId = typeof body.model === "string" ? body.model.trim() : "";
+  const providerName = typeof body.provider === "string" ? body.provider.trim() : "";
+  const noBackup = body.noBackup === true;
+  if (!modelId) return { ok: false, status: 400, error: "model 不能为空" };
+
+  if (platform === "codex") {
+    return { ok: false, status: 400, error: "Codex 只有当前激活模型，不能从列表删除。请先写入另一个模型作为激活项。" };
+  }
+
+  const file = uiConfigPath(platform);
+  if (!existsSync(file)) {
+    return { ok: false, status: 404, error: "配置文件不存在" };
+  }
+  let raw;
+  try {
+    raw = readFileSync(file, "utf8");
+  } catch (err) {
+    return { ok: false, status: 500, error: `无法读取文件: ${err && err.code ? err.code : "读取失败"}` };
+  }
+  const bom = raw.charCodeAt(0) === 0xfeff;
+  const textBody = bom ? raw.slice(1) : raw;
+  const style = fileWriteStyle(raw, true);
+  let nextText = "";
+  let removedFrom = null;
+
+  try {
+    const parsed = JSON.parse(textBody);
+    if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return { ok: false, status: 400, error: "目标文件不是 JSON 对象" };
+    }
+
+    if (platform === "opencode") {
+      if (!isPlainObject(parsed.provider)) {
+        return { ok: false, status: 404, error: "未找到该模型" };
+      }
+      const hits = [];
+      for (const name of Object.keys(parsed.provider)) {
+        if (providerName && name !== providerName) continue;
+        const block = parsed.provider[name];
+        if (isPlainObject(block) && isPlainObject(block.models) && Object.prototype.hasOwnProperty.call(block.models, modelId)) {
+          hits.push(name);
+        }
+      }
+      if (!hits.length) return { ok: false, status: 404, error: "未找到该模型" };
+      if (hits.length > 1) return { ok: false, status: 400, error: "多个供应商含有同名模型，请指定供应商后再删除" };
+      removedFrom = hits[0];
+      delete parsed.provider[removedFrom].models[modelId];
+      if (typeof parsed.model === "string") {
+        const def = parsed.model.trim();
+        if (def === `${removedFrom}/${modelId}` || def === modelId) delete parsed.model;
+      }
+    } else if (platform === "pi") {
+      if (!isPlainObject(parsed.providers)) {
+        return { ok: false, status: 404, error: "未找到该模型" };
+      }
+      const hits = [];
+      for (const name of Object.keys(parsed.providers)) {
+        if (providerName && name !== providerName) continue;
+        const block = parsed.providers[name];
+        if (isPlainObject(block) && Array.isArray(block.models) && block.models.some((item) => item && item.id === modelId)) {
+          hits.push(name);
+        }
+      }
+      if (!hits.length) return { ok: false, status: 404, error: "未找到该模型" };
+      if (hits.length > 1) return { ok: false, status: 400, error: "多个供应商含有同名模型，请指定供应商后再删除" };
+      removedFrom = hits[0];
+      const block = parsed.providers[removedFrom];
+      block.models = block.models.filter((item) => !(item && item.id === modelId));
+    } else if (platform === "claude") {
+      if (!isPlainObject(parsed.env)) {
+        return { ok: false, status: 404, error: "未找到该模型" };
+      }
+      const env = parsed.env;
+      let keys = CLAUDE_ENV_MODEL_KEYS.filter((key) => env[key] === modelId);
+      if (providerName) {
+        if (!CLAUDE_ENV_MODEL_KEYS.includes(providerName) || env[providerName] !== modelId) {
+          return { ok: false, status: 404, error: "未找到该模型" };
+        }
+        keys = [providerName];
+      }
+      if (!keys.length) return { ok: false, status: 404, error: "未找到该模型" };
+      if (keys.length > 1) return { ok: false, status: 400, error: "多个角色使用该模型，请指定 env 键后再删除" };
+      removedFrom = keys[0];
+      delete env[removedFrom];
+    }
+    nextText = serializeConfig(parsed, style);
+  } catch {
+    return { ok: false, status: 400, error: "配置文件解析失败（内容未回显）" };
+  }
+
+  let backup = null;
+  try {
+    backup = writeLocalFile(file, nextText, { exists: true, noBackup });
+  } catch (err) {
+    return { ok: false, status: 500, error: `写入失败: ${err && err.code ? err.code : "未知错误"}` };
+  }
+
+  const after = readLocalConfig(platform);
+  return {
+    ok: true,
+    platform,
+    file: displayHomePath(file),
+    deleted: modelId,
+    provider: removedFrom,
+    backup: backup ? displayHomePath(backup) : null,
+    local: after.ok ? after : null,
+  };
+}
+
+function deleteLocalProvider(body) {
+  const platform = typeof body.platform === "string" ? body.platform.trim() : "";
+  if (!LOCAL_CONFIG_PLATFORMS.includes(platform)) {
+    return { ok: false, status: 400, error: "未知平台（支持 opencode / pi / codex / claude）" };
+  }
+  const providerName = typeof body.provider === "string" ? body.provider.trim() : "";
+  const noBackup = body.noBackup === true;
+  if (!providerName) return { ok: false, status: 400, error: "provider 不能为空" };
+  if (platform === "claude") {
+    return { ok: false, status: 400, error: "Claude Code 没有可删除的供应商节点；请删除单个模型键" };
+  }
+
+  const file = uiConfigPath(platform);
+  if (!existsSync(file)) return { ok: false, status: 404, error: "配置文件不存在" };
+  let raw;
+  try {
+    raw = readFileSync(file, "utf8");
+  } catch (err) {
+    return { ok: false, status: 500, error: `无法读取文件: ${err && err.code ? err.code : "读取失败"}` };
+  }
+  const bom = raw.charCodeAt(0) === 0xfeff;
+  const textBody = bom ? raw.slice(1) : raw;
+  const style = fileWriteStyle(raw, true);
+  let nextText = "";
+
+  try {
+    if (platform === "codex") {
+      const parsed = parseCodexToml(textBody);
+      if (!isPlainObject(parsed.providers) || !Object.prototype.hasOwnProperty.call(parsed.providers, providerName)) {
+        return { ok: false, status: 404, error: "未找到该供应商" };
+      }
+      const found = findTomlSectionRange(textBody, providerName);
+      if (!found) return { ok: false, status: 404, error: "未找到该供应商" };
+      const { lines, start, end, nl } = found;
+      lines.splice(start, end - start);
+      while (start < lines.length && lines[start].trim() === "") lines.splice(start, 1);
+      if (start > 0 && lines[start - 1].trim() === "" && (start >= lines.length || lines[start].trim() === "")) {
+        lines.splice(start - 1, 1);
+      }
+      let next = lines.join(nl);
+      if (parsed.model_provider === providerName) {
+        next = upsertTomlTopLevel(next, "model_provider", "");
+      }
+      if (style.bom) next = "\ufeff" + next;
+      nextText = next;
+    } else {
+      const parsed = JSON.parse(textBody);
+      if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+        return { ok: false, status: 400, error: "目标文件不是 JSON 对象" };
+      }
+      if (platform === "opencode") {
+        if (!isPlainObject(parsed.provider) || !Object.prototype.hasOwnProperty.call(parsed.provider, providerName)) {
+          return { ok: false, status: 404, error: "未找到该供应商" };
+        }
+        delete parsed.provider[providerName];
+        if (typeof parsed.model === "string" && parsed.model.startsWith(providerName + "/")) delete parsed.model;
+      } else if (platform === "pi") {
+        if (!isPlainObject(parsed.providers) || !Object.prototype.hasOwnProperty.call(parsed.providers, providerName)) {
+          return { ok: false, status: 404, error: "未找到该供应商" };
+        }
+        delete parsed.providers[providerName];
+      }
+      nextText = serializeConfig(parsed, style);
+    }
+  } catch {
+    return { ok: false, status: 400, error: "配置文件解析失败（内容未回显）" };
+  }
+
+  let backup = null;
+  try {
+    backup = writeLocalFile(file, nextText, { exists: true, noBackup });
+  } catch (err) {
+    return { ok: false, status: 500, error: `写入失败: ${err && err.code ? err.code : "未知错误"}` };
+  }
+  const after = readLocalConfig(platform);
+  return {
+    ok: true,
+    platform,
+    file: displayHomePath(file),
+    deletedProvider: providerName,
+    backup: backup ? displayHomePath(backup) : null,
+    local: after.ok ? after : null,
+  };
+}
+
+function updateLocalProvider(body) {
+  const platform = typeof body.platform === "string" ? body.platform.trim() : "";
+  if (!LOCAL_CONFIG_PLATFORMS.includes(platform)) {
+    return { ok: false, status: 400, error: "未知平台（支持 opencode / pi / codex / claude）" };
+  }
+  const providerName = typeof body.provider === "string" ? body.provider.trim() : "";
+  const noBackup = body.noBackup === true;
+  if (!providerName) return { ok: false, status: 400, error: "provider 不能为空" };
+  if (platform === "codex") {
+    return { ok: false, status: 400, error: "Codex 的 TOML 供应商段请用写入功能改当前模型，不支持整段 JSON 编辑" };
+  }
+
+  const parsedFrag = parseProviderFragment(body.fragment);
+  if (!parsedFrag.ok) return { ok: false, status: 400, error: parsedFrag.error };
+
+  const file = uiConfigPath(platform);
+  if (!existsSync(file)) return { ok: false, status: 404, error: "配置文件不存在" };
+  let raw;
+  try {
+    raw = readFileSync(file, "utf8");
+  } catch (err) {
+    return { ok: false, status: 500, error: `无法读取文件: ${err && err.code ? err.code : "读取失败"}` };
+  }
+  const bom = raw.charCodeAt(0) === 0xfeff;
+  const textBody = bom ? raw.slice(1) : raw;
+  const style = fileWriteStyle(raw, true);
+  let nextText = "";
+
+  try {
+    const parsed = JSON.parse(textBody);
+    if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+      return { ok: false, status: 400, error: "目标文件不是 JSON 对象" };
+    }
+    if (platform === "opencode") {
+      if (!isPlainObject(parsed.provider) || !Object.prototype.hasOwnProperty.call(parsed.provider, providerName)) {
+        return { ok: false, status: 404, error: "未找到该供应商" };
+      }
+      parsed.provider[providerName] = restoreCredentials(parsedFrag.value, parsed.provider[providerName]);
+    } else if (platform === "pi") {
+      if (!isPlainObject(parsed.providers) || !Object.prototype.hasOwnProperty.call(parsed.providers, providerName)) {
+        return { ok: false, status: 404, error: "未找到该供应商" };
+      }
+      parsed.providers[providerName] = restoreCredentials(parsedFrag.value, parsed.providers[providerName]);
+    } else if (platform === "claude") {
+      if (providerName !== "env") return { ok: false, status: 400, error: "Claude Code 只能编辑 env 片段" };
+      if (!isPlainObject(parsed.env)) parsed.env = {};
+      const incoming = isPlainObject(parsedFrag.value.env) ? parsedFrag.value.env : parsedFrag.value;
+      parsed.env = restoreCredentials(incoming, parsed.env);
+    }
+    nextText = serializeConfig(parsed, style);
+  } catch {
+    return { ok: false, status: 400, error: "配置文件解析失败（内容未回显）" };
+  }
+
+  let backup = null;
+  try {
+    backup = writeLocalFile(file, nextText, { exists: true, noBackup });
+  } catch (err) {
+    return { ok: false, status: 500, error: `写入失败: ${err && err.code ? err.code : "未知错误"}` };
+  }
+  const after = readLocalConfig(platform);
+  return {
+    ok: true,
+    platform,
+    file: displayHomePath(file),
+    provider: providerName,
+    backup: backup ? displayHomePath(backup) : null,
+    local: after.ok ? after : null,
+  };
+}
+
+function writeLocalFile(file, text, { exists, noBackup }) {
+  mkdirSync(path.dirname(file), { recursive: true });
+  let mode = null;
+  try { mode = statSync(file).mode & 0o777; } catch { mode = null; }
+  let backup = null;
+  if (exists && !noBackup) {
+    backup = uniqueBackupPath(file, new Date());
+    copyFileSync(file, backup);
+  }
+  try {
+    writeAtomic(file, text, mode);
+  } catch (err) {
+    warnWindowsFileLock(err, file, backup);
+    throw err;
+  }
+  return backup;
+}
+
+function injectLocalConfig(body) {
+  const platform = typeof body.platform === "string" ? body.platform.trim() : "";
+  if (!LOCAL_CONFIG_PLATFORMS.includes(platform)) {
+    return { ok: false, status: 400, error: "未知平台（支持 opencode / pi / codex / claude）" };
+  }
+  const modelIds = parseInjectModels(body.models);
+  if (!modelIds.length) {
+    return { ok: false, status: 400, error: "models 不能为空" };
+  }
+  const baseURL = typeof body.baseURL === "string" ? body.baseURL.trim() : "";
+  const apiKey = typeof body.apiKey === "string" ? body.apiKey.trim() : "";
+  const providerName = (typeof body.providerName === "string" ? body.providerName.trim() : "")
+    || (baseURL ? (deriveProviderName((() => { try { return new URL(baseURL).host; } catch { return ""; } })()) || "") : "")
+    || "my-provider";
+  const protocol = typeof body.protocol === "string" ? body.protocol.trim() : "";
+  const setDefault = body.setDefault === true;
+  const noBackup = body.noBackup === true;
+
+  if ((platform === "opencode" || platform === "pi" || platform === "codex") && !baseURL && !existsSync(uiConfigPath(platform))) {
+    return { ok: false, status: 400, error: "新建配置需要填写 API 地址 (Base URL)" };
+  }
+  if (baseURL && !/^https?:\/\//i.test(baseURL)) {
+    return { ok: false, status: 400, error: "baseURL 必须以 http:// 或 https:// 开头" };
+  }
+
+  let models;
+  try {
+    models = loadCatalogModels();
+  } catch {
+    return { ok: false, status: 500, error: "读取 catalog 失败" };
+  }
+
+  const file = uiConfigPath(platform);
+  const exists = existsSync(file);
+  let raw = "";
+  if (exists) {
+    try {
+      raw = readFileSync(file, "utf8");
+    } catch (err) {
+      return { ok: false, status: 500, error: `无法读取文件: ${err && err.code ? err.code : "读取失败"}` };
+    }
+  }
+  const bom = exists && raw.charCodeAt(0) === 0xfeff;
+  const textBody = bom ? raw.slice(1) : raw;
+  const unmatched = [];
+  const added = [];
+  const updated = [];
+  let nextText = "";
+  const style = fileWriteStyle(raw, exists);
+
+  try {
+    if (platform === "opencode") {
+      let parsed = null;
+      if (exists) {
+        parsed = JSON.parse(textBody);
+        if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+          return { ok: false, status: 400, error: "目标文件不是 JSON 对象" };
+        }
+      } else {
+        parsed = { $schema: "https://opencode.ai/config.json" };
+      }
+      if (!parsed.provider || typeof parsed.provider !== "object") parsed.provider = {};
+      const modelEntries = {};
+      for (const id of modelIds) {
+        const built = buildModelEntry(models, id);
+        modelEntries[id] = built.entry;
+        if (!built.matched) unmatched.push(id);
+      }
+      const proto = opencodeBuildArgs(protocol || "openai");
+      const realNpm = proto.protocol === "openai" ? (proto.npm || probeRealNpm(file)) : proto.npm;
+      const block = buildOpencodeProvider({
+        name: providerName,
+        baseURL: baseURL || "https://api.openai.com/v1",
+        npm: realNpm,
+        protocol: proto.protocol,
+        modelEntries,
+      });
+      const existing = parsed.provider[providerName];
+      if (existing && typeof existing === "object") {
+        const merged = { ...existing };
+        if (block.npm) merged.npm = block.npm;
+        merged.options = isPlainObject(existing.options) ? { ...existing.options } : {};
+        if (baseURL) merged.options.baseURL = baseURL;
+        if (apiKey) merged.options.apiKey = apiKey;
+        merged.models = isPlainObject(existing.models) ? { ...existing.models } : {};
+        for (const id of Object.keys(modelEntries)) {
+          if (Object.prototype.hasOwnProperty.call(merged.models, id)) updated.push(id);
+          else added.push(id);
+          merged.models[id] = modelEntries[id];
+        }
+        parsed.provider[providerName] = merged;
+      } else {
+        if (!baseURL) {
+          return { ok: false, status: 400, error: "新建供应商需要填写 API 地址 (Base URL)" };
+        }
+        if (apiKey) block.options.apiKey = apiKey;
+        parsed.provider[providerName] = block;
+        added.push(...modelIds);
+      }
+      if (setDefault && modelIds[0]) parsed.model = `${providerName}/${modelIds[0]}`;
+      nextText = serializeConfig(parsed, style);
+    } else if (platform === "pi") {
+      let parsed = null;
+      if (exists) {
+        parsed = JSON.parse(textBody);
+        if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+          return { ok: false, status: 400, error: "目标文件不是 JSON 对象" };
+        }
+      } else {
+        parsed = {};
+      }
+      if (!parsed.providers || typeof parsed.providers !== "object") parsed.providers = {};
+      const existing = parsed.providers[providerName];
+      const nextModels = [];
+      const seen = new Set();
+      if (existing && typeof existing === "object" && Array.isArray(existing.models)) {
+        for (const item of existing.models) {
+          if (item && typeof item === "object" && typeof item.id === "string" && item.id) {
+            nextModels.push(item);
+            seen.add(item.id);
+          }
+        }
+      }
+      for (const id of modelIds) {
+        const built = buildPiModelEntry(models, id);
+        if (!built.matched) unmatched.push(id);
+        if (seen.has(id)) {
+          const idx = nextModels.findIndex((m) => m && m.id === id);
+          if (idx >= 0) nextModels[idx] = built.entry;
+          updated.push(id);
+        } else {
+          nextModels.push(built.entry);
+          added.push(id);
+        }
+      }
+      if (!(existing && typeof existing === "object") && !baseURL) {
+        return { ok: false, status: 400, error: "新建供应商需要填写 API 地址 (Base URL)" };
+      }
+      const block = existing && typeof existing === "object" ? { ...existing } : {};
+      if (baseURL) block.baseURL = baseURL;
+      if (apiKey) block.apiKey = apiKey;
+      if (protocol) block.api = protocol;
+      else if (!block.api) block.api = "openai-completions";
+      block.models = nextModels;
+      parsed.providers[providerName] = block;
+      nextText = serializeConfig(parsed, style);
+    } else if (platform === "claude") {
+      let parsed = null;
+      if (exists) {
+        parsed = JSON.parse(textBody);
+        if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
+          return { ok: false, status: 400, error: "目标文件不是 JSON 对象" };
+        }
+      } else {
+        parsed = {};
+      }
+      if (!parsed.env || typeof parsed.env !== "object") parsed.env = {};
+      const main = modelIds[0];
+      const specs = claudeInjectSpecs(models, main);
+      if (!specs.matched) unmatched.push(main);
+      for (const extra of modelIds.slice(1)) {
+        const extraSpec = claudeInjectSpecs(models, extra);
+        if (!extraSpec.matched) unmatched.push(extra);
+      }
+      if (baseURL) parsed.env.ANTHROPIC_BASE_URL = baseURL;
+      if (apiKey) parsed.env.ANTHROPIC_AUTH_TOKEN = apiKey;
+      parsed.env.ANTHROPIC_MODEL = main;
+      if (specs.effort) parsed.env.CLAUDE_CODE_EFFORT_LEVEL = String(specs.effort);
+      if (specs.budget != null) parsed.env.MAX_THINKING_TOKENS = String(specs.budget);
+      added.push(main);
+      nextText = serializeConfig(parsed, style);
+    } else if (platform === "codex") {
+      const main = modelIds[0];
+      const effortRes = matchModel(models, main);
+      let effort = null;
+      if (effortRes.entry && effortRes.entry.reasoning) {
+        effort = effortRes.entry.reasoning.default_effort
+          || (Array.isArray(effortRes.entry.reasoning.effort_values) && effortRes.entry.reasoning.effort_values[0])
+          || null;
+      }
+      if (!effortRes.entry) unmatched.push(main);
+      for (const extra of modelIds.slice(1)) {
+        if (!matchModel(models, extra).entry) unmatched.push(extra);
+      }
+      const wire = protocol || "chat";
+      if (!exists || !textBody.trim()) {
+        if (!baseURL) {
+          return { ok: false, status: 400, error: "新建配置需要填写 API 地址 (Base URL)" };
+        }
+        const url = baseURL;
+        const lines = [
+          `model = ${tomlQuoted(main)}`,
+          `model_provider = ${tomlQuoted(providerName)}`,
+        ];
+        if (effort) lines.push(`model_reasoning_effort = ${tomlQuoted(effort)}`);
+        if (modelIds.length > 1) {
+          lines.push("");
+          lines.push("# 备选模型（将上方 model 替换为下列之一即可）：");
+          for (const alt of modelIds.slice(1)) lines.push(`# model = ${tomlQuoted(alt)}`);
+        }
+        lines.push("");
+        const key = /^[A-Za-z0-9_-]+$/.test(providerName) ? providerName : tomlQuoted(providerName);
+        lines.push(`[model_providers.${key}]`);
+        lines.push(`name = ${tomlQuoted(providerName)}`);
+        lines.push(`base_url = ${tomlQuoted(url)}`);
+        lines.push(`wire_api = ${tomlQuoted(wire)}`);
+        if (apiKey) lines.push(`experimental_bearer_token = ${tomlQuoted(apiKey)}`);
+        nextText = lines.join(style.crlf ? "\r\n" : "\n") + (style.trailingNewline ? (style.crlf ? "\r\n" : "\n") : "");
+        if (style.bom) nextText = "\ufeff" + nextText;
+      } else {
+        let next = textBody;
+        next = upsertTomlTopLevel(next, "model", main);
+        next = upsertTomlTopLevel(next, "model_provider", providerName);
+        if (effort) next = upsertTomlTopLevel(next, "model_reasoning_effort", effort);
+        const parsed = parseCodexToml(next);
+        if (!parsed.providers || !parsed.providers[providerName]) {
+          if (!baseURL) {
+            return { ok: false, status: 400, error: "新建供应商需要填写 API 地址 (Base URL)" };
+          }
+          next = appendCodexProviderSection(next, { providerName, baseURL, protocol: wire, apiKey });
+        } else {
+          if (baseURL) next = upsertTomlSectionKey(next, providerName, "base_url", baseURL);
+          if (protocol) next = upsertTomlSectionKey(next, providerName, "wire_api", wire);
+          if (apiKey) next = upsertTomlSectionKey(next, providerName, "experimental_bearer_token", apiKey);
+        }
+        if (style.bom) next = "\ufeff" + next;
+        nextText = next;
+      }
+      added.push(main);
+    }
+  } catch (err) {
+    const msg = err && err.message ? err.message : "写入准备失败";
+    if (/JSON/.test(msg) || /parse/i.test(msg)) {
+      return { ok: false, status: 400, error: "配置文件解析失败（内容未回显）" };
+    }
+    return { ok: false, status: 500, error: "写入准备失败" };
+  }
+
+  let backup = null;
+  try {
+    backup = writeLocalFile(file, nextText, { exists, noBackup });
+  } catch (err) {
+    return { ok: false, status: 500, error: `写入失败: ${err && err.code ? err.code : "未知错误"}` };
+  }
+
+  const after = readLocalConfig(platform);
+  const displayPath = displayHomePath(file);
+  return {
+    ok: true,
+    platform,
+    file: displayPath,
+    created: !exists,
+    backup: backup ? displayHomePath(backup) : null,
+    provider: providerName,
+    added,
+    updated,
+    unmatched,
+    setDefault: setDefault && platform === "opencode" ? `${providerName}/${modelIds[0]}` : (platform === "codex" || platform === "claude" ? modelIds[0] : null),
+    local: after.ok ? after : null,
+  };
+}
+
+function readRequestBody(req, limit = 1024 * 1024) {
+  return new Promise((resolve, reject) => {
+    let received = 0;
+    const chunks = [];
+    req.on("data", (chunk) => {
+      received += chunk.length;
+      if (received > limit) {
+        req.destroy(new Error("Request body too large"));
+        return;
+      }
+      chunks.push(chunk);
+    });
+    req.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+    req.on("error", reject);
+  });
+}
+
 function createUiServer() {
-  return createServer((req, res) => {
+  return createServer(async (req, res) => {
+    // 跨域预检
+    if (req.method === "OPTIONS") {
+      res.writeHead(204, {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+      });
+      res.end();
+      return;
+    }
+
+    const parsedUrl = new URL(req.url || "/", "http://127.0.0.1");
+    const urlPath = parsedUrl.pathname;
+
+    // 模型嗅探 API 接口：支持 POST 或 GET
+    if (urlPath === "/api/models" || urlPath === "/api/sniff") {
+      let baseURL = "";
+      let apiKey = "";
+
+      if (req.method === "POST") {
+        try {
+          const bodyText = await readRequestBody(req);
+          if (bodyText.trim()) {
+            const parsed = JSON.parse(bodyText);
+            if (parsed && typeof parsed === "object") {
+              if (typeof parsed.baseURL === "string") baseURL = parsed.baseURL;
+              if (typeof parsed.apiKey === "string") apiKey = parsed.apiKey;
+            }
+          }
+        } catch {
+          sendJson(res, 400, { ok: false, error: "请求格式错误，需提供合法 JSON" });
+          return;
+        }
+      } else if (req.method === "GET") {
+        baseURL = parsedUrl.searchParams.get("baseURL") || "";
+        apiKey = parsedUrl.searchParams.get("apiKey") || "";
+      } else {
+        res.writeHead(405, { "Content-Type": "text/plain; charset=utf-8", Allow: "GET, POST, OPTIONS" });
+        res.end("405 Method Not Allowed\n");
+        return;
+      }
+
+      if (!apiKey && req.headers.authorization) {
+        const auth = req.headers.authorization.trim();
+        if (auth.toLowerCase().startsWith("bearer ")) apiKey = auth.slice(7).trim();
+      }
+
+      if (!baseURL.trim()) {
+        sendJson(res, 400, { ok: false, error: "baseURL 不能为空" });
+        return;
+      }
+      if (!/^https?:\/\//i.test(baseURL.trim())) {
+        sendJson(res, 400, { ok: false, error: "baseURL 必须以 http:// 或 https:// 开头" });
+        return;
+      }
+
+      const result = await probeModelIdsDetailed(baseURL.trim(), apiKey);
+      sendJson(res, result.ok ? 200 : 400, result);
+      return;
+    }
+
+    if (urlPath === "/api/local-config") {
+      if (req.method === "GET") {
+        const platform = parsedUrl.searchParams.get("platform") || "opencode";
+        const result = readLocalConfig(platform);
+        sendJson(res, result.status || (result.ok ? 200 : 400), result);
+        return;
+      }
+      if (req.method === "POST") {
+        let payload = null;
+        try {
+          const bodyText = await readRequestBody(req);
+          payload = bodyText.trim() ? JSON.parse(bodyText) : {};
+        } catch {
+          sendJson(res, 400, { ok: false, error: "请求格式错误，需提供合法 JSON" });
+          return;
+        }
+        if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+          sendJson(res, 400, { ok: false, error: "请求格式错误，需提供合法 JSON" });
+          return;
+        }
+        const action = typeof payload.action === "string" && payload.action.trim()
+          ? payload.action.trim()
+          : "inject";
+        if (action !== "inject" && action !== "delete" && action !== "delete-provider" && action !== "update-provider") {
+          sendJson(res, 400, { ok: false, error: "未知 action（支持 inject / delete / delete-provider / update-provider）" });
+          return;
+        }
+        const result = action === "delete" ? deleteLocalConfigModel(payload)
+          : action === "delete-provider" ? deleteLocalProvider(payload)
+            : action === "update-provider" ? updateLocalProvider(payload)
+              : injectLocalConfig(payload);
+        sendJson(res, result.status || (result.ok ? 200 : 400), result);
+        return;
+      }
+      res.writeHead(405, { "Content-Type": "text/plain; charset=utf-8", Allow: "GET, POST, OPTIONS" });
+      res.end("405 Method Not Allowed\n");
+      return;
+    }
+
     if (req.method !== "GET" && req.method !== "HEAD") {
       res.writeHead(405, { "Content-Type": "text/plain; charset=utf-8", Allow: "GET, HEAD" });
       res.end("405 Method Not Allowed\n");
       return;
     }
 
-    const urlPath = (req.url || "/").split("?")[0].split("#")[0];
     const target = resolveRequestPath(urlPath);
     if (!target) {
       sendNotFound(res);

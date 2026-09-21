@@ -5,7 +5,7 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
 ![dependencies](https://img.shields.io/badge/dependencies-0-success.svg)
-![models](https://img.shields.io/badge/models-327-informational.svg)
+![models](https://img.shields.io/badge/models-328-informational.svg)
 
 Give it a model ID — usually a legacy name a relay kept alive — and get back the **official spec** plus a
 paste-ready config snippet for opencode or pi.
@@ -54,7 +54,7 @@ Install straight from GitHub (recommended — you get a global `apifix` command)
 
 ```bash
 npm install -g --install-links=true github:xlong-c/apifix           # track the default branch (latest)
-npm install -g --install-links=true "github:xlong-c/apifix#v0.2.2"  # pin a version (recommended)
+npm install -g --install-links=true "github:xlong-c/apifix#v0.2.3"  # pin a version (recommended)
 apifix gpt-6-astra                     # works immediately; no dependency install needed (zero deps)
 ```
 
@@ -63,7 +63,7 @@ apifix gpt-6-astra                     # works immediately; no dependency instal
 > incomplete package (symptom: `Cannot find module .../apifix.mjs` when running `apifix`). The flag
 > is a no-op on npm versions that already pack by default.
 > Prefer no flags? Tarball install works too:
-> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.2.tar.gz`
+> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.3.tar.gz`
 
 Or clone and run from source:
 
@@ -138,6 +138,7 @@ node apifix.mjs fix claude                   # ~/.claude/settings.json (AUTH_TOK
 node apifix.mjs fix ./my-config.json         # any file: opencode / pi / codex / claude auto-detected
 node apifix.mjs fix opencode --dry-run       # show the diff plan only, write nothing
 node apifix.mjs fix opencode --yes           # skip the [y/N] prompt (for scripts)
+node apifix.mjs fix opencode --fill --dry-run # fill: complete name-only entries with the official spec
 ```
 
 Only fields documented on the official spec are changed (opencode's `limit.context`/`limit.output`/
@@ -153,6 +154,18 @@ atomic replace (tmp + rename) followed by automatic re-verification. codex TOML 
 **line level** — only the target value's character span changes; comments, indentation, CRLF and every
 other byte stay untouched. `--json` gives machine-readable output, and `--no-backup` turns the automatic
 backup off.
+
+Add `--fill` for **fill mode**: by default only declared fields are compared; `--fill` also pulls in
+comparable fields your config **doesn't declare**, completing them from "（缺失）" / "missing" to the
+official value in one pass — ideal for minimal entries that only declare `name` (e.g. the `{name: id}`
+stub `login` writes for an uncatalogued model, or a hand-written relay config). An **empty `name`**
+(a string that trims to empty) is filled with the model id too, matching `apifix <id> --emit opencode`'s
+default; entries that don't declare `name` gain no new field, and a non-empty `name` keeps your custom
+display name. The field list matches
+the default mode; fields where the official value is `null` (undocumented) are still skipped with an
+"undocumented" note and never guessed, and credentials are unaffected. `--fill` supports opencode / pi
+only — passing `--fill` to codex / claude reports "not supported" and exits 2. Running `--fill` again
+after a fill yields a 0-item plan (idempotent).
 
 Exit codes: `0` fixed or nothing to fix, `1` differences exist but were not applied (cancelled / `--dry-run`),
 `2` usage or read error.
@@ -199,20 +212,26 @@ node apifix.mjs --ui --port 8000 --no-open
 
 - **Single lookup**: three panes — filters by vendor / lifecycle on the left, a result list with match cards in
   the middle, and details on the right (spec table, gotchas, opencode / pi snippet tabs with a
-  **minimal / full** toggle).
+  **minimal / full** toggle). The detail pane can send the current model into the API config tab.
 - **Batch parse**: paste a list of IDs and get a match verdict plus the resolved entry for each line.
+- **API config** (requires `npm start` / `apifix --ui`): inspect the local OpenCode / Pi / Codex / Claude Code
+  config grouped by provider (credentials redacted), edit one provider's JSON fragment, delete an empty
+  provider or a single model, or write selected models into that provider (official specs injected;
+  a `.bak-<timestamp>` backup is created first).
 
 ![Batch parse](docs/batch.png)
 
-It binds `127.0.0.1` only and serves just `/`, `/ui/*`, `/lib/*`, and `/catalog.json`. If the port is taken it
+It binds `127.0.0.1` only. Static assets are `/`, `/ui/*`, `/lib/*`, and `/catalog.json`; local endpoints are
+`/api/models` (sniff) and `/api/local-config` (read / inject the on-disk config). If the port is taken it
 retries at +1 (up to +10).
 
-The UI is **fully static** (`ui/` + `lib/core.mjs` + `catalog.json`), so publishing the repo root as a site root
-is enough to run it on GitHub Pages: the root `index.html` redirects to `/ui/`.
+The lookup UI is **fully static** (`ui/` + `lib/core.mjs` + `catalog.json`), so publishing the repo root as a site
+root is enough to run it on GitHub Pages: the root `index.html` redirects to `/ui/`. Reading and writing the
+on-disk config only works with the local `apifix --ui` server.
 
 ## Coverage
 
-327 entries across 23 vendors:
+328 entries across 24 vendors:
 
 | vendor | count | vendor | count | vendor | count |
 | --- | ---: | --- | ---: | --- | ---: |
@@ -222,11 +241,11 @@ is enough to run it on GitHub Pages: the root `index.html` redirects to `/ui/`.
 | tencent | 11 | volcengine | 11 | deepseek | 10 |
 | nvidia | 8 | amazon | 7 | iflytek | 7 |
 | microsoft | 7 | meta | 7 | xai | 16 |
-| minimax | 5 | 01ai | 3 | ai21 / writer / stepfun | 1 each |
+| minimax | 5 | 01ai | 3 | ai21 / writer / stepfun / unisound | 1 each |
 
-Lifecycle: `current` 150, `legacy` 92, `retired` 82, `unreleased` 2 (plus 1 unlabeled). 307 entries are verified against official docs.
+Lifecycle: `current` 151, `legacy` 92, `retired` 82, `unreleased` 2 (plus 1 unlabeled). 308 entries are verified against official docs.
 
-**Pricing**: 231 models carry official USD pricing (per 1M tokens). Non-USD prices are converted at merge time
+**Pricing**: 232 models carry official USD pricing (per 1M tokens). Non-USD prices are converted at merge time
 using a fixed reference rate of 1 USD = 7.2 CNY, with the original values kept in `cost.note`. That rate is a
 reference, not a live quote.
 
@@ -292,7 +311,7 @@ node apifix.mjs gpt-6-astra --emit claude-env -f  # env block for ~/.claude/sett
 - **Only vendor-official docs** (model pages, API docs, pricing pages). Aggregators, relay dashboards, and
   forums are not sources.
 - **`null` means "not documented"**, not zero; it renders as `未知/not documented`. Better empty than invented.
-- **`verified`**: `true` means every field was checked against official docs (307/327); `false` means the source
+- **`verified`**: `true` means every field was checked against official docs (308/328); `false` means the source
   is indirect or pending, and the card says so explicitly.
 - **`confidence`** (`high`/`medium`/`low`) works together with `sources`, so every value is traceable.
 - Lifecycle and `legacy_ids` record retirements and relay-reused IDs; **retired models show their pre-retirement spec**.

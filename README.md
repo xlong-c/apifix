@@ -5,7 +5,7 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
 ![dependencies](https://img.shields.io/badge/dependencies-0-success.svg)
-![models](https://img.shields.io/badge/models-327-informational.svg)
+![models](https://img.shields.io/badge/models-328-informational.svg)
 
 输入一个模型 id（通常是中转沿用的 legacy 名字），拿到它的**官网规格**，以及可直接粘贴的 opencode / pi 配置片段。
 
@@ -45,7 +45,7 @@
 
 ```bash
 npm install -g --install-links=true github:xlong-c/apifix            # 跟随默认分支（最新）
-npm install -g --install-links=true "github:xlong-c/apifix#v0.2.2"   # 锁定版本（推荐）
+npm install -g --install-links=true "github:xlong-c/apifix#v0.2.3"   # 锁定版本（推荐）
 apifix gpt-6-astra                     # 直接可用，无需 npm install 依赖（零依赖）
 ```
 
@@ -53,7 +53,7 @@ apifix gpt-6-astra                     # 直接可用，无需 npm install 依�
 > 链接（junction）到缓存临时目录而不是打包安装，可能装出不完整的包（症状：运行 `apifix` 报
 > `Cannot find module .../apifix.mjs`）。该参数在其它 npm 版本上没有副作用。
 > 不想带参数也可以用 tarball 安装：
-> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.2.tar.gz`
+> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.3.tar.gz`
 
 或克隆源码运行：
 
@@ -120,6 +120,7 @@ node apifix.mjs fix claude                   # ~/.claude/settings.json（AUTH_TO
 node apifix.mjs fix ./my-config.json         # 任意文件：自动识别 opencode / pi / codex / claude
 node apifix.mjs fix opencode --dry-run       # 只看差异计划，不写入
 node apifix.mjs fix opencode --yes           # 跳过 [y/N] 询问（脚本用）
+node apifix.mjs fix opencode --fill --dry-run # 补齐：只声明 name 的条目一次性补全为官网规格
 ```
 
 只改官网已文档化的规格字段（opencode 的 `limit.context`/`limit.output`/`reasoning`/`temperature`/
@@ -132,6 +133,15 @@ node apifix.mjs fix opencode --yes           # 跳过 [y/N] 询问（脚本用�
 `<file>.bak-<时间戳>`，经临时文件原子替换，写后自动复验；codex 的 TOML 走**行级回写**——只重写
 目标值的字符区间，注释 / 缩进 / CRLF 等其余字节一律不动。`--json` 输出机器可读结果，
 `--no-backup` 关闭自动备份。
+
+加 `--fill` 开启**补齐模式**：默认只对比已声明字段，`--fill` 会把配置里**未声明**的可比字段
+也纳入计划，从「（缺失）」一次性补齐为官网值——适合只声明了 `name` 的最小条目（例如 `login`
+为未收录模型写入的 `{name: id}`，或手写的中转配置）。**空 `name`（字符串但 trim 后为空）也会
+一并补为模型 id**，与 `apifix <id> --emit opencode` 的默认行为一致；未声明 `name` 的条目不新增该
+字段，非空 `name` 保留用户自定义展示名。字段清单与默认模式一致，官网 `null`
+（未文档化）的字段仍然跳过并注明「官网未文档化」，绝不臆造；凭证字段不受影响。`--fill` 仅支持
+opencode / pi，对 codex / claude 传 `--fill` 会直接报「不支持」并以 exit 2 退出。补齐后再次
+运行 `--fill` 计划为 0 项（幂等）。
 
 退出码：`0` 已修复或无需修复、`1` 存在差异但未应用（取消 / `--dry-run`）、`2` 用法或读取错误。
 
@@ -171,19 +181,20 @@ node apifix.mjs --ui --port 8000 --no-open
 
 ![apifix Web UI](docs/ui.png)
 
-- **单条查询**：三栏布局——左侧按 vendor / 生命周期筛选，中间结果列表（含匹配卡片），右侧详情（规格表、注意事项、opencode / pi 片段，带**精简 / 完整**切换）。
+- **单条查询**：三栏布局——左侧按 vendor / 生命周期筛选，中间结果列表（含匹配卡片），右侧详情（规格表、注意事项、opencode / pi 片段，带**精简 / 完整**切换）。详情里可点「加入配置」，把当前模型送进 API 配置页。
 - **批量解析**：粘贴一批 id，一次给出每行的匹配结论与命中项。
+- **API 配置**（需 `npm start` / `apifix --ui`）：查阅本机 OpenCode / Pi / Codex / Claude Code 配置（按供应商分组、凭证脱敏），编辑某一家的 JSON 片段、删除空供应商或单个模型，也可把已选模型写入对应供应商（官网规格自动注入，写入前备份为 `.bak-时间戳`）。
 
 ![批量解析](docs/batch.png)
 
-只监听 `127.0.0.1`，仅暴露 `/`、`/ui/*`、`/lib/*`、`/catalog.json`；端口被占用时自动 +1 重试（最多 +10）。
+只监听 `127.0.0.1`；静态资源暴露 `/`、`/ui/*`、`/lib/*`、`/catalog.json`，另有本地接口 `/api/models`（嗅探）与 `/api/local-config`（查阅 / 注入本机配置）。端口被占用时自动 +1 重试（最多 +10）。
 
-UI 是**纯静态**的（`ui/` + `lib/core.mjs` + `catalog.json`），把仓库根目录作为站点根发布即可跑在
-GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
+查询页本身是**纯静态**的（`ui/` + `lib/core.mjs` + `catalog.json`），把仓库根目录作为站点根发布即可跑在
+GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。查阅 / 写入本机配置只在本地 `apifix --ui` 服务下可用。
 
 ## 支持范围
 
-当前收录 **327** 个条目、23 个 vendor：
+当前收录 **328** 个条目、24 个 vendor：
 
 | vendor | 数量 | vendor | 数量 | vendor | 数量 |
 | --- | ---: | --- | ---: | --- | ---: |
@@ -193,11 +204,11 @@ GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
 | tencent | 11 | volcengine | 11 | deepseek | 10 |
 | nvidia | 8 | amazon | 7 | iflytek | 7 |
 | microsoft | 7 | meta | 7 | xai | 16 |
-| minimax | 5 | 01ai | 3 | ai21 / writer / stepfun | 各 1 |
+| minimax | 5 | 01ai | 3 | ai21 / writer / stepfun / unisound | 各 1 |
 
-生命周期：`current` 150、`legacy` 92、`retired` 82、`unreleased` 2（另有 1 条未标注）；307 条已核验官网。
+生命周期：`current` 151、`legacy` 92、`retired` 82、`unreleased` 2（另有 1 条未标注）；308 条已核验官网。
 
-**定价**：**231** 个模型带官方 USD 定价（每 1M tokens）。非美元定价在合并时按固定参考汇率
+**定价**：**232** 个模型带官方 USD 定价（每 1M tokens）。非美元定价在合并时按固定参考汇率
 1 USD = 7.2 CNY 换算，原始币种数值保留在 `cost.note` 里；该汇率是参考值，不是实时行情。
 
 ## 匹配规则
@@ -255,7 +266,7 @@ node apifix.mjs gpt-6-astra --emit claude-env -f  # ~/.claude/settings.json 的 
 
 - **只采信厂商官方文档**（官方模型页 / API 文档 / 定价页）。聚合站、中转商后台、论坛不作为来源。
 - **`null` = 官方未文档化**，不是「等于 0」；渲染为 `未知/not documented`。宁可留空，绝不臆造数值。
-- **`verified`**：`true` 表示已与官方文档逐项核验（307/327）；`false` 表示来源间接或待核验，卡片会显式提示。
+- **`verified`**：`true` 表示已与官方文档逐项核验（308/328）；`false` 表示来源间接或待核验，卡片会显式提示。
 - **`confidence`**（`high`/`medium`/`low`）配合 `sources` 使用，来源可逐条追溯。
 - 生命周期与 `legacy_ids` 记录退役、中转沿用 id 的历史；**退役模型的规格为退役前规格**。
 

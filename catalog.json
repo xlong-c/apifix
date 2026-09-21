@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "updated_at": "2026-09-20",
+  "updated_at": "2026-09-21",
   "models": [
     {
       "id": "yi-large",
@@ -25608,6 +25608,98 @@
         "as_of": "2026-09-15",
         "sources": [
           "https://cloud.tencent.com/document/product/1823/130055"
+        ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "u2-flash",
+      "vendor": "unisound",
+      "family": "Unisound U2",
+      "api_protocol": "chat_completions",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "2026-09-15 发布（高密度 MoE 架构，266B 总参数 / 10B 激活）",
+      "context_window": 524288,
+      "max_output_tokens": 131072,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {
+          "supported": true,
+          "range": [
+            0,
+            2
+          ],
+          "constraint": null
+        },
+        "top_p": {
+          "supported": true,
+          "range": null,
+          "constraint": null
+        },
+        "top_k": {
+          "supported": null,
+          "range": null,
+          "constraint": "未文档化"
+        }
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": null
+      },
+      "structured_output": {
+        "supported": true,
+        "mechanism": "response_format"
+      },
+      "vision": false,
+      "pdf": null,
+      "caching": {
+        "mode": "automatic",
+        "min_tokens": null,
+        "ttl_options": null
+      },
+      "aliases": [
+        "u2",
+        "u2 flash",
+        "unisound/u2-flash",
+        "unisound-u2-flash"
+      ],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方文档规格为 512K（524,288 tokens）上下文，最大输出 128K（131,072 tokens）；部分中转或第三方配置可能填 512000 / 128000",
+        "云知声 MaaS 平台采用 OpenAI 兼容格式（baseURL: https://maas-api.unisound.com/v1）",
+        "支持思维链/思考模式（可传 extra_body: {\"thinking\": {\"type\": \"enabled\"|\"disabled\"}} 开启或关闭），但官方 API 未对 u2-flash 提供 reasoning_effort 档位（该参数仅部分三方托管模型如 DeepSeek/GLM/Kimi 支持），因此无 low/medium/high 推理强度分档",
+        "基于通用基座模型 U2 强化后训练演进，采用稀疏 MoE 架构（总参数 266B，单次推理激活约 10B）",
+        "支持长程任务执行与 Agent 协同，峰值吞吐达 300 tokens/s"
+      ],
+      "sources": [
+        "https://maas.unisound.com/models/u2-flash",
+        "https://maas.unisound.com/docs/api/text/openai-compatible",
+        "https://maas.unisound.com/"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.083333,
+        "output": 0.166667,
+        "cache_read": 0.016667,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "官方定价页为人民币（元 / 1M tokens）（按 1 USD = 7.2 CNY 换算；原始 CNY 值：input=0.6、output=1.2、cache_read=0.12；限时6折优惠价 input=0.36、output=0.72）",
+        "as_of": "2026-09-21",
+        "sources": [
+          "https://maas.unisound.com/models/u2-flash"
         ],
         "confidence": "high"
       }
