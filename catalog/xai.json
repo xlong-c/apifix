@@ -1,6 +1,6 @@
 {
   "vendor": "xai",
-  "updated_at": "2026-09-20",
+  "updated_at": "2026-11-02",
   "models": [
     {
       "id": "grok-3",
@@ -761,7 +761,8 @@
       ],
       "sources": [
         "https://docs.x.ai/developers/models/grok-4.20-0309-non-reasoning",
-        "https://docs.x.ai/developers/models"
+        "https://docs.x.ai/developers/models",
+        "https://docs.x.ai/docs/models/grok-4.20-non-reasoning"
       ],
       "confidence": "high",
       "cost": {
@@ -779,9 +780,10 @@
         },
         "tiers": null,
         "note": null,
-        "as_of": "2026-09-15",
+        "as_of": "2026-11-02",
         "sources": [
-          "https://docs.x.ai/developers/pricing"
+          "https://docs.x.ai/developers/pricing",
+          "https://docs.x.ai/docs/pricing"
         ],
         "confidence": "high"
       }
@@ -874,7 +876,8 @@
       "sources": [
         "https://docs.x.ai/developers/models/grok-4.20-0309-reasoning",
         "https://docs.x.ai/developers/release-notes",
-        "https://docs.x.ai/developers/models"
+        "https://docs.x.ai/developers/models",
+        "https://docs.x.ai/docs/models/grok-4.20-reasoning"
       ],
       "confidence": "high",
       "cost": {
@@ -892,9 +895,10 @@
         },
         "tiers": null,
         "note": null,
-        "as_of": "2026-09-15",
+        "as_of": "2026-11-02",
         "sources": [
-          "https://docs.x.ai/developers/pricing"
+          "https://docs.x.ai/developers/pricing",
+          "https://docs.x.ai/docs/pricing"
         ],
         "confidence": "high"
       }
@@ -978,7 +982,8 @@
       ],
       "sources": [
         "https://docs.x.ai/developers/models/grok-4.20-multi-agent-0309",
-        "https://docs.x.ai/developers/model-capabilities/text/multi-agent"
+        "https://docs.x.ai/developers/model-capabilities/text/multi-agent",
+        "https://docs.x.ai/docs/models/grok-4.20-multi-agent"
       ],
       "confidence": "high",
       "cost": {
@@ -996,9 +1001,10 @@
         },
         "tiers": null,
         "note": null,
-        "as_of": "2026-09-15",
+        "as_of": "2026-11-02",
         "sources": [
-          "https://docs.x.ai/developers/pricing"
+          "https://docs.x.ai/developers/pricing",
+          "https://docs.x.ai/docs/pricing"
         ],
         "confidence": "high"
       }

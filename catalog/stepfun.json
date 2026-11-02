@@ -1,6 +1,6 @@
 {
   "vendor": "stepfun",
-  "updated_at": "2026-09-20",
+  "updated_at": "2026-11-02",
   "models": [
     {
       "id": "step-5-preview",
@@ -11,7 +11,7 @@
       "lifecycle": "current",
       "lifecycle_note": "2026-09-20 发布（Preview）；模型权重计划 2026-10-15 开源",
       "context_window": 1048576,
-      "max_output_tokens": 1048576,
+      "max_output_tokens": 65536,
       "reasoning": {
         "supported": true,
         "effort_values": [
@@ -35,13 +35,19 @@
         },
         "top_p": {
           "supported": true,
-          "range": null,
-          "constraint": "默认 0.9"
+          "range": [
+            0,
+            1
+          ],
+          "constraint": "(0,1.0]；默认 0.9"
         },
         "top_k": {
-          "supported": null,
-          "range": null,
-          "constraint": "未文档化"
+          "supported": true,
+          "range": [
+            0,
+            500
+          ],
+          "constraint": "Messages API 文档化；Chat Completions 请求参数未列出"
         }
       },
       "tools": {
@@ -61,19 +67,29 @@
         "min_tokens": 256,
         "ttl_options": null
       },
-      "aliases": [],
+      "aliases": [
+        "stepfun/step-5-preview"
+      ],
       "legacy_ids": [],
       "gotchas": [
-        "官方「规格速览」最大输出与上下文同为 1M tokens；max_tokens 默认 INF（不限制，由模型自动决定）",
+        "官方「规格速览」：最大输入 1M tokens / 最大输出 64k tokens；Chat Completions 的 max_tokens 默认为 INF（不作限制，由模型自动决定），输入 + 输出总量受上下文上限约束",
+        "推理强度两套写法：Chat Completions 用 reasoning_effort，Messages API 用 output_config.effort；取值均为 low/medium/high，medium 为默认推荐",
         "tools 不支持 type: \"web_search\"（该模型会拒绝该工具），需改用网页搜索 API",
-        "图片单次最多 60 张（jpg/jpeg/png/webp/静态 gif）；视频仅支持 http/https 链接（mp4，<128MB，建议 <5 分钟）",
-        "提示缓存自动启用（输入 ≥256 tokens 起，LRU 淘汰，无手动清理接口）",
+        "图片单次最多 60 张（jpg/jpeg/png/webp/静态 gif），detail 可取 low/high；视频支持 mp4 / QuickTime / Matroska，可传 URL / Base64 / Files API 的 stepfile:// 引用，单个 mp4 <128MB、建议 <5 分钟",
+        "提示缓存自动启用（输入 ≥256 tokens 起缓存，LRU 淘汰，无手动清理接口；命中部分按对应模型费用的 20% 计费）",
         "reasoning 默认返回 reasoning 字段；传 reasoning_format=\"deepseek-style\" 可改用 reasoning_content（DeepSeek 兼容）",
-        "anthropic_messages 协议需走 Step Plan 通道（baseURL https://api.stepfun.com/step_plan）；Claude Code 不识别该模型 id、默认按 200k 上下文处理，需在 settings.json env 显式设置 CLAUDE_CODE_MAX_CONTEXT_TOKENS=1000000 才能用满 1M"
+        "anthropic_messages 协议需走 Step Plan 通道（baseURL https://api.stepfun.com/step_plan）；Claude Code 不识别该模型 id（默认按 200k 处理），需在 settings.json env 同时设置 CLAUDE_CODE_MAX_CONTEXT_TOKENS=1000000 与 CLAUDE_CODE_AUTO_COMPACT_WINDOW=1000000（纯数字，范围 100000–1000000）才能用满 1M",
+        "opencode 官方接入：内置 stepfun provider 默认指向 https://api.stepfun.com/v1（普通 API），要用 Step Plan 额度需覆盖 provider.stepfun.api = https://api.stepfun.com/step_plan/v1"
       ],
       "sources": [
         "https://platform.stepfun.com/docs/zh/guides/models/step-5-preview",
         "https://platform.stepfun.com/docs/zh/api-reference/chat/chat-completion-create",
+        "https://platform.stepfun.com/docs/zh/api-reference/chat/messages-create",
+        "https://platform.stepfun.com/docs/zh/guides/developer/reasoning",
+        "https://platform.stepfun.com/docs/zh/guides/developer/prompt-cache",
+        "https://platform.stepfun.com/docs/zh/api-reference/tool-call",
+        "https://platform.stepfun.com/docs/zh/step-plan/integrations/claude-code",
+        "https://platform.stepfun.com/docs/zh/step-plan/integrations/open-code",
         "https://www.stepfun.com/step-5-preview"
       ],
       "confidence": "high",
@@ -91,6 +107,170 @@
         "sources": [
           "https://platform.stepfun.com/docs/zh/guides/pricing/details"
         ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "step-3.5-flash",
+      "vendor": "stepfun",
+      "family": "Step 3.5 Flash",
+      "api_protocol": "chat_completions|anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "StepFun 官方模型页当前列出；旗舰语言推理模型",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_k": {"supported": null, "range": null, "constraint": "官方模型页未文档化"}
+      },
+      "tools": {"function_calling": true, "parallel": null, "strict": null, "choice_modes": []},
+      "structured_output": {"supported": null, "mechanism": null},
+      "vision": null,
+      "pdf": null,
+      "caching": {"mode": null, "min_tokens": null, "ttl_options": null},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "256K 上下文；面向高速推理与工具调用",
+        "官方价格以人民币发布，按目录合并兜底汇率 7.2 CNY/USD 换算"
+      ],
+      "sources": [
+        "https://platform.stepfun.com/docs/zh/guides/models/step-3.5-flash",
+        "https://platform.stepfun.com/docs/zh/guides/pricing/details"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.097222,
+        "output": 0.291667,
+        "cache_read": 0.019444,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Converted from CNY at 7.2 CNY/USD; official CNY values: input 0.70, cache read 0.14, output 2.10",
+        "as_of": "2026-11-02",
+        "sources": ["https://platform.stepfun.com/docs/zh/guides/pricing/details"],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "step-3.5-flash-2603",
+      "vendor": "stepfun",
+      "family": "Step 3.5 Flash",
+      "api_protocol": "chat_completions|anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "StepFun 官方模型页当前列出的 Agent 优化版",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": ["low", "high"],
+        "default_effort": null,
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_k": {"supported": null, "range": null, "constraint": "官方模型页未文档化"}
+      },
+      "tools": {"function_calling": true, "parallel": null, "strict": null, "choice_modes": []},
+      "structured_output": {"supported": null, "mechanism": null},
+      "vision": null,
+      "pdf": null,
+      "caching": {"mode": null, "min_tokens": null, "ttl_options": null},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "Agent 优化版；官方文档称 Token 效率和推理速度提升",
+        "reasoning_effort 支持 low/high 两档",
+        "官方价格以人民币发布，按目录合并兜底汇率 7.2 CNY/USD 换算"
+      ],
+      "sources": [
+        "https://platform.stepfun.com/docs/zh/guides/models/step-3.5-flash",
+        "https://platform.stepfun.com/docs/zh/guides/pricing/details"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.097222,
+        "output": 0.291667,
+        "cache_read": 0.019444,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Converted from CNY at 7.2 CNY/USD; official CNY values: input 0.70, cache read 0.14, output 2.10",
+        "as_of": "2026-11-02",
+        "sources": ["https://platform.stepfun.com/docs/zh/guides/pricing/details"],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "step-3.7-flash",
+      "vendor": "stepfun",
+      "family": "Step 3.7 Flash",
+      "api_protocol": "chat_completions|anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "StepFun 官方模型页当前列出的旗舰多模态推理模型",
+      "context_window": 262144,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": ["low", "medium", "high"],
+        "default_effort": "medium",
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_k": {"supported": null, "range": null, "constraint": "官方模型页未文档化"}
+      },
+      "tools": {"function_calling": true, "parallel": null, "strict": null, "choice_modes": []},
+      "structured_output": {"supported": null, "mechanism": null},
+      "vision": true,
+      "pdf": null,
+      "caching": {"mode": null, "min_tokens": null, "ttl_options": null},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "原生支持图像和视频理解；上下文长度 256K tokens",
+        "Chat Completions 使用 reasoning_effort；Messages API 使用 output_config.effort",
+        "官方价格以人民币发布，按目录合并兜底汇率 7.2 CNY/USD 换算"
+      ],
+      "sources": [
+        "https://platform.stepfun.com/docs/zh/guides/models/step-3.7-flash",
+        "https://platform.stepfun.com/docs/zh/guides/pricing/details"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 0.1875,
+        "output": 1.125,
+        "cache_read": 0.0375,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Converted from CNY at 7.2 CNY/USD; official CNY values: input 1.35, cache read 0.27, output 8.10",
+        "as_of": "2026-11-02",
+        "sources": ["https://platform.stepfun.com/docs/zh/guides/pricing/details"],
         "confidence": "high"
       }
     }

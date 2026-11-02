@@ -1,6 +1,6 @@
 {
   "vendor": "anthropic",
-  "updated_at": "2026-09-20",
+  "updated_at": "2026-11-02",
   "models": [
     {
       "id": "claude-3-5-haiku-20241022",
@@ -950,6 +950,43 @@
         ],
         "confidence": "high"
       }
+    },
+    {
+      "id": "claude-haiku-5-5",
+      "vendor": "anthropic",
+      "family": "haiku",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "官方模型总览当前列出；退役承诺不早于 2027-10-07",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "medium",
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"},
+        "top_k": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"}
+      },
+      "tools": {"function_calling": true, "parallel": null, "strict": null, "choice_modes": []},
+      "structured_output": {"supported": null, "mechanism": null},
+      "vision": null,
+      "pdf": null,
+      "caching": {"mode": null, "min_tokens": null, "ttl_options": null},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方总览仅标注起始价格（From $0.10 / input MTok、From $0.50 / output MTok），未给出固定单价"
+      ],
+      "sources": ["https://docs.anthropic.com/en/docs/about-claude/models/overview"],
+      "confidence": "high",
+      "cost": null
     },
     {
       "id": "claude-mythos-5",
@@ -2005,6 +2042,54 @@
       }
     },
     {
+      "id": "claude-opus-5-5",
+      "vendor": "anthropic",
+      "family": "opus",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "官方模型总览当前列出；退役承诺不早于 2027-09-22",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "medium",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"},
+        "top_k": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"}
+      },
+      "tools": {"function_calling": true, "parallel": null, "strict": null, "choice_modes": []},
+      "structured_output": {"supported": null, "mechanism": null},
+      "vision": null,
+      "pdf": null,
+      "caching": {"mode": null, "min_tokens": null, "ttl_options": null},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": ["Thinking 为 Adaptive（always on）"],
+      "sources": ["https://docs.anthropic.com/en/docs/about-claude/models/overview"],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 4,
+        "output": 20,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-11-02",
+        "sources": ["https://docs.anthropic.com/en/docs/about-claude/models/overview"],
+        "confidence": "high"
+      }
+    },
+    {
       "id": "claude-sonnet-4-20250514",
       "vendor": "anthropic",
       "family": "sonnet",
@@ -2427,6 +2512,54 @@
         "sources": [
           "https://platform.claude.com/docs/en/about-claude/pricing"
         ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "claude-sonnet-5-5",
+      "vendor": "anthropic",
+      "family": "sonnet",
+      "api_protocol": "anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "官方模型总览当前列出；退役承诺不早于 2027-09-28",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": null,
+        "default_effort": "high",
+        "summary_values": null,
+        "can_disable": null,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"},
+        "top_k": {"supported": null, "range": null, "constraint": "官方模型总览未文档化"}
+      },
+      "tools": {"function_calling": true, "parallel": null, "strict": null, "choice_modes": []},
+      "structured_output": {"supported": null, "mechanism": null},
+      "vision": null,
+      "pdf": null,
+      "caching": {"mode": null, "min_tokens": null, "ttl_options": null},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [],
+      "sources": ["https://docs.anthropic.com/en/docs/about-claude/models/overview"],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2,
+        "output": 10,
+        "cache_read": null,
+        "cache_write": null,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": null,
+        "as_of": "2026-11-02",
+        "sources": ["https://docs.anthropic.com/en/docs/about-claude/models/overview"],
         "confidence": "high"
       }
     }

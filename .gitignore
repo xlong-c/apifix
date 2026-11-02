@@ -1,5 +1,6 @@
 # Node
 node_modules/
+target/
 npm-debug.log*
 .catalog.*.tmp
 

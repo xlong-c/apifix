@@ -1,6 +1,6 @@
 {
   "vendor": "openai",
-  "updated_at": "2026-09-20",
+  "updated_at": "2026-11-02",
   "models": [
     {
       "id": "chat-latest",
@@ -4632,6 +4632,124 @@
         "sources": [
           "https://developers.openai.com/api/docs/pricing"
         ],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gpt-6.1-sol",
+      "vendor": "openai",
+      "family": "GPT-6.1",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "OpenAI 官方模型页当前列出；工具调用须使用 Responses API",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": ["low", "medium", "high", "xhigh", "max"],
+        "default_effort": "medium",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_k": {"supported": false, "range": null, "constraint": "非 OpenAI API 参数"}
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {"supported": null, "mechanism": null},
+      "vision": true,
+      "pdf": null,
+      "caching": {"mode": null, "min_tokens": null, "ttl_options": null},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "工具调用必须使用 Responses API",
+        ">272K 输入 token 全量按 2x 输入 / 1.5x 输出计费"
+      ],
+      "sources": [
+        "https://developers.openai.com/api/docs/models/gpt-6.1-sol",
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 2,
+        "output": 10,
+        "cache_read": 0.1,
+        "cache_write": 2.5,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": ">272K 输入 token 的价格倍率见 gotchas",
+        "as_of": "2026-11-02",
+        "sources": ["https://developers.openai.com/api/docs/pricing"],
+        "confidence": "high"
+      }
+    },
+    {
+      "id": "gpt-6.1-terra",
+      "vendor": "openai",
+      "family": "GPT-6.1",
+      "api_protocol": "responses",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "OpenAI 官方模型页当前列出；工具调用须使用 Responses API",
+      "context_window": 1050000,
+      "max_output_tokens": 128000,
+      "reasoning": {
+        "supported": true,
+        "effort_values": ["none", "low", "medium", "high", "xhigh", "max"],
+        "default_effort": "medium",
+        "summary_values": null,
+        "can_disable": true,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_k": {"supported": false, "range": null, "constraint": "非 OpenAI API 参数"}
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {"supported": null, "mechanism": null},
+      "vision": true,
+      "pdf": null,
+      "caching": {"mode": null, "min_tokens": null, "ttl_options": null},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "工具调用必须使用 Responses API",
+        ">272K 输入 token 全量按 2x 输入 / 1.5x 输出计费"
+      ],
+      "sources": [
+        "https://developers.openai.com/api/docs/models/gpt-6.1-terra",
+        "https://developers.openai.com/api/docs/pricing"
+      ],
+      "confidence": "high",
+      "cost": {
+        "currency": "USD",
+        "unit": "per_1m_tokens",
+        "input": 1,
+        "output": 5,
+        "cache_read": 0.05,
+        "cache_write": 1.25,
+        "context_over_200k": null,
+        "tiers": null,
+        "note": "Cache write 为 30 分钟档；>272K 输入 token 的价格倍率见 gotchas",
+        "as_of": "2026-11-02",
+        "sources": ["https://developers.openai.com/api/docs/pricing"],
         "confidence": "high"
       }
     },

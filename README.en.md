@@ -3,16 +3,11 @@
 [中文](README.md) | [English](README.en.md)
 
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
-![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
-![dependencies](https://img.shields.io/badge/dependencies-0-success.svg)
-![models](https://img.shields.io/badge/models-327-informational.svg)
+![rust](https://img.shields.io/badge/rust-%3E%3D1.92-orange.svg)
+![legacy node](https://img.shields.io/badge/legacy%20CLI-node%20%3E%3D18-brightgreen.svg)
+![models](https://img.shields.io/badge/models-337-informational.svg)
 
-Give it a model ID — usually a legacy name a relay kept alive — and get back the **official spec** plus a
-paste-ready config snippet for opencode or pi.
-
-Zero dependencies; configs are read locally only, on demand (`audit` / `fix` / `protocols`). The only network
-request in the whole project is `login`'s model auto-detection (which only hits the base URL you type in);
-everything else stays offline.
+apifix is migrating from Node/Web to a Rust + Slint desktop app. `cargo run` opens the native UI; the Rust CLI supports model lookup, listing, batch matching, comparison, and config snippet generation. Config audit, repair, login, and protocol scanning still use the compatibility Node CLI.
 
 ## Why you need this
 
@@ -50,12 +45,22 @@ overnight. All of this surfaces in apifix's gotchas and in the generated snippet
 
 ## Quick start
 
-Install straight from GitHub (recommended — you get a global `apifix` command):
+Install Rust 1.92+, then install the Rust + Slint version from GitHub:
+
+```bash
+cargo install --git https://github.com/xlong-c/apifix --locked
+apifix                                  # Slint desktop app
+apifix gpt-6.1-sol                      # Rust CLI
+```
+
+### Legacy Node CLI
+
+Audit, repair, login, and protocol scanning remain available through the compatibility Node CLI:
 
 ```bash
 npm install -g --install-links=true github:xlong-c/apifix           # track the default branch (latest)
 npm install -g --install-links=true "github:xlong-c/apifix#v0.2.2"  # pin a version (recommended)
-apifix gpt-6-astra                     # works immediately; no dependency install needed (zero deps)
+apifix gpt-6-astra                     # legacy Node CLI lookup
 ```
 
 > Why `--install-links=true` is required: npm 11 defaults `install-links` to `false`, which links
@@ -68,13 +73,14 @@ apifix gpt-6-astra                     # works immediately; no dependency instal
 Or clone and run from source:
 
 ```bash
-git clone https://github.com/xlong-c/apifix && cd apifix    # no npm install needed: zero dependencies
-node apifix.mjs gpt-6-astra            # opencode snippet by default (key stays the ID you typed)
-npm start                              # = node apifix.mjs --ui, opens the local Web UI
+git clone https://github.com/xlong-c/apifix && cd apifix
+cargo run                              # native Rust + Slint desktop app
+cargo run -- gpt-6-astra              # Rust CLI lookup and opencode snippet
+node apifix.mjs audit <file>           # compatibility entry for audit/fix/login/protocols
+npm run legacy:web                     # legacy browser UI
 ```
 
-For development, `npm link` gives you a global command pointing at your working copy (edits take effect
-immediately).
+`npm start` also launches the Slint desktop app. Other Rust lookup, list, and emitter commands run as `cargo run -- ...`.
 
 Common commands:
 
@@ -188,12 +194,24 @@ stays offline.
 
 Exit codes: `0` written, `1` cancelled / re-verification mismatch, `2` usage or read error.
 
-## Web UI
+## Desktop UI (Slint)
 
 ```bash
-node apifix.mjs --ui                   # defaults to http://127.0.0.1:7788/
-node apifix.mjs --ui --port 8000 --no-open
+npm start
+# or cargo run
 ```
+
+Single-model lookup and specification details:
+
+![Slint desktop app: model specification and config snippet](docs/screenshots/slint-model-lookup.png)
+
+Batch matching:
+
+![Slint desktop app: batch model matching](docs/screenshots/slint-batch-lookup.png)
+
+The legacy browser UI remains available through `npm run legacy:web`.
+
+## Web UI (legacy)
 
 ![apifix Web UI](docs/ui.png)
 
@@ -212,7 +230,7 @@ is enough to run it on GitHub Pages: the root `index.html` redirects to `/ui/`.
 
 ## Coverage
 
-327 entries across 23 vendors:
+337 entries across 23 vendors:
 
 | vendor | count | vendor | count | vendor | count |
 | --- | ---: | --- | ---: | --- | ---: |
@@ -292,7 +310,7 @@ node apifix.mjs gpt-6-astra --emit claude-env -f  # env block for ~/.claude/sett
 - **Only vendor-official docs** (model pages, API docs, pricing pages). Aggregators, relay dashboards, and
   forums are not sources.
 - **`null` means "not documented"**, not zero; it renders as `未知/not documented`. Better empty than invented.
-- **`verified`**: `true` means every field was checked against official docs (307/327); `false` means the source
+- **`verified`**: `true` means every field was checked against official docs (317/337); `false` means the source
   is indirect or pending, and the card says so explicitly.
 - **`confidence`** (`high`/`medium`/`low`) works together with `sources`, so every value is traceable.
 - Lifecycle and `legacy_ids` record retirements and relay-reused IDs; **retired models show their pre-retirement spec**.
@@ -305,9 +323,12 @@ in `curl`/`sdk` snippets need environment variables you set yourself.
 
 ```
 apifix/
-├── apifix.mjs        CLI + local UI server (zero dependencies)
-├── lib/core.mjs      Shared core (pure ESM, importable in the browser)
-├── ui/               Web UI (fully static)
+├── Cargo.toml        Rust CLI + Slint desktop app
+├── src/              Rust catalog, matching, rendering, and UI modules
+├── ui/app.slint      Native Slint interface
+├── apifix.mjs        Compatibility Node CLI + legacy Web UI
+├── lib/core.mjs      Compatibility shared core (pure ESM)
+├── ui/               Legacy static Web UI
 ├── catalog/          Source of truth: one file per vendor (catalog/<vendor>.json, edit these)
 ├── catalog.json      **Generated** bundle built from catalog/ (CLI/UI read this; do not hand-edit)
 ├── tools/            Build + merge + validate scripts (used by CI)

@@ -3,14 +3,11 @@
 [中文](README.md) | [English](README.en.md)
 
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
-![node](https://img.shields.io/badge/node-%3E%3D18-brightgreen.svg)
-![dependencies](https://img.shields.io/badge/dependencies-0-success.svg)
-![models](https://img.shields.io/badge/models-327-informational.svg)
+![rust](https://img.shields.io/badge/rust-%3E%3D1.92-orange.svg)
+![legacy node](https://img.shields.io/badge/legacy%20CLI-node%20%3E%3D18-brightgreen.svg)
+![models](https://img.shields.io/badge/models-337-informational.svg)
 
-输入一个模型 id（通常是中转沿用的 legacy 名字），拿到它的**官网规格**，以及可直接粘贴的 opencode / pi 配置片段。
-
-零依赖；配置只在本地按需读取（`audit` / `fix` / `protocols`）。除 `login` 的模型自动检测
-（只请求你自己填写的 baseURL）外，全程零网络请求。
+apifix 正从 Node/Web 迁移为 Rust + Slint 桌面应用。`cargo run` 启动原生界面；Rust CLI 已支持模型查询、列表、批量匹配、比较和配置片段生成。配置审计、修复、登录和协议扫描目前仍由兼容版 Node CLI 提供。
 
 ## 为什么需要它
 
@@ -41,12 +38,22 @@
 
 ## 快速开始
 
-从 GitHub 直接安装（推荐，装完即是全局 `apifix` 命令）：
+安装 Rust 1.92+，从 GitHub 安装 Rust + Slint 版本：
+
+```bash
+cargo install --git https://github.com/xlong-c/apifix --locked
+apifix                                  # Slint 桌面应用
+apifix gpt-6.1-sol                      # Rust CLI
+```
+
+### 旧版 Node CLI
+
+审计、修复、登录与协议扫描仍通过兼容版 Node CLI 提供：
 
 ```bash
 npm install -g --install-links=true github:xlong-c/apifix            # 跟随默认分支（最新）
 npm install -g --install-links=true "github:xlong-c/apifix#v0.2.2"   # 锁定版本（推荐）
-apifix gpt-6-astra                     # 直接可用，无需 npm install 依赖（零依赖）
+apifix gpt-6-astra                     # 旧版 Node CLI 查询
 ```
 
 > 为什么必须带 `--install-links=true`：npm 11 的 `install-links` 默认为 `false`，会把 git 依赖
@@ -58,12 +65,14 @@ apifix gpt-6-astra                     # 直接可用，无需 npm install 依�
 或克隆源码运行：
 
 ```bash
-git clone https://github.com/xlong-c/apifix && cd apifix    # 无需 npm install：零依赖
-node apifix.mjs gpt-6-astra            # 默认输出 opencode 片段（key 沿用你输入的 id）
-npm start                              # = node apifix.mjs --ui，打开本地 Web UI
+git clone https://github.com/xlong-c/apifix && cd apifix
+cargo run                              # Rust + Slint 原生桌面 UI
+cargo run -- gpt-6-astra              # Rust CLI 查询并生成 opencode 片段
+node apifix.mjs audit <file>           # 兼容入口：Rust 尚未迁移的 audit/fix/login/protocols
+npm run legacy:web                     # 旧版浏览器 UI
 ```
 
-开发/自用推荐 `npm link`（全局命令指向本目录，改代码即时生效）。
+`npm start` 同样启动 Slint 桌面应用；Rust CLI 的其它查询、列表与 emitter 命令可用 `cargo run -- ...` 调用。
 
 常用命令：
 
@@ -162,12 +171,24 @@ node apifix.mjs login oc myrelay --base-url https://api.example.com/v1 \
 
 退出码：`0` 已写入、`1` 取消 / 复验有差异、`2` 用法或读取错误。
 
-## Web UI
+## 桌面 UI（Slint）
 
 ```bash
-node apifix.mjs --ui                   # 默认 http://127.0.0.1:7788/
-node apifix.mjs --ui --port 8000 --no-open
+npm start
+# 或 cargo run
 ```
+
+单条查询与规格详情：
+
+![Slint 桌面版：模型规格与配置片段](docs/screenshots/slint-model-lookup.png)
+
+批量解析：
+
+![Slint 桌面版：批量模型匹配](docs/screenshots/slint-batch-lookup.png)
+
+旧版浏览器 UI 保留为兼容入口：`npm run legacy:web`。
+
+## Web UI（旧版）
 
 ![apifix Web UI](docs/ui.png)
 
@@ -183,7 +204,7 @@ GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
 
 ## 支持范围
 
-当前收录 **327** 个条目、23 个 vendor：
+当前收录 **337** 个条目、23 个 vendor：
 
 | vendor | 数量 | vendor | 数量 | vendor | 数量 |
 | --- | ---: | --- | ---: | --- | ---: |
@@ -255,7 +276,7 @@ node apifix.mjs gpt-6-astra --emit claude-env -f  # ~/.claude/settings.json 的 
 
 - **只采信厂商官方文档**（官方模型页 / API 文档 / 定价页）。聚合站、中转商后台、论坛不作为来源。
 - **`null` = 官方未文档化**，不是「等于 0」；渲染为 `未知/not documented`。宁可留空，绝不臆造数值。
-- **`verified`**：`true` 表示已与官方文档逐项核验（307/327）；`false` 表示来源间接或待核验，卡片会显式提示。
+- **`verified`**：`true` 表示已与官方文档逐项核验（317/337）；`false` 表示来源间接或待核验，卡片会显式提示。
 - **`confidence`**（`high`/`medium`/`low`）配合 `sources` 使用，来源可逐条追溯。
 - 生命周期与 `legacy_ids` 记录退役、中转沿用 id 的历史；**退役模型的规格为退役前规格**。
 
@@ -266,9 +287,12 @@ node apifix.mjs gpt-6-astra --emit claude-env -f  # ~/.claude/settings.json 的 
 
 ```
 apifix/
-├── apifix.mjs        CLI + 本地 UI 服务器（零依赖）
-├── lib/core.mjs      共享核心（纯 ESM，浏览器可直接 import）
-├── ui/               Web UI（纯静态）
+├── Cargo.toml        Rust CLI + Slint 桌面应用
+├── src/              Rust 目录、匹配、渲染与 UI 模块
+├── ui/app.slint      Slint 原生界面
+├── apifix.mjs        兼容版 Node CLI + 旧 Web UI
+├── lib/core.mjs      兼容版共享核心（纯 ESM）
+├── ui/               旧版纯静态 Web UI
 ├── catalog/          数据源：一厂商一文件（catalog/<vendor>.json，手工编辑这里）
 ├── catalog.json      **生成物**：由 catalog/ 打包的 bundle（CLI/UI 只读它，勿手工编辑）
 ├── tools/            打包 + 合并 + 校验脚本（CI 用）

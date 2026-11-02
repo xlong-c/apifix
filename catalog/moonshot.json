@@ -1,6 +1,6 @@
 {
   "vendor": "moonshot",
-  "updated_at": "2026-09-20",
+  "updated_at": "2026-11-02",
   "models": [
     {
       "id": "kimi-k2",
@@ -835,6 +835,106 @@
         ],
         "confidence": "high"
       }
+    },
+    {
+      "id": "kimi-k3.1-pro",
+      "vendor": "moonshot",
+      "family": "Kimi K3.1",
+      "api_protocol": "chat_completions|responses|anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "官方开放平台当前旗舰模型",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": ["low", "high", "max"],
+        "default_effort": "max",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_k": {"supported": null, "range": null, "constraint": "官方模型页未文档化"}
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {"supported": true, "mechanism": "JSON Schema（strict: true）"},
+      "vision": true,
+      "pdf": null,
+      "caching": {"mode": "automatic", "min_tokens": null, "ttl_options": ["5m", "1h"]},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "始终开启思考，不支持关闭；reasoning_effort 支持 low/high/max，默认 max",
+        "官方快速开始页记录 1M token 上下文",
+        "上下文缓存自动生效，TTL 支持 5m（默认）和 1h"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k3-1-pro-quickstart.md",
+        "https://platform.kimi.com/docs/guide/use-reasoning-effort.md",
+        "https://platform.kimi.com/docs/guide/use-kimi-vision-model.md",
+        "https://platform.kimi.com/docs/guide/context-caching.md",
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "cost": null
+    },
+    {
+      "id": "kimi-k3.1-pro-highspeed",
+      "vendor": "moonshot",
+      "family": "Kimi K3.1",
+      "api_protocol": "chat_completions|responses|anthropic_messages",
+      "verified": true,
+      "lifecycle": "current",
+      "lifecycle_note": "官方列为 Kimi K3.1 Pro 高速版；同等智能，输出速度约 2–3 倍",
+      "context_window": 1048576,
+      "max_output_tokens": null,
+      "reasoning": {
+        "supported": true,
+        "effort_values": ["low", "high", "max"],
+        "default_effort": "max",
+        "summary_values": null,
+        "can_disable": false,
+        "thinking_budget": null
+      },
+      "sampling": {
+        "temperature": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_p": {"supported": null, "range": null, "constraint": "官方模型页未文档化"},
+        "top_k": {"supported": null, "range": null, "constraint": "官方模型页未文档化"}
+      },
+      "tools": {
+        "function_calling": true,
+        "parallel": null,
+        "strict": null,
+        "choice_modes": []
+      },
+      "structured_output": {"supported": true, "mechanism": "JSON Schema（strict: true）"},
+      "vision": true,
+      "pdf": null,
+      "caching": {"mode": "automatic", "min_tokens": null, "ttl_options": ["5m", "1h"]},
+      "aliases": [],
+      "legacy_ids": [],
+      "gotchas": [
+        "官方快速开始页称其与 Kimi K3.1 Pro 同等智能，输出速度约 2–3 倍",
+        "始终开启思考，reasoning_effort 支持 low/high/max，默认 max",
+        "定价未在当前可访问官方页面中列出，保持未知"
+      ],
+      "sources": [
+        "https://platform.kimi.com/docs/guide/kimi-k3-1-pro-quickstart.md",
+        "https://platform.kimi.com/docs/guide/use-reasoning-effort.md",
+        "https://platform.kimi.com/docs/guide/use-kimi-vision-model.md",
+        "https://platform.kimi.com/docs/guide/context-caching.md",
+        "https://platform.kimi.ai/docs/pricing/chat"
+      ],
+      "confidence": "high",
+      "cost": null
     },
     {
       "id": "kimi-k3",

@@ -1,0 +1,23 @@
+[package]
+name = "apifix"
+version = "0.2.2"
+edition = "2024"
+rust-version = "1.92"
+build = "build.rs"
+description = "Official model specs and config snippets with a Slint desktop app"
+license = "MIT"
+repository = "https://github.com/xlong-c/apifix"
+
+[[bin]]
+name = "apifix"
+path = "src/main.rs"
+
+[dependencies]
+arboard = "3.6"
+clap = { version = "4.5", features = ["derive"] }
+serde_json = { version = "1.0", features = ["preserve_order"] }
+slint = { version = "1.18.1", default-features = false, features = ["std", "backend-winit", "renderer-software", "compat-1-2"] }
+strsim = "0.11"
+
+[build-dependencies]
+slint-build = "1.18.1"

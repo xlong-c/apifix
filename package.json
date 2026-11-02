@@ -1,7 +1,7 @@
 {
   "name": "apifix",
   "version": "0.2.2",
-  "description": "模型官方参数速查 + 配置片段生成器（零依赖 Node >= 18，含本地 Web UI）",
+  "description": "模型官方参数速查与配置片段生成器（Rust + Slint 桌面应用）",
   "type": "module",
   "bin": {
     "apifix": "./apifix.mjs"
@@ -10,7 +10,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "start": "node apifix.mjs --ui",
+    "start": "cargo run --",
+    "legacy:web": "node apifix.mjs --ui",
     "build": "node tools/build-catalog.mjs",
     "validate": "node tools/validate-catalog.mjs",
     "merge": "node tools/merge-catalog.mjs"

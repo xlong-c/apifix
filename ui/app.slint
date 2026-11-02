@@ -1,0 +1,166 @@
+import { Button, CheckBox, ComboBox, LineEdit, ScrollView, TextEdit } from "std-widgets.slint";
+
+export component MainWindow inherits Window {
+    title: "apifix · 模型规格速查";
+    min-width: 900px;
+    min-height: 620px;
+    preferred-width: 1220px;
+    preferred-height: 800px;
+    background: #111517;
+
+    in-out property <[string]> model-rows;
+    in-out property <[string]> vendor-options;
+    in-out property <[string]> lifecycle-options;
+    in-out property <string> detail-text;
+    in-out property <string> output-text;
+    in-out property <string> catalog-status;
+    in-out property <bool> full-mode: false;
+    in-out property <bool> batch-view: false;
+    in-out property <string> batch-input;
+    in-out property <string> batch-output;
+    callback search-changed(string);
+    callback vendor-changed(string);
+    callback lifecycle-changed(string);
+    callback verified-changed(bool);
+    callback select-model(string);
+    callback emit-changed(string, bool, string);
+    callback toggle-batch();
+    callback run-batch(string);
+    callback copy-output();
+
+    VerticalLayout {
+        spacing: 0px;
+        Rectangle {
+            height: 68px;
+            background: #1a2022;
+            HorizontalLayout {
+                padding-left: 20px;
+                padding-right: 20px;
+                spacing: 16px;
+                Text { text: "apifix"; color: #f1f5f3; font-size: 22px; font-weight: 700; vertical-alignment: center; }
+                Text { text: "模型官网参数"; color: #98aaa4; font-size: 13px; vertical-alignment: center; }
+                Button { text: root.batch-view ? "单条查询" : "批量解析"; clicked => { root.toggle-batch(); } }
+                Rectangle { horizontal-stretch: 1; }
+                Text { text: root.catalog-status; color: #a8b7b1; font-size: 12px; vertical-alignment: center; }
+            }
+        }
+
+        if !root.batch-view: HorizontalLayout {
+            padding: 14px;
+            spacing: 12px;
+            Rectangle {
+                width: 295px;
+                background: #181e20;
+                border-radius: 6px;
+                VerticalLayout {
+                    padding: 12px;
+                    spacing: 10px;
+                    LineEdit {
+                        placeholder-text: "搜索模型 ID、厂商或别名";
+                        edited(text) => { root.search-changed(text); }
+                    }
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text { text: "厂商"; color: #a8b7b1; vertical-alignment: center; }
+                        vendor_select := ComboBox {
+                            horizontal-stretch: 1;
+                            model: root.vendor-options;
+                            selected(value) => { root.vendor-changed(self.current-value); }
+                        }
+                    }
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text { text: "状态"; color: #a8b7b1; vertical-alignment: center; }
+                        lifecycle_select := ComboBox {
+                            horizontal-stretch: 1;
+                            model: root.lifecycle-options;
+                            selected(value) => { root.lifecycle-changed(self.current-value); }
+                        }
+                    }
+                    CheckBox {
+                        text: "仅已核验";
+                        toggled => { root.verified-changed(self.checked); }
+                    }
+                    Text { text: "模型目录"; color: #b8c8c2; font-size: 13px; font-weight: 600; }
+                    ScrollView {
+                        vertical-stretch: 1;
+                        VerticalLayout {
+                            for row in root.model-rows: Button {
+                                text: row;
+                                clicked => { root.select-model(row); }
+                            }
+                        }
+                    }
+                }
+            }
+            Rectangle {
+                horizontal-stretch: 1;
+                background: #181e20;
+                border-radius: 6px;
+                VerticalLayout {
+                    padding: 16px;
+                    spacing: 12px;
+                    Text { text: "规格详情"; color: #eef4f1; font-size: 17px; font-weight: 650; }
+                    ScrollView {
+                        vertical-stretch: 1;
+                        Text { text: root.detail-text; color: #c1cfca; font-size: 13px; wrap: word-wrap; vertical-alignment: top; }
+                    }
+                    Rectangle { height: 1px; background: #303a3d; }
+                    HorizontalLayout {
+                        spacing: 8px;
+                        Text { text: "配置片段"; color: #eef4f1; font-size: 15px; font-weight: 650; vertical-alignment: center; }
+                        emitter_select := ComboBox {
+                            model: ["opencode", "pi", "codex", "claude-env", "curl", "sdk"];
+                            selected(value) => { root.emit-changed("", root.full-mode, self.current-value); }
+                        }
+                        CheckBox {
+                            text: "完整模式";
+                            checked <=> root.full-mode;
+                            toggled => { root.emit-changed("", self.checked, emitter_select.current-value); }
+                        }
+                        Rectangle { horizontal-stretch: 1; }
+                        Button { text: "复制"; clicked => { root.copy-output(); } }
+                    }
+                    TextEdit {
+                        text: root.output-text;
+                        read-only: true;
+                        height: 180px;
+                        font-family: "Consolas";
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+
+        if root.batch-view: Rectangle {
+            vertical-stretch: 1;
+            background: #111517;
+            VerticalLayout {
+                padding: 20px;
+                spacing: 12px;
+                Text { text: "批量解析"; color: #eef4f1; font-size: 18px; font-weight: 650; }
+                HorizontalLayout {
+                    vertical-stretch: 1;
+                    spacing: 12px;
+                    TextEdit {
+                        text <=> root.batch-input;
+                        placeholder-text: "每行一个模型 ID";
+                        font-family: "Consolas";
+                        font-size: 13px;
+                    }
+                    TextEdit {
+                        text: root.batch-output;
+                        read-only: true;
+                        font-family: "Consolas";
+                        font-size: 13px;
+                    }
+                }
+                HorizontalLayout {
+                    spacing: 8px;
+                    Button { text: "解析"; clicked => { root.run-batch(root.batch-input); } }
+                    Button { text: "复制结果"; clicked => { root.copy-output(); } }
+                }
+            }
+        }
+    }
+}
