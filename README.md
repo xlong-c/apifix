@@ -5,7 +5,7 @@
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 ![rust](https://img.shields.io/badge/rust-%3E%3D1.92-orange.svg)
 ![legacy node](https://img.shields.io/badge/legacy%20CLI-node%20%3E%3D18-brightgreen.svg)
-![models](https://img.shields.io/badge/models-337-informational.svg)
+![models](https://img.shields.io/badge/models-338-informational.svg)
 
 apifix 正从 Node/Web 迁移为 Rust + Slint 桌面应用。`cargo run` 启动原生界面；Rust CLI 已支持模型查询、列表、批量匹配、比较和配置片段生成。配置审计、修复、登录和协议扫描目前仍由兼容版 Node CLI 提供。
 
@@ -52,7 +52,7 @@ apifix gpt-6.1-sol                      # Rust CLI
 
 ```bash
 npm install -g --install-links=true github:xlong-c/apifix            # 跟随默认分支（最新）
-npm install -g --install-links=true "github:xlong-c/apifix#v0.2.2"   # 锁定版本（推荐）
+npm install -g --install-links=true "github:xlong-c/apifix#v0.2.3"   # 锁定版本（推荐）
 apifix gpt-6-astra                     # 旧版 Node CLI 查询
 ```
 
@@ -60,7 +60,7 @@ apifix gpt-6-astra                     # 旧版 Node CLI 查询
 > 链接（junction）到缓存临时目录而不是打包安装，可能装出不完整的包（症状：运行 `apifix` 报
 > `Cannot find module .../apifix.mjs`）。该参数在其它 npm 版本上没有副作用。
 > 不想带参数也可以用 tarball 安装：
-> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.2.tar.gz`
+> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.3.tar.gz`
 
 或克隆源码运行：
 
@@ -197,28 +197,28 @@ npm start
 
 ![批量解析](docs/batch.png)
 
-只监听 `127.0.0.1`，仅暴露 `/`、`/ui/*`、`/lib/*`、`/catalog.json`；端口被占用时自动 +1 重试（最多 +10）。
+兼容版 Web UI 通过本机服务查阅 OpenCode / Pi / Codex / Claude Code 配置，并支持配置片段编辑和模型注入；凭证在界面中脱敏，写入前自动备份。服务只监听 `127.0.0.1`，端口被占用时自动 +1 重试（最多 +10）。
 
-UI 是**纯静态**的（`ui/` + `lib/core.mjs` + `catalog.json`），把仓库根目录作为站点根发布即可跑在
-GitHub Pages 上：根 `index.html` 会重定向到 `/ui/`。
+兼容版查询页仍可部署到 GitHub Pages；本机配置查阅与写入仅在 `npm run legacy:web` 下可用。
 
 ## 支持范围
 
-当前收录 **337** 个条目、23 个 vendor：
+当前收录 **338** 个条目、24 个 vendor：
 
 | vendor | 数量 | vendor | 数量 | vendor | 数量 |
 | --- | ---: | --- | ---: | --- | ---: |
-| openai | 63 | anthropic | 24 | alibaba | 42 |
-| zhipu | 22 | moonshot | 20 | baidu | 17 |
+| openai | 65 | anthropic | 27 | alibaba | 42 |
+| zhipu | 22 | moonshot | 22 | baidu | 17 |
 | google | 17 | cohere | 15 | mistral | 12 |
 | tencent | 11 | volcengine | 11 | deepseek | 10 |
 | nvidia | 8 | amazon | 7 | iflytek | 7 |
 | microsoft | 7 | meta | 7 | xai | 16 |
-| minimax | 5 | 01ai | 3 | ai21 / writer / stepfun | 各 1 |
+| minimax | 5 | 01ai | 3 | stepfun | 4 |
+| unisound / ai21 / writer | 各 1 | | | |
 
-生命周期：`current` 150、`legacy` 92、`retired` 82、`unreleased` 2（另有 1 条未标注）；307 条已核验官网。
+生命周期：`current` 161、`legacy` 92、`retired` 82、`unreleased` 2（另有 1 条未标注）；318 条已核验官网。
 
-**定价**：**231** 个模型带官方 USD 定价（每 1M tokens）。非美元定价在合并时按固定参考汇率
+**定价**：**239** 个模型带官方 USD 定价（每 1M tokens）。非美元定价在合并时按固定参考汇率
 1 USD = 7.2 CNY 换算，原始币种数值保留在 `cost.note` 里；该汇率是参考值，不是实时行情。
 
 ## 匹配规则
@@ -276,7 +276,7 @@ node apifix.mjs gpt-6-astra --emit claude-env -f  # ~/.claude/settings.json 的 
 
 - **只采信厂商官方文档**（官方模型页 / API 文档 / 定价页）。聚合站、中转商后台、论坛不作为来源。
 - **`null` = 官方未文档化**，不是「等于 0」；渲染为 `未知/not documented`。宁可留空，绝不臆造数值。
-- **`verified`**：`true` 表示已与官方文档逐项核验（317/337）；`false` 表示来源间接或待核验，卡片会显式提示。
+- **`verified`**：`true` 表示已与官方文档逐项核验（318/338）；`false` 表示来源间接或待核验，卡片会显式提示。
 - **`confidence`**（`high`/`medium`/`low`）配合 `sources` 使用，来源可逐条追溯。
 - 生命周期与 `legacy_ids` 记录退役、中转沿用 id 的历史；**退役模型的规格为退役前规格**。
 

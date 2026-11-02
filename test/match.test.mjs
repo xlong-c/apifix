@@ -150,15 +150,24 @@ test("厂商前缀：vendor/<id> 全量归一化命中（新增厂商无需改�
 
 test("厂商前缀：stepfun/step-5-preview（回归用例）", () => {
   const r = matchModel(catalog, "stepfun/step-5-preview");
-  assertHit(r, "normalized", "step-5-preview");
+  assertHit(r, "alias", "step-5-preview");
 });
 
-test("短缩写：step5 → 前缀匹配建议（仅建议，不自动纠错）", () => {
-  const r = matchModel(catalog, "step5");
-  assert.equal(r.entry, null);
-  assert.equal(r.kind, "none");
-  assert.equal(r.suggestion, "step-5-preview");
-  assert.equal(r.suggestionKind, "prefix");
+test("短缩写：step5 / step 5 → 前缀匹配建议（仅建议，不自动纠错）", () => {
+  for (const input of ["step5", "step 5", "step-5"]) {
+    const r = matchModel(catalog, input);
+    assert.equal(r.entry, null);
+    assert.equal(r.kind, "none");
+    assert.equal(r.suggestion, "step-5-preview");
+    assert.equal(r.suggestionKind, "prefix");
+  }
+});
+
+test("云知声 u2-flash：精确 / 别名 / 中转前缀命中", () => {
+  assertHit(matchModel(catalog, "u2-flash"), "exact", "u2-flash");
+  assertHit(matchModel(catalog, "u2 flash"), "alias", "u2-flash");
+  assertHit(matchModel(catalog, "u2"), "alias", "u2-flash");
+  assertHit(matchModel(catalog, "unisound/u2-flash"), "alias", "u2-flash");
 });
 
 test("前缀建议的边界：过短输入 / 无候选都不给建议", () => {
@@ -184,9 +193,8 @@ test("严格模式：归一化写法不自动命中，只给「最接近」建�
   assert.ok(r.ops.some((op) => op.includes("relay 后缀")), "ops 应说明去掉了 relay 后缀");
 
   const vendor = matchModel(catalog, "stepfun/step-5-preview", { strict: true });
-  assert.equal(vendor.entry, null);
-  assert.equal(vendor.suggestion, "step-5-preview");
-  assert.equal(vendor.suggestionKind, "normalized");
+  assert.equal(vendor.entry.id, "step-5-preview");
+  assert.equal(vendor.kind, "alias");
 });
 
 test("默认（宽松）模式不受影响：CLI 直接查询仍解析中转写法", () => {

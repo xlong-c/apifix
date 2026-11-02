@@ -28,6 +28,7 @@ export const OFFICIAL_DOMAINS = {
   ai21: ["ai21.com"],
   stepfun: ["stepfun.com"],
   writer: ["writer.com"],
+  unisound: ["unisound.com"],
 };
 
 // 通用托管平台：host 命中还不够，路径前缀也必须命中（vendor 必须匹配）。

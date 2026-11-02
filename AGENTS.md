@@ -12,6 +12,7 @@ opencode / pi 配置片段；零依赖 Node（>= 18，ESM），内置纯静态 W
 
 ```
 apifix.mjs                 CLI 入口：参数解析、--list/--match、emit 调度、audit/fix/login 子命令、本地 UI 静态服务器
+                           UI 另提供 /api/models（嗅探）与 /api/local-config（查阅 / 注入本机配置）
 lib/core.mjs               唯一共享核心：匹配 / 卡片 / emit（浏览器与 Node 通用，零 Node API）
 ui/index.html, ui/app.js, ui/style.css
                            纯静态 UI（SPA）

@@ -1,7 +1,7 @@
 {
   "name": "apifix",
-  "version": "0.2.2",
-  "description": "模型官方参数速查与配置片段生成器（Rust + Slint 桌面应用）",
+  "version": "0.2.3",
+  "description": "模型官方参数速查与配置片段生成器（Rust + Slint 桌面应用；含兼容版 Node CLI）",
   "type": "module",
   "bin": {
     "apifix": "./apifix.mjs"
