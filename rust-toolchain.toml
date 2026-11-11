@@ -1,0 +1,5 @@
+# gpui-kit 0.9.1 锁定的 gpui-pre 0.3.12 使用了 std::hint::cold_path
+# （Rust 1.93 stable 尚未稳定），因此固定到已验证可编译的工具链。
+# 若本机没有该 toolchain，rustup 会按此文件自动安装。
+[toolchain]
+channel = "1.99.0"
