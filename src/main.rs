@@ -30,8 +30,6 @@ struct Args {
     #[arg(long)]
     canonical_id: bool,
     #[arg(long)]
-    ui: bool,
-    #[arg(long)]
     catalog: Option<String>,
     id: Option<String>,
 }
@@ -51,20 +49,45 @@ enum Command {
         #[arg(long)]
         json: bool,
     },
+    /// catalog/ 与 catalog.json 的构建与校验（仓库维护用，在仓库根目录运行）
+    Catalog {
+        #[command(subcommand)]
+        action: CatalogAction,
+    },
+}
+
+#[derive(Subcommand)]
+enum CatalogAction {
+    /// 由 catalog/ 打包生成 catalog.json
+    Build {
+        /// 只校验 catalog.json 是否最新（不一致 exit 1）
+        #[arg(long)]
+        check: bool,
+        /// 只打印摘要，不写入 catalog.json
+        #[arg(long = "dry-run")]
+        dry_run: bool,
+    },
+    /// 校验 catalog/ 结构、schema、id 唯一、来源白名单，以及与 catalog.json 的一致性
+    Validate {
+        /// 校验指定的 bundle 文件（兼容旧用法）；省略则校验 catalog/ + catalog.json
+        file: Option<String>,
+    },
 }
 
 fn main() {
-    if let Err(error) = run() {
+    let args = Args::parse();
+    let wants_gui =
+        args.command.is_none() && !args.list && args.match_file.is_none() && args.id.is_none();
+
+    if let Err(error) = run(args, wants_gui) {
         eprintln!("apifix: error: {error}");
-        std::process::exit(2);
+        // GUI 启动失败（典型：GPU 不可用）单独用 exit 1，与用法错误 exit 2 区分。
+        std::process::exit(if wants_gui { 1 } else { 2 });
     }
 }
 
-fn run() -> Result<(), String> {
-    let args = Args::parse();
-    if args.ui
-        || (args.command.is_none() && !args.list && args.match_file.is_none() && args.id.is_none())
-    {
+fn run(args: Args, wants_gui: bool) -> Result<(), String> {
+    if wants_gui {
         return gui::run();
     }
     let catalog = if let Some(path) = args.catalog {
@@ -73,6 +96,19 @@ fn run() -> Result<(), String> {
         catalog::load_bundled()?
     };
     match args.command {
+        Some(Command::Catalog { action }) => {
+            // catalog 维护命令直接读写仓库内的 catalog/ 与 catalog.json，与内嵌数据无关。
+            let root = std::env::current_dir().map_err(|error| error.to_string())?;
+            let code = match action {
+                CatalogAction::Build { check, dry_run } => {
+                    apifix::catalog_tools::command_build(&root, check, dry_run)
+                }
+                CatalogAction::Validate { file } => {
+                    apifix::catalog_tools::command_validate(&root, file.as_deref())
+                }
+            };
+            std::process::exit(code);
+        }
         Some(Command::Audit { file, format, json }) => {
             let text = if file == "-" {
                 let mut text = String::new();

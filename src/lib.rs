@@ -1,4 +1,5 @@
 pub mod catalog;
+pub mod catalog_tools;
 pub mod config;
 pub mod extra;
 pub mod matching;
