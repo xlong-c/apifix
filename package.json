@@ -1,6 +1,6 @@
 {
   "name": "apifix",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "private": true,
   "description": "模型官方参数速查与配置片段生成器（Rust + GPUI 桌面应用）",
   "type": "module",
