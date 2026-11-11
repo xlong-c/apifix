@@ -1,5 +1,9 @@
 # Rust + Slint Migration Implementation Plan
 
+> **已废弃（2026-11-11）**：桌面 GUI 已从 Slint 整体迁移到 GPUI（gpui-kit）。
+> 迁移设计与落地记录见 [2026-11-11-gpui-migration-design.md](2026-11-11-gpui-migration-design.md)。
+> 本文保留作历史记录；其中 `ui/app.slint`、`build.rs`、Slint 依赖均已删除。
+
 > **For Claude:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task.
 
 **Goal:** Replace apifix's Node CLI and browser UI with a Rust CLI and native Slint desktop application while preserving catalog data and documented behavior.

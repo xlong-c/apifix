@@ -1,5 +1,9 @@
 # Rust + Slint Migration Inventory
 
+> **已废弃（2026-11-11）**：GUI 已从 Slint 迁移到 GPUI，见
+> [2026-11-11-gpui-migration-design.md](2026-11-11-gpui-migration-design.md)。
+> 本文的「Rust + Slint status」列保留作历史对照。
+
 Snapshot: 2026-11-02
 
 ## Runtime and Command Coverage

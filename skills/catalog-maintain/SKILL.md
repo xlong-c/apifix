@@ -74,8 +74,8 @@ description: 维护 apifix 的模型目录：新增或更新模型规格与定�
 ```bash
 node tools/merge-catalog.mjs --dry-run   # 先看报告（去重、range 转换、cost 写入）
 node tools/merge-catalog.mjs             # 写回 catalog.json
-node tools/validate-catalog.mjs          # 必须 0 error（CI 也跑这个）
-node apifix.mjs <你的 id>                # 冒烟
+cargo run -- catalog validate            # 必须 0 error（CI 也跑这个）
+cargo run -- <你的 id>                   # 冒烟
 git diff catalog.json                    # 只应出现预期条目
 ```
 
@@ -97,14 +97,14 @@ git diff catalog.json                    # 只应出现预期条目
 
 ## PR 前检查清单
 
-- [ ] 只改必要文件（`incoming/*.json`、`catalog.json`，必要时 `apifix.mjs` / `lib/core.mjs` / README）
+- [ ] 只改必要文件（`incoming/*.json`、`catalog/<vendor>.json`，必要时 `src/` 与 README）
 - [ ] 条目只引用官方文档，`sources` 为可访问的 http(s) 链接；未文档化的值写 `null`
 - [ ] 定价文件放在 `incoming/pricing-*.json`，`unit` 为 `per_1m_tokens`、币种 USD
-- [ ] `for f in apifix.mjs lib/*.mjs tools/*.mjs; do node --check "$f"; done` 通过
-- [ ] `node tools/validate-catalog.mjs` 0 error；`node apifix.mjs <id>` 输出符合预期
+- [ ] `cargo fmt --check` 与 `cargo clippy --all-targets -- -D warnings` 通过
+- [ ] `cargo run -- catalog validate` 0 error；`cargo run -- <id>` 输出符合预期
 - [ ] legacy id 有 `legacy_ids` note；PR 描述写清依据的官方页面
 
 ## 其他
 
-- 改了 `lib/core.mjs` 的 emit 逻辑，必须同步改 `ui/fallback.mjs`（两者逐字节一致，跑 `node tools/parity-check.mjs`）。
+- 改了 `src/render.rs` / `src/extra.rs` 的 emit 逻辑，必须保持不带 `-f` 的输出字节不变（不变量 2），改动前后用 `diff` 对拍。
 - 详细规则见 `CONTRIBUTING.md`；架构与不变量见 `AGENTS.md`。

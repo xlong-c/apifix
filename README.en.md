@@ -3,11 +3,10 @@
 [中文](README.md) | [English](README.en.md)
 
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
-![rust](https://img.shields.io/badge/rust-%3E%3D1.92-orange.svg)
-![legacy node](https://img.shields.io/badge/legacy%20CLI-node%20%3E%3D18-brightgreen.svg)
+![rust](https://img.shields.io/badge/rust-%3E%3D1.99-orange.svg)
 ![models](https://img.shields.io/badge/models-338-informational.svg)
 
-apifix is migrating from Node/Web to a Rust + Slint desktop app. `cargo run` opens the native UI; the Rust CLI supports model lookup, listing, batch matching, comparison, and config snippet generation. Config audit, repair, login, and protocol scanning still use the compatibility Node CLI.
+apifix is a Rust + GPUI desktop app: `cargo run` opens the native UI, and the CLI supports model lookup, listing, batch matching, comparison, config snippet generation, and config audit. Fully local, zero network requests.
 
 ## Why you need this
 
@@ -45,188 +44,84 @@ overnight. All of this surfaces in apifix's gotchas and in the generated snippet
 
 ## Quick start
 
-Install Rust 1.92+, then install the Rust + Slint version from GitHub:
+Install Rust 1.99+ (gpui-kit needs it; `rust-toolchain.toml` pins it), then install the Rust + GPUI version from GitHub:
 
 ```bash
 cargo install --git https://github.com/xlong-c/apifix --locked
-apifix                                  # Slint desktop app
+apifix                                  # GPUI desktop app
 apifix gpt-6.1-sol                      # Rust CLI
 ```
-
-### Legacy Node CLI
-
-Audit, repair, login, and protocol scanning remain available through the compatibility Node CLI:
-
-```bash
-npm install -g --install-links=true github:xlong-c/apifix           # track the default branch (latest)
-npm install -g --install-links=true "github:xlong-c/apifix#v0.2.3"  # pin a version (recommended)
-apifix gpt-6-astra                     # legacy Node CLI lookup
-```
-
-> Why `--install-links=true` is required: npm 11 defaults `install-links` to `false`, which links
-> (junctions) git dependencies to a cache temp dir instead of packing them, and can yield an
-> incomplete package (symptom: `Cannot find module .../apifix.mjs` when running `apifix`). The flag
-> is a no-op on npm versions that already pack by default.
-> Prefer no flags? Tarball install works too:
-> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.3.tar.gz`
 
 Or clone and run from source:
 
 ```bash
 git clone https://github.com/xlong-c/apifix && cd apifix
-cargo run                              # native Rust + Slint desktop app
-cargo run -- gpt-6-astra              # Rust CLI lookup and opencode snippet
-node apifix.mjs audit <file>           # compatibility entry for audit/fix/login/protocols
-npm run legacy:web                     # legacy browser UI
+cargo run                              # native Rust + GPUI desktop app
+cargo run -- gpt-6-astra               # CLI lookup and opencode snippet
+cargo run -- audit ~/.config/opencode/opencode.json   # config audit (redacted)
 ```
 
-`npm start` also launches the Slint desktop app. Other Rust lookup, list, and emitter commands run as `cargo run -- ...`.
+`npm start` is equivalent to `cargo run` (use `cargo run -- ...` for everything else).
 
 Common commands:
 
 ```bash
-node apifix.mjs <id>                   # opencode snippet; stdout is pure JSON, notes go to stderr
-node apifix.mjs <id> --emit pi         # pi snippet; also codex|claude-env|curl|sdk
-node apifix.mjs <id> --emit codex -f   # full codex config.toml (provider block + placeholders)
-node apifix.mjs <id> -f                # full mode: adds family/status/modalities/cost, etc.
-node apifix.mjs <id> --card            # box card: full spec table + gotchas + sources
-node apifix.mjs <id> --json            # raw catalog entry (every field)
-node apifix.mjs <id> --name "GPT-6 Astra" # override the display name in the snippet
-node apifix.mjs <id> --canonical-id    # key uses the canonical ID (e.g. gpt-6-astra-free → gpt-6-astra)
-node apifix.mjs --list                 # all IDs grouped by vendor; --list --json for scripts
-node apifix.mjs --match ids.txt        # batch-match a file, one verdict per line
-node apifix.mjs fix <file> --dry-run   # preview config fixes (y applies / --yes for scripts)
-node apifix.mjs login opencode         # interactive provider setup (baseURL / protocol / key / models)
-node apifix.mjs --version | --help
+cargo run -- <id>                      # opencode snippet; stdout is pure JSON, notes go to stderr
+cargo run -- <id> --emit pi            # pi snippet; also codex|claude-env|curl|sdk
+cargo run -- <id> --emit codex -f      # full codex config.toml (provider block + placeholders)
+cargo run -- <id> -f                   # full mode: adds family/status/modalities/cost, etc.
+cargo run -- <id> --card               # spec card: full spec table + gotchas + sources
+cargo run -- <id> --json               # raw catalog entry (every field)
+cargo run -- <id> --name "GPT-6 Astra" # override the display name in the snippet
+cargo run -- <id> --canonical-id       # key uses the canonical ID (e.g. gpt-6-astra-free → gpt-6-astra)
+cargo run -- --list                    # all IDs grouped by vendor; --list --json for scripts
+cargo run -- --match ids.txt           # batch-match a file, one verdict per line
+cargo run -- search qwen               # full-text search
+cargo run -- compare <id-a> <id-b>     # side-by-side comparison
+cargo run -- audit <file>              # config audit (credentials redacted)
+cargo run -- --version | --help
 ```
 
 Exit codes: `0` success, `1` unmatched, `2` usage or file error.
 
-### Protocol overview (`protocols`)
+### Config audit (`audit`)
 
-One command to see **which protocol every provider in every tool config actually speaks**, checked
-against each model's native protocol:
+Compares the spec written in your config against the catalog's official spec field by field and reports
+`match` / `diff` / `unknown`:
 
 ```bash
-node apifix.mjs protocols            # auto-scans ~/.config/opencode, ~/.pi, ~/.claude, ~/.codex
-node apifix.mjs protocols --json     # machine-readable; --no-defaults scans only --file paths
+cargo run -- audit ~/.config/opencode/opencode.json
+cargo run -- audit ~/.pi/agent/models.json --json
+cargo run -- audit ~/.codex/config.toml            # auto-detects TOML by suffix
+cargo run -- audit ./my-config.json --format generic
 ```
 
-A protocol mismatch means the relay must translate, so parameters like `thinking`/`temperature` can
-be silently dropped ("dumbed down"). The report marks each row `✓ match` / `⚠ native X (translation
-required)` / `? protocol uncertain` and summarizes mismatching providers at the end.
-Supports opencode (`npm` + `baseURL` inference), pi (`api` field), claude-code
-(`ANTHROPIC_BASE_URL`), and codex (`wire_api` in `config.toml`); multi-protocol pipe values (e.g.
-`chat_completions|responses|anthropic_messages`) count as a match for any listed protocol.
-`@ai-sdk/openai` is a **declared interface format** (the protocol column shows `openai`, with no
-"inferred" tag): it is compared as the OpenAI family (chat_completions / responses — a match when the
-model supports either). Only a baseURL path containing `/responses` refines it to responses (a URL
-heuristic); a contradiction there is merely reported as "protocol uncertain".
+`--format {auto,opencode,pi,codex,claude,generic}` (default auto) detects by suffix and content
+(`.toml` → codex, an `env` block → claude). Output is always **credential-redacted**
+(key/token/secret → `[REDACTED]`); the command only reads the file, never writes, never goes online.
 
-Five files are scanned by default (only if present): opencode / pi `models.json` / **pi
-`models-store.json` (the model store)** / claude / codex. The model store is a tool-generated model list,
-not your hand-written config: the report **collapses it into a single row**, and its "not in the catalog"
-entries do not count as config problems (`--json` reports them separately as `store_models` /
-`store_unmapped`).
+> **Config repair** (`fix`), the interactive **add-a-provider** wizard (`login`), and **protocol scanning**
+> (`protocols`) are **not available yet**: they were removed with the legacy Node CLI and still need a
+> Rust port.
 
-### Config repair (`fix`)
-
-Turn the discrepancies `audit` reports back into the official spec with one command: it shows a diff plan,
-then asks `[y/N]` — `y` applies, `n` cancels. Both `audit` and `fix` accept
-`--format {auto,opencode,pi,codex,claude,generic}`; auto detection uses the extension and content
-(`.toml` → codex, an `env` block → claude).
+## Desktop UI (GPUI)
 
 ```bash
-node apifix.mjs fix opencode                 # ~/.config/opencode/opencode.json
-node apifix.mjs fix pi                       # ~/.pi/agent/models.json
-node apifix.mjs fix codex                    # ~/.codex/config.toml (line-level TOML rewrite)
-node apifix.mjs fix claude                   # ~/.claude/settings.json (AUTH_TOKEN never read/written)
-node apifix.mjs fix ./my-config.json         # any file: opencode / pi / codex / claude auto-detected
-node apifix.mjs fix opencode --dry-run       # show the diff plan only, write nothing
-node apifix.mjs fix opencode --yes           # skip the [y/N] prompt (for scripts)
-```
-
-Only fields documented on the official spec are changed (opencode's `limit.context`/`limit.output`/
-`reasoning`/`temperature`/`tool_call`/`attachment`/`variants` (effort levels); pi's `contextWindow`/
-`maxTokens`/`reasoning`/`thinkingLevelMap`/`input`; codex's `model_reasoning_effort` when the value is
-not an official level (changed to the documented `default_effort`) and the active provider's `wire_api`
-when it contradicts the official protocol; claude's `CLAUDE_CODE_EFFORT_LEVEL` (same level rule) and
-`MAX_THINKING_TOKENS` (clamped into the official range)). Fields your config doesn't declare are left
-alone; undocumented values are never guessed — they are skipped with a note. **Credentials
-(`apiKey`/`token`) are never touched and never echoed** — claude's `ANTHROPIC_AUTH_TOKEN` only ever
-appears as a placeholder. Before writing, a backup is saved as `<file>.bak-<timestamp>`; the write is an
-atomic replace (tmp + rename) followed by automatic re-verification. codex TOML is rewritten at the
-**line level** — only the target value's character span changes; comments, indentation, CRLF and every
-other byte stay untouched. `--json` gives machine-readable output, and `--no-backup` turns the automatic
-backup off.
-
-Exit codes: `0` fixed or nothing to fix, `1` differences exist but were not applied (cancelled / `--dry-run`),
-`2` usage or read error.
-
-### Add a provider (`login`)
-
-A guided wizard that writes a new provider into your opencode config: provider name → base URL → API
-protocol → API key (entered silently, never echoed) → model selection → set as default (optional) →
-confirm and write.
-
-```bash
-node apifix.mjs login opencode            # interactive wizard, writes ~/.config/opencode/opencode.json
-node apifix.mjs login opencode myrelay    # pick the provider name up front
-```
-
-Model selection **auto-detects** by default: it requests `{baseURL}/models` (5s timeout) and lists the
-available IDs for numbered selection; on failure or with `--no-fetch` it falls back to manual input. Matched
-models automatically carry the official catalog spec (unmatched ones get a minimal `{name: id}` entry you can
-repair later with `apifix fix`). An existing provider with the same name asks before overwriting; in
-non-interactive mode, supply `--base-url`/`--api-key`/`--model` to skip all prompts (for scripts; writing
-still requires `--yes`).
-
-```bash
-# one-shot non-interactive (scripts / CI)
-node apifix.mjs login oc myrelay --base-url https://api.example.com/v1 \
-  --api-key sk-xxx --model gpt-6-astra,deepseek-flash --yes
-```
-
-Writing reuses fix's safety pipeline: automatic backup, atomic replace, post-write re-verification; the API
-key lands only in `options.apiKey` and every output (including `--json`) shows a mask. This is the **only**
-command in the project that makes a network request (and only to the base URL you entered); everything else
-stays offline.
-
-Exit codes: `0` written, `1` cancelled / re-verification mismatch, `2` usage or read error.
-
-## Desktop UI (Slint)
-
-```bash
-npm start
-# or cargo run
+cargo run
+# or npm start
 ```
 
 Single-model lookup and specification details:
 
-![Slint desktop app: model specification and config snippet](docs/screenshots/slint-model-lookup.png)
+![GPUI desktop app: model specification and config snippet](docs/screenshots/gpui-model-lookup.png)
 
 Batch matching:
 
-![Slint desktop app: batch model matching](docs/screenshots/slint-batch-lookup.png)
+![GPUI desktop app: batch model matching](docs/screenshots/gpui-batch-lookup.png)
 
-The legacy browser UI remains available through `npm run legacy:web`. Its local server can inspect and edit OpenCode, Pi, Codex, and Claude Code configurations, mask credentials, and back up files before model injection.
+The legacy browser UI and Node CLI have been removed; the desktop app is the only GUI entry point.
 
-## Web UI (legacy)
-
-![apifix Web UI](docs/ui.png)
-
-- **Single lookup**: three panes — filters by vendor / lifecycle on the left, a result list with match cards in
-  the middle, and details on the right (spec table, gotchas, opencode / pi snippet tabs with a
-  **minimal / full** toggle).
-- **Batch parse**: paste a list of IDs and get a match verdict plus the resolved entry for each line.
-
-![Batch parse](docs/batch.png)
-
-It binds `127.0.0.1` only and serves just `/`, `/ui/*`, `/lib/*`, and `/catalog.json`. If the port is taken it
-retries at +1 (up to +10).
-
-The UI is **fully static** (`ui/` + `lib/core.mjs` + `catalog.json`), so publishing the repo root as a site root
-is enough to run it on GitHub Pages: the root `index.html` redirects to `/ui/`.
+> **GPU requirement**: GPUI is a GPU-rendered framework with no software-rendering fallback. When no usable GPU is present (no graphics card, VM, remote desktop without GPU passthrough, Linux without a Vulkan driver, …) the window fails to open; the program prints a hint and exits with code 1. Use the CLI (`cargo run -- <model-id>`) instead.
 
 ## Coverage
 
@@ -253,13 +148,13 @@ reference, not a live quote.
 
 **Two contexts, with different strictness:**
 
-- **Config recognition** (`audit` / `fix` / `protocols` reading a model id from a config file):
+- **Config recognition** (`audit` reading a model id from a config file):
   **only id / aliases / legacy ids count** — the chain is `id → model → interface → params`. Normalized
   forms (`glm-5.3-flash-free`, `stepfun/step-5-preview`) get a "closest match" suggestion only and never
   inherit the official spec automatically (a relay variant may be a different model). Relay-invented
   names (e.g. `MiniMaxAI/MiniMax-M2`) are **registered explicitly as `aliases`** — the anchor is a
   curated fact, not a guess.
-- **Direct lookups** (`apifix <id>` / `--match` / the UI / `login`): after id / alias / legacy it tries
+- **Direct lookups** (`apifix <id>` / `--match` / the desktop UI): after id / alias / legacy it tries
   stripping the vendor prefix (`openai/`, `anthropic/`, `meta/`, `google/`, `z-ai/`, `stepfun/`, and more —
   a static alias list plus **every vendor from the catalog is added automatically**), stripping relay
   suffixes (`-free`, `-preview`, `-exp`, `-latest`, `-build`, `-contributor`, `-vision-exp`,
@@ -300,10 +195,10 @@ opencode/pi add the full field set; codex prints a complete `config.toml`
 use. `--card`/`--json`/`--list`/`--match` already show complete data.
 
 ```bash
-node apifix.mjs gpt-6-astra -f                    # full opencode mode (with cost)
-node apifix.mjs gpt-6-astra --emit pi -f          # full pi mode
-node apifix.mjs gpt-6-astra --emit codex -f       # full codex config.toml (with provider block)
-node apifix.mjs gpt-6-astra --emit claude-env -f  # env block for ~/.claude/settings.json
+cargo run -- gpt-6-astra -f                    # full opencode mode (with cost)
+cargo run -- gpt-6-astra --emit pi -f          # full pi mode
+cargo run -- gpt-6-astra --emit codex -f       # full codex config.toml (with provider block)
+cargo run -- gpt-6-astra --emit claude-env -f  # env block for ~/.claude/settings.json
 ```
 
 ## Data provenance and trust
@@ -324,21 +219,19 @@ in `curl`/`sdk` snippets need environment variables you set yourself.
 
 ```
 apifix/
-├── Cargo.toml        Rust CLI + Slint desktop app
-├── src/              Rust catalog, matching, rendering, and UI modules
-├── ui/app.slint      Native Slint interface
-├── apifix.mjs        Compatibility Node CLI + legacy Web UI
-├── lib/core.mjs      Compatibility shared core (pure ESM)
-├── ui/               Legacy static Web UI
+├── Cargo.toml        Rust CLI + GPUI desktop app
+├── rust-toolchain.toml  Pins Rust 1.99 (required by gpui-kit)
+├── src/              Rust catalog, matching, rendering, audit, and catalog-tooling modules
+├── src/gui.rs        GPUI desktop interface (single lookup + batch parsing)
+├── src/catalog_tools.rs  catalog/ ↔ catalog.json build + validation
 ├── catalog/          Source of truth: one file per vendor (catalog/<vendor>.json, edit these)
-├── catalog.json      **Generated** bundle built from catalog/ (CLI/UI read this; do not hand-edit)
-├── tools/            Build + merge + validate scripts (used by CI)
+├── catalog.json      **Generated** bundle built from catalog/ (do not hand-edit)
+├── tools/            Incoming-batch merge script only (merge-catalog.mjs, Node)
 ├── incoming/         Raw research batches (traceable provenance)
-├── legacy-python/    Original Python implementation (reference only)
 └── skills/           Companion AI skills (model-spec-lookup / catalog-maintain)
 ```
 
-To change data: edit `catalog/<vendor>.json` → run `npm run build` to regenerate `catalog.json`
+To change data: edit `catalog/<vendor>.json` → run `cargo run -- catalog build` to regenerate `catalog.json`
 (see [CONTRIBUTING.md](CONTRIBUTING.md)).
 
 ## FAQ
@@ -358,9 +251,8 @@ Prices come from official pricing pages, are stamped with `as_of`, and carry a `
 converted at a 1 USD = 7.2 CNY reference rate, with originals preserved in `cost.note`.
 
 **Does it read or upload my config?**
-Locally only, and never over the network: `audit` / `fix` read the config file you point them at, and
-`protocols` scans known paths by default (`--file` for explicit paths). Credential fields are stripped at
-extraction time and never echoed in any output; `fix` backs up the file before writing.
+Locally only, and never over the network: `audit` reads the config file you point it at. Credential fields
+are stripped at extraction time and never echoed in any output. The project makes no network requests at all.
 
 **How does it relate to cc-switch?**
 It doesn't — no dependency either way. The generated snippets paste straight into your relay config, so the two
@@ -368,7 +260,7 @@ can be used together.
 
 **How do I add or fix a model?**
 See [CONTRIBUTING.md](CONTRIBUTING.md): drop research into `incoming/`, run `npm run merge`, then
-`npm run validate` (CI runs it on every push/PR).
+`cargo run -- catalog validate` (CI runs it on every push/PR).
 
 ## Contributing
 

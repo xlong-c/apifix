@@ -12,21 +12,21 @@ description: 查询 LLM 模型的官方参数规格（上下文窗口、最大�
 relay 上配置模型需要粘贴片段；怀疑模型被「降智」或参数不生效；把中转 ID
 （`gpt-6-astra-free`、`openai/gpt-6-astra`）对照官网规范 ID。
 
-**前置条件**：`git clone` 本仓库 + Node.js >= 18，在仓库根目录跑 `node apifix.mjs`；
+**前置条件**：`git clone` 本仓库 + Rust 1.99（`rust-toolchain.toml` 已固定），在仓库根目录跑 `cargo run --`；
 全局安装过则用 `apifix <id>`。**离线可用**，不联网、不读本地客户端配置。
 
 ## 怎么跑
 
 ```bash
-node apifix.mjs <id>                 # 默认输出 opencode 片段（最小字段集）
-node apifix.mjs <id> --emit pi       # pi 片段（也支持 codex / claude-env / curl / sdk）
-node apifix.mjs <id> --emit codex -f        # 完整 codex config.toml（provider 段 + 占位符）
-node apifix.mjs <id> --emit claude-env -f   # ~/.claude/settings.json 的 env 块（占位符）
-node apifix.mjs <id> --canonical-id  # key 用官网规范 id（修正中转旧名）
-node apifix.mjs <id> --card          # 完整规格卡片（含 gotchas / sources）
-node apifix.mjs <id> --json          # catalog 原始条目（含 pricing 元数据）
-node apifix.mjs <id> -f              # 完整模式：追加 cost / status / modalities
-node apifix.mjs --match ids.txt      # 批量逐行匹配
+cargo run -- <id>                 # 默认输出 opencode 片段（最小字段集）
+cargo run -- <id> --emit pi       # pi 片段（也支持 codex / claude-env / curl / sdk）
+cargo run -- <id> --emit codex -f        # 完整 codex config.toml（provider 段 + 占位符）
+cargo run -- <id> --emit claude-env -f   # ~/.claude/settings.json 的 env 块（占位符）
+cargo run -- <id> --canonical-id  # key 用官网规范 id（修正中转旧名）
+cargo run -- <id> --card          # 完整规格卡片（含 gotchas / sources）
+cargo run -- <id> --json          # catalog 原始条目（含 pricing 元数据）
+cargo run -- <id> -f              # 完整模式：追加 cost / status / modalities
+cargo run -- --match ids.txt      # 批量逐行匹配
 ```
 
 退出码：`0` 成功、`1` 未收录（`<id>` 与 `--match`）、`2` 用法/文件错误。
@@ -49,7 +49,7 @@ node apifix.mjs --match ids.txt      # 批量逐行匹配
 **1）中转写法 → 官网规格**（stderr 提示不影响 stdout 可粘贴性）：
 
 ```bash
-$ node apifix.mjs gpt-6-astra-free
+$ cargo run -- gpt-6-astra-free
 [i] gpt-6-astra-free -> 官网规范 id gpt-6-astra（值采用官方规格，去除 relay 后缀 -free）
 { "gpt-6-astra-free": { "attachment": true,
     "limit": { "context": 1050000, "output": 128000 }, "name": "gpt-6-astra-free",
@@ -65,7 +65,7 @@ key 仍是输入 id（可直接替换中转配置），数值来自官网条目 
 
 ```bash
 $ printf 'gpt-6-astra\ngpt_6_astra\nopenai/gpt-6-astra\ngpt-6-astra-free\ngpt-6-astra-preview\n' > ids.txt
-$ node apifix.mjs --match ids.txt
+$ cargo run -- --match ids.txt
 [OK] gpt-6-astra            -> gpt-6-astra
 [~] gpt_6_astra             -> gpt-6-astra（分隔符等价匹配 (-/./_ 视为相同)）
 [~] openai/gpt-6-astra      -> gpt-6-astra（去除厂商前缀 openai/）
@@ -78,11 +78,11 @@ $ node apifix.mjs --match ids.txt
 **3）看踩坑点与定价**（配置前必查）：
 
 ```bash
-$ node apifix.mjs gpt-6-astra --card   # 卡片尾部给出 gotchas 与 sources
+$ cargo run -- gpt-6-astra --card   # 卡片尾部给出 gotchas 与 sources
 [!] reasoning.effort 'none' 返回 400（不支持 none/minimal）
 [!] 工具调用必须用 Responses API；Chat Completions 不支持 tools
 
-$ node apifix.mjs gpt-6-astra -f       # cost 只在 -f 输出，USD / 每 1M tokens
+$ cargo run -- gpt-6-astra -f       # cost 只在 -f 输出，USD / 每 1M tokens
 "cost": { "input": 10, "output": 50, "cache_read": 1, "cache_write": 12.5,
           "context_over_200k": { "input": 20, "output": 75 } }
 ```

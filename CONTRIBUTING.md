@@ -7,7 +7,7 @@ apifix 的模型目录（`catalog.json`）是**人工核验的静态快照**。�
 1. **只引用官方文档**：厂商官方文档 / 官方模型页 / 官方定价页。博客、聚合站、中转站后台、
    论坛帖子**不能**作为规格来源。云平台（AWS / Azure / Vertex）文档对**非**云厂商的模型
    不能作为来源（例外：`vendor` 为 `amazon` / `microsoft` 时，其自有云文档即第一方文档）。
-   完整规则见下方「来源白名单」，`tools/validate-catalog.mjs` 会强制校验。
+   完整规则见下方「来源白名单」，``cargo run -- catalog validate`` 会强制校验。
 2. **未文档化就留 null**：不猜、不抄本地配置、不抄中转商页面。`null` 表示「官方未文档化」，
    渲染时会显示 `未知/not documented`。
 3. **不确定就降 confidence**：`high`（官方文档明确）/ `medium`（多源交叉推断）/
@@ -18,7 +18,7 @@ apifix 的模型目录（`catalog.json`）是**人工核验的静态快照**。�
 ### 来源白名单
 
 `sources` 只接受**第一方厂商域名**（host 等于后缀或为其子域）。判定规则由
-`tools/validate-catalog.mjs` 的 `checkSources` 执行，违规会以
+``cargo run -- catalog validate`` 的 `checkSources` 执行，违规会以
 `<id>: sources 含非官方来源 <url>（vendor=<vendor>）` 报 error。
 
 - 云平台文档（`docs.aws.amazon.com`、`learn.microsoft.com`、`ai.azure.com`）**不是**
@@ -56,9 +56,9 @@ apifix 的模型目录（`catalog.json`）是**人工核验的静态快照**。�
 
 ## 如何新增一个模型
 
-> **编辑 `catalog/<vendor>.json`，然后运行 `npm run build`。**
+> **编辑 `catalog/<vendor>.json`，然后运行 `cargo run -- catalog build`。**
 > `catalog/` 是唯一数据源（一厂商一文件，手工编辑这里）；`catalog.json` 是**生成物**，
-> **不要手工编辑**。CI 会运行 `node tools/build-catalog.mjs --check`，
+> **不要手工编辑**。CI 会运行 `cargo run -- catalog build --check`，
 > 改了 `catalog/` 却忘记 rebuild 的 PR 会直接失败。
 
 1. 在 `incoming/` 下新建批次文件（或追加到已有批次），结构：
@@ -104,11 +104,11 @@ apifix 的模型目录（`catalog.json`）是**人工核验的静态快照**。�
 4. 直接编辑 `catalog/<vendor>.json`（推荐）或改完批次后跑 merge，然后重建 + 自检：
 
    ```bash
-   npm run build                            # catalog/ → catalog.json（生成物）
-   node tools/build-catalog.mjs --check     # 确认 catalog.json 与 catalog/ 一致
-   node tools/validate-catalog.mjs          # 结构 + 来源白名单 + bundle 一致性
-   node apifix.mjs --list | head
-   node apifix.mjs <你的模型 id>
+   cargo run -- catalog build               # catalog/ → catalog.json（生成物）
+   cargo run -- catalog build --check       # 确认 catalog.json 与 catalog/ 一致
+   cargo run -- catalog validate            # 结构 + 来源白名单 + bundle 一致性
+   cargo run -- --list | head
+   cargo run -- <你的模型 id>
    ```
 
    厂商文件格式：`{"vendor": "<vendor>", "updated_at": "YYYY-MM-DD", "models": [ ... ]}`；
@@ -153,7 +153,7 @@ merge 会原样保留你写的那一侧：
   如 `{"condition": "输入长度(32,128]", "input": 0.6667, "output": 3.3333}`。
 
 每个档位对象都必须有数值 `input` / `output`；`cache_read` / `cache_write` 可选（数值）。
-`tiers` 属于 catalog 元数据，**不会**出现在 `apifix.mjs -f` 的 opencode 片段里。
+`tiers` 属于 catalog 元数据，**不会**出现在 `cargo run -- <id> -f` 的 opencode 片段里。
 
 其余规则：
 
@@ -177,19 +177,19 @@ merge 会原样保留你写的那一侧：
 }
 ```
 
-`node apifix.mjs <id> -f` 会把 `cost` 输出为 opencode 的 cost 片段（仅 `input`/`output`/
+`cargo run -- <id> -f` 会把 `cost` 输出为 opencode 的 cost 片段（仅 `input`/`output`/
 `cache_read`/`cache_write`/`context_over_200k`，空值键省略；`input`/`output` 缺一即整体不输出）。
 
 ## PR 检查清单
 
-- [ ] 只改必要文件（`incoming/*.json`、`catalog/<vendor>.json`，必要时 `apifix.mjs` / `lib/core.mjs` / README）
-- [ ] 改过 `catalog/` 后已运行 `npm run build`（`catalog.json` 是生成物，不要手工编辑）
+- [ ] 只改必要文件（`incoming/*.json`、`catalog/<vendor>.json`，必要时 `src/` 与 README）
+- [ ] 改过 `catalog/` 后已运行 `cargo run -- catalog build`（`catalog.json` 是生成物，不要手工编辑）
 - [ ] 条目只引用官方文档，`sources` 为可访问的 http(s) 链接且通过来源白名单
 - [ ] 未文档化的值写 `null`，没有臆造数值
 - [ ] 定价文件放在 `incoming/pricing-*.json`，`unit` 为 `per_1m_tokens`、币种为 USD（或注明 CNY 原价）
-- [ ] `node --check apifix.mjs && node --check lib/core.mjs && node --check tools/*.mjs` 通过
-- [ ] `node tools/build-catalog.mjs --check` 通过（bundle 与 catalog/ 一致）
-- [ ] `node tools/validate-catalog.mjs` 0 error
-- [ ] `node apifix.mjs <id>` 输出符合预期，legacy id 有 `legacy_ids` note
+- [ ] `cargo fmt --check` 与 `cargo clippy --all-targets -- -D warnings` 通过
+- [ ] `cargo run -- catalog build --check` 通过（bundle 与 catalog/ 一致）
+- [ ] `cargo run -- catalog validate` 0 error
+- [ ] `cargo run -- <id>` 输出符合预期，legacy id 有 `legacy_ids` note
 - [ ] 条目数 / vendor / verified / 定价数有变化时，已同步 README 与 README.en 的统计数字（模型数 badge、支持范围、verified 比例）
 - [ ] PR 描述里写清依据的官方页面

@@ -3,11 +3,10 @@
 [中文](README.md) | [English](README.en.md)
 
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
-![rust](https://img.shields.io/badge/rust-%3E%3D1.92-orange.svg)
-![legacy node](https://img.shields.io/badge/legacy%20CLI-node%20%3E%3D18-brightgreen.svg)
+![rust](https://img.shields.io/badge/rust-%3E%3D1.99-orange.svg)
 ![models](https://img.shields.io/badge/models-338-informational.svg)
 
-apifix 正从 Node/Web 迁移为 Rust + Slint 桌面应用。`cargo run` 启动原生界面；Rust CLI 已支持模型查询、列表、批量匹配、比较和配置片段生成。配置审计、修复、登录和协议扫描目前仍由兼容版 Node CLI 提供。
+apifix 是 Rust + GPUI 桌面应用：`cargo run` 启动原生界面，CLI 支持模型查询、列表、批量匹配、比较、配置片段生成与配置审计。纯本地、零网络请求。
 
 ## 为什么需要它
 
@@ -38,168 +37,84 @@ apifix 正从 Node/Web 迁移为 Rust + Slint 桌面应用。`cargo run` 启动�
 
 ## 快速开始
 
-安装 Rust 1.92+，从 GitHub 安装 Rust + Slint 版本：
+安装 Rust 1.99+（gpui-kit 依赖的 gpui-pre 需要该版本；仓库内的 `rust-toolchain.toml` 已固定），从 GitHub 安装 Rust + GPUI 版本：
 
 ```bash
 cargo install --git https://github.com/xlong-c/apifix --locked
-apifix                                  # Slint 桌面应用
+apifix                                  # GPUI 桌面应用
 apifix gpt-6.1-sol                      # Rust CLI
 ```
 
-### 旧版 Node CLI
-
-审计、修复、登录与协议扫描仍通过兼容版 Node CLI 提供：
-
-```bash
-npm install -g --install-links=true github:xlong-c/apifix            # 跟随默认分支（最新）
-npm install -g --install-links=true "github:xlong-c/apifix#v0.2.3"   # 锁定版本（推荐）
-apifix gpt-6-astra                     # 旧版 Node CLI 查询
-```
-
-> 为什么必须带 `--install-links=true`：npm 11 的 `install-links` 默认为 `false`，会把 git 依赖
-> 链接（junction）到缓存临时目录而不是打包安装，可能装出不完整的包（症状：运行 `apifix` 报
-> `Cannot find module .../apifix.mjs`）。该参数在其它 npm 版本上没有副作用。
-> 不想带参数也可以用 tarball 安装：
-> `npm install -g https://github.com/xlong-c/apifix/archive/refs/tags/v0.2.3.tar.gz`
-
-或克隆源码运行：
+### 从源码运行
 
 ```bash
 git clone https://github.com/xlong-c/apifix && cd apifix
-cargo run                              # Rust + Slint 原生桌面 UI
-cargo run -- gpt-6-astra              # Rust CLI 查询并生成 opencode 片段
-node apifix.mjs audit <file>           # 兼容入口：Rust 尚未迁移的 audit/fix/login/protocols
-npm run legacy:web                     # 旧版浏览器 UI
+cargo run                              # GPUI 原生桌面 UI
+cargo run -- gpt-6-astra               # CLI 查询并生成 opencode 片段
+cargo run -- audit ~/.config/opencode/opencode.json   # 配置审计（已脱敏）
 ```
 
-`npm start` 同样启动 Slint 桌面应用；Rust CLI 的其它查询、列表与 emitter 命令可用 `cargo run -- ...` 调用。
+`npm start` 等价于 `cargo run`（其余 `cargo run -- ...` 命令直接用 cargo 即可）。
 
 常用命令：
 
 ```bash
-node apifix.mjs <id>                   # opencode 片段；stdout 是纯 JSON，提示走 stderr
-node apifix.mjs <id> --emit pi         # pi 片段；也可 codex|claude-env|curl|sdk
-node apifix.mjs <id> --emit codex -f   # 完整 codex config.toml（provider 段 + 占位符）
-node apifix.mjs <id> -f                # 完整模式：追加 family/status/modalities/cost 等
-node apifix.mjs <id> --card            # box 卡片：完整规格表 + 注意事项 + 来源
-node apifix.mjs <id> --json            # catalog 原始条目（全部字段）
-node apifix.mjs <id> --name "GPT-6 Astra" # 覆盖片段里的展示名
-node apifix.mjs <id> --canonical-id    # key 用官网规范 id（如 gpt-6-astra-free → gpt-6-astra）
-node apifix.mjs --list                 # 全部 id（按 vendor 分组）；--list --json 供脚本用
-node apifix.mjs --match ids.txt        # 逐行批量匹配，逐行给结论
-node apifix.mjs fix <file> --dry-run   # 配置差异修复预览（y 应用 / --yes 脚本用）
-node apifix.mjs login opencode         # 交互式添加供应商（baseURL/协议/key/模型）
-node apifix.mjs --version | --help
+cargo run -- <id>                      # opencode 片段；stdout 是纯 JSON，提示走 stderr
+cargo run -- <id> --emit pi            # pi 片段；也可 codex|claude-env|curl|sdk
+cargo run -- <id> --emit codex -f      # 完整 codex config.toml（provider 段 + 占位符）
+cargo run -- <id> -f                   # 完整模式：追加 family/status/modalities/cost 等
+cargo run -- <id> --card               # 规格卡片：完整规格表 + 注意事项 + 来源
+cargo run -- <id> --json               # catalog 原始条目（全部字段）
+cargo run -- <id> --name "GPT-6 Astra" # 覆盖片段里的展示名
+cargo run -- <id> --canonical-id       # key 用官网规范 id（如 gpt-6-astra-free → gpt-6-astra）
+cargo run -- --list                    # 全部 id（按 vendor 分组）；--list --json 供脚本用
+cargo run -- --match ids.txt           # 逐行批量匹配，逐行给结论
+cargo run -- search qwen               # 全文搜索
+cargo run -- compare <id-a> <id-b>     # 并排对比
+cargo run -- audit <file>              # 配置审计（凭证脱敏）
+cargo run -- --version | --help
 ```
 
 退出码：`0` 成功、`1` 未收录、`2` 用法或文件错误。
 
-### 协议总览（protocols）
+### 配置审计（audit）
 
-一条命令看清**所有工具配置里每个 provider 实际说的协议**，并对照模型的原生协议：
+把配置里写下的规格和 catalog 的官网规格逐字段对比，报出 `match` / `diff` / `unknown`：
 
 ```bash
-node apifix.mjs protocols            # 自动扫描 ~/.config/opencode、~/.pi、~/.claude、~/.codex
-node apifix.mjs protocols --json     # 机器可读；--no-defaults 只扫 --file 指定的文件
+cargo run -- audit ~/.config/opencode/opencode.json
+cargo run -- audit ~/.pi/agent/models.json --json
+cargo run -- audit ~/.codex/config.toml            # auto 按后缀识别 TOML
+cargo run -- audit ./my-config.json --format generic
 ```
 
-协议不匹配 = 中转必须做协议翻译 = `thinking`/`temperature` 等参数可能在翻译中被静默丢弃（俗称"降智"）。
-报告逐行给出 `✓ 匹配` / `⚠ 原生 X（需翻译）` / `? 协议不确定`，末尾汇总不一致的 provider 数量。
-支持 opencode（`npm` + `baseURL` 推断）、pi（`api` 字段）、claude-code（`ANTHROPIC_BASE_URL`）、
-codex（`config.toml` 的 `wire_api`）；多路协议值（如 `chat_completions|responses|anthropic_messages`）
-按"任一皆可"判定为匹配。`@ai-sdk/openai` 是**接口格式声明**（协议列显示 `openai`，不标「推断」）：
-比对时按 OpenAI 家族（chat_completions / responses）处理，模型支持其中任一即判匹配；只有 baseURL
-路径含 `/responses` 时才细化为 responses（URL 启发式），与官方不一致只提示「协议不确定」。
+`--format {auto,opencode,pi,codex,claude,generic}`（默认 auto）：按后缀与内容识别
+（`.toml` → codex、含 `env` 块 → claude）。输出已强制**凭证脱敏**
+（key/token/secret → `[REDACTED]`），本命令只读文件、不联网、不写入。
 
-默认扫描 5 个文件（存在才读）：opencode / pi `models.json` / **pi `models-store.json`（模型库）** /
-claude / codex。模型库是工具自动生成的模型清单、不是你的手写配置：报告里**折叠成一行**，其中的
-「目录未收录」也不计入配置问题（`--json` 用 `store_models` / `store_unmapped` 单独计数）。
+> 配置**修复**（`fix`）、交互式**添加供应商**（`login`）、**协议扫描**（`protocols`）目前
+> **尚未提供**：随旧 Node CLI 一起移除，后续按同样语义往 Rust 移植。
 
-### 配置修复（fix）
-
-`audit` 报出的差异，一条命令改回官网规格：先显示差异计划，再询问 `[y/N]`——`y` 应用，`n` 取消。
-`audit` 与 `fix` 都支持 `--format {auto,opencode,pi,codex,claude,generic}`；auto 按后缀与内容识别
-（`.toml` → codex、含 `env` 块 → claude）。
+## 桌面 UI（GPUI）
 
 ```bash
-node apifix.mjs fix opencode                 # ~/.config/opencode/opencode.json
-node apifix.mjs fix pi                       # ~/.pi/agent/models.json
-node apifix.mjs fix codex                    # ~/.codex/config.toml（TOML 行级回写）
-node apifix.mjs fix claude                   # ~/.claude/settings.json（AUTH_TOKEN 永不读写）
-node apifix.mjs fix ./my-config.json         # 任意文件：自动识别 opencode / pi / codex / claude
-node apifix.mjs fix opencode --dry-run       # 只看差异计划，不写入
-node apifix.mjs fix opencode --yes           # 跳过 [y/N] 询问（脚本用）
-```
-
-只改官网已文档化的规格字段（opencode 的 `limit.context`/`limit.output`/`reasoning`/`temperature`/
-`tool_call`/`attachment`/`variants`（effort 档位）；pi 的 `contextWindow`/`maxTokens`/`reasoning`/
-`thinkingLevelMap`/`input`；codex 的 `model_reasoning_effort` 不属于官方档位时改为 `default_effort`、
-当前 provider 的 `wire_api` 与官方协议不符时改写；claude 的 `CLAUDE_CODE_EFFORT_LEVEL` 非官方档位时
-改为 `default_effort`、`MAX_THINKING_TOKENS` 越界时收窄到官方区间）。配置里未声明的字段不动；
-官网未文档化的值不猜，跳过并注明。**凭证（`apiKey`/`token`）永不触碰、永不回显**——claude 的
-`ANTHROPIC_AUTH_TOKEN` 在任何输出里都只以占位符形态出现。写入前自动备份为
-`<file>.bak-<时间戳>`，经临时文件原子替换，写后自动复验；codex 的 TOML 走**行级回写**——只重写
-目标值的字符区间，注释 / 缩进 / CRLF 等其余字节一律不动。`--json` 输出机器可读结果，
-`--no-backup` 关闭自动备份。
-
-退出码：`0` 已修复或无需修复、`1` 存在差异但未应用（取消 / `--dry-run`）、`2` 用法或读取错误。
-
-### 添加供应商（login）
-
-一条向导把新供应商写进 opencode 配置：provider 名称 → baseURL → API 格式 → API key（静默输入，
-不回显）→ 模型选择 → 设为默认（可选）→ 确认写入。
-
-```bash
-node apifix.mjs login opencode            # 交互式向导，写入 ~/.config/opencode/opencode.json
-node apifix.mjs login opencode myrelay    # 指定 provider 名称
-```
-
-模型选择默认**自动检测**：请求 `{baseURL}/models`（5s 超时），列出可用 id 供编号选择；
-检测失败或加 `--no-fetch` 转手动输入。命中的模型自动带出 catalog 官网规格（未收录的写
-`{name: id}` 最小条目，可后续 `apifix fix` 修正）。已有同名 provider 会询问覆盖；非交互
-模式给全 `--base-url`/`--api-key`/`--model` 可跳过一切提示（脚本用，写入仍需 `--yes`）。
-
-```bash
-# 非交互一步到位（脚本/CI 用）
-node apifix.mjs login oc myrelay --base-url https://api.example.com/v1 \
-  --api-key sk-xxx --model gpt-6-astra,deepseek-flash --yes
-```
-
-写入复用 fix 的安全管道：自动备份、原子替换、写后复验；API key 只写 `options.apiKey`，
-任何输出（含 `--json`）只显示掩码。这是全项目**唯一**会发起网络请求的命令（只请求你自己
-填写的 baseURL）；其余命令依旧零网络。
-
-退出码：`0` 已写入、`1` 取消 / 复验有差异、`2` 用法或读取错误。
-
-## 桌面 UI（Slint）
-
-```bash
-npm start
-# 或 cargo run
+cargo run
+# 或 npm start
 ```
 
 单条查询与规格详情：
 
-![Slint 桌面版：模型规格与配置片段](docs/screenshots/slint-model-lookup.png)
+![GPUI 桌面版：模型规格与配置片段](docs/screenshots/gpui-model-lookup.png)
 
 批量解析：
 
-![Slint 桌面版：批量模型匹配](docs/screenshots/slint-batch-lookup.png)
+![GPUI 桌面版：批量模型匹配](docs/screenshots/gpui-batch-lookup.png)
 
-旧版浏览器 UI 保留为兼容入口：`npm run legacy:web`。
+旧版浏览器 UI 与 Node CLI 已移除；桌面版就是唯一 GUI 入口。
 
-## Web UI（旧版）
-
-![apifix Web UI](docs/ui.png)
-
-- **单条查询**：三栏布局——左侧按 vendor / 生命周期筛选，中间结果列表（含匹配卡片），右侧详情（规格表、注意事项、opencode / pi 片段，带**精简 / 完整**切换）。
-- **批量解析**：粘贴一批 id，一次给出每行的匹配结论与命中项。
-
-![批量解析](docs/batch.png)
-
-兼容版 Web UI 通过本机服务查阅 OpenCode / Pi / Codex / Claude Code 配置，并支持配置片段编辑和模型注入；凭证在界面中脱敏，写入前自动备份。服务只监听 `127.0.0.1`，端口被占用时自动 +1 重试（最多 +10）。
-
-兼容版查询页仍可部署到 GitHub Pages；本机配置查阅与写入仅在 `npm run legacy:web` 下可用。
+> **GPU 要求**：GPUI 是 GPU 渲染框架，没有软件渲染降级。GPU 不可用（无显卡、虚拟机、
+> 远程桌面未直通、Linux 缺 Vulkan 驱动等）时窗口创建失败，程序会打印提示并以退出码 1 结束，
+> 此时请改用 CLI（`cargo run -- <model-id>`）。
 
 ## 支持范围
 
@@ -225,12 +140,12 @@ npm start
 
 **分两种场景，严格程度不同：**
 
-- **配置识别**（`audit` / `fix` / `protocols` 读取配置里的模型 id）：**只认 id / 别名 / legacy**——
+- **配置识别**（`audit` 读取配置里的模型 id）：**只认 id / 别名 / legacy**——
   链路是 `id → 模型 → 识别接口 → 修复参数`。归一化写法（`glm-5.3-flash-free`、`stepfun/step-5-preview`）
   只给「最接近」建议，**不会自动套用官网规格**（中转变体可能是另一个型号，宁可让人确认）。
   中转自造的名字（如 `MiniMaxAI/MiniMax-M2`）在 catalog 里**显式登记为 `aliases`** 做锚定——
   锚点是登记的事实，不靠算法猜。
-- **直接查询**（`apifix <id>` / `--match` / UI / `login`）：在 id / 别名 / legacy 之外，依次尝试
+- **直接查询**（`apifix <id>` / `--match` / 桌面 UI）：在 id / 别名 / legacy 之外，依次尝试
   去厂商前缀（`openai/`、`anthropic/`、`meta/`、`google/`、`z-ai/`、`stepfun/` 等——静态别名表 +
   **目录内 vendor 自动并入**，新增厂商无需改代码）→ 去 relay 后缀（`-free`、`-preview`、`-exp`、
   `-latest`、`-build`、`-contributor`、`-vision-exp`、`-expires-on-*`、`-ga-*`、`-YYYYMMDD`、`-vN`）→
@@ -266,10 +181,10 @@ codex 输出完整 `config.toml`（`model_provider` + `[model_providers.x]` 段�
 `--card`/`--json`/`--list`/`--match` 本就展示完整数据。
 
 ```bash
-node apifix.mjs gpt-6-astra -f                    # opencode 完整模式（含 cost）
-node apifix.mjs gpt-6-astra --emit pi -f          # pi 完整模式
-node apifix.mjs gpt-6-astra --emit codex -f       # 完整 codex config.toml（含 provider 段）
-node apifix.mjs gpt-6-astra --emit claude-env -f  # ~/.claude/settings.json 的 env 块
+cargo run -- gpt-6-astra -f                    # opencode 完整模式（含 cost）
+cargo run -- gpt-6-astra --emit pi -f          # pi 完整模式
+cargo run -- gpt-6-astra --emit codex -f       # 完整 codex config.toml（含 provider 段）
+cargo run -- gpt-6-astra --emit claude-env -f  # ~/.claude/settings.json 的 env 块
 ```
 
 ## 数据来源与可信度
@@ -287,21 +202,19 @@ node apifix.mjs gpt-6-astra --emit claude-env -f  # ~/.claude/settings.json 的 
 
 ```
 apifix/
-├── Cargo.toml        Rust CLI + Slint 桌面应用
+├── Cargo.toml        Rust CLI + GPUI 桌面应用
+├── rust-toolchain.toml  固定 Rust 1.99（gpui-kit 所需）
+├── src/gui.rs        GPUI 桌面界面（单条查询 + 批量解析）
 ├── src/              Rust 目录、匹配、渲染与 UI 模块
-├── ui/app.slint      Slint 原生界面
-├── apifix.mjs        兼容版 Node CLI + 旧 Web UI
-├── lib/core.mjs      兼容版共享核心（纯 ESM）
-├── ui/               旧版纯静态 Web UI
+├── src/catalog_tools.rs  catalog/ ↔ catalog.json 构建与校验（取代旧 Node 脚本）
 ├── catalog/          数据源：一厂商一文件（catalog/<vendor>.json，手工编辑这里）
-├── catalog.json      **生成物**：由 catalog/ 打包的 bundle（CLI/UI 只读它，勿手工编辑）
-├── tools/            打包 + 合并 + 校验脚本（CI 用）
+├── catalog.json      **生成物**：由 catalog/ 打包的 bundle（勿手工编辑）
+├── tools/            仅剩 incoming 批次合并脚本（merge-catalog.mjs，Node）
 ├── incoming/         原始调研批次（可追溯数据来源）
-├── legacy-python/    初版 Python 实现（仅参考）
 └── skills/           配套 AI 技能（model-spec-lookup / catalog-maintain）
 ```
 
-改数据：编辑 `catalog/<vendor>.json` → `npm run build` 重建 `catalog.json`（详见
+改数据：编辑 `catalog/<vendor>.json` → `cargo run -- catalog build` 重建 `catalog.json`（详见
 [CONTRIBUTING.md](CONTRIBUTING.md)）。
 
 ## 常见问题
@@ -327,7 +240,7 @@ apifix/
 
 **怎么新增或修正一个模型？**
 见 [CONTRIBUTING.md](CONTRIBUTING.md)：调研结果落到 `incoming/` 批次，跑 `npm run merge` 合并、
-`npm run validate` 校验（CI 每次 push/PR 都会跑）。
+`cargo run -- catalog validate` 校验（CI 每次 push/PR 都会跑）。
 
 ## 参与贡献
 
