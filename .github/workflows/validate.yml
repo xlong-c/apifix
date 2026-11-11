@@ -84,10 +84,12 @@ jobs:
           cargo run --quiet --locked -- search qwen > /dev/null
           cargo run --quiet --locked -- compare "$FIRST" "$SECOND" > /dev/null
 
-      # 配置审计：fixtures 均为假 key（sk-TEST），不会触碰真实用户配置
+      # 配置审计：fixtures 均为假 key（sk-TEST），不会触碰真实用户配置。
+      # 夹具本身是「有差异的配置」，audit 发现差异时按设计返回 1，故 0/1 都算通过，
+      # 只有用法/读取错误（2）才失败。
       - name: Smoke test (audit)
         run: |
-          cargo run --quiet --locked -- audit tools/fixtures/opencode-broken.json > /dev/null
-          cargo run --quiet --locked -- audit tools/fixtures/pi-broken.json > /dev/null
-          cargo run --quiet --locked -- audit tools/fixtures/codex-broken.toml > /dev/null
-          cargo run --quiet --locked -- audit tools/fixtures/claude-broken.json > /dev/null
+          cargo run --quiet --locked -- audit tools/fixtures/opencode-broken.json > /dev/null || [ $? -eq 1 ]
+          cargo run --quiet --locked -- audit tools/fixtures/pi-broken.json > /dev/null || [ $? -eq 1 ]
+          cargo run --quiet --locked -- audit tools/fixtures/codex-broken.toml > /dev/null || [ $? -eq 1 ]
+          cargo run --quiet --locked -- audit tools/fixtures/claude-broken.json > /dev/null || [ $? -eq 1 ]

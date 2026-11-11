@@ -82,7 +82,7 @@ cargo run -- audit <file>              # config audit (credentials redacted)
 cargo run -- --version | --help
 ```
 
-Exit codes: `0` success, `1` unmatched, `2` usage or file error.
+Exit codes: `0` success, `1` unmatched (for `audit`: differences found), `2` usage or file error.
 
 ### Config audit (`audit`)
 
