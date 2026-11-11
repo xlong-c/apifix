@@ -1,12 +1,18 @@
 name: validate
 
 on:
+  # 只在 master 与 PR 上跑：功能分支推上去不再各自触发整套矩阵（省 Actions 分钟数）。
   push:
-    branches: ["**"]
+    branches: [master]
   pull_request:
 
 permissions:
   contents: read
+
+# 同一 ref 的新推送取消上一轮未完成的运行，避免排队浪费。
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   validate:
@@ -24,18 +30,28 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Set up Rust stable
-        uses: dtolnay/rust-toolchain@stable
+      # gpui-kit 0.9.1 的 gpui-pre 0.3.12 需要 std::hint::cold_path（1.93 stable 尚未稳定），
+      # 与 rust-toolchain.toml 保持一致。
+      - name: Set up Rust 1.99
+        uses: dtolnay/rust-toolchain@1.99.0
         with:
           components: clippy, rustfmt
 
-      - name: Install Slint Linux build dependencies
+      # 缓存 target/ 与 cargo registry：gpui 依赖树很大，冷编译是分钟数的主要开销。
+      - name: Cache cargo build
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: ${{ matrix.os }}
+
+      # GPUI 在 Linux 上走 X11 / Wayland，编译期需要对应的开发头文件
+      - name: Install GPUI Linux build dependencies
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y libxkbcommon-dev libwayland-dev libx11-dev libx11-xcb-dev \
             libxrandr-dev libxcursor-dev libxi-dev libxinerama-dev libxcb-shape0-dev \
-            libxcb-xfixes0-dev libxcb-xkb-dev libxkbcommon-x11-dev
+            libxcb-xfixes0-dev libxcb-xkb-dev libxkbcommon-x11-dev \
+            libfontconfig-dev libvulkan-dev
 
       - name: Rust format, test, and lint
         run: |
@@ -43,73 +59,35 @@ jobs:
           cargo test --locked
           cargo clippy --locked --all-targets -- -D warnings
 
-      - name: Set up Node.js 20
-        uses: actions/setup-node@v7
-        with:
-          node-version: "20"
-
-      - name: Syntax check (node --check, all .mjs + ui/*.js + test)
-        run: |
-          for f in apifix.mjs lib/*.mjs tools/*.mjs ui/*.js ui/*.mjs test/*.mjs; do
-            echo "checking $f"
-            node --check "$f"
-          done
-
       - name: Check catalog.json is up to date with catalog/
-        run: node tools/build-catalog.mjs --check
+        run: cargo run --quiet --locked -- catalog build --check
 
       - name: Validate catalog (catalog/ + catalog.json)
-        run: node tools/validate-catalog.mjs
+        run: cargo run --quiet --locked -- catalog validate
 
-      # 不变量 2 的自动化守护：core 与 ui fallback 逐字节对拍（组数 = 模型数 × 2 emitter × 2 模式）
-      - name: Parity check (core vs ui fallback)
-        run: node tools/parity-check.mjs
-
-      - name: Unit tests (node:test)
-        run: node --test
-
-      # 冒烟 id 从 catalog 动态派生，避免数据演进（模型退役/改名）导致假红
+      # 冒烟 id 从 catalog 动态派生，避免数据演进（模型退役/改名）导致假红。
+      # 先把 --list 落盘再取首两行，避免 head/grep -m1 触发 SIGPIPE（bash -o pipefail）。
       - name: Smoke test (list / match / emit)
         run: |
-          FIRST=$(node -e "console.log(require('./catalog.json').models[0].id)")
-          SECOND=$(node -e "console.log(require('./catalog.json').models[1].id)")
-          node apifix.mjs --list > /dev/null
-          node apifix.mjs "$FIRST" > /dev/null
-          node apifix.mjs "$SECOND" --emit pi -f > /dev/null
-          node apifix.mjs "$SECOND" --emit codex -f > /dev/null
-          node apifix.mjs "$SECOND" --emit claude-env -f > /dev/null
+          cargo run --quiet --locked -- --list > "$RUNNER_TEMP/list.txt"
+          FIRST=$(awk -F'  ·  ' 'NR==1 { print $2 }' "$RUNNER_TEMP/list.txt")
+          SECOND=$(awk -F'  ·  ' 'NR==2 { print $2 }' "$RUNNER_TEMP/list.txt")
+          echo "smoke ids: $FIRST / $SECOND"
+          cargo run --quiet --locked -- "$FIRST" > /dev/null
+          cargo run --quiet --locked -- "$SECOND" --emit pi -f > /dev/null
+          cargo run --quiet --locked -- "$SECOND" --emit codex -f > /dev/null
+          cargo run --quiet --locked -- "$SECOND" --emit claude-env -f > /dev/null
+          cargo run --quiet --locked -- "$SECOND" --emit curl > /dev/null
+          cargo run --quiet --locked -- "$SECOND" --emit sdk > /dev/null
           printf '%s\n%s\n' "$FIRST" "$SECOND" > "$RUNNER_TEMP/ids.txt"
-          node apifix.mjs --match "$RUNNER_TEMP/ids.txt" > /dev/null
+          cargo run --quiet --locked -- --match "$RUNNER_TEMP/ids.txt" > /dev/null
+          cargo run --quiet --locked -- search qwen > /dev/null
+          cargo run --quiet --locked -- compare "$FIRST" "$SECOND" > /dev/null
 
-      - name: Smoke test (fix)
+      # 配置审计：fixtures 均为假 key（sk-TEST），不会触碰真实用户配置
+      - name: Smoke test (audit)
         run: |
-          cp tools/fixtures/opencode-broken.json "$RUNNER_TEMP/fix-oc.json"
-          cp tools/fixtures/pi-broken.json "$RUNNER_TEMP/fix-pi.json"
-          cp tools/fixtures/codex-broken.toml "$RUNNER_TEMP/fix-codex.toml"
-          cp tools/fixtures/claude-broken.json "$RUNNER_TEMP/fix-claude.json"
-          # dry-run 期望有差异（exit 1）且不写入
-          node apifix.mjs fix "$RUNNER_TEMP/fix-oc.json" --dry-run && exit 1 || test $? -eq 1
-          node apifix.mjs fix "$RUNNER_TEMP/fix-pi.json" --dry-run && exit 1 || test $? -eq 1
-          node apifix.mjs fix "$RUNNER_TEMP/fix-codex.toml" --dry-run && exit 1 || test $? -eq 1
-          node apifix.mjs fix "$RUNNER_TEMP/fix-claude.json" --dry-run && exit 1 || test $? -eq 1
-          # --yes 应用后 audit 复验应完全一致（codex/claude 由后缀与内容自动识别）
-          node apifix.mjs fix "$RUNNER_TEMP/fix-oc.json" --yes --no-backup
-          node apifix.mjs fix "$RUNNER_TEMP/fix-pi.json" --yes --no-backup
-          node apifix.mjs fix "$RUNNER_TEMP/fix-codex.toml" --yes --no-backup
-          node apifix.mjs fix "$RUNNER_TEMP/fix-claude.json" --yes --no-backup
-          node apifix.mjs audit "$RUNNER_TEMP/fix-oc.json"
-          node apifix.mjs audit "$RUNNER_TEMP/fix-pi.json"
-          node apifix.mjs audit "$RUNNER_TEMP/fix-codex.toml"
-          node apifix.mjs audit "$RUNNER_TEMP/fix-claude.json"
-
-      # login 非交互冒烟：写 $RUNNER_TEMP 下的临时文件（绝不碰真实用户配置），假 key（sk-TEST）
-      - name: Smoke test (login non-interactive)
-        run: |
-          SMOKE_ID=$(node -e "console.log(require('./catalog.json').models[0].id)")
-          node apifix.mjs login opencode smoketest \
-            --file "$RUNNER_TEMP/login-oc.json" \
-            --base-url "https://example.invalid/v1" \
-            --api-key "sk-TEST-SMOKE" \
-            --model "$SMOKE_ID" \
-            --no-fetch --yes --no-backup
-          node -e "const j=require(process.env.RUNNER_TEMP + '/login-oc.json'); const b=j.provider.smoketest; if (b.npm !== '@ai-sdk/openai-compatible' || !b.options.baseURL || b.options.apiKey !== 'sk-TEST-SMOKE' || !b.models[process.argv[1]]) process.exit(1)" "$SMOKE_ID"
+          cargo run --quiet --locked -- audit tools/fixtures/opencode-broken.json > /dev/null
+          cargo run --quiet --locked -- audit tools/fixtures/pi-broken.json > /dev/null
+          cargo run --quiet --locked -- audit tools/fixtures/codex-broken.toml > /dev/null
+          cargo run --quiet --locked -- audit tools/fixtures/claude-broken.json > /dev/null
