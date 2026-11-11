@@ -1,32 +1,15 @@
 {
   "name": "apifix",
   "version": "0.2.3",
-  "description": "模型官方参数速查与配置片段生成器（Rust + Slint 桌面应用；含兼容版 Node CLI）",
+  "private": true,
+  "description": "模型官方参数速查与配置片段生成器（Rust + GPUI 桌面应用）",
   "type": "module",
-  "bin": {
-    "apifix": "./apifix.mjs"
-  },
-  "engines": {
-    "node": ">=18"
-  },
   "scripts": {
     "start": "cargo run --",
-    "legacy:web": "node apifix.mjs --ui",
-    "build": "node tools/build-catalog.mjs",
-    "validate": "node tools/validate-catalog.mjs",
+    "build": "cargo run -- catalog build",
+    "validate": "cargo run -- catalog validate",
     "merge": "node tools/merge-catalog.mjs"
   },
-  "files": [
-    "apifix.mjs",
-    "lib/",
-    "ui/",
-    "tools/",
-    "catalog/",
-    "catalog.json",
-    "index.html",
-    "README.md",
-    "LICENSE"
-  ],
   "keywords": [
     "llm",
     "model-catalog",

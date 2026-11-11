@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 // merge-catalog.mjs — 把 incoming/*.json 批次合并进 catalog/（零依赖 / ESM）
 //
-// 与 legacy-python/tools/merge_catalog.py 1:1 对齐：相同的规范化、去重优先级、
-// 报告格式与退出码（模型条目部分）。
+// 这是仓库里仅存的 Node 脚本：构建与校验已迁到 Rust（`apifix catalog build|validate`），
+// 但 incoming 批次的合并逻辑（去重优先级、pricing 处理）仍在这里，合并后会调用
+// build-catalog.mjs 重建 catalog.json。合并后务必跑 `cargo run -- catalog build --check`
+// 确认 Rust 侧产出的字节与提交的 catalog.json 一致。
 //
 // 做三件事：
 //   1. 读取 incoming/ 下所有批次文件（有 models 列表的）+ 现有 catalog/（或 catalog.json）；

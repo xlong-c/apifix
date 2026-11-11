@@ -2,9 +2,8 @@
 name = "apifix"
 version = "0.2.3"
 edition = "2024"
-rust-version = "1.92"
-build = "build.rs"
-description = "Official model specs and config snippets with a Slint desktop app"
+rust-version = "1.99"
+description = "Official model specs and config snippets with a GPUI desktop app"
 license = "MIT"
 repository = "https://github.com/xlong-c/apifix"
 
@@ -13,11 +12,10 @@ name = "apifix"
 path = "src/main.rs"
 
 [dependencies]
-arboard = "3.6"
 clap = { version = "4.5", features = ["derive"] }
 serde_json = { version = "1.0", features = ["preserve_order"] }
-slint = { version = "1.18.1", default-features = false, features = ["std", "backend-winit", "renderer-software", "compat-1-2"] }
 strsim = "0.11"
 
-[build-dependencies]
-slint-build = "1.18.1"
+# UI：gpui-kit 全家桶（GPUI + Base + Component + 图标资源，单一依赖）。
+# 它内部统一锁定 gpui-pre =0.3.12，官方 gpui 0.2.2 不要同时引入，避免两棵 gpui 树。
+gpui-kit = "0.9.1"
